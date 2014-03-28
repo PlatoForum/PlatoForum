@@ -17,21 +17,21 @@ Display comments with different layouts
 * List
 
 ## Comment View ##
-Link to the comment which the current comment replies to (if there's any)
-Display comment body
-Link to author's user statistics view
-Links to strongest supporting/opposing replies
+1. Link to the comment which the current comment replies to (if there's any)
+2. Display comment body
+3. Link to author's user statistics view
+4. Links to strongest supporting/opposing replies
 
 ## User Statistics View ##
-Radar chart
-Comment history
+* Radar chart
+* Comment history
 
 ## New Article ##
 
 ## Universal Header ##
-Sitemap (Home > Topic > Stance > Comment)
-New comment button
+* Sitemap (Home > Topic > Stance > Comment)
+* New comment button
 
 ## Universal Footer ##
-FB Login button
-Link to user statistics view
+* FB Login button
+* Link to user statistics view
