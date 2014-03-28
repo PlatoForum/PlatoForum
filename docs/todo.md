@@ -6,8 +6,9 @@
 * Comment View
 
 ## Database ##
-* Define collections (user, comment, pipe for worker)
+* Define collections (user, comment, pipe for worker, clusters)
 
-## Clustering Worker ##
+## Graph Algorithm ##
 * Adjacency matrix runtime updating
-* Graph Algorithm
+* Cluster algorithm
+* Define output cluster format
