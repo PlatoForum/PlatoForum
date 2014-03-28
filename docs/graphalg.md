@@ -1,3 +1,4 @@
+# Graph Algorithm #
 In order to classify comments into clusters, we need to define a *metric* or a
 concept of distance between any two comments. By modeling each of _comments_ in
 the database as a node in a complete graph, we naturally use the weight of an
