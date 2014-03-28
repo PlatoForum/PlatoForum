@@ -26,7 +26,7 @@ Display comments with different layouts
 * Radar chart
 * Comment history
 
-## New Article ##
+## New Comment ##
 
 ## Universal Header ##
 * Sitemap (Home > Topic > Stance > Comment)
