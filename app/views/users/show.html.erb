@@ -4,6 +4,22 @@
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+<p>
+  <strong>Authored comments:</strong></br>
+    <% @user.works.each do |w| %>      
+      Time:
+      <%= w.doc %></br>
+      Subject: 
+      <%= w.subject %></br>
+      Body: 
+      <%= w.body %></br>
+    <% end %>
+</p>
 
+<%= link_to 'New comment', new_comment_path(:owner => @user) %> |
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

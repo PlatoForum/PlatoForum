@@ -1,4 +1,10 @@
 PlatoForum::Application.routes.draw do
+  resources :stances
+
+  resources :topics
+
+  resources :comments
+
   resources :users
 
   get 'auth/:provider/callback' => 'sessions#create'
