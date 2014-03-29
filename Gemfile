@@ -45,6 +45,10 @@ end
 # Use MongoDB
 gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
 
+# Use Facebook Authentication
+gem 'omniauth'
+gem 'omniauth-facebook'
+
 gem 'therubyracer'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
