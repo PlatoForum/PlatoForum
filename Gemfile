@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
+ruby "2.1.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
-
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -41,3 +41,10 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+# Use MongoDB
+gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
+
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
