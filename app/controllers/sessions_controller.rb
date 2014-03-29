@@ -1,4 +1,9 @@
 class SessionsController < ApplicationController
+  skip_before_action :require_user, only: [:new, :create]
+
+  def new
+  end
+  
   def create
     auth = request.env["omniauth.auth"]
     user = User.where(:provider => auth['provider'],

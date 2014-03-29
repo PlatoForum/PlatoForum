@@ -3,14 +3,15 @@ PlatoForum::Application.routes.draw do
 
   get 'auth/:provider/callback' => 'sessions#create'
   get 'auth/failure' => redirect('/')
-  get 'signout' =>'sessions#destroy', as: 'signout'
+  get "signin" => "sessions#new", :as => "signin"
+  get "signout" => "sessions#destroy", :as => "signout"
 
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'sessions#create'
+  root 'sessions#new'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
