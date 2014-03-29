@@ -10,7 +10,11 @@ PlatoForum::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
+<<<<<<< HEAD
   root 'users#index'
+=======
+  #root 'welcome#index'
+>>>>>>> ab80cdc0460e7e943428d96b893f3e79e424feb2
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
