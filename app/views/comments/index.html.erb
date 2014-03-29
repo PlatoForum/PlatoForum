@@ -6,6 +6,10 @@
       <th>Time</th>
       <th>Subject</th>
       <th>Body</th>
+      <th>Liked</th>
+      <th>Disliked</th>
+      <th></th>
+      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -18,6 +22,26 @@
         <td><%= comment.doc %></td>
         <td><%= comment.subject %></td>
         <td><%= comment.body %></td>
+        <td>
+          <% comment.likes.each do |like| %>
+            <%= link_to like.name, like %></br>
+          <% end %>
+        </td>
+        <td>
+          <% comment.dislikes.each do |d| %>
+            <%= link_to d.name, d %></br>
+          <% end %>
+        </td>
+        <% if current_user.approvals.find(comment.id) %>
+          <td><%= link_to 'Unlike', unlike_comment_path(comment), method: :put %></td>
+          <td></td>
+        <% elsif current_user.disapprovals.find(comment.id) %>
+          <td></td>
+          <td><%= link_to 'Undislike', undislike_comment_path(comment), method: :put %></td>
+        <% else %>
+          <td><%= link_to 'Like', like_comment_path(comment), method: :put %></td>
+          <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put %></td>
+        <% end %>
         <td><%= link_to 'Show', comment %></td>
         <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
         <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>

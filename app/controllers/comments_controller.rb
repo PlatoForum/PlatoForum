@@ -15,9 +15,7 @@ class CommentsController < ApplicationController
   # GET /comments/new
   def new
     @comment = Comment.new
-    puts params
     @owner = User.find_by(:id => session[:user_id])
-    puts @owner
   end
 
   # GET /comments/1/edit
@@ -65,6 +63,32 @@ class CommentsController < ApplicationController
       format.html { redirect_to comments_url }
       format.json { head :no_content }
     end
+  end
+
+  def like
+    c = Comment.find_by(:id => params[:id])
+    c.likes << User.find_by(:id => session[:user_id])
+    c.save
+    redirect_to comments_url
+  end
+
+  def unlike
+    c = Comment.find_by(:id => params[:id])
+    User.find_by(:id => session[:user_id]).approvals.delete(c)
+    redirect_to comments_url
+  end
+
+  def dislike
+    c = Comment.find_by(:id => params[:id])
+    c.dislikes << User.find_by(:id => session[:user_id])
+    c.save
+    redirect_to comments_url
+  end
+
+  def undislike
+    c = Comment.find_by(:id => params[:id])
+    User.find_by(:id => session[:user_id]).disapprovals.delete(c)
+    redirect_to comments_url
   end
 
   private

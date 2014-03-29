@@ -19,6 +19,28 @@
       <%= w.body %></br>
     <% end %>
 </p>
+<p>
+  <strong>Liked comments:</strong></br>
+    <% @user.approvals.each do |w| %>      
+      Time:
+      <%= w.doc %></br>
+      Subject: 
+      <%= w.subject %></br>
+      Body: 
+      <%= w.body %></br>
+    <% end %>
+</p>
+<p>
+  <strong>Disliked comments:</strong></br>
+    <% @user.disapprovals.each do |w| %>      
+      Time:
+      <%= w.doc %></br>
+      Subject: 
+      <%= w.subject %></br>
+      Body: 
+      <%= w.body %></br>
+    <% end %>
+</p>
 
 <%= link_to 'New comment', new_comment_path(:owner => @user) %> |
 <%= link_to 'Edit', edit_user_path(@user) %> |
