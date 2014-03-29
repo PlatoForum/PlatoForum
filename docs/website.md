@@ -33,5 +33,5 @@ Display comments with different layouts
 * New comment button
 
 ## Universal Footer ##
-* FB Login button
+* FB Login button (Facebook app ID 1397952233812918, [app page]('https://developers.facebook.com/apps/1397952233812918/'))
 * Link to user statistics view
