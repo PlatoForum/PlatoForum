@@ -1,6 +1,16 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Topic:</strong>
+  <%= @comment.target.description %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @comment.owner.name %>
+</p>
+
+<p>
   <strong>Subject:</strong>
   <%= @comment.subject %>
 </p>

@@ -1,4 +1,5 @@
-<h1>Listing comments</h1>
+<h1><%= @target.description %></h1>
+<h2>Listing Comments</h2>
 
 <table>
   <thead>
@@ -18,34 +19,36 @@
 
   <tbody>
     <% @comments.each do |comment| %>
-      <tr>
-        <td><%= comment.doc %></td>
-        <td><%= comment.subject %></td>
-        <td><%= comment.body %></td>
-        <td>
-          <% comment.likes.each do |like| %>
-            <%= link_to like.name, like %></br>
+      <% #if comment.target.id == session[:topic_id]%>
+        <tr>
+          <td><%= comment.doc %></td>
+          <td><%= comment.subject %></td>
+          <td><%= comment.body %></td>
+          <td>
+            <% comment.likes.each do |like| %>
+              <%= link_to like.name, like %></br>
+            <% end %>
+          </td>
+          <td>
+            <% comment.dislikes.each do |d| %>
+              <%= link_to d.name, d %></br>
+            <% end %>
+          </td>
+          <% if current_user.approvals.find(comment.id) %>
+            <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
+            <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
+          <% elsif current_user.disapprovals.find(comment.id) %>
+            <td><%= link_to 'Like', like_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
+            <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
+          <% else %>
+            <td><%= link_to 'Like', like_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
+            <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
           <% end %>
-        </td>
-        <td>
-          <% comment.dislikes.each do |d| %>
-            <%= link_to d.name, d %></br>
-          <% end %>
-        </td>
-        <% if current_user.approvals.find(comment.id) %>
-          <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
-          <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
-        <% elsif current_user.disapprovals.find(comment.id) %>
-          <td><%= link_to 'Like', like_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
-          <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
-        <% else %>
-          <td><%= link_to 'Like', like_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
-          <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
-        <% end %>
-        <td><%= link_to 'Show', comment, class: 'btn btn-small' %></td>
-        <td><%= link_to 'Edit', edit_comment_path(comment), class: 'btn btn-small' %></td>
-        <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small' %></td>
-      </tr>
+          <td><%= link_to 'Show', comment, class: 'btn btn-small' %></td>
+          <td><%= link_to 'Edit', edit_comment_path(comment), class: 'btn btn-small' %></td>
+          <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small' %></td>
+        </tr>
+      <% #end %>
     <% end %>
   </tbody>
 </table>

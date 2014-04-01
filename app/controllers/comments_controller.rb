@@ -4,7 +4,8 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @target = Topic.find_by(:id => session[:topic_id])
+    @comments = @target.comments
   end
 
   # GET /comments/1
@@ -15,6 +16,7 @@ class CommentsController < ApplicationController
   # GET /comments/new
   def new
     @comment = Comment.new
+    @target = Topic.find_by(:id => session[:topic_id])
     @owner = User.find_by(:id => session[:user_id])
   end
 
@@ -26,6 +28,7 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = Comment.new
+    @comment.target = Topic.find_by(:id => session[:topic_id])
     @comment.subject = params[:comment][:subject]
     @comment.body = params[:comment][:body]
     @comment.owner = User.find_by(:id => session[:user_id])
