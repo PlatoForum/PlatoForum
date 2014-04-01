@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
     if current_user
       return true
     end
+    session[:return_to] ||= request.referer
     redirect_to signin_url
   end
 end
