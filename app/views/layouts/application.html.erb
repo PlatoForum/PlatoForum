@@ -11,11 +11,12 @@
 </head>
 
 <body>
-<header class="navbar navbar-fixed-top navbar-inverse">
+<header class="navbar navbar-fixed-top">
   <div id="user_nav">
-    <div class="navbar-inner">
+    <div class="navbar-header">
       <div class="container">
-        <ul class="nav pull-left">
+        <a class="navbar-brand" href="#">PlatoForum</a>
+        <ul class="nav pull-right">
           <li>
             <% if current_user %>
               <strong><%= current_user.name %></strong><%= link_to "Sign out", signout_path, id: "sign_out" %>

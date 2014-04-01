@@ -15,14 +15,13 @@
       <tr>
         <td><%= topic.description %></td>
         <td><%= topic.permalink %></td>
-        <td><%= link_to 'Show', topic %></td>
-        <td><%= link_to 'Edit', edit_topic_path(topic) %></td>
-        <td><%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', topic, class: 'btn btn-small' %></td>
+        <td><%= link_to 'Edit', edit_topic_path(topic), class: 'btn btn-small' %></td>
+        <td><%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small' %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Topic', new_topic_path %>
+<%= link_to 'New Topic', new_topic_path, class: 'btn btn-large btn-primary'%>

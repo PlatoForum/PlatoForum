@@ -10,5 +10,5 @@
   <%= @comment.body %>
 </p>
 
-<%= link_to 'Edit', edit_comment_path(@comment) %> |
-<%= link_to 'Back', comments_path %>
+<%= link_to 'Edit', edit_comment_path(@comment), class: 'btn'  %> 
+<%= link_to 'Back', comments_path, class: 'btn btn-primary'  %>

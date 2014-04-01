@@ -42,6 +42,6 @@
     <% end %>
 </p>
 
-<%= link_to 'New comment', new_comment_path(:owner => @user) %> |
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'New comment', new_comment_path(:owner => @user), class: 'btn btn-primary' %> 
+<%= link_to 'Edit', edit_user_path(@user), class: 'btn' %> 
+<%= link_to 'Back', users_path, class: 'btn'  %>
