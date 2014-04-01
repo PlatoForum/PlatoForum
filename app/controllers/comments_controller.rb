@@ -67,29 +67,38 @@ class CommentsController < ApplicationController
 
   def like
     c = Comment.find_by(:id => params[:id])
+    User.find_by(:id => session[:user_id]).disapprovals.delete(c)
     c.likes << User.find_by(:id => session[:user_id])
     c.save
     redirect_to comments_url
   end
 
-  def unlike
+  #def unlike
+  #  c = Comment.find_by(:id => params[:id])
+  #  User.find_by(:id => session[:user_id]).approvals.delete(c)
+  #  redirect_to comments_url
+  #end
+
+  def neutral
     c = Comment.find_by(:id => params[:id])
     User.find_by(:id => session[:user_id]).approvals.delete(c)
+    User.find_by(:id => session[:user_id]).disapprovals.delete(c)
     redirect_to comments_url
   end
 
   def dislike
     c = Comment.find_by(:id => params[:id])
+    User.find_by(:id => session[:user_id]).approvals.delete(c)
     c.dislikes << User.find_by(:id => session[:user_id])
     c.save
     redirect_to comments_url
   end
 
-  def undislike
-    c = Comment.find_by(:id => params[:id])
-    User.find_by(:id => session[:user_id]).disapprovals.delete(c)
-    redirect_to comments_url
-  end
+  #def undislike
+  #  c = Comment.find_by(:id => params[:id])
+  #  User.find_by(:id => session[:user_id]).disapprovals.delete(c)
+  #  redirect_to comments_url
+  #end
 
   private
     # Use callbacks to share common setup or constraints between actions.

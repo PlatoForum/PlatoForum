@@ -33,11 +33,11 @@
           <% end %>
         </td>
         <% if current_user.approvals.find(comment.id) %>
-          <td><%= link_to 'Unlike', unlike_comment_path(comment), method: :put %></td>
-          <td></td>
+          <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put %></td>
+          <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put %></td>
         <% elsif current_user.disapprovals.find(comment.id) %>
-          <td></td>
-          <td><%= link_to 'Undislike', undislike_comment_path(comment), method: :put %></td>
+          <td><%= link_to 'Like', like_comment_path(comment), method: :put %></td>
+          <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put %></td>
         <% else %>
           <td><%= link_to 'Like', like_comment_path(comment), method: :put %></td>
           <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put %></td>
