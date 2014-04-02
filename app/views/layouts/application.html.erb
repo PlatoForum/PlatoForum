@@ -8,6 +8,22 @@
   <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  	<script>
+	function checkPage(){
+	    if(sessionStorage.visited != 1){
+	        sessionStorage.startingPage = document.URL;
+	    }
+	    else{
+	        return;
+	    }
+	}
+	</script>
+	<script>
+	function returnPage(){
+	    window.location.href = sessionStorage.startingPage;
+	    sessionStorage.visited = 1;
+	}
+	</script>
 </head>
 
 <body>

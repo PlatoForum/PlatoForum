@@ -9,11 +9,13 @@ class SessionsController < ApplicationController
     user = User.where(:provider => auth['provider'],
                       :uid => auth['uid']).first || User.create_with_omniauth(auth)
     session[:user_id] = user.id
-    redirect_to session.delete(:return_to)
+    #redirect_to session.delete(:return_to) || root_path
+    #redirect_to params[:lastpage]
   end
 
   def destroy
-    reset_session
-    redirect_to root_url
+    #reset_session
+    session.delete(:user_id)
+    #redirect_to root_url
   end
 end

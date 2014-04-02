@@ -19,7 +19,6 @@
 
   <tbody>
     <% @comments.each do |comment| %>
-      <% #if comment.target.id == session[:topic_id]%>
         <tr>
           <td><%= comment.doc %></td>
           <td><%= comment.subject %></td>
@@ -34,6 +33,7 @@
               <%= link_to d.name, d %></br>
             <% end %>
           </td>
+          <% if !current_user.nil?() %>
           <% if current_user.approvals.find(comment.id) %>
             <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
             <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
@@ -44,11 +44,11 @@
             <td><%= link_to 'Like', like_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
             <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
           <% end %>
+          <% end %>
           <td><%= link_to 'Show', comment, class: 'btn btn-small' %></td>
-          <td><%= link_to 'Edit', edit_comment_path(comment), class: 'btn btn-small' %></td>
+          <!--<td><%= link_to 'Edit', edit_comment_path(comment), class: 'btn btn-small' %></td>-->
           <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small' %></td>
         </tr>
-      <% #end %>
     <% end %>
   </tbody>
 </table>

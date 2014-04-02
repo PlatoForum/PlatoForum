@@ -1,4 +1,9 @@
 class CommentsController < ApplicationController
+  
+  #require login to view comments
+  #after_filter :require_user
+  #protect_from_forgery with: :exception
+  
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   # GET /comments
@@ -21,8 +26,8 @@ class CommentsController < ApplicationController
   end
 
   # GET /comments/1/edit
-  def edit
-  end
+  #def edit
+  #end
 
   # POST /comments
   # POST /comments.json
