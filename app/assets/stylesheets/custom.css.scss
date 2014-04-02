@@ -1,2 +1,23 @@
 @import "bootstrap";
-body { padding-top: 70px; }
+
+/* universal */
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  padding-top: 70px;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.center h1 {
+  margin-bottom: 10px;
+}

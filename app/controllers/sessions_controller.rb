@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     user = User.where(:provider => auth['provider'],
                       :uid => auth['uid']).first || User.create_with_omniauth(auth)
     session[:user_id] = user.id
-    redirect_to session.delete(:return_to), :notice => "Signed in!"
+    redirect_to session.delete(:return_to)
   end
 
   def destroy
