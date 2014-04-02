@@ -10,18 +10,12 @@
   <![endif]-->
   	<script>
 	function checkPage(){
-	    if(sessionStorage.visited != 1){
-	        sessionStorage.startingPage = document.URL;
-	    }
-	    else{
-	        return;
-	    }
+	    sessionStorage.startingPage = document.URL;
 	}
 	</script>
 	<script>
 	function returnPage(){
 	    window.location.href = sessionStorage.startingPage;
-	    sessionStorage.visited = 1;
 	}
 	</script>
 </head>
