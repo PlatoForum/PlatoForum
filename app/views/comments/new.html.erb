@@ -1,6 +1,6 @@
 <h1>New comment</h1>
-<h2>for "<%= @target.description %>"</h2>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', comments_path %>
+<%= link_to 'Back', "/#{params[:permalink]}/comments" %>
+<button></button>

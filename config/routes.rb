@@ -13,7 +13,13 @@ PlatoForum::Application.routes.draw do
 
   resources :users
 
-  get ':lastpage/auth/:provider/callback' => 'sessions#create'
+  get ':permalink' => "comments#index"
+  get ':permalink/comments' => "comments#index"
+  get ':permalink/comments/new' => "comments#new"
+
+  post ':permalink/comments' => "comments#create"
+
+  #get ':lastpage/auth/:provider/callback' => 'sessions#create'
 
   get 'auth/:provider/callback' => 'sessions#create'
   get 'auth/failure' => redirect('/')
