@@ -17,9 +17,7 @@ class CommentsController < ApplicationController
   # GET /comments/new
   def new
     @comment = Comment.new
-    @target = Topic.find_by(:id => session[:topic_id])
-    @user = User.find_by(:id => session[:user_id])
-    @comment.owner = get_proxy_by_user_and_topic(@user, @target)
+    @comment.owner = @proxy
   end
 
   # GET /comments/1/edit
@@ -30,11 +28,10 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = Comment.new
-    @comment.target = Topic.find_by(:id => session[:topic_id])
+    @comment.target = @target
     @comment.subject = params[:comment][:subject]
     @comment.body = params[:comment][:body]
-    @comment.owner = get_proxy_by_user_and_topic(@user, @comment.target)
-
+    @comment.owner = @proxy
     respond_to do |format|
       if @comment.save!
         format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
@@ -116,17 +113,15 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:subject, :body)
     end
 
-    def get_proxy_by_user_and_topic(user, topic)
-      @proxy = user.proxies.find_by(:topic_id => topic._id)
-      return @proxy if @proxy
-      @proxy = Proxy.new
-      @proxy.topic = topic
-      @proxy.user = user
-      @proxy.save!
-      return @proxy
-    end
-
     def set_proxy
+      @owner = User.find_by(:id => session[:user_id])
+      @target = Topic.find_by(:id => session[:topic_id])
+      @proxy = @owner.proxies.find_by(:topic_id => @target._id)
+      return if @proxy
+      @proxy = Proxy.new
+      @proxy.topic = @target
+      @proxy.user = @owner
+      @proxy.save!
     end
 
 end
