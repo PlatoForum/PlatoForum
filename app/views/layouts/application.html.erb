@@ -11,21 +11,18 @@
 </head>
 
 <body>
-<header class="navbar navbar-fixed-top">
-  <div id="user_nav">
-    <div class="navbar-header">
-      <div class="container">
-        <a class="navbar-brand" href="\#">PlatoForum</a>
-        <ul class="nav pull-right">
-          <li>
-            <% if current_user %>
-              <strong><%= current_user.name %></strong><%= link_to "Sign out", signout_path, id: "sign_out" %>
-            <% else %>
-              <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
-            <% end %>
-          </li>
-        </ul>
-      </div>
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="navbar-brand" id="logo" href="\#">PlatoForum</a>
+      <ul class="nav pull-right">
+          <% if current_user %>
+            <li id="fb_account">Logged in as <strong><%= current_user.name %></strong></li>
+            <li><%= link_to "Sign out", signout_path, id: "sign_out" %></li>
+          <% else %>
+            <li><%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %></li>
+          <% end %>
+      </ul>
     </div>
   </div>
 </header>
