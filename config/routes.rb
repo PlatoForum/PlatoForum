@@ -1,4 +1,10 @@
 PlatoForum::Application.routes.draw do
+
+  # Static Pages
+  get "static/about"
+  get "static/privacy_policy"
+  get "static/contact"
+  
   resources :stances
 
   resources :topics
