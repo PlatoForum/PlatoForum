@@ -34,10 +34,10 @@
               <%= link_to d.name, d %></br>
             <% end %>
           </td>
-          <% if current_user.approvals.find(comment.id) %>
+          <% if current_proxy.approvals.find(comment.id) %>
             <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
             <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
-          <% elsif current_user.disapprovals.find(comment.id) %>
+          <% elsif current_proxy.disapprovals.find(comment.id) %>
             <td><%= link_to 'Like', like_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
             <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
           <% else %>

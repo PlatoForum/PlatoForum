@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_proxy, only: [:new, :create]
 
   # GET /comments
   # GET /comments.json
@@ -17,7 +18,8 @@ class CommentsController < ApplicationController
   def new
     @comment = Comment.new
     @target = Topic.find_by(:id => session[:topic_id])
-    @owner = User.find_by(:id => session[:user_id])
+    @user = User.find_by(:id => session[:user_id])
+    @comment.owner = get_proxy_by_user_and_topic(@user, @target)
   end
 
   # GET /comments/1/edit
@@ -31,7 +33,7 @@ class CommentsController < ApplicationController
     @comment.target = Topic.find_by(:id => session[:topic_id])
     @comment.subject = params[:comment][:subject]
     @comment.body = params[:comment][:body]
-    @comment.owner = User.find_by(:id => session[:user_id])
+    @comment.owner = get_proxy_by_user_and_topic(@user, @comment.target)
 
     respond_to do |format|
       if @comment.save!
@@ -113,4 +115,18 @@ class CommentsController < ApplicationController
     def comment_params
       params.require(:comment).permit(:subject, :body)
     end
+
+    def get_proxy_by_user_and_topic(user, topic)
+      @proxy = user.proxies.find_by(:topic_id => topic._id)
+      return @proxy if @proxy
+      @proxy = Proxy.new
+      @proxy.topic = topic
+      @proxy.user = user
+      @proxy.save!
+      return @proxy
+    end
+
+    def set_proxy
+    end
+
 end

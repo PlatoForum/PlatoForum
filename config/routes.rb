@@ -1,4 +1,6 @@
 PlatoForum::Application.routes.draw do
+  resources :proxies
+
   resources :stances
 
   resources :topics
@@ -7,16 +9,17 @@ PlatoForum::Application.routes.draw do
 
   resources :users
 
+  #get ':topic_id' => "topic#show"
+  #get ':topic_id/comments/new' => "comments#new"
+
   get 'auth/:provider/callback' => 'sessions#create'
   get 'auth/failure' => redirect('/')
   get "signin" => "sessions#new", :as => "signin"
   get "signout" => "sessions#destroy", :as => "signout"
 
   put "like/:id" => "comments#like", as: 'like_comment'
-  #put "unlike/:id" => "comments#unlike", as: 'unlike_comment'
   put "dislike/:id" => "comments#dislike", as: 'dislike_comment'
   put "neutral/:id" => "comments#neutral", as: 'neutral_comment'
-  #put "undislike/:id" => "comments#undislike", as: 'undislike_comment'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

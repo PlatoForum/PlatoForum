@@ -5,9 +5,7 @@ class User
   field :uid, type: String
   field :name, type: String
 
-  has_many :works, class_name: "Comment", inverse_of: :owner, autosave: true, validate: false
-  has_and_belongs_to_many :approvals, class_name: "Comment", inverse_of: :likes, validate: false
-  has_and_belongs_to_many :disapprovals, class_name: "Comment", inverse_of: :dislikes, validate: false
+  has_many :proxies
 
   def self.create_with_omniauth(auth)
     create! do |user|
@@ -18,4 +16,15 @@ class User
       end
     end
   end
+
+  #def get_proxy_by_topic(topic_id)
+  #  self.proxies.each do |p|
+  #    return p if p.topic._id == topic_id
+  #  end
+  #  @pn = Proxy.new 
+  #  @pn.topic = Topic.find_by(:id => topic_id)
+  #  self.proxies << @pn
+  #  @pn.save!
+  #  return pn
+  #end
 end
