@@ -31,18 +31,20 @@ class ApplicationController < ActionController::Base
   end
 
   def sample(collection)
-    while true 
-      r = rand()
-      adj = collection.find_by(:ran =>{"$lte" => r, "$gte" => r-0.01})
-      puts adj
-      break unless adj.nil?
+    rand = Random.new
+    while true
+      r = rand.rand(1.0)
+      word = collection.find_by(:ran =>{"$lte" => r, "$gte" => r-0.01})
+      return word
     end
-    return adj
   end
 
   def pseudonym_gen
     while true
-        p = sample(Town).name + sample(Adjective).word + sample(Name).word
+      p = sample(Town).name + sample(Adjective).word + sample(Name).word
+
+      puts "Created a new name: " + p
+
       if Proxy.find_by(:pseudonym => p).nil?
         return p
       end
