@@ -38,7 +38,7 @@
               <%= link_to d.pseudonym, d, onClick: "checkPage()" %></br>
             <% end %>
           </td>
-          <% unless @proxy.nil? %>
+          <% unless session[:user_id].nil? %>
           <% if @proxy.approvals.find(comment.id) %>
             <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
             <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
@@ -60,4 +60,6 @@
 
 <br>
 
-<%= link_to 'New Comment', "/#{@target.permalink}/comments/new", class: 'btn btn-large btn-primary' %>
+<%= unless session[:user_id].nil?
+  link_to 'New Comment', "/#{@target.permalink}/comments/new", class: 'btn btn-large btn-primary'
+end %>

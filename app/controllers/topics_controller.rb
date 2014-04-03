@@ -32,7 +32,7 @@ class TopicsController < ApplicationController
         format.html { redirect_to "/#{@topic.permalink}/comments", notice: 'Topic was successfully created.' }
         format.json { render action: 'show', status: :created, location: @topic }
       else
-        format.html { render action: 'new' }
+        format.html { render action: 'new', notice: @errormessage }
         format.json { render json: @topic.errors, status: :unprocessable_entity }
       end
     end
