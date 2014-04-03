@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PlatoForum</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+        <script>
+      function checkPage(){
+          sessionStorage.startingPage = document.URL;
+      }
+      </script>
+      <script>
+      function returnPage(){
+          window.location.href = sessionStorage.startingPage;
+      }
+    </script>
+</head>
+
+<body>
+<%= render 'layouts/header' %>
+<div class="container theme-showcase" role="main">
+  <%= yield %>
+</div>
+</body>
+<%= render 'layouts/footer' %>
+
+</html>

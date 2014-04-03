@@ -5,14 +5,14 @@ class CommentsController < ApplicationController
   #protect_from_forgery with: :exception
   
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :set_proxy, only: [:new, :create, :like, :neutral, :dislike, :show, :index]
+  before_action :set_proxy, only: [:new, :create, :like, :neutral, :dislike, :show]
 
   # GET /:permalink/comments
   # GET /:permalink/comments.json
   def index
     @target = Topic.find_by(:permalink => params[:permalink])
     if @target.nil?()
-      redirect_to root_path
+      format.html { redirect_to root_path, error: 'Cannot find topic.' }
     else
       @comments = @target.comments
     end
@@ -126,6 +126,9 @@ class CommentsController < ApplicationController
     def set_proxy
       @user = User.find_by(:id => session[:user_id])
       @target = Topic.find_by(:permalink => params[:permalink])
+      if @target.nil?()
+        format.html { redirect_to root_path, error: 'Cannot find topic.' }
+      end
       @proxy = @user.proxies.find_by(:topic_id => @target._id)
       return if @proxy
       @proxy = Proxy.new

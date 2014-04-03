@@ -1,0 +1,15 @@
+<div class="row">
+  <% @topics.each do |topic| %>
+  <div class="col-sm-4">
+          <ul class="nav nav-list">
+            <li class="list-group-item active">
+              <h4 class="list-group-item-heading"><%= link_to topic.description, "/#{topic.permalink}/comments", id: "topicdes"%></h4>
+              <p class="list-group-item-text" id= "commnum">共有<%= topic.comments.count %>則評論</p>
+            </li>
+            <% topic.comments.each do |comment| %>
+            <li class="list-group-item"><%= link_to comment.subject, comment, onClick: "checkPage()"%></li>
+            <% end %>
+          </ul>
+        </div><!-- /.col-sm-4 -->
+        <% end %>
+</div>
