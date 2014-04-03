@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :set_proxy, only: [:new, :create]
+  before_action :set_proxy, only: [:new, :create, :like, :neutral, :dislike, :show, :index]
 
   # GET /comments
   # GET /comments.json
@@ -69,8 +69,8 @@ class CommentsController < ApplicationController
 
   def like
     c = Comment.find_by(:id => params[:id])
-    User.find_by(:id => session[:user_id]).disapprovals.delete(c)
-    c.likes << User.find_by(:id => session[:user_id])
+    @proxy.disapprovals.delete(c)
+    c.likes << @proxy
     c.save
     redirect_to comments_url
   end
@@ -83,15 +83,15 @@ class CommentsController < ApplicationController
 
   def neutral
     c = Comment.find_by(:id => params[:id])
-    User.find_by(:id => session[:user_id]).approvals.delete(c)
-    User.find_by(:id => session[:user_id]).disapprovals.delete(c)
+    @proxy.approvals.delete(c) 
+    @proxy.disapprovals.delete(c) 
     redirect_to comments_url
   end
 
   def dislike
     c = Comment.find_by(:id => params[:id])
-    User.find_by(:id => session[:user_id]).approvals.delete(c)
-    c.dislikes << User.find_by(:id => session[:user_id])
+    @proxy.approvals.delete(c) 
+    c.dislikes << @proxy
     c.save
     redirect_to comments_url
   end
@@ -121,6 +121,7 @@ class CommentsController < ApplicationController
       @proxy = Proxy.new
       @proxy.topic = @target
       @proxy.user = @owner
+      @proxy.pseudonym = pseudonym_gen
       @proxy.save!
     end
 

@@ -26,18 +26,18 @@
           <td><%= comment.body %></td>
           <td>
             <% comment.likes.each do |like| %>
-              <%= link_to like.name, like %></br>
+              <%= link_to like.pseudonym, like %></br>
             <% end %>
           </td>
           <td>
             <% comment.dislikes.each do |d| %>
-              <%= link_to d.name, d %></br>
+              <%= link_to d.pseudonym, d %></br>
             <% end %>
           </td>
-          <% if current_proxy.approvals.find(comment.id) %>
+          <% if @proxy.approvals.find(comment.id) %>
             <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
             <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
-          <% elsif current_proxy.disapprovals.find(comment.id) %>
+          <% elsif @proxy.disapprovals.find(comment.id) %>
             <td><%= link_to 'Like', like_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
             <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
           <% else %>

@@ -11,15 +11,11 @@ class Proxy
 
   validates_presence_of :user
   validates_presence_of :topic
-
-  before_save :pseudonym_generator
+  validates_uniqueness_of :pseudonym
 
   #def initialize(name)
   #  #self.pseudonym = pseudonym_generator()
   #  self.pseudonym = name
   #end
 
-  def pseudonym_generator()
-    self.pseudonym = 'default'
-  end
-end
+ end

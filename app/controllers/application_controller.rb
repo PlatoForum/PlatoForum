@@ -13,8 +13,12 @@ class ApplicationController < ActionController::Base
   end
 
   def current_proxy
-    if current_user
-      @current_proxy ||= current_user.proxies.find_by(:topic_id => session[:topic_id]) if session[:topic_id]
+    if current_user and session[:topic_id]
+      if @current_proxy and @current_proxy.topic._id == session[:topic_id]
+        return @current_proxy
+      else
+        @current_proxy = current_user.proxies.find_by(:topic_id => session[:topic_id]) 
+      end
     end
   end
 
@@ -37,7 +41,13 @@ class ApplicationController < ActionController::Base
   end
 
   def pseudonym_gen
-    return sample(Town).name + sample(Adjective).word + sample(Name).word
+    p = nil
+    while true
+      unless Proxy.find_by(:pseudonym => p).nil?
+        p = sample(Town).name + sample(Adjective).word + sample(Name).word
+        return p
+      end
+    end
   end
  
 
