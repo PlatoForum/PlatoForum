@@ -2,7 +2,7 @@
 <h2>評論</h2>
 
 <center>
-<%= link_to 'Edit', edit_topic_path(@target), class: 'btn btn-small', onClick: 'checkPage()' %>
+<%= link_to 'Edit', edit_topic_path(@target), class: 'btn btn-small', onClick: 'checkPage(2)' %>
 <%= link_to 'Destroy', @target, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small' %>
 </center>
 
@@ -30,12 +30,12 @@
           <td><%= comment.body %></td>
           <td>
             <% comment.likes.each do |like| %>
-              <%= link_to like.name, like, onClick: "checkPage()" %></br>
+              <%= link_to like.name, like, onClick: "checkPage(2)" %></br>
             <% end %>
           </td>
           <td>
             <% comment.dislikes.each do |d| %>
-              <%= link_to d.name, d, onClick: "checkPage()" %></br>
+              <%= link_to d.name, d, onClick: "checkPage(2)" %></br>
             <% end %>
           </td>
           <% if !current_user.nil?() %>
@@ -50,7 +50,7 @@
             <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
           <% end %>
           <% end %>
-          <td><%= link_to 'Show', comment, class: 'btn btn-small', onClick: "checkPage()" %></td>
+          <td><%= link_to 'Show', comment, class: 'btn btn-small', onClick: "checkPage(2)" %></td>
           <!--<td><%= link_to 'Edit', edit_comment_path(comment), class: 'btn btn-small' %></td>-->
           <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small' %></td>
         </tr>

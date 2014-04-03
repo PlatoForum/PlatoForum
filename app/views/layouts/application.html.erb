@@ -1,31 +1,48 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>PlatoForum</title>
+<html lang="en">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>PlatoForum</title>
+
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
-  <!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-  	<script>
-	function checkPage(){
-	    sessionStorage.startingPage = document.URL;
-	}
-	</script>
-	<script>
-	function returnPage(){
-	    window.location.href = sessionStorage.startingPage;
-	}
-	</script>
-</head>
 
-<body>
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+            <script>
+      function checkPage(){
+          localStorage.startingPage = document.URL;
+      }
+      </script>
+      <script>
+      function returnPage(){
+          window.location.href = localStorage.startingPage;
+      }
+    </script></head>
+  <body>
+
 <%= render 'layouts/header' %>
-<div class="container center hero-unit">
-  <%= yield %>
-</div>
-</body>
-<%= render 'layouts/footer' %>
 
+<div class="container theme-showcase" role="main">
+<%= yield %>
+
+      <footer>
+        <p>&copy; PlatoForum 2014</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+  </body>
 </html>

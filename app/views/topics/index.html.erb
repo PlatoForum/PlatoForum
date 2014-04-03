@@ -1,21 +1,7 @@
 <h1>議題清單</h1>
 <h2>選一個議題，開始討論！</h2>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>議題</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @topics.each do |topic| %>
-      <tr>
-        <td><%= link_to topic.description, "/#{topic.permalink}/comments"%></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render 'topics/bubbleview' %>
 
 <br>
 <%= link_to 'New Topic', new_topic_path, class: 'btn btn-large btn-primary'%>
