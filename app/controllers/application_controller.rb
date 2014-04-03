@@ -42,7 +42,10 @@ class ApplicationController < ActionController::Base
 
   def pseudonym_gen
     while true
-        p = sample(Town).name + sample(Adjective).word + sample(Name).word
+      p = sample(Town).name + sample(Adjective).word + sample(Name).word
+
+      puts "Created a new name: " + p
+
       if Proxy.find_by(:pseudonym => p).nil?
         return p
       end
