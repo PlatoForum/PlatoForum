@@ -12,3 +12,8 @@ body {
 .theme-showcase > p > .btn {
   margin: 5px 0;
 }
+.list-head {
+  color: #fff;
+  background-color: #ffffff;
+  border-color: #357ebd;
+}

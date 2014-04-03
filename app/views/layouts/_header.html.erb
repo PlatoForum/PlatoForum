@@ -11,11 +11,12 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-              <li><%= link_to "About", "/static/about"  %></li>
-              <li><%= link_to "Contact", "/static/contact"  %></li>
-              <li><%= link_to "Privacy", "/static/privacy_policy"  %></li>
-            <li class="dropdown">
+              <li <% if !request.fullpath.include? "/static/" %> class="active" <% end %>><%= link_to "Home", "/"  %></li>
+              <li <% if request.fullpath == "/static/about" %> class="active" <% end %> ><%= link_to "About", "/static/about"  %></li>
+              <li <% if request.fullpath == "/static/contact" %> class="active" <% end %> ><%= link_to "Contact", "/static/contact"  %></li>
+              <li <% if request.fullpath == "/static/privacy_policy" %> class="active" <% end %> ><%= link_to "Privacy", "/static/privacy_policy"  %></li>
               <% if current_user %>
+              <li class="dropdown">
               <a href="/fumou" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %><b class="caret"></b></a>
               <ul class="dropdown-menu">
                 
@@ -23,12 +24,12 @@
                 <li><a href="#">個人設定</a></li>
                 <li class="divider"></li>
                 <li><%= link_to "登出", signout_path, id: "sign_out", onClick: "checkPage()" %></li>
-              </ul>
+              </ul></li>
                <% else %>
                 <li><%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in", onClick: "checkPage()" %></li>
               <% end %>
               
-            </li>
+            
           </ul>
         </div><!--/.nav-collapse -->
       </div>

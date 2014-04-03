@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
   #protect_from_forgery with: :exception
   
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :set_proxy, only: [:new, :create, :like, :neutral, :dislike, :show, :index]
+  before_action :set_proxy, only: [:new, :create, :like, :neutral, :dislike, :index]#, :show]
 
   # GET /:permalink/comments
   # GET /:permalink/comments.json
@@ -77,6 +77,7 @@ class CommentsController < ApplicationController
     end
   end
 
+  # LIKE/NERUTRAL/DISLIKE /comments/1/(ACTION)
   def like
     c = Comment.find_by(:id => params[:id])
     @proxy.disapprovals.delete(c)
@@ -84,12 +85,6 @@ class CommentsController < ApplicationController
     c.save
     redirect_to "/#{c.target.permalink}/comments"
   end
-
-  #def unlike
-  #  c = Comment.find_by(:id => params[:id])
-  #  User.find_by(:id => session[:user_id]).approvals.delete(c)
-  #  redirect_to comments_url
-  #end
 
   def neutral
     c = Comment.find_by(:id => params[:id])
@@ -106,12 +101,6 @@ class CommentsController < ApplicationController
     redirect_to "/#{c.target.permalink}/comments"
   end
 
-  #def undislike
-  #  c = Comment.find_by(:id => params[:id])
-  #  User.find_by(:id => session[:user_id]).disapprovals.delete(c)
-  #  redirect_to comments_url
-  #end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
@@ -125,7 +114,12 @@ class CommentsController < ApplicationController
 
     def set_proxy
       @user = User.find_by(:id => session[:user_id])
-      @target = Topic.find_by(:permalink => params[:permalink])
+      if !params[:id].nil?
+        @target = Comment.find(params[:id]).target
+      else
+        @target = Topic.find_by(:permalink => params[:permalink])
+      end
+      
       if @target.nil?
         format.html { redirect_to root_path, error: 'Cannot find page' }
       end
