@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
   #protect_from_forgery with: :exception
   
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_proxy, only: [:new, :create, :like, :neutral, :dislike, :show, :index]
 
   # GET /:permalink/comments
   # GET /:permalink/comments.json
@@ -25,8 +26,7 @@ class CommentsController < ApplicationController
   # GET /:permalink/comments/new
   def new
     @comment = Comment.new
-    @target = Topic.find_by(:permalink => params[:permalink])
-    @owner = User.find_by(:id => session[:user_id])
+    @comment.owner = @proxy
   end
 
   # GET /comments/1/edit
@@ -37,11 +37,10 @@ class CommentsController < ApplicationController
   # POST /:permalink/comments.json
   def create
     @comment = Comment.new
-    @comment.target = Topic.find_by(:permalink => params[:permalink])
+    @comment.target = @target
     @comment.subject = params[:comment][:subject]
     @comment.body = params[:comment][:body]
-    @comment.owner = User.find_by(:id => session[:user_id])
-
+    @comment.owner = @proxy
     respond_to do |format|
       if @comment.save!
         format.html { redirect_to "/#{params[:permalink]}/comments", notice: 'Comment was successfully created.' }
@@ -80,8 +79,8 @@ class CommentsController < ApplicationController
 
   def like
     c = Comment.find_by(:id => params[:id])
-    User.find_by(:id => session[:user_id]).disapprovals.delete(c)
-    c.likes << User.find_by(:id => session[:user_id])
+    @proxy.disapprovals.delete(c)
+    c.likes << @proxy
     c.save
     redirect_to "/#{c.target.permalink}/comments"
   end
@@ -94,15 +93,15 @@ class CommentsController < ApplicationController
 
   def neutral
     c = Comment.find_by(:id => params[:id])
-    User.find_by(:id => session[:user_id]).approvals.delete(c)
-    User.find_by(:id => session[:user_id]).disapprovals.delete(c)
+    @proxy.approvals.delete(c) 
+    @proxy.disapprovals.delete(c) 
     redirect_to "/#{c.target.permalink}/comments"
   end
 
   def dislike
     c = Comment.find_by(:id => params[:id])
-    User.find_by(:id => session[:user_id]).approvals.delete(c)
-    c.dislikes << User.find_by(:id => session[:user_id])
+    @proxy.approvals.delete(c) 
+    c.dislikes << @proxy
     c.save
     redirect_to "/#{c.target.permalink}/comments"
   end
@@ -123,4 +122,17 @@ class CommentsController < ApplicationController
     def comment_params
       params.require(:comment).permit(:subject, :body)
     end
+
+    def set_proxy
+      @user = User.find_by(:id => session[:user_id])
+      @target = Topic.find_by(:permalink => params[:permalink])
+      @proxy = @user.proxies.find_by(:topic_id => @target._id)
+      return if @proxy
+      @proxy = Proxy.new
+      @proxy.topic = @target
+      @proxy.user = @user
+      @proxy.pseudonym = pseudonym_gen
+      @proxy.save!
+    end
+
 end

@@ -30,27 +30,25 @@
           <td><%= comment.body %></td>
           <td>
             <% comment.likes.each do |like| %>
-              <%= link_to like.name, like, onClick: "checkPage(2)" %></br>
+              <%= link_to like.pseudonym, onClick: "checkPage()", like %></br>
             <% end %>
           </td>
           <td>
             <% comment.dislikes.each do |d| %>
-              <%= link_to d.name, d, onClick: "checkPage(2)" %></br>
+              <%= link_to d.pseudonym, onClick: "checkPage()", d %></br>
             <% end %>
           </td>
-          <% if !current_user.nil?() %>
-          <% if current_user.approvals.find(comment.id) %>
+          <% if @proxy.approvals.find(comment.id) %>
             <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
             <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
-          <% elsif current_user.disapprovals.find(comment.id) %>
+          <% elsif @proxy.disapprovals.find(comment.id) %>
             <td><%= link_to 'Like', like_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
             <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
           <% else %>
             <td><%= link_to 'Like', like_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
             <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
           <% end %>
-          <% end %>
-          <td><%= link_to 'Show', comment, class: 'btn btn-small', onClick: "checkPage(2)" %></td>
+          <td><%= link_to 'Show', comment, class: 'btn btn-small', onClick: "checkPage()" %></td>
           <!--<td><%= link_to 'Edit', edit_comment_path(comment), class: 'btn btn-small' %></td>-->
           <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small' %></td>
         </tr>
