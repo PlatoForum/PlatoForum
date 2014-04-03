@@ -53,5 +53,14 @@ gem 'therubyracer'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails', '2.2.8'
 
+# Use BSON::ObjectId field in Mongoid model
 gem 'bson'
 gem 'moped', github: 'mongoid/moped'
+
+# Use Redis server for job queuing
+gem 'redis'
+gem 'redis-namespace'
+gem 'resque', "~> 1.22.0"
+
+# Use json for object serialization
+gem 'json'
