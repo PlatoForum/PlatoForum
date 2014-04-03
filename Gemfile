@@ -52,3 +52,6 @@ gem 'omniauth-facebook'
 gem 'therubyracer'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails', '2.2.8'
+
+gem 'bson'
+gem 'moped', github: 'mongoid/moped'

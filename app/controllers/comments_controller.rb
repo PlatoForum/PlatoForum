@@ -81,24 +81,26 @@ class CommentsController < ApplicationController
   # LIKE/NERUTRAL/DISLIKE /comments/1/(ACTION)
   def like
     c = Comment.find_by(:id => params[:id])
-    @proxy.disapprovals.delete(c)
     c.likes << @proxy
     c.save
+    create_job(:like, @proxy._id, c._id) 
+    create_job(:undislike, @proxy._id, c._id) if @proxy.disapprovals.delete(c)
     redirect_to "/#{c.target.permalink}/comments"
   end
 
   def neutral
     c = Comment.find_by(:id => params[:id])
-    @proxy.approvals.delete(c) 
-    @proxy.disapprovals.delete(c) 
+    create_job(:unlike, @proxy._id, c._id) if @proxy.approvals.delete(c) 
+    create_job(:undislike, @proxy._id, c._id) if @proxy.disapprovals.delete(c)
     redirect_to "/#{c.target.permalink}/comments"
   end
 
   def dislike
     c = Comment.find_by(:id => params[:id])
-    @proxy.approvals.delete(c) 
     c.dislikes << @proxy
     c.save
+    create_job(:dislike, @proxy._id, c._id)
+    create_job(:unlike, @proxy._id, c._id) if @proxy.approvals.delete(c) 
     redirect_to "/#{c.target.permalink}/comments"
   end
 
@@ -153,5 +155,13 @@ class CommentsController < ApplicationController
         
         set_proxy
       end
+    end
+
+    def create_job(action, proxy_id, comment_id)
+      job = Job.new
+      job.action = action
+      job.who = proxy_id
+      job.post = comment_id
+      job.save!
     end
 end

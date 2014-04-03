@@ -15,4 +15,13 @@ class Comment
   validates_presence_of :doc
   validates_presence_of :subject
   validates_presence_of :body
+
+  after_create :create_job
+  def create_job
+    @job = Job.new
+    @job.who = self.owner._id
+    @job.post = self._id
+    @job.action = :create
+    @job.save!
+  end
 end
