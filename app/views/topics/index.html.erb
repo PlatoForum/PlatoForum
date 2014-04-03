@@ -1,7 +1,7 @@
-<h1>議題清單</h1>
-<h2>選一個議題，開始討論！</h2>
+<div class="jumbotron">
+	<h1>議題清單</h1>
+	<p>選擇一項議題，立刻加入討論！</p>
+	<p><%= link_to 'New Topic', new_topic_path, class: 'btn btn-large btn-primary', role: "button"%></p>
+</div>
 
-<%= render 'topics/bubbleview' %>
-
-<br>
-<%= link_to 'New Topic', new_topic_path, class: 'btn btn-large btn-primary'%>
+<%= render 'topics/listview' %>

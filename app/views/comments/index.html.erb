@@ -10,6 +10,7 @@
   <thead>
     <tr>
       <th>Time</th>
+      <th>Author</th>
       <th>Subject</th>
       <th>Body</th>
       <th>Liked</th>
@@ -26,6 +27,7 @@
     <% @comments.each do |comment| %>
         <tr>
           <td><%= comment.doc %></td>
+          <td><%= comment.owner.pseudonym %></td>
           <td><%= comment.subject %></td>
           <td><%= comment.body %></td>
           <td>

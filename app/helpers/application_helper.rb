@@ -5,8 +5,12 @@ module ApplicationHelper
     	
 	end
 
-	def bootstrap_form_for(name, *args, &block)
-		options = args.extract_options!
-    	form_for(name, *(args << options.merge(:builder => BootstrapFormBuilder)), &block)
-  	end
+	def flash_class(level)
+    case level
+        when :notice then "alert alert-info"
+        when :success then "alert alert-success"
+        when :error then "alert alert-error"
+        when :alert then "alert alert-error"
+    end
+	end
 end

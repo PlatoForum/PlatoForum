@@ -25,13 +25,24 @@ p {
   line-height: 1.7em;
 }
 
-#topicdes
-{
-	color: #fff;
+/* theme */
+
+body {
+  padding-top: 70px;
+  padding-bottom: 30px;
 }
 
-#commnum
-{
-	color: #ccc;
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
 }
 
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+.list-head {
+  color: #fff;
+  background-color: #ffffff;
+  border-color: #357ebd;
+}
