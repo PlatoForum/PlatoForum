@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
   #protect_from_forgery with: :exception
   
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :set_proxy, only: [:new, :create, :like, :neutral, :dislike, :show]
+  before_action :set_proxy, only: [:new, :create, :like, :neutral, :dislike, :show, :index]
 
   # GET /:permalink/comments
   # GET /:permalink/comments.json

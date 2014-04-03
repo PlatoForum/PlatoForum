@@ -43,8 +43,8 @@ class ApplicationController < ActionController::Base
   def pseudonym_gen
     p = nil
     while true
-      unless Proxy.find_by(:pseudonym => p).nil?
         p = sample(Town).name + sample(Adjective).word + sample(Name).word
+      if Proxy.find_by(:pseudonym => p).nil?
         return p
       end
     end
