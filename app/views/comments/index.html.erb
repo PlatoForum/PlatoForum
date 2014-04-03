@@ -30,12 +30,12 @@
           <td><%= comment.body %></td>
           <td>
             <% comment.likes.each do |like| %>
-              <%= link_to like.pseudonym, onClick: "checkPage()", like %></br>
+              <%= link_to like.pseudonym, like, onClick: "checkPage()" %></br>
             <% end %>
           </td>
           <td>
             <% comment.dislikes.each do |d| %>
-              <%= link_to d.pseudonym, onClick: "checkPage()", d %></br>
+              <%= link_to d.pseudonym, d, onClick: "checkPage()" %></br>
             <% end %>
           </td>
           <% if @proxy.approvals.find(comment.id) %>

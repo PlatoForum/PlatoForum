@@ -15,17 +15,19 @@
               <li><%= link_to "Contact", "/static/contact"  %></li>
               <li><%= link_to "Privacy", "/static/privacy_policy"  %></li>
             <li class="dropdown">
+              <% if current_user %>
               <a href="/fumou" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %><b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <% if current_user %>
+                
                 <li><a href="#">活動記錄</a></li>
                 <li><a href="#">個人設定</a></li>
                 <li class="divider"></li>
                 <li><%= link_to "登出", signout_path, id: "sign_out", onClick: "checkPage()" %></li>
+              </ul>
                <% else %>
                 <li><%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in", onClick: "checkPage()" %></li>
               <% end %>
-              </ul>
+              
             </li>
           </ul>
         </div><!--/.nav-collapse -->
