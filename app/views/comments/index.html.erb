@@ -1,7 +1,12 @@
 <h1><%= @target.description %></h1>
-<h2>Listing Comments</h2>
+<h2>評論</h2>
 
-<table>
+<center>
+<%= link_to 'Edit', edit_topic_path(@target), class: 'btn btn-small', onClick: 'checkPage()' %>
+<%= link_to 'Destroy', @target, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small' %>
+</center>
+
+<table class="table">
   <thead>
     <tr>
       <th>Time</th>
@@ -19,7 +24,6 @@
 
   <tbody>
     <% @comments.each do |comment| %>
-      <% #if comment.target.id == session[:topic_id]%>
         <tr>
           <td><%= comment.doc %></td>
           <td><%= comment.subject %></td>
@@ -44,15 +48,14 @@
             <td><%= link_to 'Like', like_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
             <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
           <% end %>
-          <td><%= link_to 'Show', comment, class: 'btn btn-small' %></td>
-          <td><%= link_to 'Edit', edit_comment_path(comment), class: 'btn btn-small' %></td>
+          <td><%= link_to 'Show', comment, class: 'btn btn-small', onClick: "checkPage()" %></td>
+          <!--<td><%= link_to 'Edit', edit_comment_path(comment), class: 'btn btn-small' %></td>-->
           <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small' %></td>
         </tr>
-      <% #end %>
     <% end %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'New Comment', new_comment_path, class: 'btn btn-large btn-primary' %>
+<%= link_to 'New Comment', "/#{@target.permalink}/comments/new", class: 'btn btn-large btn-primary' %>

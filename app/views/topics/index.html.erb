@@ -1,23 +1,17 @@
-<h1>Listing topics</h1>
+<h1>議題清單</h1>
+<h2>選一個議題，開始討論！</h2>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Description</th>
-      <th>Permalink</th>
-      <th></th>
-      <th></th>
+      <th>議題</th>
     </tr>
   </thead>
 
   <tbody>
     <% @topics.each do |topic| %>
       <tr>
-        <td><%= topic.description %></td>
-        <td><%= topic.permalink %></td>
-        <td><%= link_to 'Show', topic, class: 'btn btn-small' %></td>
-        <td><%= link_to 'Edit', edit_topic_path(topic), class: 'btn btn-small' %></td>
-        <td><%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small' %></td>
+        <td><%= link_to topic.description, "/#{topic.permalink}/comments"%></td>
       </tr>
     <% end %>
   </tbody>

@@ -1,12 +1,21 @@
 class CommentsController < ApplicationController
+  
+  #require login to view comments
+  #after_filter :require_user
+  #protect_from_forgery with: :exception
+  
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   before_action :set_proxy, only: [:new, :create, :like, :neutral, :dislike, :show, :index]
 
-  # GET /comments
-  # GET /comments.json
+  # GET /:permalink/comments
+  # GET /:permalink/comments.json
   def index
-    @target = Topic.find_by(:id => session[:topic_id])
-    @comments = @target.comments
+    @target = Topic.find_by(:permalink => params[:permalink])
+    if @target.nil?()
+      redirect_to root_path
+    else
+      @comments = @target.comments
+    end
   end
 
   # GET /comments/1
@@ -14,18 +23,18 @@ class CommentsController < ApplicationController
   def show
   end
 
-  # GET /comments/new
+  # GET /:permalink/comments/new
   def new
     @comment = Comment.new
     @comment.owner = @proxy
   end
 
   # GET /comments/1/edit
-  def edit
-  end
+  #def edit
+  #end
 
-  # POST /comments
-  # POST /comments.json
+  # POST /:permalink/comments
+  # POST /:permalink/comments.json
   def create
     @comment = Comment.new
     @comment.target = @target
@@ -34,7 +43,7 @@ class CommentsController < ApplicationController
     @comment.owner = @proxy
     respond_to do |format|
       if @comment.save!
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+        format.html { redirect_to "/#{params[:permalink]}/comments", notice: 'Comment was successfully created.' }
         format.json { render action: 'show', status: :created, location: @comment }
       else
         format.html { render action: 'new' }
@@ -48,7 +57,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+        format.html { redirect_to "/#{@comment.target.permalink}/comments", notice: 'Comment was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -60,9 +69,10 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy
+    @permalink = @comment.target.permalink
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to comments_url }
+      format.html { redirect_to "/#{@permalink}/comments" }
       format.json { head :no_content }
     end
   end
@@ -72,7 +82,7 @@ class CommentsController < ApplicationController
     @proxy.disapprovals.delete(c)
     c.likes << @proxy
     c.save
-    redirect_to comments_url
+    redirect_to "/#{c.target.permalink}/comments"
   end
 
   #def unlike
@@ -85,7 +95,7 @@ class CommentsController < ApplicationController
     c = Comment.find_by(:id => params[:id])
     @proxy.approvals.delete(c) 
     @proxy.disapprovals.delete(c) 
-    redirect_to comments_url
+    redirect_to "/#{c.target.permalink}/comments"
   end
 
   def dislike
@@ -93,7 +103,7 @@ class CommentsController < ApplicationController
     @proxy.approvals.delete(c) 
     c.dislikes << @proxy
     c.save
-    redirect_to comments_url
+    redirect_to "/#{c.target.permalink}/comments"
   end
 
   #def undislike

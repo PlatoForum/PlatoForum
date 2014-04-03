@@ -1,6 +1,9 @@
 PlatoForum::Application.routes.draw do
-  resources :proxies
-
+  # Static Pages
+  get "static/about"
+  get "static/privacy_policy"
+  get "static/contact"
+  
   resources :stances
 
   resources :topics
@@ -9,8 +12,17 @@ PlatoForum::Application.routes.draw do
 
   resources :users
 
+  resources :proxies
+
   #get ':topic_id' => "topic#show"
   #get ':topic_id/comments/new' => "comments#new"
+  get ':permalink' => "comments#index"
+  get ':permalink/comments' => "comments#index"
+  get ':permalink/comments/new' => "comments#new"
+
+  post ':permalink/comments' => "comments#create"
+
+  #get ':lastpage/auth/:provider/callback' => 'sessions#create'
 
   get 'auth/:provider/callback' => 'sessions#create'
   get 'auth/failure' => redirect('/')

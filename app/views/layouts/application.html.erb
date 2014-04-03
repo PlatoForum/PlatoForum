@@ -8,32 +8,23 @@
   <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  	<script>
+	function checkPage(){
+	    sessionStorage.startingPage = document.URL;
+	}
+	</script>
+	<script>
+	function returnPage(){
+	    window.location.href = sessionStorage.startingPage;
+	}
+	</script>
 </head>
 
 <body>
-<header class="navbar navbar-fixed-top">
-  <div id="user_nav">
-    <div class="navbar-header">
-      <div class="container">
-        <a class="navbar-brand" href="\#">PlatoForum</a>
-        <ul class="nav pull-right">
-          <li>
-            <% if current_user %>
-              <strong><%= current_user.name %></strong><%= link_to "Sign out", signout_path, id: "sign_out" %>
-            <% else %>
-              <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
-            <% end %>
-          </li>
-          <li>
-            <%= pseudonym_gen %>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</header>
 <div class="container center hero-unit">
   <%= yield %>
 </div>
 </body>
+<%= render 'layouts/footer' %>
+
 </html>

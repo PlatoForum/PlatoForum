@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@comment) do |f| %>
+<%= form_for(@comment, url: "/#{@target.permalink}/comments") do |f| %>
   <% if @comment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
@@ -10,6 +10,8 @@
       </ul>
     </div>
   <% end %>
+
+  <h2>for "<%= @target.description %>"</h2>
 
   <div class="container">
     <%= f.label :subject %>
