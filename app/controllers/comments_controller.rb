@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
   def index
     @target = Topic.find_by(:permalink => params[:permalink])
     if @target.nil?()
-      format.html { redirect_to root_path, error: 'Cannot find topic.' }
+      format.html { render text: "Error", status: 404 }
     else
       @comments = @target.comments
     end
@@ -126,8 +126,8 @@ class CommentsController < ApplicationController
     def set_proxy
       @user = User.find_by(:id => session[:user_id])
       @target = Topic.find_by(:permalink => params[:permalink])
-      if @target.nil?()
-        format.html { redirect_to root_path, error: 'Cannot find topic.' }
+      if @target.nil?
+        format.html { redirect_to root_path, error: 'Cannot find page' }
       end
       @proxy = @user.proxies.find_by(:topic_id => @target._id)
       return if @proxy
