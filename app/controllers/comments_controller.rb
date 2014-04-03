@@ -128,14 +128,12 @@ class CommentsController < ApplicationController
 
     def set_proxy #require login and proxy
       @user = User.find_by(:id => session[:user_id])
-      
-
       @proxy = @user.proxies.find_by(:topic_id => @target._id)
       return if @proxy
       @proxy = Proxy.new
       @proxy.topic = @target
       @proxy.user = @user
-      @proxy.pseudonym = pseudonym_gen
+      @proxy.pseudonym = "TEST"#pseudonym_gen
       @proxy.save!
     end
 
