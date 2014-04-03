@@ -133,7 +133,7 @@ class CommentsController < ApplicationController
       @proxy = Proxy.new
       @proxy.topic = @target
       @proxy.user = @user
-      @proxy.pseudonym = "TEST"#pseudonym_gen
+      @proxy.pseudonym = pseudonym_gen
       @proxy.save!
     end
 
