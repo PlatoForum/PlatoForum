@@ -38,6 +38,8 @@
               <%= link_to d.pseudonym, d, onClick: "checkPage()" %></br>
             <% end %>
           </td>
+          <% if @proxy.nil? %>
+          <% else %>
           <% if @proxy.approvals.find(comment.id) %>
             <td><%= link_to 'Neutral', neutral_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
             <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
@@ -47,6 +49,7 @@
           <% else %>
             <td><%= link_to 'Like', like_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
             <td><%= link_to 'Dislike', dislike_comment_path(comment), method: :put, class: 'btn btn-small' %></td>
+          <% end %>
           <% end %>
           <td><%= link_to 'Show', comment, class: 'btn btn-small', onClick: "checkPage()" %></td>
           <!--<td><%= link_to 'Edit', edit_comment_path(comment), class: 'btn btn-small' %></td>-->
