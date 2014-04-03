@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
   #after_filter :require_user
   #protect_from_forgery with: :exception
   
+  #before_action :check_topic
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   before_action :before_edit, only: [:new, :create, :like, :neutral, :dislike]#, :show]
   before_action :before_show, only: [:index]
@@ -113,12 +114,22 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:subject, :body)
     end
 
+    def check_topic
+      if !params[:id].nil?
+        @target = Comment.find(params[:id]).target
+      else
+        @target = Topic.find_by(:permalink => params[:permalink])
+      end
+
+      if @target.nil?
+        format.html { render text: "Error", status: 404 }
+      end
+    end
+
     def set_proxy #require login and proxy
       @user = User.find_by(:id => session[:user_id])
       
-      if @target.nil?
-        format.html { redirect_to root_path, error: 'Cannot find page' }
-      end
+
       @proxy = @user.proxies.find_by(:topic_id => @target._id)
       return if @proxy
       @proxy = Proxy.new
@@ -129,22 +140,14 @@ class CommentsController < ApplicationController
     end
 
     def before_edit
-      if !params[:id].nil?
-        @target = Comment.find(params[:id]).target
-      else
-        @target = Topic.find_by(:permalink => params[:permalink])
-      end
+      check_topic
       set_proxy
     end
 
     def before_show
-      if !params[:id].nil?
-        @target = Comment.find(params[:id]).target
-      else
-        @target = Topic.find_by(:permalink => params[:permalink])
-      end
-
-      if session[:user_id].nil? #anonymous
+      
+      check_topic
+      if session[:user_id].nil? #use anonymous proxy
         @proxy = Proxy.new
         @proxy.topic = @target
         @proxy.user = @user
