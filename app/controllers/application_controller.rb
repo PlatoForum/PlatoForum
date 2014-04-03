@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :require_user
   protect_from_forgery with: :exception
 
-  helper_method :current_user, :current_proxy
+  helper_method :current_user, :current_proxy, :pseudonym_gen
 
   private
 
@@ -25,4 +25,20 @@ class ApplicationController < ActionController::Base
     session[:return_to] ||= request.referer
     redirect_to signin_url
   end
+
+  def sample(collection)
+    while true 
+      r = rand()
+      adj = collection.find_by(:ran =>{"$lte" => r, "$gte" => r-0.01})
+      puts adj
+      break unless adj.nil?
+    end
+    return adj
+  end
+
+  def pseudonym_gen
+    return sample(Town).name + sample(Adjective).word + sample(Name).word
+  end
+ 
+
 end
