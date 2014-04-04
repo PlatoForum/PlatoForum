@@ -96,9 +96,10 @@ class CommentsController < ApplicationController
   # LIKE/NERUTRAL/DISLIKE /comments/1/(ACTION)
   def like
     c = Comment.find_by(:id => params[:id])
-    @proxy.disapprovals.delete(c)
     c.likes << @proxy
     c.save
+    create_job(:like, @proxy._id, c._id) 
+    create_job(:undislike, @proxy._id, c._id) if @proxy.disapprovals.delete(c)
     respond_to do |format|
       format.html { redirect_to "/#{c.target.permalink}/comments", notice: '已成功表達支持' }
     end
@@ -106,20 +107,23 @@ class CommentsController < ApplicationController
 
   def neutral
     c = Comment.find_by(:id => params[:id])
-    @proxy.approvals.delete(c) 
-    @proxy.disapprovals.delete(c) 
+    create_job(:unlike, @proxy._id, c._id) if @proxy.approvals.delete(c) 
+    create_job(:undislike, @proxy._id, c._id) if @proxy.disapprovals.delete(c)
     respond_to do |format|
       format.html { redirect_to "/#{c.target.permalink}/comments", notice: '已成功表達中立' }
     end  end
+  end
 
   def dislike
     c = Comment.find_by(:id => params[:id])
-    @proxy.approvals.delete(c) 
     c.dislikes << @proxy
     c.save
+    create_job(:dislike, @proxy._id, c._id)
+    create_job(:unlike, @proxy._id, c._id) if @proxy.approvals.delete(c) 
     respond_to do |format|
       format.html { redirect_to "/#{c.target.permalink}/comments", notice: '已成功表達反對' }
     end  end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
