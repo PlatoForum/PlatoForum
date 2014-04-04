@@ -29,6 +29,18 @@ class UsersController < ApplicationController
   def edit
   end
 
+  # GET /:permalink/change_name
+  def change_pseudonym
+    unless session[:user_id].nil?
+      @user = User.find_by(:id => session[:user_id])
+      @target = Topic.find_by(:permalink => params[:permalink])
+      @proxy = @user.proxies.find_by(:topic_id => @target._id)
+      @proxy.update({:pseudonym => pseudonym_gen})
+    end
+    
+    redirect_to "/#{params[:permalink]}"
+  end
+
   # POST /users
   # POST /users.json
   def create

@@ -41,7 +41,7 @@ PlatoForum::Application.routes.draw do
   post ':permalink/comments' => "comments#create"
 
   get ':permalink/edit' => "topics#edit"
-
+  get ':permalink/change_name' => 'users#change_pseudonym'
   get ':permalink' => "comments#index"
 
   # Example of regular route:

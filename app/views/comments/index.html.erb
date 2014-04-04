@@ -4,12 +4,16 @@
 </ul>
 
 <div class="jumbotron">
-  <h1><strong><%= @target.name %></strong></h1>
-  <p><%= @target.description %></p>
-  <p>你在這個議題下的代名：<strong><%= @proxy.pseudonym %></strong></p>
+  <div class="page-header">
+    <h1><strong><%= @target.name %></strong></h1>
+    <h2><%= @target.description %></h2>
+  </div>
+  <% unless session[:user_id].nil? %>
+    <p>你在這個議題下的代名：<strong><%= @proxy.pseudonym %></strong>（<a href="/<%= @target.permalink %>/change_name" data-confirm="你確定嗎？這個動作無法還原！">我要改名！</a>）</p>
+  <% end %>
   <p>
     <%= link_to "編輯議題", "/#{@target.permalink}/edit", class: 'btn btn-warning', role: "button"%>
-    <%= link_to "刪除議題", @target, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'%>
+    <%= link_to "刪除議題", @target, method: :delete, data: { confirm: '你確定嗎？這個動作無法還原！' }, class: 'btn btn-danger'%>
     <%= unless session[:user_id].nil?
       link_to '發表評論', "/#{@target.permalink}/comments/new", class: 'btn btn-primary pull-right'
     end %>

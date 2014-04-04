@@ -41,14 +41,45 @@
         <% unless @comment.errors[:stance].nil? %>
         <label class="control-label" for="inputError"><%= @comment.errors[:stance].join(", ") %></label>
         <% end %>
-        <%= f.number_field :stance, class: "form-control", placeholder: "立場", max: 1, min: -1 %>
-        <span class="help-block">請使用數字 1:支持, 0:中立, -1:反對（暫時）</span>
+        <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="0">
+        <div class="btn-group btn-group-justified" data-toggle="buttons-radio">
+          <a href="#" id="button_like" onClick="click_like()" type="button" class="btn btn-success" value="1">支持</a>
+          <a href="#" id="button_neutral" onClick="click_neutral()" type="button" class="btn btn-warning" value="0">✓ 中立</a>
+          <a href="#" id="button_dislike" onClick="click_dislike()" type="button" class="btn btn-danger" value="-1">反對</a>
+        </div>
       </div>
     </div>
+    
+    <script type="text/javascript">
+      function clear_buttons(){
+        var elem_like = document.getElementById("button_like").innerHTML = "支持";
+        var elem_neutral = document.getElementById("button_neutral").innerHTML = "中立";
+        var elem_dislike = document.getElementById("button_dislike").innerHTML = "反對";
+      }
+      function click_like(){
+        clear_buttons();
+
+        document.getElementById("button_like").innerHTML = "✓ 支持";
+        $("#comment_stance").val(1);
+      }
+      function click_neutral(){
+        clear_buttons();
+
+        document.getElementById("button_neutral").innerHTML = "✓ 中立";
+        $("#comment_stance").val(0);
+      }
+      function click_dislike(){
+        clear_buttons();
+
+        document.getElementById("button_dislike").innerHTML = "✓ 反對";
+        $("#comment_stance").val(-1);
+      }
+    </script>
+
 
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
-        <button onClick="returnPage()" class="btn btn-default">返回</button>
+        <button onClick="history.go(-1);" class="btn btn-default">返回</button>
         <%= f.submit "送出", :class => 'btn btn-primary'%>
       </div>
     </div>
