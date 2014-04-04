@@ -25,7 +25,7 @@
               <tr>
                 <td><a data-toggle="modal" href="#modal_<%= comment.id %>"><%= comment.body %></a></td>
                 <td><%= comment.owner.pseudonym %></td>
-                <td><%= comment.doc %></td>
+                <td><%= comment.doc.strftime("%F %T") %></td>
                 <td>
                   <span class="label label-success"><%= comment.likes.count %></span> 
                   <span class="label label-danger"><%= comment.dislikes.count %></span>
@@ -64,7 +64,7 @@
               <tr>
                 <td><a data-toggle="modal" href="#modal_<%= comment.id %>"><%= comment.body %></a></td>
                 <td><%= comment.owner.pseudonym %></td>
-                <td><%= comment.doc %></td>
+                <td><%= comment.doc.strftime("%F %T") %></td>
                 <td>
                   <span class="label label-success"><%= comment.likes.count %></span> 
                   <span class="label label-danger"><%= comment.dislikes.count %></span>
@@ -102,7 +102,7 @@
               <tr>
                 <td><a data-toggle="modal" href="#modal_<%= comment.id %>"><%= comment.body %></a></td>
                 <td><%= comment.owner.pseudonym %></td>
-                <td><%= comment.doc %></td>
+                <td><%= comment.doc.strftime("%F %T") %></td>
                 <td>
                   <span class="label label-success"><%= comment.likes.count %></span> 
                   <span class="label label-danger"><%= comment.dislikes.count %></span>
@@ -129,15 +129,13 @@
           <% if comment.subject == "" %>
             <h4 class="modal-title">（沒有主旨）</h4>
           <% else %>
-            <h4 class="modal-title">主旨：<%= comment.subject %></h4>
+            <h4 class="modal-title"><%= comment.subject %></h4>
           <% end %>
         </div>
         <div class="modal-body">
-
             <p class="text-primary"><%= comment.body %></p>
             <br>
-            <p class="text-muted pull-right"><%= comment.owner.pseudonym %> 發表於 <%= comment.doc %></p>
-
+            <p class="text-muted pull-right"><%= comment.owner.pseudonym %> 發表於 <%= comment.doc.strftime("%F %T") %></p>
         </div>
         <div class="modal-footer">
           <% if session[:user_id].nil? %>
