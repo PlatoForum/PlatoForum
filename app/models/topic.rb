@@ -10,5 +10,7 @@ class Topic
 
   validates :name, presence: true
   #validates :description, presence: true
-  validates :permalink, uniqueness: true, presence: true
+  validates_presence_of :permalink
+  validates_uniqueness_of :permalink
+  validates_format_of :permalink, :with => /\A\w+\z/
 end

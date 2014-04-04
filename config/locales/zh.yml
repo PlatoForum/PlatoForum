@@ -38,6 +38,7 @@ zh:
               blank: "不能留空"
             permalink:
               taken: "與現有議題重複"
+              invalid: "不符合規格"
               blank: "不能留空"
         comment:
           attributes:
