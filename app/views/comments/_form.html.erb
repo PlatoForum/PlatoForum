@@ -16,7 +16,10 @@
   <% end %>
 
   <fieldset>
-    <legend>以『<%= @proxy.pseudonym %>』身份，對『<%= @target.name %>』發表評論</legend>
+    <legend>
+      <h2>以『<%= @proxy.pseudonym %>』身份，對『<%= @target.name %>』發表評論</h2>
+      <p class="text-muted"><%= @target.description %></p>
+    </legend>
     <div class="form-group <%= "has-error" unless @comment.errors[:subject].count ==0 %>">
       <label for="name" class="col-lg-2 control-label">主旨</label>
       <div class="col-lg-10">
