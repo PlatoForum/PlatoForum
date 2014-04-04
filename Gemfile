@@ -64,3 +64,6 @@ gem 'resque', "~> 1.22.0"
 
 # Use json for object serialization
 gem 'json'
+
+# Use rails_12factor for assets pipelining
+gem 'rails_12factor'
