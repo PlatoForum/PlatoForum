@@ -17,21 +17,30 @@
 
   <fieldset>
     <legend>以『<%= @proxy.pseudonym %>』身份，對『<%= @target.name %>』發表評論</legend>
-    <div class="form-group">
+    <div class="form-group <%= "has-error" unless @comment.errors[:subject].count ==0 %>">
       <label for="name" class="col-lg-2 control-label">主旨</label>
       <div class="col-lg-10">
+        <% unless @comment.errors[:subject].nil? %>
+        <label class="control-label" for="inputError"><%= @comment.errors[:subject].join(", ") %></label>
+        <% end %>
         <%= f.text_field :subject, class: "form-control", placeholder: "評論主旨" %>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <%= "has-error" unless @comment.errors[:body].count ==0 %>">
       <label for="description" class="col-lg-2 control-label">內容（必要）</label>
       <div class="col-lg-10">
+        <% unless @comment.errors[:body].nil? %>
+        <label class="control-label" for="inputError"><%= @comment.errors[:body].join(", ") %></label>
+        <% end %>
         <%= f.text_area :body, class: "form-control", placeholder: "評論內容", rows: "5" %>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <%= "has-error" unless @comment.errors[:stance].count ==0 %>">
       <label for="permalink" class="col-lg-2 control-label">立場（必要）</label>
       <div class="col-lg-10">
+        <% unless @comment.errors[:stance].nil? %>
+        <label class="control-label" for="inputError"><%= @comment.errors[:stance].join(", ") %></label>
+        <% end %>
         <%= f.number_field :stance, class: "form-control", placeholder: "立場", max: 1, min: -1 %>
         <span class="help-block">請使用數字 1:支持, 0:中立, -1:反對（暫時）</span>
       </div>
