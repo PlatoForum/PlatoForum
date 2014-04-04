@@ -1,5 +1,9 @@
-<h1>Editing topic</h1>
+<ul class="breadcrumb" style="margin-bottom: 5px;">
+    <li><%= link_to "Home", root_path %></li>
+    <li><%= link_to @topic.name, "/#{@topic.permalink}/" %></li>
+    <li class="active">編輯議題</li>
+</ul>
+
+<h1>編輯議題</h1>
 
 <%= render 'form' %>
-
-<button onClick="returnPage()" class="btn">Back</button>

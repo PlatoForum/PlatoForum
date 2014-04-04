@@ -6,7 +6,7 @@
   <% if @topic.errors.any? %>
     <div class="bs-component">
       <div class="alert alert-dismissable alert-danger">
-        <strong><%= @topic.errors.count %>項錯誤：</strong>
+        <strong><%=@topic.errors.count %> 項錯誤：</strong>
         <ul>
         <% @topic.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>

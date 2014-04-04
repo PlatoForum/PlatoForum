@@ -1,34 +1,47 @@
 <div class="row">
-  <div class="col-sm-6">
-    <ul class="nav nav-list">
-      <li class="list-group-item active">
-        <h4 class="list-group-item-heading">熱門議題</h4>
-        <p class="list-group-item-text">按照留言數排序</p>
-      </li>
-      <% @topics.each do |topic| %>
-      <li class="list-group-item">
-        <a href="/<%= topic.permalink %>/comments" >
-        <h4 class="list-group-item-heading"><%= topic.description %></h4>
-        <p class="list-group-item-text"><%= topic.comments.count %>則評論</p>
+  <div class="col-sm-4">
+    <div class="bs-component">
+      <div class="list-group">
+        <div class="list-group-item active">
+          <h4 class="list-group-item-heading">熱門議題</h4>
+          <p class="list-group-item-text">按照評論數量排序</p>
+        </div>
+        <% @topics.each do |topic| %>
+        <a href="/<%= topic.permalink %>/comments" class="list-group-item">
+          <span class="badge"><%= topic.comments.count %></span><%= topic.name %>
         </a>
-      </li>
-      <% end %>
-    </ul>
+        <% end %>
+      </div>
+    </div>
   </div>
-  <div class="col-sm-6">
-    <ul class="nav nav-list">
-      <li class="list-group-item active">
-        <h4 class="list-group-item-heading">最新議題</h4>
-        <p class="list-group-item-text">按照創建時間排序</p>
-      </li>
-      <% @topics.each do |topic| %>
-      <li class="list-group-item">
-        <a href="/<%= topic.permalink %>/comments" >
-        <h4 class="list-group-item-heading"><%= topic.description %></h4>
-        <p class="list-group-item-text"><%= topic.comments.count %>則評論</p>
+  <div class="col-sm-4">
+    <div class="bs-component">
+      <div class="list-group">
+        <div class="list-group-item active">
+          <h4 class="list-group-item-heading">最新議題</h4>
+          <p class="list-group-item-text">按照創建時間排序</p>
+        </div>
+        <% @topics.each do |topic| %>
+        <a href="/<%= topic.permalink %>/comments" class="list-group-item">
+          <span class="badge"><%= topic.comments.count %></span><%= topic.name %>
         </a>
-      </li>
-      <% end %>
-    </ul>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="bs-component">
+      <div class="list-group">
+        <div class="list-group-item active">
+          <h4 class="list-group-item-heading">訂閱議題</h4>
+          <p class="list-group-item-text">按照未讀評論數量排序</p>
+        </div>
+        <% @topics.each do |topic| %>
+        <a href="/<%= topic.permalink %>/comments" class="list-group-item">
+          <span class="badge"><%= topic.comments.count %></span><%= topic.name %>
+        </a>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

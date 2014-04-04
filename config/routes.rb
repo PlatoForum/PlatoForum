@@ -37,6 +37,8 @@ PlatoForum::Application.routes.draw do
   get ':permalink/comments/new' => "comments#new"
   post ':permalink/comments' => "comments#create"
 
+  get ':permalink/edit' => "topics#edit"
+
   get ':permalink' => "comments#index"
 
   # Example of regular route:

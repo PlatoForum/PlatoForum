@@ -9,6 +9,6 @@ class Topic
   has_many :proxies
 
   validates :name, presence: true
-  validates :description, presence: true
+  #validates :description, presence: true
   validates :permalink, uniqueness: true, presence: true
 end

@@ -18,20 +18,37 @@
 #
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
-
+#zh.mongoid.errors.messages.validations.message
+#zh.mongoid.errors.messages.validations.summary
+#zh.mongoid.errors.messages.validations.resolution
 zh:
   mongoid:
     errors:
       full_messages:
-      format: "%{message}"
+      format: 
+      messages: 
+        validations:
+          message: "問題"
+          summary: "總結"
+          resolution: "解決"
       models:
         topic:
           attributes:
             name:
               blank: "不能留空"
             permalink:
-              conflict: "與現有議題重複"
+              taken: "與現有議題重複"
+              blank: "不能留空"
+        comment:
+          attributes:
+            body:
+              blank: "不能留空"
+            stance:
+              blank: "不能留空"
     attributes:
       topic:
         name: "議題名稱"
         permalink: "永久連結"
+      comment:
+        body: "評論內容"
+        stance: "評論立場"

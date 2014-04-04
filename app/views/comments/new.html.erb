@@ -1,5 +1,9 @@
-<h1>New comment</h1>
+<ul class="breadcrumb" style="margin-bottom: 5px;">
+    <li><%= link_to "Home", root_path %></li>
+    <li><%= link_to @target.name, "/#{@target.permalink}/" %></li>
+    <li class="active">發表評論</li>
+</ul>
+
+<h1>發表評論</h1>
 
 <%= render 'form' %>
-
-<button onClick="returnPage(2)" class="btn">Back</button>

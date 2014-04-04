@@ -6,8 +6,8 @@ class CommentsController < ApplicationController
   
   #before_action :check_topic
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :before_edit, only: [:new, :create, :like, :neutral, :dislike]#, :show]
-  before_action :before_show, only: [:index]
+  before_action :before_edit, only: [:new, :create, :like, :neutral, :dislike]
+  before_action :before_show, only: [:index, :show]
 
   # GET /:permalink/comments
   # GET /:permalink/comments.json
@@ -38,17 +38,31 @@ class CommentsController < ApplicationController
   # POST /:permalink/comments
   # POST /:permalink/comments.json
   def create
-    @comment = Comment.new
+    @comment = Comment.new(comment_params)
     @comment.target = @target
-    @comment.subject = params[:comment][:subject]
-    @comment.body = params[:comment][:body]
+    
+    if params[:comment][:stance].nil?()
+      @comment.stance = 0
+    else 
+      if params[:comment][:stance].to_i > 1
+        @comment.stance = 1
+      else 
+        if params[:comment][:stance].to_i < -1
+          @comment.stance = -1
+        else
+          @comment.stance = params[:comment][:stance]
+        end
+      end 
+    end
+    
     @comment.owner = @proxy
+    
     respond_to do |format|
-      if @comment.save!
-        format.html { redirect_to "/#{params[:permalink]}/comments", notice: 'Comment was successfully created.' }
+      if @comment.save
+        format.html { redirect_to "/#{params[:permalink]}/comments", notice: '已成功發表評論！' }
         format.json { render action: 'show', status: :created, location: @comment }
       else
-        format.html { render action: 'new' }
+        format.html { render action: 'new', notice: @errormessage }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
@@ -113,7 +127,7 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:subject, :body)
+      params.require(:comment).permit(:subject, :body, :stance)
     end
 
     def check_topic
@@ -147,7 +161,7 @@ class CommentsController < ApplicationController
     def before_show
       
       check_topic
-      if session[:user_id].nil? #use anonymous proxy
+      if session[:user_id].nil? #not logged in, use anonymous proxy
         @proxy = Proxy.new
         @proxy.topic = @target
         @proxy.user = @user

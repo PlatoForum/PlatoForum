@@ -1,26 +1,48 @@
-<%= form_for(@comment, url: "/#{@target.permalink}/comments") do |f| %>
-  <% if @comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+<div class="well bs-component">
 
-      <ul>
-      <% @comment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= form_for(@comment, url: "/#{@target.permalink}/comments", :html => { class: "form-horizontal"}) do |f| %>
+
+  <% if @comment.errors.any? %>
+    <div class="bs-component">
+      <div class="alert alert-dismissable alert-danger">
+        <strong><%=@comment.errors.count %> 項錯誤：</strong>
+        <ul>
+        <% @comment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <h2>for "<%= @target.description %>"</h2>
-  <h4>Your pseudonym: <%= @proxy.pseudonym %></h4>
+  <fieldset>
+    <legend>以『<%= @proxy.pseudonym %>』身份，對『<%= @target.name %>』發表評論</legend>
+    <div class="form-group">
+      <label for="name" class="col-lg-2 control-label">主旨</label>
+      <div class="col-lg-10">
+        <%= f.text_field :subject, class: "form-control", placeholder: "評論主旨" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description" class="col-lg-2 control-label">內容（必要）</label>
+      <div class="col-lg-10">
+        <%= f.text_area :body, class: "form-control", placeholder: "評論內容", rows: "5" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="permalink" class="col-lg-2 control-label">立場（必要）</label>
+      <div class="col-lg-10">
+        <%= f.number_field :stance, class: "form-control", placeholder: "立場", max: 1, min: -1 %>
+        <span class="help-block">請使用數字 1:支持, 0:中立, -1:反對（暫時）</span>
+      </div>
+    </div>
 
-  <div class="container">
-    <%= f.label :subject %>
-    <%= f.text_field :subject %>
-  </div>
-  <div class="container">
-    <%= f.label :body %>
-    <%= f.text_field :body %>
-  </div>
-  <%= f.submit :class => 'btn btn-primary'%>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button onClick="returnPage()" class="btn btn-default">返回</button>
+        <%= f.submit "送出", :class => 'btn btn-primary'%>
+      </div>
+    </div>
+  </fieldset>
 <% end %>
+</div>
