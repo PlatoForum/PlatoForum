@@ -111,7 +111,7 @@ class CommentsController < ApplicationController
     create_job(:undislike, @proxy._id, c._id) if @proxy.disapprovals.delete(c)
     respond_to do |format|
       format.html { redirect_to "/#{c.target.permalink}/comments", notice: '已成功表達中立' }
-    end  end
+    end
   end
 
   def dislike
@@ -122,7 +122,7 @@ class CommentsController < ApplicationController
     create_job(:unlike, @proxy._id, c._id) if @proxy.approvals.delete(c) 
     respond_to do |format|
       format.html { redirect_to "/#{c.target.permalink}/comments", notice: '已成功表達反對' }
-    end  end
+    end
   end
 
   private
