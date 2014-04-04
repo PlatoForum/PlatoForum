@@ -140,6 +140,9 @@
 
         </div>
         <div class="modal-footer">
+          <% if session[:user_id].nil? %>
+            <button href="" class="btn btn-default" data-dismiss="modal" aria-hidden="true">返回</button>
+          <% else %>
           <center><p class="text-muted">我對於這個評論表達</p></center>
           <div class="btn-group btn-group-justified">
                 <% if @proxy.approvals.find(comment.id) %>
@@ -160,6 +163,7 @@
                   <a href="" class="btn btn-danger">✓ 反對</a>
                 <% end %>
               </div>
+            <% end %>
         </div>
       </div>
     </div>

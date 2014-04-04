@@ -12,6 +12,14 @@ class UsersController < ApplicationController
   def show
   end
 
+  # GET /user/panel
+  def panel
+  end
+
+  # GET /user/activities
+  def activities
+  end
+
   # GET /users/new
   def new
     @user = User.new

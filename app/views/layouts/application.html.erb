@@ -33,7 +33,7 @@
 
 <%= render 'layouts/header' %>
 
-<div class="container theme-showcase" role="main">
+<div class="container" role="main">
     <% flash.each do |key, value| %>
         <div class="<%= flash_class(key) %>">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -47,10 +47,6 @@
       </footer>
 
     </div> <!-- /container -->
-
-    <script src="/assets/jquery.min.js"></script>
-    <script src="/assets/bootstrap.min.js"></script>
-    <script src="/assets/bootstrap-dropdown.js"></script>
 
   </body>
 </html>

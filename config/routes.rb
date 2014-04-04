@@ -19,6 +19,9 @@ PlatoForum::Application.routes.draw do
 
   #get ':lastpage/auth/:provider/callback' => 'sessions#create'
 
+  get 'user/panel' => 'users#panel'
+  get 'user/activities' => 'users#activities'
+
   get 'auth/:provider/callback' => 'sessions#create'
   get 'auth/failure' => redirect('/')
   get "signin" => "sessions#new", :as => "signin"

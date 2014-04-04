@@ -8,10 +8,10 @@
   <p><%= @target.description %></p>
   <p>你在這個議題下的代名：<strong><%= @proxy.pseudonym %></strong></p>
   <p>
-    <%= link_to "編輯議題", "/#{@target.permalink}/edit", class: 'btn btn-lg btn-warning', role: "button"%>
-    <%= link_to "刪除議題", @target, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-lg btn-danger'%>
+    <%= link_to "編輯議題", "/#{@target.permalink}/edit", class: 'btn btn-warning', role: "button"%>
+    <%= link_to "刪除議題", @target, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'%>
     <%= unless session[:user_id].nil?
-      link_to '發表評論', "/#{@target.permalink}/comments/new", class: 'btn btn-lg btn-primary pull-right'
+      link_to '發表評論', "/#{@target.permalink}/comments/new", class: 'btn btn-primary pull-right'
     end %>
   </p>
 </div>

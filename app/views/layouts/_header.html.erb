@@ -11,17 +11,17 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav pull-right">
-              <li <% if !request.fullpath.include? "/static/" %> class="active" <% end %>><%= link_to "Home", "/"  %></li>
+              <li <% if !(request.fullpath.include? "/static/" or request.fullpath.include? "/user/") %> class="active" <% end %>><%= link_to "Home", "/"  %></li>
               <li <% if request.fullpath == "/static/about" %> class="active" <% end %> ><%= link_to "About", "/static/about"  %></li>
               <li <% if request.fullpath == "/static/contact" %> class="active" <% end %> ><%= link_to "Contact", "/static/contact"  %></li>
               <li <% if request.fullpath == "/static/privacy_policy" %> class="active" <% end %> ><%= link_to "Privacy", "/static/privacy_policy"  %></li>
               <% if current_user %>
-              <li class="dropdown">
+              <li <% if request.fullpath.include? "/user/" %> class="active" <% end %> class="dropdown">
               <a href="/fumou" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %><b class="caret"></b></a>
               <ul class="dropdown-menu">
                 
-                <li><a href="#">活動記錄</a></li>
-                <li><a href="#">個人設定</a></li>
+                <li><a href="/user/activities">活動記錄</a></li>
+                <li><a href="/user/panel">個人設定</a></li>
                 <li class="divider"></li>
                 <li><%= link_to "登出", signout_path, id: "sign_out", onClick: "checkPage()" %></li>
               </ul></li>

@@ -99,23 +99,27 @@ class CommentsController < ApplicationController
     @proxy.disapprovals.delete(c)
     c.likes << @proxy
     c.save
-    redirect_to "/#{c.target.permalink}/comments"
+    respond_to do |format|
+      format.html { redirect_to "/#{c.target.permalink}/comments", notice: '已成功表達支持' }
+    end
   end
 
   def neutral
     c = Comment.find_by(:id => params[:id])
     @proxy.approvals.delete(c) 
     @proxy.disapprovals.delete(c) 
-    redirect_to "/#{c.target.permalink}/comments"
-  end
+    respond_to do |format|
+      format.html { redirect_to "/#{c.target.permalink}/comments", notice: '已成功表達中立' }
+    end  end
 
   def dislike
     c = Comment.find_by(:id => params[:id])
     @proxy.approvals.delete(c) 
     c.dislikes << @proxy
     c.save
-    redirect_to "/#{c.target.permalink}/comments"
-  end
+    respond_to do |format|
+      format.html { redirect_to "/#{c.target.permalink}/comments", notice: '已成功表達反對' }
+    end  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
