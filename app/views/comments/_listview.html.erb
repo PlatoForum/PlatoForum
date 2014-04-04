@@ -27,7 +27,7 @@
                 <td><%= comment.owner.pseudonym %></td>
                 <td><%= comment.doc %></td>
                 <td>
-                  <span class="label label-success"><%= comment.likes.count %></span>
+                  <span class="label label-success"><%= comment.likes.count %></span> 
                   <span class="label label-danger"><%= comment.dislikes.count %></span>
                 </td>
               </tr>
@@ -66,7 +66,7 @@
                 <td><%= comment.owner.pseudonym %></td>
                 <td><%= comment.doc %></td>
                 <td>
-                  <span class="label label-success"><%= comment.likes.count %></span>
+                  <span class="label label-success"><%= comment.likes.count %></span> 
                   <span class="label label-danger"><%= comment.dislikes.count %></span>
                 </td>
               </tr>
@@ -104,7 +104,7 @@
                 <td><%= comment.owner.pseudonym %></td>
                 <td><%= comment.doc %></td>
                 <td>
-                  <span class="label label-success"><%= comment.likes.count %></span>
+                  <span class="label label-success"><%= comment.likes.count %></span> 
                   <span class="label label-danger"><%= comment.dislikes.count %></span>
                 </td>
               </tr>
@@ -133,29 +133,31 @@
           <% end %>
         </div>
         <div class="modal-body">
+
             <p class="text-primary"><%= comment.body %></p>
             <br>
             <p class="text-muted pull-right"><%= comment.owner.pseudonym %> 發表於 <%= comment.doc %></p>
+
         </div>
         <div class="modal-footer">
           <center><p class="text-muted">我對於這個評論表達</p></center>
           <div class="btn-group btn-group-justified">
                 <% if @proxy.approvals.find(comment.id) %>
-                  <a href="#" class="btn btn-success disabled">✓ 支持</a>
+                  <a href="" class="btn btn-success">✓ 支持</a>
                   <%= link_to "中立", neutral_comment_path(comment), method: :put, class: 'btn btn-warning' %>
                   <%= link_to "反對", dislike_comment_path(comment), method: :put, class: 'btn btn-danger' %>
                 <% end %>
                 
                 <% if !@proxy.disapprovals.find(comment.id) && !@proxy.approvals.find(comment.id) %>
                   <%= link_to "支持", like_comment_path(comment), method: :put, class: 'btn btn-success' %>
-                  <a href="#" class="btn btn-warning disabled">✓ 中立</a>
+                  <a href="" class="btn btn-warning">✓ 中立</a>
                   <%= link_to "反對", dislike_comment_path(comment), method: :put, class: 'btn btn-danger' %>
                 <% end %>
                 
                 <% if @proxy.disapprovals.find(comment.id) %>
                   <%= link_to "支持", like_comment_path(comment), method: :put, class: 'btn btn-success' %>
                   <%= link_to "中立", neutral_comment_path(comment), method: :put, class: 'btn btn-warning' %>
-                  <a href="#" class="btn btn-danger disabled">✓ 反對</a>
+                  <a href="" class="btn btn-danger">✓ 反對</a>
                 <% end %>
               </div>
         </div>
