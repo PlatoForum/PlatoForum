@@ -1,23 +1,50 @@
-<%= form_for(@topic) do |f| %>
-  <% if @topic.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@topic.errors.count, "error") %> prohibited this topic from being saved:</h2>
 
-      <ul>
-      <% @topic.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<div class="well bs-component">
+
+<%= form_for(@topic, :html => { class: "form-horizontal"}) do |f| %>
+
+  <% if @topic.errors.any? %>
+    <div class="bs-component">
+      <div class="alert alert-dismissable alert-danger">
+        <strong><%= @topic.errors.count %>項錯誤：</strong>
+        <ul>
+        <% @topic.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <div class="container">
-    <%= f.label :description %>
-    <%= f.text_field :description%>
-  </div>
-  <div class="container">
-    <%= f.label :permalink %>
-    <%= f.text_field :permalink%>
-  </div>
-  <%= f.submit :class => 'btn btn-primary'%>
+  <fieldset>
+    <legend>議題</legend>
+    <div class="form-group">
+      <label for="name" class="col-lg-2 control-label">名稱（必要）</label>
+      <div class="col-lg-10">
+        <%= f.text_field :name, class: "form-control", placeholder: "議題名稱" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description" class="col-lg-2 control-label">描述</label>
+      <div class="col-lg-10">
+        <%= f.text_area :description, class: "form-control", placeholder: "議題描述", rows: "3" %>
+        <span class="help-block">簡單描述議論的目標，請保持客觀。例如：『你對太陽花學運的看法為何？』</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="permalink" class="col-lg-2 control-label">永久連結（必要）</label>
+      <div class="col-lg-10">
+        <%= f.text_field :permalink, class: "form-control", placeholder: "永久連結" %>
+        <span class="help-block">作為議題網址使用。只能使用英文字母、數字和底線。</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button onClick="returnPage()" class="btn btn-default">返回</button>
+        <%= f.submit "送出", :class => 'btn btn-primary'%>
+      </div>
+    </div>
+  </fieldset>
 <% end %>
+</div>

@@ -1,5 +1,6 @@
 class Topic
   include Mongoid::Document
+  field :name, type: String
   field :description, type: String
   field :permalink, type: String
 
@@ -7,6 +8,7 @@ class Topic
   has_many :stances
   has_many :proxies
 
+  validates :name, presence: true
   validates :description, presence: true
   validates :permalink, uniqueness: true, presence: true
 end
