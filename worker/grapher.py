@@ -10,32 +10,51 @@ G = nx.Graph()
 delta = 1
 
 def adjust_preference(pid, cid, offset):
+    global G
+    global delta
+    print 'before adjustment'
+    graph_status()
     proxy = proxies_collection.find_one({"_id":ObjectId(pid)})
-    if 'works_ids' in proxy.keys():
-        for widobj in proxy['works_ids']:
-            G[str(widobj)][cid]['weight'] -= offset
-    if 'approvals_ids' in proxy.keys():
-        for aidobj in proxy['approvals_ids']:
+    works = comments_collection.find({"owner_id":ObjectId(pid)})
+    for widobj in works:
+        print widobj['_id']
+        print str(widobj['_id'])
+        G[str(widobj['_id'])][cid]['weight'] -= offset
+    if 'approval_ids' in proxy.keys():
+        for aidobj in proxy['approval_ids']:
+            print 'approval'
             G[str(aidobj)][cid]['weight'] -= offset
-    if 'disapprovals_ids' in proxy.keys():
-        for didobj in proxy['disapprovals_ids']:
+    if 'disapproval_ids' in proxy.keys():
+        for didobj in proxy['disapproval_ids']:
+            print 'disapproval'
             G[str(didobj)][cid]['weight'] += offset
+    print 'after adjustment'
+    graph_status()
 
 def like(pid, cid):
+    print 'like'
+    global delta
     adjust_preference(pid, cid, delta)
 def unlike(pid, cid):
+    print 'unlike'
+    global delta
     adjust_preference(pid, cid, -delta)
 
 def dislike(pid, cid):
+    print 'dislike'
     unlike(pid, cid)
 
 def undislike(pid, cid):
+    print 'undislike'
     like(pid, cid)
 
-def create_comment(pid, cid):
+def create(pid, cid):
+    print 'create'
+    global G
     G.add_node(cid)
     for node in G.nodes():
-        G.add_edge(cid, node, weight=0)
+        G.add_edge(cid, node)
+        G[cid][node]['weight'] = 0
     like(pid, cid)
 
 def process_job(job):
@@ -50,11 +69,14 @@ def process_job(job):
         dislike(pid, cid)
     elif y == 'undislike':
         undislike(pid, cid)
-    elif y == 'create_comment':
-        create_comment(pid, cid)
+    elif y == 'create':
+        create(pid, cid)
     else:
         # should throw an exception here
         pass
+
+def graph_status():
+    print [(n,G[n]) for n in G.nodes()]
 
 rc = redis.Redis()
 
@@ -80,5 +102,4 @@ for item in ps.listen():
     if item['type'] == 'message':
         job = json.loads(item['data'])
         process_job(job)
-        print G.edges()
-        print G.nodes()
+        print [(n,G[n]) for n in G.nodes()]

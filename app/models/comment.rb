@@ -5,7 +5,7 @@ class Comment
   field :doc, type: Time, default: Time.now
 
   belongs_to :owner, class_name: "Proxy", inverse_of: :works, autosave: true
-  belongs_to :target, class_name: "Topic", inverse_of: :comments, autosave:true
+  belongs_to :target, class_name: "Topic", inverse_of: :comments, autosave: true
   belongs_to :stance
 
   has_and_belongs_to_many :likes, class_name: "Proxy", inverse_of: :approvals, validate: false
@@ -22,6 +22,7 @@ class Comment
     @job.who = self.owner._id
     @job.post = self._id
     @job.action = :create
-    @job.save!
+    redis = Redis.new
+    redis.publish "jobqueue", @job.to_json
   end
 end
