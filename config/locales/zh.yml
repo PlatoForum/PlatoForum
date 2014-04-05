@@ -1,0 +1,58 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+#zh.mongoid.errors.messages.validations.message
+#zh.mongoid.errors.messages.validations.summary
+#zh.mongoid.errors.messages.validations.resolution
+zh:
+  mongoid:
+    errors:
+      full_messages:
+      format:
+      messages:
+        validations:
+          message: "問題"
+          summary: "總結"
+          resolution: "解決"
+      models:
+        topic:
+          attributes:
+            name:
+              blank: "不能留空"
+            permalink:
+              taken: "與現有議題重複"
+              invalid: "不符合規格"
+              blank: "不能留空"
+        comment:
+          attributes:
+            subject:
+              blank: "不能留空"
+            body:
+              blank: "不能留空"
+            stance:
+              blank: "必須選擇"
+    attributes:
+      topic:
+        name: "議題名稱"
+        permalink: "永久連結"
+      comment:
+        subject: "評論主旨"
+        body: "評論內容"
+        stance: "評論立場"

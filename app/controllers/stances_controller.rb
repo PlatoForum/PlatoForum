@@ -1,5 +1,8 @@
 class StancesController < ApplicationController
   before_action :set_stance, only: [:show, :edit, :update, :destroy]
+  
+  before_action :before_edit, only: [:new, :create, :like, :neutral, :dislike]
+  before_action :before_show, only: [:index, :show]
 
   # GET /stances
   # GET /stances.json
@@ -9,6 +12,7 @@ class StancesController < ApplicationController
 
   # GET /stances/1
   # GET /stances/1.json
+  # GET /:permalink/:stance
   def show
   end
 
@@ -64,7 +68,34 @@ class StancesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_stance
-      @stance = Stance.find(params[:id])
+      @target = Topic.find_by(:permalink => params[:permalink])
+      #@stance = Stance.find(params[:id]) # use integer for now
+      @stance = Stance.new
+
+      @stance.number = params[:stance].to_i
+      if @stance.number == 1
+        @stance.description = "支持"
+      end
+      if @stance.number == 2
+        @stance.description = "中立"
+      end
+      if @stance.number == 3
+        @stance.description = "反對"
+      end
+      @stance.target = @target
+
+      unless session[:user_id].nil?
+        @user = User.find(session[:user_id])
+      end
+
+      #temporary
+      @target.comments.each do |comment|
+        if comment.stance == @stance.number
+
+          @stance.comments << comment
+          
+        end
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

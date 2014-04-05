@@ -1,0 +1,106 @@
+<div class="row">
+
+  <div class="col-md-4">
+    <div class="bs-component">
+
+
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          <h3 class="panel-title"><a  href="/<%= @target.permalink %>/stance1">支持</a></h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped table-hover ">
+
+            <tbody>
+              <% @comments.each do |comment| %>
+              <% if comment.stance == 1 %>
+              <tr>
+                <td width="10">
+                  <span class="label label-success">讚 <%= comment.likes.count %></span> 
+                  <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
+                </td>
+                <td><a href="/comments/<%= comment.id %>"><%= comment.subject %></a></td>
+                <% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
+                  <td>今天 <%= comment.doc.strftime("%T") %></td>
+                <% else %>
+                  <td><%= comment.doc.strftime("%F") %></td>
+                <% end %>
+              </tr>
+              <% end %>
+              <% end %>
+            </tbody>
+          </table> 
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="bs-component">
+
+      <div class="panel panel-warning">
+        <div class="panel-heading">
+          <h3 class="panel-title"><a  href="/<%= @target.permalink %>/stance2">中立</a></h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped table-hover ">
+
+            <tbody>
+              <% @comments.each do |comment| %>
+              <% if comment.stance == 2 %>
+              <tr>
+                <td width="10">
+                  <span class="label label-success">讚 <%= comment.likes.count %></span> 
+                  <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
+                </td>
+                <td><a href="/comments/<%= comment.id %>"><%= comment.subject %></a></td>
+                <% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
+                  <td>今天 <%= comment.doc.strftime("%T") %></td>
+                <% else %>
+                  <td><%= comment.doc.strftime("%F") %></td>
+                <% end %>
+                </tr>
+              <% end %>
+              <% end %>
+            </tbody>
+          </table> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="bs-component">
+
+      <div class="panel panel-danger">
+        <div class="panel-heading">
+          <h3 class="panel-title"><a  href="/<%= @target.permalink %>/stance3">反對</a></h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped table-hover ">
+
+            <tbody>
+              <% @comments.each do |comment| %>
+              <% if comment.stance == 3 %>
+              <tr>
+                <td width="10">
+                  <span class="label label-success">讚 <%= comment.likes.count %></span> 
+                  <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
+                </td>
+                <td><a href="/comments/<%= comment.id %>"><%= comment.subject %></a></td>
+                <% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
+                  <td>今天 <%= comment.doc.strftime("%T") %></td>
+                <% else %>
+                  <td><%= comment.doc.strftime("%F") %></td>
+                <% end %>
+              </tr>
+              <% end %>
+              <% end %>
+            </tbody>
+          </table> 
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

@@ -21,12 +21,10 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-            <script>
+      <script>
       function checkPage(){
           localStorage.startingPage = document.URL;
       }
-      </script>
-      <script>
       function returnPage(){
           window.location.href = localStorage.startingPage;
       }
@@ -35,20 +33,19 @@
 
 <%= render 'layouts/header' %>
 
-<div class="container theme-showcase" role="main">
-    <% flash.each do |key, value| %>
-        <div class="<%= flash_class(key) %>">
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
-            <%= value %>
-        </div>
+<div class="container" role="main">
+  <% flash.each do |key, value| %>
+    <div class="<%= flash_class(key) %>">
+      <a href="#" class="close" data-dismiss="alert">&times;</a>
+      <%= value %>
+    </div>
   <% end %>
-<%= yield %>
 
-      <footer>
-        <p>&copy; PlatoForum 2014</p>
-      </footer>
+  <%= yield %> <!-- Page Body -->
 
-    </div> <!-- /container -->
+  <footer><p>&copy; PlatoForum 2014</p></footer>
 
-  </body>
+</div> <!-- /container -->
+
+</body>
 </html>

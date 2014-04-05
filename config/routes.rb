@@ -19,6 +19,9 @@ PlatoForum::Application.routes.draw do
 
   #get ':lastpage/auth/:provider/callback' => 'sessions#create'
 
+  get 'user/panel' => 'users#panel'
+  get 'user/activities' => 'users#activities'
+
   get 'auth/:provider/callback' => 'sessions#create'
   get 'auth/failure' => redirect('/')
   get "signin" => "sessions#new", :as => "signin"
@@ -36,6 +39,14 @@ PlatoForum::Application.routes.draw do
   get ':permalink/comments' => "comments#index"
   get ':permalink/comments/new' => "comments#new"
   post ':permalink/comments' => "comments#create"
+
+  get ':permalink/subscribe' => "topics#subscribe"
+  get ':permalink/unsubscribe' => "topics#unsubscribe"
+
+  get ':permalink/edit' => "topics#edit"
+  get ':permalink/change_name' => 'users#change_pseudonym'
+
+  get ':permalink/stance:stance' => "stances#show"
 
   get ':permalink' => "comments#index"
 

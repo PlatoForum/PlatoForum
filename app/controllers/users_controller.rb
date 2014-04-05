@@ -12,6 +12,14 @@ class UsersController < ApplicationController
   def show
   end
 
+  # GET /user/panel
+  def panel
+  end
+
+  # GET /user/activities
+  def activities
+  end
+
   # GET /users/new
   def new
     @user = User.new
@@ -19,6 +27,18 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+  end
+
+  # GET /:permalink/change_name
+  def change_pseudonym
+    unless session[:user_id].nil?
+      @user = User.find_by(:id => session[:user_id])
+      @target = Topic.find_by(:permalink => params[:permalink])
+      @proxy = @user.proxies.find_by(:topic_id => @target._id)
+      @proxy.update({:pseudonym => pseudonym_gen})
+    end
+    
+    redirect_to "/#{params[:permalink]}"
   end
 
   # POST /users

@@ -77,4 +77,6 @@ PlatoForum::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  ENV["REDISTOGO_URL"] = 'redis://redistogo:982c75e48017ec010893a064a1794d72@grideye.redistogo.com:10330/'
 end
