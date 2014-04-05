@@ -82,7 +82,7 @@
 
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
-        <button onClick="history.go(-1);" class="btn btn-default">返回</button>
+        <button onclick="window.history.go(-1); return false;" class="btn btn-default">返回</button>
         <%= f.submit "送出", :class => 'btn btn-primary'%>
       </div>
     </div>

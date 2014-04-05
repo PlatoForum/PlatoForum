@@ -4,47 +4,55 @@
     <li class="active">檢視評論</li>
 </ul>
 
-<a data-toggle="modal" href="#myModal" class="btn btn-primary btn-large">Launch demo modal</a>
 
 <div class="bs-component">
-  <div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h4 class="modal-title">Modal title</h4>
-        </div>
-        <div class="modal-body">
-          <p>One fine body…</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+    
+    <div class="page-header">
+    <h2>議題：<%= @comment.target.name %></h2>
+    <p class = "text-muted"><%= @comment.target.description %></p>
+    </div>
+
+    <% if @comment.stance == 1 %>
+      <div class="panel panel-success">
+    <% elsif @comment.stance == 0 %>
+      <div class="panel panel-warning">
+    <% else %>
+      <div class="panel panel-danger">
+    <% end %>
+      <div class="panel-heading">
+
+        <% if @comment.subject.empty? %>
+          <h3 class="panel-title">（沒有主旨）</h3>
+        <% else %>
+          <h3 class="panel-title"><%= @comment.subject %></h3>
+        <% end %>
+      </div>
+      <div class="panel-body">
+        <p class="text-primary pull-right"><%= @comment.owner.pseudonym %><br>發表於 <%= @comment.doc.strftime("%F %T") %> </p>
+        <p class="text-muted"><%= @comment.body %></p>
       </div>
     </div>
-  </div>
+
+    <% unless session[:user_id].nil? %>
+    <center><p class="text-muted">我對於這條評論</p></center>
+    <div class="btn-group btn-group-justified">
+      <% if @proxy.approvals.find(@comment.id) %>
+        <a href="" class="btn btn-success">✓ 支持</a>
+        <%= link_to "中立", neutral_comment_path(@comment), method: :put, class: 'btn btn-warning' %>
+        <%= link_to "反對", dislike_comment_path(@comment), method: :put, class: 'btn btn-danger' %>
+      <% end %>
+      
+      <% if !@proxy.disapprovals.find(@comment.id) && !@proxy.approvals.find(@comment.id) %>
+        <%= link_to "支持", like_comment_path(@comment), method: :put, class: 'btn btn-success' %>
+        <a href="" class="btn btn-warning">✓ 中立</a>
+        <%= link_to "反對", dislike_comment_path(@comment), method: :put, class: 'btn btn-danger' %>
+      <% end %>
+      
+      <% if @proxy.disapprovals.find(@comment.id) %>
+        <%= link_to "支持", like_comment_path(@comment), method: :put, class: 'btn btn-success' %>
+        <%= link_to "中立", neutral_comment_path(@comment), method: :put, class: 'btn btn-warning' %>
+        <a href="" class="btn btn-danger">✓ 反對</a>
+      <% end %>
+    </div>
+  <% end %>
 </div>
-
-<p>
-  <strong>Topic:</strong>
-  <%= @comment.target.description %>
-</p>
-
-<p>
-  <strong>Author:</strong>
-  <%= @comment.owner.pseudonym %>
-</p>
-
-<p>
-  <strong>Subject:</strong>
-  <%= @comment.subject %>
-</p>
-
-<p>
-  <strong>Body:</strong>
-  <%= @comment.body %>
-</p>
-
-<%= link_to 'Edit', edit_comment_path(@comment), class: 'btn'  %>
-<button onClick="returnPage(2)" class="btn">Back</button>

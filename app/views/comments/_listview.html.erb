@@ -1,6 +1,6 @@
 <div class="row">
 
-  <div class="col-lg-4">
+  <div class="col-md-4">
     <div class="bs-component">
 
 
@@ -23,7 +23,7 @@
               <% @comments.each do |comment| %>
               <% if comment.stance == 1 %>
               <tr>
-                <td><a data-toggle="modal" href="#modal_<%= comment.id %>"><%= comment.body %></a></td>
+                <td><a href="/comments/<%= comment.id %>"><%= comment.body %></a></td>
                 <td><%= comment.owner.pseudonym %></td>
                 <td><%= comment.doc.strftime("%F %T") %></td>
                 <td>
@@ -40,7 +40,7 @@
 
     </div>
   </div>
-  <div class="col-lg-4">
+  <div class="col-md-4">
     <div class="bs-component">
 
       <div class="panel panel-warning">
@@ -62,7 +62,7 @@
               <% @comments.each do |comment| %>
               <% if comment.stance == 0 %>
               <tr>
-                <td><a data-toggle="modal" href="#modal_<%= comment.id %>"><%= comment.body %></a></td>
+                <td><a href="/comments/<%= comment.id %>"><%= comment.body %></a></td>
                 <td><%= comment.owner.pseudonym %></td>
                 <td><%= comment.doc.strftime("%F %T") %></td>
                 <td>
@@ -78,7 +78,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-4">
+  <div class="col-md-4">
     <div class="bs-component">
 
       <div class="panel panel-danger">
@@ -100,7 +100,7 @@
               <% @comments.each do |comment| %>
               <% if comment.stance == -1 %>
               <tr>
-                <td><a data-toggle="modal" href="#modal_<%= comment.id %>"><%= comment.body %></a></td>
+                <td><a href="/comments/<%= comment.id %>/show"><%= comment.body %></a></td>
                 <td><%= comment.owner.pseudonym %></td>
                 <td><%= comment.doc.strftime("%F %T") %></td>
                 <td>

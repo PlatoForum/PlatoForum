@@ -125,7 +125,7 @@ class CommentsController < ApplicationController
   #  end
   #end
 
-  
+
   # LIKE/NERUTRAL/DISLIKE /comments/1/(ACTION)
   def like
       c = Comment.find_by(:id => params[:id])
@@ -133,7 +133,7 @@ class CommentsController < ApplicationController
       c.likes << @proxy
       c.save
       respond_to do |format|
-        format.html { redirect_to "/#{c.target.permalink}/comments", notice: '已成功表達支持' }
+        format.html { redirect_to "/comments/#{c.id}", notice: '已成功表達支持' }
       end
   end
 
@@ -142,7 +142,7 @@ class CommentsController < ApplicationController
       @proxy.approvals.delete(c) 
       @proxy.disapprovals.delete(c) 
       respond_to do |format|
-        format.html { redirect_to "/#{c.target.permalink}/comments", notice: '已成功表達中立' }
+        format.html { redirect_to "/comments/#{c.id}", notice: '已成功表達中立' }
       end
   end
 
@@ -152,7 +152,7 @@ class CommentsController < ApplicationController
       c.dislikes << @proxy
       c.save
       respond_to do |format|
-        format.html { redirect_to "/#{c.target.permalink}/comments", notice: '已成功表達反對' }
+        format.html { redirect_to "/comments/#{c.id}", notice: '已成功表達反對' }
       end
   end
 

@@ -5,6 +5,7 @@ class User
   field :uid, type: String
   field :name, type: String
 
+  has_many :read_comments, class_name: "Comment"
   has_many :proxies
 
   def self.create_with_omniauth(auth)

@@ -6,7 +6,7 @@
           <h4 class="list-group-item-heading">熱門議題</h4>
           <p class="list-group-item-text">按照評論數量排序</p>
         </div>
-        <% @topics.each do |topic| %>
+        <% @topics.sort!{ |a,b| b.comments.count <=> a.comments.count }.first(10).each do |topic| %>
         <a href="/<%= topic.permalink %>/comments" class="list-group-item">
           <span class="badge"><%= topic.comments.count %></span><%= topic.name %>
         </a>
@@ -21,9 +21,13 @@
           <h4 class="list-group-item-heading">最新議題</h4>
           <p class="list-group-item-text">按照創建時間排序</p>
         </div>
-        <% @topics.each do |topic| %>
+        <% @topics.sort!{ |a,b| b.doc <=> a.doc }.first(10).each do |topic| %>
         <a href="/<%= topic.permalink %>/comments" class="list-group-item">
-          <span class="badge"><%= topic.comments.count %></span><%= topic.name %>
+          <% if topic.doc.strftime("%F") == Time.now.in_time_zone.strftime("%F") %>
+            <span class="badge">今天 <%= topic.doc.strftime("%T") %></span><%= topic.name %>
+          <% else %>
+            <span class="badge"><%= topic.doc.strftime("%F") %></span><%= topic.name %>
+          <% end %>
         </a>
         <% end %>
       </div>
@@ -36,11 +40,69 @@
           <h4 class="list-group-item-heading">訂閱議題</h4>
           <p class="list-group-item-text">按照未讀評論數量排序</p>
         </div>
-        <% @topics.each do |topic| %>
+        <% @topics.sort!{ |a,b| a.id <=> b.id }.first(10).each do |topic| %>
         <a href="/<%= topic.permalink %>/comments" class="list-group-item">
           <span class="badge"><%= topic.comments.count %></span><%= topic.name %>
         </a>
         <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="bs-component">
+  <div class="modal fade" id="modal_new_topic">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <% @topic = Topic.new %>
+        <%= form_for(@topic, :html => { class: "form-horizontal"}) do |f| %>
+
+          <fieldset>
+
+            <div class="modal-header">
+            <h4>發起議題</h4>
+            </div>
+            
+            <div class="modal-body">
+            <div class="form-group has-warning">
+              <label for="name" class="col-sm-2 control-label">名稱</label>
+              <div class="col-sm-10">
+                <%= f.text_field :name, class: "form-control", placeholder: "議題名稱" %>
+                <span class="help-block">必要</span>
+              </div>
+            </div>
+            <div class="form-group <%= "has-error" unless @topic.errors[:description].count ==0 %>">
+              <label for="description" class="col-sm-2 control-label">描述</label>
+              <div class="col-sm-10">
+                <%= f.text_area :description, class: "form-control", placeholder: "議題描述", rows: "3" %>
+                <span class="help-block">簡單描述議論的目標，請保持客觀，並且使用是非題形式。例如『你支持太陽花學運嗎？』而不是『太陽花學運的起因是什麼？』</span>
+              </div>
+            </div>
+
+            <div class="form-group has-warning">
+              <label for="permalink" class="col-sm-2 control-label">永久連結</label>
+              <div class="col-sm-10">
+
+                <%= f.text_field :permalink, class: "form-control", placeholder: "永久連結" %>
+                <span class="help-block">作為議題網址使用。只能使用英文字母、數字和底線。必要</span>
+              </div>
+            </div>
+            </div>
+
+            <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-sm-10 col-sm-offset-2">
+                <button data-dismiss="modal" class="btn btn-default">返回</button>
+                <%= f.submit "送出", :class => 'btn btn-primary'%>
+              </div>
+            </div>
+            </div>
+
+          </fieldset>
+        <% end %>
+
       </div>
     </div>
   </div>
