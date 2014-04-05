@@ -161,6 +161,7 @@ class CommentsController < ApplicationController
     def create_job(action, proxy_id, comment_id)
       job = Job.new
       job.action = action
+      job.group = @target._id
       job.who = proxy_id
       job.post = comment_id
       redis = Redis.new

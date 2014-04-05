@@ -19,6 +19,7 @@ class Comment
   after_create :create_job
   def create_job
     @job = Job.new
+    @job.group = self.target._id
     @job.who = self.owner._id
     @job.post = self._id
     @job.action = :create

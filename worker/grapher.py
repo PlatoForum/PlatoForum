@@ -6,14 +6,12 @@ import json
 from bson.objectid import ObjectId
 import networkx as nx
 
-G = nx.Graph()
+Gs = {}
 delta = 1
 
-def adjust_preference(pid, cid, offset):
-    global G
-    global delta
+def adjust_preference(G, pid, cid, offset):
     print 'before adjustment'
-    graph_status()
+    graph_status(G)
     proxy = proxies_collection.find_one({"_id":ObjectId(pid)})
     works = comments_collection.find({"owner_id":ObjectId(pid)})
     for widobj in works:
@@ -29,53 +27,58 @@ def adjust_preference(pid, cid, offset):
             print 'disapproval'
             G[str(didobj)][cid]['weight'] += offset
     print 'after adjustment'
-    graph_status()
+    graph_status(G)
 
-def like(pid, cid):
+def like(G, pid, cid):
     print 'like'
     global delta
-    adjust_preference(pid, cid, delta)
-def unlike(pid, cid):
+    adjust_preference(G, pid, cid, delta)
+def unlike(G, pid, cid):
     print 'unlike'
     global delta
-    adjust_preference(pid, cid, -delta)
+    adjust_preference(G, pid, cid, -delta)
 
-def dislike(pid, cid):
+def dislike(G, pid, cid):
     print 'dislike'
-    unlike(pid, cid)
+    unlike(G, pid, cid)
 
-def undislike(pid, cid):
+def undislike(G, pid, cid):
     print 'undislike'
-    like(pid, cid)
+    like(G, pid, cid)
 
-def create(pid, cid):
+def create(G, pid, cid):
     print 'create'
-    global G
     G.add_node(cid)
     for node in G.nodes():
         G.add_edge(cid, node)
         G[cid][node]['weight'] = 0
-    like(pid, cid)
+    like(G, pid, cid)
 
 def process_job(job):
+    global Gs
+    tid = job['group']['$oid']
     pid = job['who']['$oid']
     cid = job['post']['$oid']
+    print tid
+    if tid not in Gs.keys():
+        Gs[tid] = nx.Graph()
     y = job['action']
     if y == 'like':
-        like(pid, cid)
+        like(Gs[tid], pid, cid)
     elif y == 'unlike':
-        unlike(pid, cid)
+        unlike(Gs[tid], pid, cid)
     elif y == 'dislike':
-        dislike(pid, cid)
+        dislike(Gs[tid], pid, cid)
     elif y == 'undislike':
-        undislike(pid, cid)
+        undislike(Gs[tid], pid, cid)
     elif y == 'create':
-        create(pid, cid)
+        create(Gs[tid], pid, cid)
     else:
         # should throw an exception here
         pass
 
-def graph_status():
+# for debugging
+def graph_status(G):
     print [(n,G[n]) for n in G.nodes()]
 
 rc = redis.Redis()
@@ -102,4 +105,3 @@ for item in ps.listen():
     if item['type'] == 'message':
         job = json.loads(item['data'])
         process_job(job)
-        print [(n,G[n]) for n in G.nodes()]
