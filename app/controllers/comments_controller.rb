@@ -163,7 +163,6 @@ class CommentsController < ApplicationController
       job.action = action
       job.who = proxy_id
       job.post = comment_id
-      job.save!
       redis = Redis.new
       redis.publish "jobqueue", job.to_json
     end
