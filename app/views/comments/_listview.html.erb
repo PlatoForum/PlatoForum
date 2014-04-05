@@ -24,7 +24,7 @@
               <% if comment.stance == 1 %>
               <tr>
                 <td><a href="/comments/<%= comment.id %>"><%= comment.subject %></a></td>
-                <td><%= comment.owner.pseudonym %></td>
+                <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%></td>
                 <td><%= comment.doc.strftime("%F %T") %></td>
                 <td>
                   <span class="label label-success">讚 <%= comment.likes.count %></span> 
@@ -63,7 +63,7 @@
               <% if comment.stance == 2 %>
               <tr>
                 <td><a href="/comments/<%= comment.id %>"><%= comment.subject %></a></td>
-                <td><%= comment.owner.pseudonym %></td>
+                <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%></td>
                 <td><%= comment.doc.strftime("%F %T") %></td>
                 <td>
                   <span class="label label-success">讚 <%= comment.likes.count %></span> 
@@ -101,7 +101,7 @@
               <% if comment.stance == 3 %>
               <tr>
                 <td><a href="/comments/<%= comment.id %>"><%= comment.subject %></a></td>
-                <td><%= comment.owner.pseudonym %></td>
+                <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%></td>
                 <td><%= comment.doc.strftime("%F %T") %></td>
                 <td>
                   <span class="label label-success">讚 <%= comment.likes.count %></span> 

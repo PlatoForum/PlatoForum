@@ -9,13 +9,43 @@ class TopicsController < ApplicationController
 
   # GET /topics/1
   # GET /topics/1.json
-  def show
-    session[:topic_id] = params[:id]
+  # This is no longer used
+  def show 
+    #session[:topic_id] = params[:id]
   end
 
   # GET /topics/new
   def new
     @topic = Topic.new
+  end
+
+  # GET /:permalink/subscribe
+  def subscribe
+    if session[:user_id].nil?
+      format.html { redirect_to "/#{params[:permalink]}", notice: "你必須先登入才能訂閱議題" }
+    else
+      @user = User.find_by(:id => session[:user_id])
+      @topic = Topic.find_by(:permalink => params[:permalink])
+      @user.subscriptions << @topic
+      @user.save
+
+      redirect_to "/#{params[:permalink]}"
+      #format.html { redirect_to "/#{params[:permalink]}", notice: "訂閱議題『#{@topic.name}』"}
+    end
+  end
+
+  # GET /:permalink/subscribe
+  def unsubscribe
+    if session[:user_id].nil?
+      format.html { redirect_to "/#{params[:permalink]}", notice: "你必須先登入才能訂閱議題" }
+    else
+      @user = User.find_by(:id => session[:user_id])
+      @topic = Topic.find_by(:permalink => params[:permalink])
+      @user.subscriptions.delete(@topic)
+
+      redirect_to "/#{params[:permalink]}"
+      #format.html { redirect_to "/#{params[:permalink]}", notice: "訂閱議題『#{@topic.name}』"}
+    end
   end
 
   # GET /topics/1/edit
@@ -29,7 +59,7 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.save
-        format.html { redirect_to "/#{@topic.permalink}/comments", success: 'Topic was successfully created.' }
+        format.html { redirect_to "/#{@topic.permalink}/comments", notice: "創建新議題『#{@topic.name}』" }
         format.json { render action: 'show', status: :created, location: @topic }
       else
         format.html { render action: 'new', notice: @errormessage }

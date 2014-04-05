@@ -40,6 +40,9 @@ PlatoForum::Application.routes.draw do
   get ':permalink/comments/new' => "comments#new"
   post ':permalink/comments' => "comments#create"
 
+  get ':permalink/subscribe' => "topics#subscribe"
+  get ':permalink/unsubscribe' => "topics#unsubscribe"
+
   get ':permalink/edit' => "topics#edit"
   get ':permalink/change_name' => 'users#change_pseudonym'
   get ':permalink' => "comments#index"

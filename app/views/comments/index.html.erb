@@ -4,7 +4,7 @@
 </ul>
 
   <div class="page-header">
-    <h1><strong><%= @target.name %></strong></h1>
+    <h1><strong><%= @target.name %></strong> <span class="badge"><%= @target.subscribed_by.count %>人訂閱</span> <% if @user.subscriptions.find(@target.id) %><% end %></h1>
     <h3 class="text-muted"><%= @target.description %>
 
       <% unless session[:user_id].nil? %>
@@ -12,6 +12,11 @@
         <button type="button" class="btn btn-default" data-toggle="modal" href="#modal_new_comment">發表評論</button>
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
         <ul class="dropdown-menu">
+          <% if @user.subscriptions.find(@target.id) %>
+            <li><a href="/<%= @target.permalink %>/unsubscribe" role: "button">取消訂閱</a></li>
+          <% else %>
+            <li><a href="/<%= @target.permalink %>/subscribe" role: "button">訂閱議題</a></li>
+          <% end %>
           <li><a href="/<%= @target.permalink %>/edit" role: "button">編輯議題</a></li>
           <li><%= link_to "刪除議題", @target, method: :delete, data: { confirm: '你確定嗎？這個動作無法還原！' }%></li>
         </ul>
@@ -21,9 +26,7 @@
   </h3>
   </div>
 
-
-    <p>你好！<strong class="text-primary"><%= @proxy.pseudonym %></strong><!-- （<a href="/<%= @target.permalink %>/change_name" data-confirm="你確定嗎？這個動作無法還原！">我要改名！</a>） --></p>
-
+<p>你好！<strong class="text-primary"><%= @proxy.pseudonym %></strong><!-- （<a href="/<%= @target.permalink %>/change_name" data-confirm="你確定嗎？這個動作無法還原！">我要改名！</a>） --></p>
 
 <%= render 'comments/listview' %>
 

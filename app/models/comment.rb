@@ -2,7 +2,7 @@ class Comment
   include Mongoid::Document
   field :subject, type: String
   field :body, type: String
-  field :doc, type: Time, default: Time.now
+  field :doc, type: Time, default: Time.zone.now
   field :stance, type: Integer
 
   belongs_to :owner, class_name: "Proxy", inverse_of: :works, autosave: true

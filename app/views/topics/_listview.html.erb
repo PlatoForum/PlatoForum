@@ -6,7 +6,7 @@
           <h4 class="list-group-item-heading">熱門議題</h4>
           <p class="list-group-item-text">按照評論數量排序</p>
         </div>
-        <% @topics.sort!{ |a,b| b.comments.count <=> a.comments.count }.first(10).each do |topic| %>
+        <% @topics.sort!{ |a,b| b.comments.count <=> a.comments.count }.first(5).each do |topic| %>
         <a href="/<%= topic.permalink %>/comments" class="list-group-item">
           <span class="badge"><%= topic.comments.count %></span><%= topic.name %>
         </a>
@@ -21,9 +21,9 @@
           <h4 class="list-group-item-heading">最新議題</h4>
           <p class="list-group-item-text">按照創建時間排序</p>
         </div>
-        <% @topics.sort!{ |a,b| b.doc <=> a.doc }.first(10).each do |topic| %>
+        <% @topics.sort!{ |a,b| b.doc <=> a.doc }.first(5).each do |topic| %>
         <a href="/<%= topic.permalink %>/comments" class="list-group-item">
-          <% if topic.doc.strftime("%F") == Time.now.in_time_zone.strftime("%F") %>
+          <% if topic.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
             <span class="badge">今天 <%= topic.doc.strftime("%T") %></span><%= topic.name %>
           <% else %>
             <span class="badge"><%= topic.doc.strftime("%F") %></span><%= topic.name %>
@@ -33,21 +33,40 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-4">
-    <div class="bs-component">
-      <div class="list-group">
-        <div class="list-group-item active">
-          <h4 class="list-group-item-heading">訂閱議題</h4>
-          <p class="list-group-item-text">按照未讀評論數量排序</p>
+  <% if session[:user_id].nil? %>
+    <div class="col-sm-4">
+      <div class="bs-component">
+        <div class="list-group">
+          <div class="list-group-item active">
+            <h4 class="list-group-item-heading">熱門訂閱議題</h4>
+            <p class="list-group-item-text">按照訂閱人數排序</p>
+          </div>
+          <% @topics.sort!{|a,b| b.subscribed_by.count <=> a.subscribed_by.count}.first(5).each do |topic| %>
+          <a href="/<%= topic.permalink %>/comments" class="list-group-item">
+            <span class="badge"><%= topic.subscribed_by.count %></span><%= topic.name %>
+          </a>
+          <% end %>
         </div>
-        <% @topics.sort!{ |a,b| a.id <=> b.id }.first(10).each do |topic| %>
-        <a href="/<%= topic.permalink %>/comments" class="list-group-item">
-          <span class="badge"><%= topic.comments.count %></span><%= topic.name %>
-        </a>
-        <% end %>
       </div>
     </div>
-  </div>
+  <% else %>
+    <div class="col-sm-4">
+      <div class="bs-component">
+        <div class="list-group">
+          <div class="list-group-item active">
+            <h4 class="list-group-item-heading">訂閱議題</h4>
+            <p class="list-group-item-text">按照未讀評論數量排序</p>
+          </div>
+          <% @user = User.find_by(:id => session[:user_id] ) %>
+          <% @user.subscriptions.sort!.first(10).each do |topic| %>
+          <a href="/<%= topic.permalink %>/comments" class="list-group-item">
+            <span class="badge"><%= topic.comments.count %></span><%= topic.name %>
+          </a>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
 
 
