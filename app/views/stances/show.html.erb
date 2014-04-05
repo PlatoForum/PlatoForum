@@ -1,4 +1,9 @@
-<p id="notice"><%= notice %></p>
+<ul class="breadcrumb" style="margin-bottom: 5px;">
+    <li><%= link_to "Home", root_path %></li>
+    <li><%= link_to @target.name, "/#{@target.permalink}/" %></li>
+    <li><%= @stance.description %></li>
+</ul>
 
-<%= link_to 'Edit', edit_stance_path(@stance) %> |
-<%= link_to 'Back', stances_path %>
+<%= render 'comments/header' %>
+
+<%= render 'stances/listview' %>

@@ -22,29 +22,37 @@ class TopicsController < ApplicationController
   # GET /:permalink/subscribe
   def subscribe
     if session[:user_id].nil?
-      format.html { redirect_to "/#{params[:permalink]}", notice: "你必須先登入才能訂閱議題" }
+      respond_to do |format|
+        format.html { redirect_to "/#{params[:permalink]}", notice: "你必須先登入才能訂閱議題" }
+      end
     else
       @user = User.find_by(:id => session[:user_id])
       @topic = Topic.find_by(:permalink => params[:permalink])
       @user.subscriptions << @topic
       @user.save
 
-      redirect_to "/#{params[:permalink]}"
-      #format.html { redirect_to "/#{params[:permalink]}", notice: "訂閱議題『#{@topic.name}』"}
+      #redirect_to "/#{params[:permalink]}"
+      respond_to do |format|
+        format.html { redirect_to "/#{params[:permalink]}", notice: "訂閱議題『#{@topic.name}』"}
+      end
     end
   end
 
   # GET /:permalink/subscribe
   def unsubscribe
     if session[:user_id].nil?
-      format.html { redirect_to "/#{params[:permalink]}", notice: "你必須先登入才能訂閱議題" }
+      respond_to do |format|
+        format.html { redirect_to "/#{params[:permalink]}", notice: "你必須先登入才能訂閱議題" }
+      end
     else
       @user = User.find_by(:id => session[:user_id])
       @topic = Topic.find_by(:permalink => params[:permalink])
       @user.subscriptions.delete(@topic)
 
-      redirect_to "/#{params[:permalink]}"
-      #format.html { redirect_to "/#{params[:permalink]}", notice: "訂閱議題『#{@topic.name}』"}
+      #redirect_to "/#{params[:permalink]}"
+      respond_to do |format|
+        format.html { redirect_to "/#{params[:permalink]}", notice: "取消訂閱議題『#{@topic.name}』"}
+      end
     end
   end
 

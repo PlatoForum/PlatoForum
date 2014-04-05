@@ -55,5 +55,57 @@ class ApplicationController < ActionController::Base
     end
   end
  
+  # This part for comment and stance
+  def check_topic
+    if !params[:id].nil?
+      @target = Comment.find(params[:id]).target
+    else
+      @target = Topic.find_by(:permalink => params[:permalink])
+    end
+
+    if @target.nil?
+      format.html { render text: "Error", status: 404 }
+    end
+  end
+
+  def create_job(action, proxy_id, comment_id)
+    job = Job.new
+    job.action = action
+    job.who = proxy_id
+    job.post = comment_id
+    job.save!
+    redis = Redis.new
+    redis.publish "jobqueue", job.to_json
+  end
+
+  def set_proxy #require login and proxy
+    @user = User.find_by(:id => session[:user_id])
+    @proxy = @user.proxies.find_by(:topic_id => @target._id)
+    return if @proxy
+    @proxy = Proxy.new
+    @proxy.topic = @target
+    @proxy.user = @user
+    @proxy.pseudonym = pseudonym_gen
+    @proxy.save!
+  end
+
+  def before_edit
+    check_topic
+    set_proxy
+  end
+
+  def before_show
+    
+    check_topic
+    if session[:user_id].nil? #not logged in, use anonymous proxy
+      @proxy = Proxy.new
+      @proxy.topic = @target
+      @proxy.user = @user
+      @proxy.pseudonym = "路人"
+    else #logged in
+      
+      set_proxy
+    end
+  end
 
 end

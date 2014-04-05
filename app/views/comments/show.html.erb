@@ -1,7 +1,7 @@
 <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><%= link_to "Home", root_path %></li>
     <li><%= link_to @target.name, "/#{@target.permalink}/" %></li>
-    <li><%= link_to @target.name, "/#{@target.permalink}/" %></li>
+    <li><%= link_to @stance.description, "/#{@target.permalink}/stance#{@stance.number}" %></li>
     <li class="active">檢視評論</li>
 </ul>
 

@@ -162,6 +162,21 @@ class CommentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
       @comment = Comment.find(params[:id])
+
+      @stance = Stance.new
+
+      @stance.number = @comment.stance
+      if @stance.number == 1
+        @stance.description = "支持"
+      end
+      if @stance.number == 2
+        @stance.description = "中立"
+      end
+      if @stance.number == 3
+        @stance.description = "反對"
+      end
+      @stance.target = @comment.target
+
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -169,55 +184,4 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:subject, :body, :stance)
     end
 
-    def check_topic
-      if !params[:id].nil?
-        @target = Comment.find(params[:id]).target
-      else
-        @target = Topic.find_by(:permalink => params[:permalink])
-      end
-
-      if @target.nil?
-        format.html { render text: "Error", status: 404 }
-      end
-    end
-
-    def set_proxy #require login and proxy
-      @user = User.find_by(:id => session[:user_id])
-      @proxy = @user.proxies.find_by(:topic_id => @target._id)
-      return if @proxy
-      @proxy = Proxy.new
-      @proxy.topic = @target
-      @proxy.user = @user
-      @proxy.pseudonym = pseudonym_gen
-      @proxy.save!
-    end
-
-    def before_edit
-      check_topic
-      set_proxy
-    end
-
-    def before_show
-      
-      check_topic
-      if session[:user_id].nil? #not logged in, use anonymous proxy
-        @proxy = Proxy.new
-        @proxy.topic = @target
-        @proxy.user = @user
-        @proxy.pseudonym = "路人"
-      else #logged in
-        
-        set_proxy
-      end
-    end
-
-    def create_job(action, proxy_id, comment_id)
-      job = Job.new
-      job.action = action
-      job.who = proxy_id
-      job.post = comment_id
-      job.save!
-      redis = Redis.new
-      redis.publish "jobqueue", job.to_json
-    end
 end

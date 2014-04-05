@@ -7,7 +7,7 @@ class Comment
 
   belongs_to :owner, class_name: "Proxy", inverse_of: :works, autosave: true
   belongs_to :target, class_name: "Topic", inverse_of: :comments, autosave:true
-  #belongs_to :stance
+  belongs_to :stanceObj, class_name: "Stance", inverse_of: :comments, autosave:true
 
   has_and_belongs_to_many :likes, class_name: "Proxy", inverse_of: :approvals, validate: false
   has_and_belongs_to_many :dislikes, class_name: "Proxy", inverse_of: :disapprovals, validate: false
