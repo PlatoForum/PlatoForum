@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     while true
       r = rand.rand(1.0)
       word = collection.find_by(:ran =>{"$lte" => r, "$gte" => r-0.01})
-      return word
+      return word unless word.nil?
     end
   end
 
