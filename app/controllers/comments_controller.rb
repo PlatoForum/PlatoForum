@@ -41,19 +41,15 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     @comment.target = @target
     
-    if params[:comment][:stance].nil?()
-      @comment.stance = 0
-    else 
-      if params[:comment][:stance].to_i > 1
-        @comment.stance = 1
-      else 
-        if params[:comment][:stance].to_i < -1
-          @comment.stance = -1
-        else
-          @comment.stance = params[:comment][:stance]
-        end
-      end 
-    end
+    # @comment.stance = params[:comment][:stance].to_i
+
+    # if @comment.stance > 1
+    #   @comment.stance = 1
+    # end 
+      
+    # if @comment.stance < -1
+    #   @comment.stance = -1
+    # else
     
     @comment.owner = @proxy
     
@@ -132,18 +128,22 @@ class CommentsController < ApplicationController
       @proxy.disapprovals.delete(c)
       c.likes << @proxy
       c.save
-      respond_to do |format|
-        format.html { redirect_to "/comments/#{c.id}", notice: '已成功表達支持' }
-      end
+      
+      redirect_to "/comments/#{c.id}"
+      # respond_to do |format|
+      #   format.html { redirect_to "/comments/#{c.id}", notice: "你覺得『#{c.subject}』讚！" }
+      # end
   end
 
   def neutral
       c = Comment.find_by(:id => params[:id])
       @proxy.approvals.delete(c) 
       @proxy.disapprovals.delete(c) 
-      respond_to do |format|
-        format.html { redirect_to "/comments/#{c.id}", notice: '已成功表達中立' }
-      end
+
+      redirect_to "/comments/#{c.id}"
+      # respond_to do |format|
+      #   format.html { redirect_to "/comments/#{c.id}", notice: "你對『#{c.subject}』沒有感覺" }
+      # end
   end
 
   def dislike
@@ -151,9 +151,11 @@ class CommentsController < ApplicationController
       @proxy.approvals.delete(c) 
       c.dislikes << @proxy
       c.save
-      respond_to do |format|
-        format.html { redirect_to "/comments/#{c.id}", notice: '已成功表達反對' }
-      end
+
+      redirect_to "/comments/#{c.id}"
+      # respond_to do |format|
+      #   format.html { redirect_to "/comments/#{c.id}", notice: "你覺得『#{c.subject}』爛！" }
+      # end
   end
 
   private
@@ -202,7 +204,7 @@ class CommentsController < ApplicationController
         @proxy = Proxy.new
         @proxy.topic = @target
         @proxy.user = @user
-        @proxy.pseudonym = "anonymous"
+        @proxy.pseudonym = "路人"
       else #logged in
         
         set_proxy

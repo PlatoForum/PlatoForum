@@ -21,7 +21,7 @@
       <p class="text-muted"><%= @target.description %></p>
     </legend>
     <div class="form-group <%= "has-error" unless @comment.errors[:subject].count ==0 %>">
-      <label for="name" class="col-lg-2 control-label">主旨</label>
+      <label for="name" class="col-lg-2 control-label">主旨（必要）</label>
       <div class="col-lg-10">
         <% unless @comment.errors[:subject].nil? %>
         <label class="control-label" for="inputError"><%= @comment.errors[:subject].join(", ") %></label>
@@ -44,11 +44,11 @@
         <% unless @comment.errors[:stance].nil? %>
         <label class="control-label" for="inputError"><%= @comment.errors[:stance].join(", ") %></label>
         <% end %>
-        <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="0">
+        <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="<%= @comment.stance %>">
         <div class="btn-group btn-group-justified" data-toggle="buttons-radio">
-          <a href="#" id="button_like" onClick="click_like()" type="button" class="btn btn-success" value="1">支持</a>
-          <a href="#" id="button_neutral" onClick="click_neutral()" type="button" class="btn btn-warning" value="0">✓ 中立</a>
-          <a href="#" id="button_dislike" onClick="click_dislike()" type="button" class="btn btn-danger" value="-1">反對</a>
+          <a href="#" id="button_like" onClick="click_like()" type="button" class="btn btn-success" value="1"><%= "✓ " if @comment.stance == 1 %> 支持</a>
+          <a href="#" id="button_neutral" onClick="click_neutral()" type="button" class="btn btn-warning" value="0"><%= "✓ " if @comment.stance == 2 %>中立</a>
+          <a href="#" id="button_dislike" onClick="click_dislike()" type="button" class="btn btn-danger" value="-1"><%= "✓ " if @comment.stance == 3 %>反對</a>
         </div>
       </div>
     </div>
@@ -69,13 +69,13 @@
         clear_buttons();
 
         document.getElementById("button_neutral").innerHTML = "✓ 中立";
-        $("#comment_stance").val(0);
+        $("#comment_stance").val(2);
       }
       function click_dislike(){
         clear_buttons();
 
         document.getElementById("button_dislike").innerHTML = "✓ 反對";
-        $("#comment_stance").val(-1);
+        $("#comment_stance").val(3);
       }
     </script>
 

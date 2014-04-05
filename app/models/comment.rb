@@ -15,6 +15,7 @@ class Comment
   validates_presence_of :owner
   validates_presence_of :doc
 
+  validates :subject, presence: true
   validates :body, presence: true
   validates :stance, presence: true
 

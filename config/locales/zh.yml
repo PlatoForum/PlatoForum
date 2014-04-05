@@ -25,8 +25,8 @@ zh:
   mongoid:
     errors:
       full_messages:
-      format: 
-      messages: 
+      format:
+      messages:
         validations:
           message: "問題"
           summary: "總結"
@@ -42,14 +42,17 @@ zh:
               blank: "不能留空"
         comment:
           attributes:
+            subject:
+              blank: "不能留空"
             body:
               blank: "不能留空"
             stance:
-              blank: "不能留空"
+              blank: "必須選擇"
     attributes:
       topic:
         name: "議題名稱"
         permalink: "永久連結"
       comment:
+        subject: "評論主旨"
         body: "評論內容"
         stance: "評論立場"
