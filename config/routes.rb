@@ -35,6 +35,8 @@ PlatoForum::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'topics#index'
+
+  get 'topic_list' => "topics#completelist"
  
   get ':permalink/comments' => "comments#index"
   get ':permalink/comments/new' => "comments#new"
