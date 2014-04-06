@@ -17,14 +17,6 @@
         </div>
         <div class="panel-body">
           <table class="table table-striped table-hover ">
-            <thead>
-              <tr>
-                <th></th>
-                <th>主旨</th>
-                <th>作者</th>
-                <th>時間</th>
-              </tr>
-            </thead>
 
             <tbody>
               <% @stance.comments.each do |comment| %>
@@ -34,8 +26,7 @@
                   <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
                 </td>
                 <td><%= comment.subject %></td>
-                <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%></td>
-                <td><%= comment.doc.strftime("%F %T") %></td>
+                <td class="text-primary"><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%> 發表於 <%= comment.doc.strftime("%F %T") %></td>
               </tr>
               <% end %>
             </tbody>

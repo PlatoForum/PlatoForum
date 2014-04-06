@@ -36,6 +36,7 @@ zh:
           attributes:
             name:
               blank: "不能留空"
+              too_long: "太長"
             permalink:
               taken: "與現有議題重複"
               invalid: "不符合規格"
@@ -44,6 +45,7 @@ zh:
           attributes:
             subject:
               blank: "不能留空"
+              too_long: "太長"
             body:
               blank: "不能留空"
             stance:
