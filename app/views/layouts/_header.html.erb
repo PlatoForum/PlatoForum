@@ -24,10 +24,10 @@
                 <li><a href="/user/activities">活動記錄</a></li>
                 <li><a href="/user/panel">個人設定</a></li>
                 <li class="divider"></li>
-                <li><%= link_to "登出", signout_path, id: "sign_out", onClick: "checkPage()" %></li>
+                <li><%= link_to "登出", signout_path, id: "sign_out" %></li>
               </ul></li>
                <% else %>
-                <li><%= link_to "用Facebook帳號登入", "/auth/facebook", id: "sign_in", onClick: "checkPage()" %></li>
+                <li><%= link_to "用Facebook帳號登入", "/signin", id: "sign_in" %></li>
               <% end %>
               
             

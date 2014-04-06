@@ -21,13 +21,8 @@
                   <span class="label label-success">讚 <%= comment.likes.count %></span> 
                   <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
                 </td>
-                <td><%= "（沒有主旨）" if comment.subject == "" %><%= comment.subject %></td>
-                <td class="text-muted hidden-xs"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></td>
-                <% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
-                  <td class="text-primary" align="right">今天 <%= comment.doc.strftime("%T") %></td>
-                <% else %>
-                  <td class="text-primary" align="right"><%= comment.doc.strftime("%F") %></td>
-                <% end %>
+                <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%>：<span class="text-muted"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
+                <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
               </tr>
               <% end %>
               <% end %>
@@ -58,13 +53,8 @@
                   <span class="label label-success">讚 <%= comment.likes.count %></span> 
                   <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
                 </td>
-                <td><%= "（沒有主旨）" if comment.subject == "" %><%= comment.subject %></td>
-                <td class="text-muted hidden-xs"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></td>
-                <% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
-                  <td class="text-primary" align="right">今天 <%= comment.doc.strftime("%T") %></td>
-                <% else %>
-                  <td class="text-primary" align="right"><%= comment.doc.strftime("%F") %></td>
-                <% end %>
+                <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%>：<span class="text-muted"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
+                <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
                 </tr>
               <% end %>
               <% end %>
@@ -89,19 +79,14 @@
             <tbody>
               <% @comments.each do |comment| %>
               <% if comment.stance == 3 %>
-              <tr onClick="document.location = '/comments/<%= comment.id %>';">
+                <tr onClick="document.location = '/comments/<%= comment.id %>';">
                 <td width="10">
                   <span class="label label-success">讚 <%= comment.likes.count %></span> 
                   <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
                 </td>
-                <td><%= "（沒有主旨）" if comment.subject == "" %><%= comment.subject %></td>
-                <td class="text-muted hidden-xs"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></td>
-                <% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
-                  <td class="text-primary" align="right">今天 <%= comment.doc.strftime("%T") %></td>
-                <% else %>
-                  <td class="text-primary" align="right"><%= comment.doc.strftime("%F") %></td>
-                <% end %>
-              </tr>
+                <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%>：<span class="text-muted"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
+                <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
+                </tr>
               <% end %>
               <% end %>
             </tbody>

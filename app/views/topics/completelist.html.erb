@@ -3,13 +3,29 @@
     <li class="active">議題列表</li>
 </ul>
 
-<ul class="nav nav-pills" style="margin-top: 15px; margin-bottom: 15px;">
+<ul class="nav nav-pills hidden-xs pull-right" style="margin-top: 15px; margin-bottom: 15px;">
+  <li class="disabled"><a href="#" style="cursor: default;">排列依照</a></li>
   <li class="active"><a href="#comments_count" data-toggle="tab">評論次數</a></li>
   <li class=""><a href="#creation_time" data-toggle="tab">創建時間</a></li>
-  <li class=""><a href="#subscription_count" data-toggle="tab">訂閱次數</a></li>
+  <li class=""><a href="#subscription_count" data-toggle="tab">訂閱人數</a></li>
   <% unless session[:user_id].nil? %>
   <li class=""><a href="#my_subscriptions" data-toggle="tab">我的訂閱</a></li>
   <% end %>
+</ul>
+<ul class="nav nav-pills visible-xs" style="margin-top: 15px; margin-bottom: 15px;">
+	<li class="dropdown active pull-right">
+	<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      排列依照 <span class="caret"></span>
+    </a>
+	<ul class="dropdown-menu">
+	  <li class="active"><a href="#comments_count" data-toggle="tab">評論數</a></li>
+	  <li class=""><a href="#creation_time" data-toggle="tab">創建時間</a></li>
+	  <li class=""><a href="#subscription_count" data-toggle="tab">訂閱數</a></li>
+	  <% unless session[:user_id].nil? %>
+	  <li class=""><a href="#my_subscriptions" data-toggle="tab">我的訂閱</a></li>
+	  <% end %>
+	</ul>
+	</li>
 </ul>
 <div id="myTabContent" class="tab-content">
   <div class="tab-pane fade active in" id="comments_count">
@@ -17,7 +33,7 @@
 		<tbody>
 			<% @topics.sort!{ |a,b| b.comments.count <=> a.comments.count }.each do |topic| %>
 			<tr onclick="document.location = '/<%= topic.permalink %>/comments';">
-				<td><%= topic.name %></td>
+				<td align="right"><%= topic.name %></td>
 				<td class="text-muted"><%= topic.description[0,20] %><%= "⋯⋯" if topic.description.length > 20 %></td>
 				<td width="30"><span class="badge"><%= topic.comments.count %></span></td>
 			</tr>
@@ -31,7 +47,7 @@
 		<tbody>
 			<% @topics.sort!{ |a,b| b.doc <=> a.doc }.each do |topic| %>
 			<tr onclick="document.location = '/<%= topic.permalink %>/comments';">
-				<td><%= topic.name %></td>
+				<td align="right"><%= topic.name %></td>
 				<td class="text-muted"><%= topic.description[0,20] %><%= "⋯⋯" if topic.description.length > 20 %></td>
 				<td width="30"><% if topic.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
 					            <span class="badge pull-right">今天 <%= topic.doc.strftime("%T") %></span>
@@ -49,7 +65,7 @@
 		<tbody>
 			<% @topics.sort!{|a,b| b.subscribed_by.count <=> a.subscribed_by.count}.each do |topic| %>
 			<tr onclick="document.location = '/<%= topic.permalink %>/comments';">
-				<td><%= topic.name %></td>
+				<td align="right"><%= topic.name %></td>
 				<td class="text-muted"><%= topic.description[0,20] %><%= "⋯⋯" if topic.description.length > 20 %></td>
 				<td width="30"><span class="badge"><%= topic.subscribed_by.count %></span></td>
 			</tr>
@@ -64,7 +80,7 @@
 			<% @user = User.find_by(:id => session[:user_id] ) %>
 			<% @user.subscriptions.each do |topic| %>
 			<tr onclick="document.location = '/<%= topic.permalink %>/comments';">
-				<td><%= topic.name %></td>
+				<td align="right"><%= topic.name %></td>
 				<td class="text-muted"><%= topic.description[0,20] %><%= "⋯⋯" if topic.description.length > 20 %></td>
 			</tr>
 		    <% end %>
