@@ -2,10 +2,9 @@
   <div class="col-sm-4">
     <div class="bs-component">
       <div class="list-group">
-        <div class="list-group-item active">
+        <a class="list-group-item active" href="/topic_list">
           <h4 class="list-group-item-heading">熱門議題</h4>
-          <p class="list-group-item-text">按照評論數量排序</p>
-        </div>
+        </a>
         <% @topics.sort!{ |a,b| b.comments.count <=> a.comments.count }.first(5).each do |topic| %>
         <a href="/<%= topic.permalink %>/comments" class="list-group-item">
           <span class="badge"><%= topic.comments.count %></span><%= topic.name %>
@@ -17,10 +16,9 @@
   <div class="col-sm-4">
     <div class="bs-component">
       <div class="list-group">
-        <div class="list-group-item active">
+        <a class="list-group-item active" href="/topic_list">
           <h4 class="list-group-item-heading">最新議題</h4>
-          <p class="list-group-item-text">按照創建時間排序</p>
-        </div>
+        </a>
         <% @topics.sort!{ |a,b| b.doc <=> a.doc }.first(5).each do |topic| %>
         <a href="/<%= topic.permalink %>/comments" class="list-group-item">
           <% if topic.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
@@ -37,10 +35,9 @@
     <div class="col-sm-4">
       <div class="bs-component">
         <div class="list-group">
-          <div class="list-group-item active">
+          <a class="list-group-item active" href="/topic_list">
             <h4 class="list-group-item-heading">熱門訂閱議題</h4>
-            <p class="list-group-item-text">按照訂閱人數排序</p>
-          </div>
+          </a>
           <% @topics.sort!{|a,b| b.subscribed_by.count <=> a.subscribed_by.count}.first(5).each do |topic| %>
           <a href="/<%= topic.permalink %>/comments" class="list-group-item">
             <span class="badge"><%= topic.subscribed_by.count %></span><%= topic.name %>
@@ -53,10 +50,9 @@
     <div class="col-sm-4">
       <div class="bs-component">
         <div class="list-group">
-          <div class="list-group-item active">
+          <a class="list-group-item active" href="/topic_list">
             <h4 class="list-group-item-heading">訂閱議題</h4>
-            <p class="list-group-item-text">按照未讀評論數量排序</p>
-          </div>
+          </a>
           <% @user = User.find_by(:id => session[:user_id] ) %>
           <% @user.subscriptions.sort!.first(10).each do |topic| %>
           <a href="/<%= topic.permalink %>/comments" class="list-group-item">
@@ -96,7 +92,7 @@
               <label for="description" class="col-sm-2 control-label">描述</label>
               <div class="col-sm-10">
                 <%= f.text_area :description, class: "form-control", placeholder: "議題描述", rows: "3" %>
-                <span class="help-block">簡單描述議論的目標，請保持客觀，並且使用是非題形式。例如『你支持太陽花學運嗎？』而不是『太陽花學運的起因是什麼？』</span>
+                <span class="help-block">簡單描述議論的目標，使用可以讓人『支持』或『反對』的形式。例如『香蕉很好吃』而不是『香蕉』</span>
               </div>
             </div>
 

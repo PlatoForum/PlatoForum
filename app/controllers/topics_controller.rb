@@ -7,6 +7,10 @@ class TopicsController < ApplicationController
     @topics = Topic.all
   end
 
+  def completelist
+    @topics = Topic.all
+  end
+
   # GET /topics/1
   # GET /topics/1.json
   # This is no longer used
