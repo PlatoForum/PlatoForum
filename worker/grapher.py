@@ -6,6 +6,7 @@ import json
 from bson.objectid import ObjectId
 import networkx as nx
 import urlparse
+from itertools import combinations, product
 
 Gs = {}
 delta = 1
@@ -14,14 +15,16 @@ def adjust_preference(G, pid, cid, offset):
     print 'before adjustment'
     graph_status(G)
     proxy = proxies_collection.find_one({"_id":ObjectId(pid)})
-    works = comments_collection.find({"owner_id":ObjectId(pid)})
-    for widobj in works:
-        print widobj['_id']
-        print str(widobj['_id'])
-        G[str(widobj['_id'])][cid]['weight'] -= offset
+    #works = comments_collection.find({"owner_id":ObjectId(pid)})
+    #for widobj in works:
+    #    print widobj['_id']
+    #    print str(widobj['_id'])
+    #    G[str(widobj['_id'])][cid]['weight'] -= offset
     if 'approval_ids' in proxy.keys():
         for aidobj in proxy['approval_ids']:
             print 'approval'
+            print str(aidobj)
+            print cid
             G[str(aidobj)][cid]['weight'] -= offset
     if 'disapproval_ids' in proxy.keys():
         for didobj in proxy['disapproval_ids']:
@@ -60,7 +63,6 @@ def process_job(job):
     tid = job['group']['$oid']
     pid = job['who']['$oid']
     cid = job['post']['$oid']
-    print tid
     if tid not in Gs.keys():
         Gs[tid] = nx.Graph()
     y = job['action']
@@ -93,13 +95,41 @@ if mongolab:
     parseobj = urlparse.urlparse(mongo_uri)
     dbname = parseobj.path[1:]
     db = mongo_connection[dbname]
-    print os.environ['MONGOLAB_USER_PY']
 else:
     mongo_connection = MongoClient()
     db = mongo_connection["plato_forum_development"]
 
 proxies_collection = db['proxies']
 comments_collection = db['comments']
+
+# Build graph from current content in MongoDB
+comments = comments_collection.find()
+for c in comments:
+    tid = str(c['target_id'])
+    cid = str(c['_id'])
+    if tid not in Gs.keys():
+        Gs[tid] = nx.Graph()
+    Gs[tid].add_node(cid)
+    for n in Gs[tid].nodes():
+        Gs[tid].add_edge(n, cid)
+        Gs[tid][n][cid]['weight'] = 0
+
+proxies = proxies_collection.find()
+for p in proxies:
+    tid = str(p['topic_id'])
+    if 'approval_ids' in p.keys():
+        for (ai, aj) in combinations(p['approval_ids'], 2):
+            Gs[tid][str(ai)][str(aj)]['weight'] -= delta
+    if 'disapproval_ids' in p.keys():
+        for (di, dj) in combinations(p['disapproval_ids'], 2):
+            Gs[tid][str(di)][str(dj)]['weight'] -= delta
+    if 'approval_ids' in p.keys() and 'disapproval_ids' in p.keys():
+        for (ai, di) in product(p['approval_ids'],p['disapproval_ids']):            
+            Gs[tid][str(ai)][str(di)]['weight'] += delta
+
+for (x,y) in Gs.items():
+    print x
+    graph_status(y)
 
 # subscribe to Redis To Go
 redistogo = True
