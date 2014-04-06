@@ -1,9 +1,7 @@
 <div class="jumbotron">
 	<h1><strong>PlatoForum 芭樂婦人</strong></h1>
-	<p>『芭樂婦人』是一個全新概念的議題辯論網站。我們致力於創造一個更加客觀、理性、刺激思考的辯論環境。</p>
-	<p>選擇一項議題，立刻加入討論！</p>
-	<p><%= link_to "了解更多", "/static/about", class: 'btn btn-lg btn-info', role: "button"%>
-	<a data-toggle="modal" href="#modal_new_topic" class= 'btn btn-lg btn-primary pull-right'>創建議題</a></p>
+	<p>『芭樂婦人』是一個全新概念的議題辯論網站。我們致力於創造一個更加客觀、理性、刺激思考的辯論環境。<%= link_to "了解更多", "/static/about", class: 'btn btn-lg btn-link', role: "button"%></p>
+	<p>選擇一項議題，立刻加入討論！<a data-toggle="modal" href="#modal_new_topic" class= 'btn btn-lg btn-link'>創建議題</a></p>
 </div>
 
 <%= render 'topics/listview' %>
