@@ -101,6 +101,10 @@ else:
 
 proxies_collection = db['proxies']
 comments_collection = db['comments']
+# To test if grapher.py is up running and can connect to MongoLab
+jobs_collection = db['jobs']
+job = {"message": "grapher.py is running"}
+print jobs_collection.insert(job)
 
 # Build graph from current content in MongoDB
 comments = comments_collection.find()
