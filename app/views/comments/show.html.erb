@@ -1,8 +1,8 @@
 <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><%= link_to "主頁", root_path %></li>
     <li><%= link_to "議題列表", "/topic_list" %></li>
-    <li><%= link_to @target.name, "/#{@target.permalink}/" %></li>
-    <li><%= link_to @stance.description, "/#{@target.permalink}/stance#{@stance.number}" %></li>
+    <li><%= link_to @topic.name, "/#{@topic.permalink}/" %></li>
+    <li><%= link_to @stance.description, "/#{@topic.permalink}/stance#{@stance.number}" %></li>
     <li class="active">檢視評論</li>
 </ul>
 
@@ -10,8 +10,8 @@
 <div class="bs-component">
     
     <div class="page-header">
-    <h2>議題：<%= @comment.target.name %></h2>
-    <p class = "text-muted"><%= @comment.target.description %></p>
+    <h2>議題：<%= @comment.topic.name %></h2>
+    <p class = "text-muted"><%= @comment.topic.description %></p>
     </div>
 
     <% if @comment.stance == 1 %>
@@ -31,7 +31,7 @@
       </div>
       <div class="panel-body">
         <p class="text-default"><%= @comment.body %></p>
-        <p class="text-primary" align="right"><% if (@comment.owner == @proxy)%>你<%else%><%=@comment.owner.pseudonym%><%end%><br>發表於 <%= @comment.doc.strftime("%F %T") %> </p>
+        <p class="text-primary" align="right"><a href="/<%=@comment.topic.permalink%>/proxy<%=@comment.owner.id%>"><% if (@comment.owner == @proxy)%>你<%else%><%=@comment.owner.pseudonym%><%end%></a><br>發表於 <%= @comment.doc.strftime("%F %T") %></p>
       </div>
 
 

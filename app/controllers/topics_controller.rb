@@ -69,9 +69,32 @@ class TopicsController < ApplicationController
   def create
     @topic = Topic.new(topic_params)
 
+    @stance1 = Stance.new
+    @stance1.number = 1
+    @stance1.description = "支持"
+    @stance1.panel = "panel-success"
+
+    @stance2 = Stance.new
+    @stance2.number = 2
+    @stance2.description = "中立"
+    @stance2.panel = "panel-warning"
+
+    @stance3 = Stance.new
+    @stance3.number = 3
+    @stance3.description = "反對"
+    @stance3.panel = "panel-danger"
+
+    @stance1.save
+    @stance2.save
+    @stance3.save
+
+    @topic.stances << @stance1
+    @topic.stances << @stance2
+    @topic.stances << @stance3
+
     respond_to do |format|
       if @topic.save
-        format.html { redirect_to "/#{@topic.permalink}/comments", notice: "創建新議題『#{@topic.name}』" }
+        format.html { redirect_to "/#{@topic.permalink}", notice: "創建新議題『#{@topic.name}』" }
         format.json { render action: 'show', status: :created, location: @topic }
       else
         format.html { render action: 'new', notice: @errormessage }
@@ -85,7 +108,7 @@ class TopicsController < ApplicationController
   def update
     respond_to do |format|
       if @topic.update(topic_params)
-        format.html { redirect_to "/#{@topic.permalink}/comments", success: 'Topic was successfully updated.' }
+        format.html { redirect_to "/#{@topic.permalink}", success: 'Topic was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

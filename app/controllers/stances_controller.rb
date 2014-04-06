@@ -68,34 +68,14 @@ class StancesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_stance
-      @target = Topic.find_by(:permalink => params[:permalink])
+      @topic = Topic.find_by(:permalink => params[:permalink])
       #@stance = Stance.find(params[:id]) # use integer for now
-      @stance = Stance.new
-
-      @stance.number = params[:stance].to_i
-      if @stance.number == 1
-        @stance.description = "支持"
-      end
-      if @stance.number == 2
-        @stance.description = "中立"
-      end
-      if @stance.number == 3
-        @stance.description = "反對"
-      end
-      @stance.target = @target
+      @stance = @topic.stances.find_by(:number => params[:stance].to_i)
 
       unless session[:user_id].nil?
         @user = User.find(session[:user_id])
       end
 
-      #temporary
-      @target.comments.each do |comment|
-        if comment.stance == @stance.number
-
-          @stance.comments << comment
-          
-        end
-      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

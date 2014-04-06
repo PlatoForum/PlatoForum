@@ -12,11 +12,11 @@ class CommentsController < ApplicationController
   # GET /:permalink/comments
   # GET /:permalink/comments.json
   def index
-    @target = Topic.find_by(:permalink => params[:permalink])
-    if @target.nil?()
+    @topic = Topic.find_by(:permalink => params[:permalink])
+    if @topic.nil?()
       format.html { render text: "Error", status: 404 }
     else
-      @comments = @target.comments
+      @comments = @topic.comments
     end
   end
 
@@ -39,7 +39,7 @@ class CommentsController < ApplicationController
   # POST /:permalink/comments.json
   def create
     @comment = Comment.new(comment_params)
-    @comment.target = @target
+    @comment.topic = @topic
     
     # @comment.stance = params[:comment][:stance].to_i
 
@@ -55,13 +55,18 @@ class CommentsController < ApplicationController
     
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to "/#{params[:permalink]}/comments", notice: '已成功發表評論！' }
+        format.html { redirect_to "/#{params[:permalink]}", notice: '已成功發表評論！' }
         format.json { render action: 'show', status: :created, location: @comment }
       else
         format.html { render action: 'new', notice: @errormessage }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
+
+    @stance = @topic.stances.find_by(:number => @comment.stance)
+
+    @stance.comments << @comment
+
   end
 
   # PATCH/PUT /comments/1
@@ -69,7 +74,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to "/#{@comment.target.permalink}/comments", notice: 'Comment was successfully updated.' }
+        format.html { redirect_to "/#{@comment.topic.permalink}", notice: 'Comment was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -81,10 +86,10 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy
-    @permalink = @comment.target.permalink
+    @permalink = @comment.topic.permalink
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to "/#{@permalink}/comments" }
+      format.html { redirect_to "/#{@permalink}" }
       format.json { head :no_content }
     end
   end
@@ -96,20 +101,20 @@ class CommentsController < ApplicationController
       c.save
       create_job(:like, @proxy._id, c._id) 
       create_job(:undislike, @proxy._id, c._id) if @proxy.disapprovals.delete(c)
-      redirect_to "/comments/#{c.id}"
-      # respond_to do |format|
-      #   format.html { redirect_to "/comments/#{c.id}", notice: "你覺得『#{c.subject}』讚！" }
-      # end
+      # redirect_to "/comments/#{c.id}"
+      respond_to do |format|
+        format.html { redirect_to "/comments/#{c.id}", notice: "你覺得『#{c.subject}』讚！" }
+      end
   end
 
   def neutral
       c = Comment.find_by(:id => params[:id])
       create_job(:unlike, @proxy._id, c._id) if @proxy.approvals.delete(c) 
       create_job(:undislike, @proxy._id, c._id) if @proxy.disapprovals.delete(c)
-      redirect_to "/comments/#{c.id}"
-      # respond_to do |format|
-      #   format.html { redirect_to "/comments/#{c.id}", notice: "你對『#{c.subject}』沒有感覺" }
-      # end
+      # redirect_to "/comments/#{c.id}"
+      respond_to do |format|
+        format.html { redirect_to "/comments/#{c.id}", notice: "你對『#{c.subject}』沒有感覺" }
+      end
   end
 
   def dislike
@@ -118,10 +123,10 @@ class CommentsController < ApplicationController
       c.save
       create_job(:dislike, @proxy._id, c._id)
       create_job(:unlike, @proxy._id, c._id) if @proxy.approvals.delete(c) 
-      redirect_to "/comments/#{c.id}"
-      # respond_to do |format|
-      #   format.html { redirect_to "/comments/#{c.id}", notice: "你覺得『#{c.subject}』爛！" }
-      # end
+      # redirect_to "/comments/#{c.id}"
+      respond_to do |format|
+        format.html { redirect_to "/comments/#{c.id}", notice: "你覺得『#{c.subject}』爛！" }
+      end
   end
 
   private
@@ -141,7 +146,7 @@ class CommentsController < ApplicationController
       if @stance.number == 3
         @stance.description = "反對"
       end
-      @stance.target = @comment.target
+      @stance.topic = @comment.topic
 
     end
 
@@ -153,7 +158,7 @@ class CommentsController < ApplicationController
     def create_job(action, proxy_id, comment_id)
       job = Job.new
       job.action = action
-      job.group = @target._id
+      job.group = @topic._id
       job.who = proxy_id
       job.post = comment_id
       REDIS.publish "jobqueue", job.to_json

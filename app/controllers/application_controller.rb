@@ -54,12 +54,12 @@ class ApplicationController < ActionController::Base
   # This part for comment and stance
   def check_topic
     if !params[:id].nil?
-      @target = Comment.find(params[:id]).target
+      @topic = Comment.find(params[:id]).topic
     else
-      @target = Topic.find_by(:permalink => params[:permalink])
+      @topic = Topic.find_by(:permalink => params[:permalink])
     end
 
-    if @target.nil?
+    if @topic.nil?
       format.html { render text: "Error", status: 404 }
     end
   end
@@ -76,10 +76,10 @@ class ApplicationController < ActionController::Base
 
   def set_proxy #require login and proxy
     @user = User.find_by(:id => session[:user_id])
-    @proxy = @user.proxies.find_by(:topic_id => @target._id)
+    @proxy = @user.proxies.find_by(:topic_id => @topic._id)
     return if @proxy
     @proxy = Proxy.new
-    @proxy.topic = @target
+    @proxy.topic = @topic
     @proxy.user = @user
     @proxy.pseudonym = pseudonym_gen
     @proxy.save!
@@ -95,7 +95,7 @@ class ApplicationController < ActionController::Base
     check_topic
     if session[:user_id].nil? #not logged in, use anonymous proxy
       @proxy = Proxy.new
-      @proxy.topic = @target
+      @proxy.topic = @topic
       @proxy.user = @user
       @proxy.pseudonym = "路人"
     else #logged in

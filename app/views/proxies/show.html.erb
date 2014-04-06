@@ -1,4 +1,11 @@
-<p id="notice"><%= notice %></p>
+<ul class="breadcrumb" style="margin-bottom: 5px;">
+    <li><%= link_to "主頁", root_path %></li>
+    <li><%= link_to "議題列表", "/topic_list" %></li>
+    <li><%= link_to @topic.name, "/#{@topic.permalink}/" %></li>
+    <li><%= @proxy_to_show.pseudonym %></li>
+</ul>
 
-<%= link_to 'Edit', edit_proxy_path(@proxy) %> |
-<%= link_to 'Back', proxies_path %>
+<div class="page-header">
+	<h1><strong><%= @topic.name %></strong></h1>
+	<h3><%= @proxy_to_show.pseudonym %><%="（你）" if @proxy_to_show == @proxy %> 的活動記錄</h3>
+</div>
