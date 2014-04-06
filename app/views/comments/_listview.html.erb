@@ -3,23 +3,25 @@
   <div class="col-md-4">
     <div class="bs-component">
 
-
       <div class="panel panel-success">
+        <a href="/<%= @target.permalink %>/stance1">
         <div class="panel-heading">
-          <h3 class="panel-title"><a  href="/<%= @target.permalink %>/stance1">支持</a></h3>
+          <h3 class="panel-title">支持</h3>
         </div>
+        </a>
+
         <div class="panel-body">
           <table class="table table-striped table-hover ">
 
             <tbody>
               <% @comments.each do |comment| %>
               <% if comment.stance == 1 %>
-              <tr>
+              <tr onClick="document.location = '/comments/<%= comment.id %>';">
                 <td width="10">
                   <span class="label label-success">讚 <%= comment.likes.count %></span> 
                   <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
                 </td>
-                <td><a href="/comments/<%= comment.id %>"><%= "（沒有主旨）" if comment.subject == "" %><%= comment.subject %></a></td>
+                <td><%= "（沒有主旨）" if comment.subject == "" %><%= comment.subject %></td>
                 <% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
                   <td>今天 <%= comment.doc.strftime("%T") %></td>
                 <% else %>
@@ -48,12 +50,12 @@
             <tbody>
               <% @comments.each do |comment| %>
               <% if comment.stance == 2 %>
-              <tr>
+              <tr onClick="document.location = '/comments/<%= comment.id %>';">
                 <td width="10">
                   <span class="label label-success">讚 <%= comment.likes.count %></span> 
                   <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
                 </td>
-                <td><a href="/comments/<%= comment.id %>"><%= "（沒有主旨）" if comment.subject == "" %><%= comment.subject %></a></td>
+                <td><%= "（沒有主旨）" if comment.subject == "" %><%= comment.subject %></td>
                 <% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
                   <td>今天 <%= comment.doc.strftime("%T") %></td>
                 <% else %>
@@ -81,12 +83,12 @@
             <tbody>
               <% @comments.each do |comment| %>
               <% if comment.stance == 3 %>
-              <tr>
+              <tr onClick="document.location = '/comments/<%= comment.id %>';">
                 <td width="10">
                   <span class="label label-success">讚 <%= comment.likes.count %></span> 
                   <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
                 </td>
-                <td><a href="/comments/<%= comment.id %>"><%= "（沒有主旨）" if comment.subject == "" %><%= comment.subject %></a></td>
+                <td><%= "（沒有主旨）" if comment.subject == "" %><%= comment.subject %></td>
                 <% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
                   <td>今天 <%= comment.doc.strftime("%T") %></td>
                 <% else %>

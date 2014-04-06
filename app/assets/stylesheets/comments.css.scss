@@ -1,3 +1,19 @@
 // Place all the styles related to the comments controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.table-hover > tbody > tr:hover > td {
+  	cursor: pointer;
+}
+
+.panel-success > a > .panel-heading {
+	color: #ffffff;
+  	background-color: #28b62c;
+  	border-color: transparent;
+}
+
+.panel-success > a:hover > .panel-heading {
+	color: #ffffff;
+  	background-color: #aaaaaa;
+  	border-color: transparent;
+}

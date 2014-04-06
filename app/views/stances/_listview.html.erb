@@ -28,12 +28,12 @@
 
             <tbody>
               <% @stance.comments.each do |comment| %>
-              <tr>
+              <tr onClick="document.location = '/comments/<%= comment.id %>';">
                 <td width="10">
                   <span class="label label-success">讚 <%= comment.likes.count %></span> 
                   <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
                 </td>
-                <td><a href="/comments/<%= comment.id %>"><%= comment.subject %></a></td>
+                <td><%= comment.subject %></td>
                 <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%></td>
                 <td><%= comment.doc.strftime("%F %T") %></td>
               </tr>
