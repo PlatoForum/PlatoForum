@@ -1,3 +1,3 @@
 <h1><strong>活動記錄</strong></h1>
 <p>你的評論、支持、反對記錄</p>
-<p class="text-primary">已登入為<%= session[:user_id] %></p>
+<p class="text-primary">已登入為 <%= current_user.name %>（<%= session[:user_id]%>）</p>
