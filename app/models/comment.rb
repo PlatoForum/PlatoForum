@@ -26,7 +26,6 @@ class Comment
     @job.who = self.owner._id
     @job.post = self._id
     @job.action = :create
-    redis = Redis.new
-    redis.publish "jobqueue", @job.to_json
+    REDIS.publish "jobqueue", @job.to_json
   end
 end

@@ -5,6 +5,7 @@ import os
 import json
 from bson.objectid import ObjectId
 import networkx as nx
+import urlparse
 
 Gs = {}
 delta = 1
@@ -81,16 +82,18 @@ def process_job(job):
 def graph_status(G):
     print [(n,G[n]) for n in G.nodes()]
 
-rc = redis.Redis()
 
 # connect to MongoDB
-mongolab = False 
+mongolab = True
 # True if connecting to MongoLab, 
 # False if connecting to local MongoDB server
 if mongolab:
-    mongo_connection = MongoClient("ds1111.mongolab.com", 55666)
-    db = mongo_connetion["platoforum_db"]
-    db.authenticate(os.environ['MONGOLAB_USER'], os.environ['MONGOLAB_PWD'])
+    mongo_connection = MongoClient(os.environ['MONGOLAB_URI'])
+    mongo_uri = os.environ['MONGOLAB_URI']
+    parseobj = urlparse.urlparse(mongo_uri)
+    dbname = parseobj.path[1:]
+    db = mongo_connection[dbname]
+    print os.environ['MONGOLAB_USER_PY']
 else:
     mongo_connection = MongoClient()
     db = mongo_connection["plato_forum_development"]
@@ -98,8 +101,16 @@ else:
 proxies_collection = db['proxies']
 comments_collection = db['comments']
 
+# subscribe to Redis To Go
+redistogo = True
+if redistogo:
+    redis_url = os.environ['REDISTOGO_URL']
+    rc = redis.from_url(redis_url)
+else:
+    rc = redis.Redis()
+
 ps = rc.pubsub()
-ps.subscribe(['jobqueue', 'jobs'])
+ps.subscribe(['jobqueue'])
 
 for item in ps.listen():
     if item['type'] == 'message':
