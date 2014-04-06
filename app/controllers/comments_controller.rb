@@ -90,45 +90,12 @@ class CommentsController < ApplicationController
   end
 
   # LIKE/NERUTRAL/DISLIKE /comments/1/(ACTION)
-  # def like
-  #   c = Comment.find_by(:id => params[:id])
-  #   c.likes << @proxy
-  #   c.save
-  #   create_job(:like, @proxy._id, c._id) 
-  #   create_job(:undislike, @proxy._id, c._id) if @proxy.disapprovals.delete(c)
-  #   respond_to do |format|
-  #     format.html { redirect_to "/#{c.target.permalink}/comments", notice: '已成功表達支持' }
-  #   end
-  # end
-
-  # def neutral
-  #   c = Comment.find_by(:id => params[:id])
-  #   create_job(:unlike, @proxy._id, c._id) if @proxy.approvals.delete(c) 
-  #   create_job(:undislike, @proxy._id, c._id) if @proxy.disapprovals.delete(c)
-  #   respond_to do |format|
-  #     format.html { redirect_to "/#{c.target.permalink}/comments", notice: '已成功表達中立' }
-  #   end
-  # end
-
-  # def dislike
-  #   c = Comment.find_by(:id => params[:id])
-  #   c.dislikes << @proxy
-  #   c.save
-  #   create_job(:dislike, @proxy._id, c._id)
-  #   create_job(:unlike, @proxy._id, c._id) if @proxy.approvals.delete(c) 
-  #  respond_to do |format|
-  #    format.html { redirect_to "/#{c.target.permalink}/comments", notice: '已成功表達反對' }
-  #  end
-  #end
-
-
-  # LIKE/NERUTRAL/DISLIKE /comments/1/(ACTION)
   def like
       c = Comment.find_by(:id => params[:id])
-      @proxy.disapprovals.delete(c)
       c.likes << @proxy
       c.save
-      
+      create_job(:like, @proxy._id, c._id) 
+      create_job(:undislike, @proxy._id, c._id) if @proxy.disapprovals.delete(c)
       redirect_to "/comments/#{c.id}"
       # respond_to do |format|
       #   format.html { redirect_to "/comments/#{c.id}", notice: "你覺得『#{c.subject}』讚！" }
@@ -137,9 +104,8 @@ class CommentsController < ApplicationController
 
   def neutral
       c = Comment.find_by(:id => params[:id])
-      @proxy.approvals.delete(c) 
-      @proxy.disapprovals.delete(c) 
-
+      create_job(:unlike, @proxy._id, c._id) if @proxy.approvals.delete(c) 
+      create_job(:undislike, @proxy._id, c._id) if @proxy.disapprovals.delete(c)
       redirect_to "/comments/#{c.id}"
       # respond_to do |format|
       #   format.html { redirect_to "/comments/#{c.id}", notice: "你對『#{c.subject}』沒有感覺" }
@@ -148,10 +114,10 @@ class CommentsController < ApplicationController
 
   def dislike
       c = Comment.find_by(:id => params[:id])
-      @proxy.approvals.delete(c) 
       c.dislikes << @proxy
       c.save
-
+      create_job(:dislike, @proxy._id, c._id)
+      create_job(:unlike, @proxy._id, c._id) if @proxy.approvals.delete(c) 
       redirect_to "/comments/#{c.id}"
       # respond_to do |format|
       #   format.html { redirect_to "/comments/#{c.id}", notice: "你覺得『#{c.subject}』爛！" }
@@ -190,7 +156,6 @@ class CommentsController < ApplicationController
       job.group = @target._id
       job.who = proxy_id
       job.post = comment_id
-      redis = Redis.new
-      redis.publish "jobqueue", job.to_json
+      REDIS.publish "jobqueue", job.to_json
     end
 end

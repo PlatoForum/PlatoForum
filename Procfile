@@ -1,1 +1,2 @@
-resque: env TERM_CHILD=1 bundle exec rake resque:work
+web: bin/rails server -p $PORT -e $RAILS_ENV
+worker: python worker/grapher.py
