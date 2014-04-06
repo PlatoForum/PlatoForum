@@ -26,7 +26,8 @@
                   <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
                 </td>
                 <td><%= comment.subject %></td>
-                <td class="text-primary"><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%> 發表於 <%= comment.doc.strftime("%F %T") %></td>
+                <td class="text-muted hidden-xs"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></td>
+                <td class="text-primary" align="right"><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%> 發表於 <%= comment.doc.strftime("%F %T") %></td>
               </tr>
               <% end %>
             </tbody>
