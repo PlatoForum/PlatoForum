@@ -38,7 +38,6 @@ PlatoForum::Application.routes.draw do
 
   get 'topic_list' => "topics#completelist"
  
-  get ':permalink/comments' => "comments#index"
   get ':permalink/comments/new' => "comments#new"
   post ':permalink/comments' => "comments#create"
 
@@ -49,6 +48,7 @@ PlatoForum::Application.routes.draw do
   get ':permalink/change_name' => 'users#change_pseudonym'
 
   get ':permalink/stance:stance' => "stances#show"
+  get ':permalink/proxy:proxy' => "proxies#show"
 
   get ':permalink' => "comments#index"
 

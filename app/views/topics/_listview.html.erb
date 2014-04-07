@@ -6,7 +6,7 @@
           <h4 class="list-group-item-heading">熱門議題</h4>
         </a>
         <% @topics.sort!{ |a,b| b.comments.count <=> a.comments.count }.first(5).each do |topic| %>
-        <a href="/<%= topic.permalink %>/comments" class="list-group-item">
+        <a href="/<%= topic.permalink %>" class="list-group-item">
           <span class="badge"><%= topic.comments.count %></span><%= topic.name %>
         </a>
         <% end %>
@@ -20,7 +20,7 @@
           <h4 class="list-group-item-heading">最新議題</h4>
         </a>
         <% @topics.sort!{ |a,b| b.doc <=> a.doc }.first(5).each do |topic| %>
-        <a href="/<%= topic.permalink %>/comments" class="list-group-item">
+        <a href="/<%= topic.permalink %>" class="list-group-item">
           <% if topic.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
             <span class="badge">今天 <%= topic.doc.strftime("%T") %></span><%= topic.name %>
           <% else %>
@@ -39,7 +39,7 @@
             <h4 class="list-group-item-heading">熱門訂閱議題</h4>
           </a>
           <% @topics.sort!{|a,b| b.subscribed_by.count <=> a.subscribed_by.count}.first(5).each do |topic| %>
-          <a href="/<%= topic.permalink %>/comments" class="list-group-item">
+          <a href="/<%= topic.permalink %>" class="list-group-item">
             <span class="badge"><%= topic.subscribed_by.count %></span><%= topic.name %>
           </a>
           <% end %>
@@ -55,7 +55,7 @@
           </a>
           <% @user = User.find_by(:id => session[:user_id] ) %>
           <% @user.subscriptions.sort!.first(10).each do |topic| %>
-          <a href="/<%= topic.permalink %>/comments" class="list-group-item">
+          <a href="/<%= topic.permalink %>" class="list-group-item">
             <span class="badge"><%= topic.comments.count %></span><%= topic.name %>
           </a>
           <% end %>

@@ -1,7 +1,11 @@
 class SessionsController < ApplicationController
-  skip_before_action :require_user, only: [:new, :create]
+  skip_before_action :require_user, only: [:create]
 
   def new
+    session[:return_to] = request.referrer if session[:return_to].nil?
+    logger.info "Called by "+ session[:return_to]
+
+    redirect_to "/auth/facebook"
   end
   
   def create
@@ -9,13 +13,16 @@ class SessionsController < ApplicationController
     user = User.where(:provider => auth['provider'],
                       :uid => auth['uid']).first || User.create_with_omniauth(auth)
     session[:user_id] = user.id
-    #redirect_to session.delete(:return_to) || root_path
+    
+    redirect_to session.delete(:return_to)
     #redirect_to params[:lastpage]
   end
 
   def destroy
     reset_session
+    logger.info "Called by "+ request.referrer
     #session.delete(:user_id)
     #redirect_to root_url
+    redirect_to request.referrer
   end
 end

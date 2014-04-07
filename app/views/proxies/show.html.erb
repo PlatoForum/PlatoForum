@@ -1,4 +1,119 @@
-<p id="notice"><%= notice %></p>
+<ul class="breadcrumb" style="margin-bottom: 5px;">
+    <li><%= link_to "主頁", root_path %></li>
+    <li><%= link_to "議題列表", "/topic_list" %></li>
+    <li><%= link_to @topic.name, "/#{@topic.permalink}/" %></li>
+    <li><%= @proxy_to_show.pseudonym %></li>
+</ul>
 
-<%= link_to 'Edit', edit_proxy_path(@proxy) %> |
-<%= link_to 'Back', proxies_path %>
+<div class="page-header">
+	<h2><%= @proxy_to_show.pseudonym %><%="（你）" if @proxy_to_show == @proxy %></h2>
+	<p class="text-muted">活動記錄</p>
+</div>
+
+<div class="row">
+
+  <div class="col-md-4">
+    <div class="bs-component">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">發表的評論</h3>
+        </div>
+
+        <div class="panel-body">
+          
+          <% if @proxy_to_show.works.count == 0 %>
+            <p class="text-muted"><%= @proxy_to_show.pseudonym %>從未發表過任何評論⋯⋯</p>
+
+          <% else %>
+
+            <table class="table table-striped table-hover ">
+              <tbody>
+                <% @proxy_to_show.works.sort!{|b,a| a.doc <=> b.doc}.each do |comment| %>
+                  <tr onClick="document.location = '/comments/<%= comment.id %>';">
+                    <td width="10">
+                      <span class="label label-success">讚 <%= comment.likes.count %></span> 
+                      <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
+                    </td>
+                    <td>「<%= comment.subject == "" ? "沒有主旨" : comment.subject %>」<span class="text-<%= comment.stanceObj.panel.nil? ? "muted" : comment.stanceObj.panel %>"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
+                    <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table> 
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="col-md-4">
+    <div class="bs-component">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          <h3 class="panel-title">覺得讚！</h3>
+        </div>
+
+        <div class="panel-body">
+          
+          <% if @proxy_to_show.approvals.count == 0 %>
+            <p class="text-muted"><%= @proxy_to_show.pseudonym %>從不覺得任何評論讚⋯⋯</p>
+
+          <% else %>
+
+            <table class="table table-striped table-hover ">
+              <tbody>
+                <% @proxy_to_show.approvals.sort!{|b,a| a.doc <=> b.doc}.each do |comment| %>
+                  <tr onClick="document.location = '/comments/<%= comment.id %>';">
+                    <td width="10">
+                      <span class="label label-success">讚 <%= comment.likes.count %></span> 
+                      <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
+                    </td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%>：<span class="text-<%= comment.stanceObj.panel.nil? ? "muted" : comment.stanceObj.panel %>"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
+                    <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table> 
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="col-md-4">
+    <div class="bs-component">
+      <div class="panel panel-danger">
+        <div class="panel-heading">
+          <h3 class="panel-title">覺得爛！</h3>
+        </div>
+
+        <div class="panel-body">
+          
+          <% if @proxy_to_show.disapprovals.count == 0 %>
+            <p class="text-muted"><%= @proxy_to_show.pseudonym %>從不覺得任何評論爛⋯⋯</p>
+
+          <% else %>
+
+            <table class="table table-striped table-hover ">
+              <tbody>
+                <% @proxy_to_show.disapprovals.sort!{|b,a| a.doc <=> b.doc}.each do |comment| %>
+                  <tr onClick="document.location = '/comments/<%= comment.id %>';">
+                    <td width="10">
+                      <span class="label label-success">讚 <%= comment.likes.count %></span> 
+                      <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
+                    </td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%>：<span class="text-<%= comment.stanceObj.panel.nil? ? "muted" : comment.stanceObj.panel %>"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
+                    <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table> 
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+    </div>
+</div>

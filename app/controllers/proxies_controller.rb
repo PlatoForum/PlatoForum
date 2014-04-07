@@ -1,5 +1,6 @@
 class ProxiesController < ApplicationController
   before_action :set_proxy, only: [:show, :edit, :update, :destroy]
+  before_action :set_proxy_to_show, only: [:show]
 
   # GET /proxies
   # GET /proxies.json
@@ -61,11 +62,12 @@ class ProxiesController < ApplicationController
     end
   end
 
+  def set_proxy_to_show
+    @proxy_to_show = Proxy.find_by(:id => params[:proxy])
+    @topic = @proxy_to_show.topic
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_proxy
-      @proxy = Proxy.find(params[:id])
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def proxy_params
