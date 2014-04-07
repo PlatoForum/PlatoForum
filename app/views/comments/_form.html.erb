@@ -27,7 +27,7 @@
         <label class="control-label" for="inputError"><%= @comment.errors[:subject].join("，") %></label>
         <% end %>
         <%= f.text_field :subject, class: "form-control", placeholder: "評論主旨" %>
-        <span class="help-block">最多十個字</span>
+        <span class="help-block">主旨只是輔助！最多十個字。</span>
       </div>
     </div>
     <div class="form-group <%= "has-error" unless @comment.errors[:body].count ==0 %>">

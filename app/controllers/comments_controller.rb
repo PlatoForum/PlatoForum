@@ -54,12 +54,12 @@ class CommentsController < ApplicationController
     
     @comment.owner = @proxy
     @comment.stance = @topic.stances.find_by(:number => comment_params[:stance])
-
-    @stance = @topic.stances.find_by(:number => comment_params[:stance])
-    @stance.comments << @comment
     
     respond_to do |format|
       if @comment.save
+
+        @stance = @topic.stances.find_by(:number => comment_params[:stance])
+        @stance.comments << @comment
         format.html { redirect_to "/#{params[:permalink]}", notice: '已成功發表評論！' }
         format.json { render action: 'show', status: :created, location: @comment }
       else
