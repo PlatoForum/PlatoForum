@@ -25,5 +25,8 @@ PlatoForum::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
+  # Do not fallback to assets pipeline if a precompiled asset is missed.
+  config.assets.compile = true
+
   ENV["REDISTOGO_URL"] = 'redis://redistogo:982c75e48017ec010893a064a1794d72@grideye.redistogo.com:10330/'
 end
