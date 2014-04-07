@@ -55,6 +55,16 @@ textarea {
     background-color: #ff5146;
 }
 
+.panel-primary > a > .panel-heading {
+  color: #ffffff;
+  background-color: #158cba;
+  border-color: transparent;
+}
+
+.panel-primary > a > .panel-heading:hover, .panel-primary > a > .panel-heading:focus {
+  background-color: #259cca;
+}
+
 .panel > a:hover, .pavel > a:focus{
   text-decoration:none;
 }

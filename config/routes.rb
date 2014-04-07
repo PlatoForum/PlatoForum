@@ -36,10 +36,12 @@ PlatoForum::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'topics#index'
 
-  get 'topic_list' => "topics#completelist"
+  get 'list' => "topics#completelist"
+  get 'subscriptions' => "topics#subscriptions"
  
   get ':permalink/comments/new' => "comments#new"
   post ':permalink/comments' => "comments#create"
+  get ':permalink/comment_:comment' => "comments#show"
 
   get ':permalink/subscribe' => "topics#subscribe"
   get ':permalink/unsubscribe' => "topics#unsubscribe"
@@ -47,8 +49,8 @@ PlatoForum::Application.routes.draw do
   get ':permalink/edit' => "topics#edit"
   get ':permalink/change_name' => 'users#change_pseudonym'
 
-  get ':permalink/stance:stance' => "stances#show"
-  get ':permalink/proxy:proxy' => "proxies#show"
+  get ':permalink/stance_:stance' => "stances#show"
+  get ':permalink/proxy_:proxy' => "proxies#show"
 
   get ':permalink' => "comments#index"
 

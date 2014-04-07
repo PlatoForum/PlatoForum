@@ -12,7 +12,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
               <li <% if request.fullpath == "/" %> class="active" <% end %>><%= link_to "主頁", "/"  %></li>
-              <li <% if !(request.fullpath.include? "/static/" or request.fullpath.include? "/user/" or request.fullpath == "/") %> class="active" <% end %>><%= link_to "議題", "/topic_list"  %></li>
+              <li <% if !(request.fullpath.include? "/static/" or request.fullpath.include? "/user/" or request.fullpath == "/") %> class="active" <% end %>><%= link_to "議題", "/list"  %></li>
               <li <% if request.fullpath == "/static/about" %> class="active" <% end %> ><%= link_to "關於", "/static/about"  %></li>
               <li <% if request.fullpath == "/static/contact" %> class="active" <% end %> ><%= link_to "聯絡", "/static/contact"  %></li>
               <li <% if request.fullpath == "/static/privacy_policy" %> class="active" <% end %> ><%= link_to "隱私權聲明", "/static/privacy_policy"  %></li>
@@ -20,7 +20,7 @@
               <li <% if request.fullpath.include? "/user/" %> class="active" <% end %> class="dropdown">
               <a href="/fumou" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %><b class="caret"></b></a>
               <ul class="dropdown-menu">
-                
+                <li><a href="/subscriptions">訂閱清單</a></li>
                 <li><a href="/user/activities">活動記錄</a></li>
                 <li><a href="/user/panel">個人設定</a></li>
                 <li class="divider"></li>

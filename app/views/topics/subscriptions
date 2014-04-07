@@ -1,6 +1,6 @@
 <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><%= link_to "主頁", root_path %></li>
-    <li class="active">議題列表</li>
+    <li class="active">訂閱清單</li>
 </ul>
 
 <ul class="nav nav-pills hidden-xs pull-right" style="margin-top: 15px; margin-bottom: 15px;">

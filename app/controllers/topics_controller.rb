@@ -11,6 +11,16 @@ class TopicsController < ApplicationController
     @topics = Topic.all
   end
 
+  def subscriptions
+    if session[:user_id].nil?
+      respond_to do |format|
+        format.html { redirect_to "/", notice: "你必須先登入才能檢閱訂閱清單" }
+      end
+    end
+    @user = User.find(session[:user_id])
+    @topics = @user.subscriptions 
+  end
+
   # GET /topics/1
   # GET /topics/1.json
   # This is no longer used

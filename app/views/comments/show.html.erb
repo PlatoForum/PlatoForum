@@ -1,8 +1,8 @@
 <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><%= link_to "主頁", root_path %></li>
-    <li><%= link_to "議題列表", "/topic_list" %></li>
+    <li><%= link_to "議題列表", "/list" %></li>
     <li><%= link_to @topic.name, "/#{@topic.permalink}/" %></li>
-    <li><%= link_to @stance.description, "/#{@topic.permalink}/stance#{@stance.number}" %></li>
+    <li><%= link_to @stance.description, "/#{@topic.permalink}/stance_#{@stance.number}" %></li>
     <li class="active">檢視評論</li>
 </ul>
 
@@ -31,7 +31,7 @@
       </div>
       <div class="panel-body">
         <p class="text-default"><%= @comment.body %></p>
-        <p class="text-primary" align="right"><a href="/<%=@comment.topic.permalink%>/proxy<%=@comment.owner.id%>"><%=@comment.owner.pseudonym%><% if (@comment.owner == @proxy)%>（你）<%end%></a><br>發表於 <%= @comment.doc.strftime("%F %T") %></p>
+        <p class="text-primary" align="right"><a href="/<%=@comment.topic.permalink%>/proxy_<%=@comment.owner.id%>"><%=@comment.owner.pseudonym%><% if (@comment.owner == @proxy)%>（你）<%end%></a><br>發表於 <%= @comment.doc.strftime("%F %T") %></p>
       </div>
 
 

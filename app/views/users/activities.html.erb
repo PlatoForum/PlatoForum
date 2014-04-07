@@ -1,12 +1,15 @@
 <h1><strong>活動記錄</strong></h1>
 <p class="text-primary">已登入為 <%= current_user.name %>（<%= session[:user_id]%>）</p>
 
-<% @user.proxies.each do |proxy| %>
+<% @user.proxies.sort!{|a,b| b.works.count <=> a.works.count}.each do |proxy| %>
+<% unless proxy.works.count + proxy.approvals.count + proxy.disapprovals.count == 0 %>
 <div class="panel panel-primary">
+	<a  href="/<%= proxy.topic.permalink %>">
 	<div class="panel-heading">
 		<span class="panel-title"><%= proxy.topic.name %>（<%= proxy.pseudonym %>）</span>
 		<% unless @user.subscriptions.find(proxy.topic.id).nil? %><span class="label label-default">已訂閱</span><% end %>
 	</div>
+	</a>
 	<div class="panel-body">
 		<div class="row">
 		  <div class="col-md-4">
@@ -116,4 +119,5 @@
 		</div>
 	</div>
 </div>
+<% end %>
 <% end %>

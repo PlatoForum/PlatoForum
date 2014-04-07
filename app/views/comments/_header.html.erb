@@ -2,7 +2,8 @@
     <h1><strong><%= @topic.name %></strong></h1>
     <span class="label label-default"><%= @topic.subscribed_by.count %>人訂閱</span>
     <% unless session[:user_id].nil? %><% if @user.subscriptions.find(@topic.id) %><span class="label label-default">已訂閱</span><% end %><% end %>
-    <h3 class="text-muted"><%= @topic.description %>
+    <h4 class="text-muted"><%= @topic.description %></h4>
+    <h4 class="text-muted">你的身份是「<a href="/<%= @topic.permalink %>/proxy_<%= @proxy.id %>"><%= @proxy.pseudonym %></a>」
 
       <% unless session[:user_id].nil? %>
       <div class="btn-group">
@@ -20,7 +21,7 @@
       </div>
       <% end %>
 
-  </h3>
+  </h4>
   </div>
 
   <div class="bs-component">

@@ -2,7 +2,7 @@
   <div class="col-sm-4">
     <div class="bs-component">
       <div class="list-group">
-        <a class="list-group-item active" href="/topic_list">
+        <a class="list-group-item active" href="/list">
           <h4 class="list-group-item-heading">熱門議題</h4>
         </a>
         <% @topics.sort!{ |a,b| b.comments.count <=> a.comments.count }.first(5).each do |topic| %>
@@ -16,7 +16,7 @@
   <div class="col-sm-4">
     <div class="bs-component">
       <div class="list-group">
-        <a class="list-group-item active" href="/topic_list">
+        <a class="list-group-item active" href="/list">
           <h4 class="list-group-item-heading">最新議題</h4>
         </a>
         <% @topics.sort!{ |a,b| b.doc <=> a.doc }.first(5).each do |topic| %>
@@ -35,7 +35,7 @@
     <div class="col-sm-4">
       <div class="bs-component">
         <div class="list-group">
-          <a class="list-group-item active" href="/topic_list">
+          <a class="list-group-item active" href="/list">
             <h4 class="list-group-item-heading">熱門訂閱議題</h4>
           </a>
           <% @topics.sort!{|a,b| b.subscribed_by.count <=> a.subscribed_by.count}.first(5).each do |topic| %>
@@ -50,7 +50,7 @@
     <div class="col-sm-4">
       <div class="bs-component">
         <div class="list-group">
-          <a class="list-group-item active" href="/topic_list">
+          <a class="list-group-item active" href="/subscriptions">
             <h4 class="list-group-item-heading">訂閱議題</h4>
           </a>
           <% @user = User.find_by(:id => session[:user_id] ) %>
