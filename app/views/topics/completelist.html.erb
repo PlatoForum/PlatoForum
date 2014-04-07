@@ -3,13 +3,15 @@
     <li class="active">議題列表</li>
 </ul>
 
+<%= render 'topics/modal_new_topic' %>
+
 <ul class="nav nav-pills hidden-xs pull-right" style="margin-top: 15px; margin-bottom: 15px;">
-  <li class="disabled"><a style="cursor: default;">排列依照</a></li>
-  <li class="active"><a href="#comments_count" data-toggle="tab">評論數</a></li>
-  <li class=""><a href="#creation_time" data-toggle="tab">創建時間</a></li>
-  <li class=""><a href="#subscription_count" data-toggle="tab">訂閱人數</a></li>
+	<li class="disabled"><a style="cursor: default;">排列依照</a></li>
+	<li class="active"><a href="#comments_count" data-toggle="tab">評論數</a></li>
+	<li class=""><a href="#creation_time" data-toggle="tab">創建時間</a></li>
+	<li class=""><a href="#subscription_count" data-toggle="tab">訂閱人數</a></li>
 </ul>
-<ul class="nav nav-pills visible-xs" style="margin-top: 15px; margin-bottom: 15px;">
+<ul class="nav nav-pills visible-xs pull-right" style="margin-top: 15px; margin-bottom: 15px;">
 	<li class="dropdown active pull-right">
 	<a class="dropdown-toggle" data-toggle="dropdown" href="#">
       排列依照 <span class="caret"></span>
@@ -21,6 +23,8 @@
 	</ul>
 	</li>
 </ul>
+<a class="btn-pills" data-toggle="modal" href="#modal_new_topic" style="margin-top: 15px; margin-bottom: 15px;">發起議題</a>
+
 <div id="myTabContent" class="tab-content">
   <div class="tab-pane fade active in" id="comments_count">
   	<table class="table table-striped table-hover ">

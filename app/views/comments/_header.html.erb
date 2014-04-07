@@ -3,7 +3,12 @@
     <span class="label label-default"><%= @topic.subscribed_by.count %>人訂閱</span>
     <% unless session[:user_id].nil? %><% if @user.subscriptions.find(@topic.id) %><span class="label label-default">已訂閱</span><% end %><% end %>
     <h4 class="text-muted"><%= @topic.description %></h4>
-    <h4 class="text-muted">你的身份是「<a href="/<%= @topic.permalink %>/proxy_<%= @proxy.id %>"><%= @proxy.pseudonym %></a>」
+    <h4 class="text-muted">你的身份是「
+      <% if session[:user_id].nil? %>
+        <span class="text-primary"><%= @proxy.display_name %></span>
+      <% else %>
+       <a data-toggle="modal" href="#modal_switch_real_id"><%= @proxy.display_name %></a>
+      <% end %>」
 
       <% unless session[:user_id].nil? %>
       <div class="btn-group">
@@ -24,7 +29,40 @@
   </h4>
   </div>
 
-  <div class="bs-component">
+<% unless session[:user_id].nil? %>
+<div class="bs-component">
+  <div class="modal fade" id="modal_switch_real_id">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4>實名／匿名切換</h4>
+        </div>
+
+        <div class="modal-body">
+          <p class="text-muted">目前你在『<span class="text-primary"><%= @topic.name %></span>』議題下的身份是『<span class="text-primary"><%= @proxy.display_name %></span>』</p>
+          <% if @proxy.real_id %>
+            <p>當你將身份切換成匿名時，所有你在這個議題下的活動將會以假名『<span class="text-primary"><%= @proxy.pseudonym %></span>』名義呈現，其他使用者無法得到除了假名之外任何你的個人資訊。</p>
+          <% else %>
+            <p>當你將身份切換成實名時，所有你在這個議題下的活動將會以臉書姓名『<span class="text-primary"><%= @proxy.user.name %></span>』名義呈現，其他使用者可以連結至你的臉書頁面。</p>
+          <% end %>
+          <p class="text-default">這動作會影響所有你在這個議題下的活動，但不會影響你在其他議題的活動。你在每個議題下的身份是獨立的。</p>
+        </div>
+
+        <div class="modal-footer">
+          <% if @proxy.real_id %><a class="btn btn-primary" href="/<%= @topic.permalink %>/proxy_fake">切換成匿名</a>
+          <% else %><a class="btn btn-primary" href="/<%= @topic.permalink %>/proxy_real">切換成實名</a>
+          <% end %>
+          <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bs-component">
   <div class="modal fade" id="modal_new_comment">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -37,9 +75,10 @@
           <fieldset>
 
             <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
               <h4>評論『<%= @topic.name %>』</h4>
               <p class="text-muted"><%= @topic.description %></p>
-              <p>身份：<strong class="text-primary"><%= @proxy.pseudonym %></strong></p>
+              <p>身份：<strong class="text-primary"><%= @proxy.display_name %></strong></p>
             </div>
 
             <div class="modal-body">
@@ -113,3 +152,4 @@
     </div>
   </div>
 </div>
+<% end %>

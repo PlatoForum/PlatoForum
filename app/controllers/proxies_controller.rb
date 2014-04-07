@@ -1,6 +1,7 @@
 class ProxiesController < ApplicationController
-  before_action :set_proxy, only: [:show, :edit, :update, :destroy]
+  before_action :set_proxy, only: [:edit, :update, :destroy, :make_real, :make_fake]
   before_action :set_proxy_to_show, only: [:show]
+  before_action :check_proxy, only: [:show]
 
   # GET /proxies
   # GET /proxies.json
@@ -20,6 +21,25 @@ class ProxiesController < ApplicationController
 
   # GET /proxies/1/edit
   def edit
+  end
+
+  # GET /:permalink/proxy_real
+  def make_real
+    @proxy.real_id = true
+    @proxy.save
+    respond_to do |format|
+      format.html { redirect_to request.referrer, notice: '成功切換成實名' }
+      format.json { render action: 'show', status: :created, location: @proxy }
+    end
+  end
+
+  def make_fake
+    @proxy.real_id = false
+    @proxy.save
+    respond_to do |format|
+      format.html { redirect_to request.referrer, notice: '成功切換成匿名' }
+      format.json { render action: 'show', status: :created, location: @proxy }
+    end
   end
 
   # POST /proxies
@@ -65,6 +85,13 @@ class ProxiesController < ApplicationController
   def set_proxy_to_show
     @proxy_to_show = Proxy.find_by(:id => params[:proxy])
     @topic = @proxy_to_show.topic
+  end
+
+  def check_proxy
+    check_topic
+    unless session[:user_id].nil?
+      set_proxy
+    end
   end
 
   private

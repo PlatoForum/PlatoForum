@@ -47,7 +47,10 @@ PlatoForum::Application.routes.draw do
   get ':permalink/unsubscribe' => "topics#unsubscribe"
 
   get ':permalink/edit' => "topics#edit"
-  get ':permalink/change_name' => 'users#change_pseudonym'
+  #get ':permalink/change_name' => 'users#change_pseudonym'
+
+  get ':permalink/proxy_real' => "proxies#make_real"
+  get ':permalink/proxy_fake' => "proxies#make_fake"
 
   get ':permalink/stance_:stance' => "stances#show"
   get ':permalink/proxy_:proxy' => "proxies#show"

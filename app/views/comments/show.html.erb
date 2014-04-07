@@ -31,7 +31,7 @@
       </div>
       <div class="panel-body">
         <p class="text-default"><%= @comment.body %></p>
-        <p class="text-primary" align="right"><a href="/<%=@comment.topic.permalink%>/proxy_<%=@comment.owner.id%>"><%=@comment.owner.pseudonym%><% if (@comment.owner == @proxy)%>（你）<%end%></a><br>發表於 <%= @comment.doc.strftime("%F %T") %></p>
+        <p class="text-primary" align="right"><a href="/<%=@comment.topic.permalink%>/proxy_<%=@comment.owner.id%>"><%=@comment.owner.display_name%><% if (@comment.owner == @proxy)%>（你）<%end%></a><br>發表於 <%= @comment.doc.strftime("%F %T") %></p>
       </div>
 
 

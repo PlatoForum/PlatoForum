@@ -2,13 +2,50 @@
     <li><%= link_to "主頁", root_path %></li>
     <li><%= link_to "議題列表", "/list" %></li>
     <li><%= link_to @topic.name, "/#{@topic.permalink}/" %></li>
-    <li><%= @proxy_to_show.pseudonym %></li>
+    <li><%= @proxy_to_show.display_name %></li>
 </ul>
 
 <div class="page-header">
-	<h2><%= @proxy_to_show.pseudonym %><%="（你）" if @proxy_to_show == @proxy %></h2>
-	<p class="text-muted">活動記錄</p>
+	<h2><%= @proxy_to_show.display_name %><% if @proxy_to_show == @proxy %>（你）<% end %></h2>
+    <% if @proxy_to_show.real_id %>
+      <span class="label label-default" <% if @proxy_to_show == @proxy %>data-toggle="modal" href="#modal_switch_real_id"<% end %>>實名</span>
+      <a href="<%= @proxy_to_show.display_link %>" target="_blank"><span class="label label-primary">Facebook</span></a>
+    <% else %>
+      <span class="label label-default" <% if @proxy_to_show == @proxy %>data-toggle="modal" href="#modal_switch_real_id"<% end %>>匿名</span>
+    <% end %>
 </div>
+
+<% if @proxy_to_show == @proxy %>
+<div class="bs-component">
+  <div class="modal fade" id="modal_switch_real_id">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4>實名／匿名切換</h4>
+        </div>
+
+        <div class="modal-body">
+          <p class="text-muted">目前你在『<span class="text-primary"><%= @topic.name %></span>』議題下的身份是『<span class="text-primary"><%= @proxy.display_name %></span>』</p>
+          <% if @proxy.real_id %>
+            <p>當你將身份切換成匿名時，所有你在這個議題下的活動將會以假名『<span class="text-primary"><%= @proxy.pseudonym %></span>』名義呈現，其他使用者無法得到除了假名之外任何你的個人資訊。</p>
+          <% else %>
+            <p>當你將身份切換成實名時，所有你在這個議題下的活動將會以臉書姓名『<span class="text-primary"><%= @proxy.user.name %></span>』名義呈現，其他使用者可以連結至你的臉書頁面。</p>
+          <% end %>
+          <p class="text-default">這動作會影響所有你在這個議題下的活動，但不會影響你在其他議題的活動。你在每個議題下的身份是獨立的。</p>
+        </div>
+
+        <div class="modal-footer">
+          <% if @proxy.real_id %><a class="btn btn-primary" href="/<%= @topic.permalink %>/proxy_fake">切換成匿名</a>
+          <% else %><a class="btn btn-primary" href="/<%= @topic.permalink %>/proxy_real">切換成實名</a>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
 
 <div class="row">
 
@@ -22,7 +59,7 @@
         <div class="panel-body">
           
           <% if @proxy_to_show.works.count == 0 %>
-            <p class="text-muted"><%= @proxy_to_show.pseudonym %>從未發表過任何評論⋯⋯</p>
+            <p class="text-muted"><%= @proxy_to_show.display_name %>從未發表過任何評論⋯⋯</p>
 
           <% else %>
 
@@ -57,7 +94,7 @@
         <div class="panel-body">
           
           <% if @proxy_to_show.approvals.count == 0 %>
-            <p class="text-muted"><%= @proxy_to_show.pseudonym %>從不覺得任何評論讚⋯⋯</p>
+            <p class="text-muted"><%= @proxy_to_show.display_name %>從不覺得任何評論讚⋯⋯</p>
 
           <% else %>
 
@@ -69,7 +106,7 @@
                       <span class="label label-success">讚 <%= comment.likes.count %></span> 
                       <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
                     </td>
-                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%>：<span class="text-<%= comment.stance.panel.nil? ? "muted" : comment.stance.panel %>"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-<%= comment.stance.panel.nil? ? "muted" : comment.stance.panel %>"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
                     <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
                   </tr>
                 <% end %>
@@ -92,7 +129,7 @@
         <div class="panel-body">
           
           <% if @proxy_to_show.disapprovals.count == 0 %>
-            <p class="text-muted"><%= @proxy_to_show.pseudonym %>從不覺得任何評論爛⋯⋯</p>
+            <p class="text-muted"><%= @proxy_to_show.display_name %>從不覺得任何評論爛⋯⋯</p>
 
           <% else %>
 
@@ -104,7 +141,7 @@
                       <span class="label label-success">讚 <%= comment.likes.count %></span> 
                       <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
                     </td>
-                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%>：<span class="text-<%= comment.stance.panel.nil? ? "muted" : comment.stance.panel %>"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-<%= comment.stance.panel.nil? ? "muted" : comment.stance.panel %>"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
                     <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
                   </tr>
                 <% end %>

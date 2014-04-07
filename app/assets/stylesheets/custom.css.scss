@@ -73,3 +73,17 @@ a.list-group-item.active:hover, a.list-group-item.active:focus
 {
   background-color: #259cca;
 }
+
+.btn-pills{
+  border-radius: 4px;
+  padding: 10px 15px;
+  color: #ffffff;
+  background-color: #158cba;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-pills:hover, .btn-pills:active{
+  color: #ffffff;
+  text-decoration: none;
+}

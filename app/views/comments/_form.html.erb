@@ -17,7 +17,7 @@
 
   <fieldset>
     <legend>
-      <h2>以『<%= @proxy.pseudonym %>』身份，對『<%= @topic.name %>』發表評論</h2>
+      <h2>以『<%= @proxy.display_name %>』身份，對『<%= @topic.name %>』發表評論</h2>
       <p class="text-muted"><%= @topic.description %></p>
     </legend>
     <div class="form-group <%= "has-error" unless @comment.errors[:subject].count ==0 %>">

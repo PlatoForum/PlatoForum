@@ -1,7 +1,9 @@
 class Proxy
   include Mongoid::Document
+  after_initialize :init
   
   field :pseudonym, type: String # should change to some pseudonym generator
+  field :real_id, type: Boolean
   
   belongs_to :user
   belongs_to :topic
@@ -17,5 +19,33 @@ class Proxy
   #  #self.pseudonym = pseudonym_generator()
   #  self.pseudonym = name
   #end
+
+  def init
+    self.real_id  ||= false          #will set the default value only if it's nil
+  end
+
+  def display_name
+    if self.real_id
+      return self.user.name
+    else
+      return self.pseudonym
+    end
+  end
+
+  def display_link
+    if self.real_id
+      return "http://www.facebook.com/" + self.user.uid
+    else
+      return "/#{self.topic.permalink}/proxy_#{self.id}"
+    end
+  end
+
+  def display_email
+    if self.real_id
+      return self.user.email
+    else
+      return "/#{self.topic.permalink}/proxy_#{self.id}"
+    end
+  end
 
  end
