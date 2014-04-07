@@ -87,3 +87,11 @@ a.list-group-item.active:hover, a.list-group-item.active:focus
   color: #ffffff;
   text-decoration: none;
 }
+
+.nav-tabs > li.dropdown-custom > a,
+.nav-tabs > li.dropdown-custom > a:hover,
+.nav-tabs > li.dropdown-custom > a:focus, {
+  margin-right: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
