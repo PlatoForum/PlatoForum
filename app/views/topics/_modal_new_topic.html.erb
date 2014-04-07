@@ -14,22 +14,50 @@
             </div>
             
             <div class="modal-body">
-            <div class="form-group has-warning">
+
+              <div class="form-group">
+                <label for="topic_type" class="col-sm-2 control-label">類型</label>
+                <div class="col-sm-10">
+                  <input class="form-control" id="topic_type" name="topic[topic_type]" type="hidden" placeholder="議題類型" value="yesno">
+                  <ul class="nav nav-pills" style="margin-bottom: 15px;">
+                    <li class="active"><a href="#yesno" onClick="click_yesno()" data-toggle="tab">封閉式</a></li>
+                    <li><a href="#open" onClick="click_open()" data-toggle="tab">開放式</a></li>
+                  </ul>
+                </div>
+              </div>
+            
+            <script type="text/javascript">
+              function click_open(){
+                $("#topic_type").val("open");
+              }
+              function click_yesno(){
+                $("#topic_type").val("yesno");
+              }
+            </script>
+
+            <div class="form-group">
               <label for="name" class="col-sm-2 control-label">名稱</label>
               <div class="col-sm-10">
                 <%= f.text_field :name, class: "form-control", placeholder: "議題名稱" %>
-                <span class="help-block">最多十個字。必要</span>
+                <span class="help-block">最多二十個字。必要</span>
               </div>
             </div>
             <div class="form-group <%= "has-error" unless @topic.errors[:description].count ==0 %>">
               <label for="description" class="col-sm-2 control-label">描述</label>
               <div class="col-sm-10">
                 <%= f.text_area :description, class: "form-control", placeholder: "議題描述", rows: "3" %>
-                <span class="help-block">簡單描述議論的目標，使用可以讓人『支持』或『反對』的形式。例如『香蕉很好吃』而不是『香蕉』</span>
+                <div id="myTabContent" class="tab-content">
+                  <div class="tab-pane fade active in" id="yesno">
+                    <span class="help-block">簡單描述議論的目標，使用可以讓人『支持』或『反對』的形式。<br>例如『你覺得香蕉好吃嗎？』而不是『你對香蕉有什麼看法？』</span>
+                  </div>
+                  <div class="tab-pane fade" id="open">
+                    <span class="help-block">簡單描述議論的目標，使用可以讓人自由回答的形式。<br>例如『你對香蕉有什麼看法？』而不是『你覺得香蕉好吃嗎？』</span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div class="form-group has-warning">
+            <div class="form-group">
               <label for="permalink" class="col-sm-2 control-label">永久連結</label>
               <div class="col-sm-10">
 

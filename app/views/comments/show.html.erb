@@ -14,13 +14,7 @@
     <p class = "text-muted"><%= @comment.topic.description %></p>
     </div>
 
-    <% if @comment.stance.number == 1 %>
-      <div class="panel panel-success">
-    <% elsif @comment.stance.number == 2 %>
-      <div class="panel panel-warning">
-    <% else %>
-      <div class="panel panel-danger">
-    <% end %>
+    <div class="panel <%= @comment.stance.panel.nil? ? "panel-default" : "panel-"+@comment.stance.panel %>">
       <div class="panel-heading">
 
         <% if @comment.subject.empty? %>

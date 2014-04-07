@@ -80,20 +80,16 @@ class TopicsController < ApplicationController
     @topic = Topic.new(topic_params)
     @topic.doc = Time.zone.now
 
-    unless topic_params[:topic_type].nil?
-      @topic.topic_type = topic_params[:topic_type] == 1 ? :open : :yesno
-    end
+    if @topic.topic_type == :open #open topic
+      @stance1 = Stance.new
+      @stance1.number = 1
+      @stance1.description = "未分類"
+      @stance1.panel = "default"
 
-    if @topic.topic_type == 1 #open topic
-      @stance0 = Stance.new
-      @stance0.number = 0
-      @stance0.description = "未分類"
-      @stance0.panel = "default"
+      @stance1.save
+      @topic.stances << @stance1
 
-      @stance0.save
-      @topic.stances << @stance0
-
-    else
+    else #yes/no topic
       @stance1 = Stance.new
       @stance1.number = 1
       @stance1.description = "支持"
@@ -132,6 +128,10 @@ class TopicsController < ApplicationController
   # PATCH/PUT /topics/1
   # PATCH/PUT /topics/1.json
   def update
+    if @topic.topic_type.nil?
+      @topic.topic_type = :yesno
+    end
+    
     respond_to do |format|
       if @topic.update(topic_params)
         format.html { redirect_to "/#{@topic.permalink}", success: 'Topic was successfully updated.' }

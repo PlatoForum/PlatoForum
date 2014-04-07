@@ -42,23 +42,18 @@ class CommentsController < ApplicationController
     @comment.topic = @topic
     @comment.doc = Time.zone.now
     
-    # @comment.stance = params[:comment][:stance].to_i
-
-    # if @comment.stance > 1
-    #   @comment.stance = 1
-    # end 
-      
-    # if @comment.stance < -1
-    #   @comment.stance = -1
-    # else
-    
     @comment.owner = @proxy
-    @comment.stance = @topic.stances.find_by(:number => comment_params[:stance])
+
+    if @topic.topic_type == :yesno
+      @stance = @topic.stances.find_by(:number => comment_params[:stance])
+      @comment.stance = @stance
+    else
+      @stance = @topic.stances.sort!{|b,a| a.comments.where(:owner => @proxy).count <=> b.comments.where(:owner => @proxy).count }.first
+      @comment.stance = @stance
+    end
     
     respond_to do |format|
       if @comment.save
-
-        @stance = @topic.stances.find_by(:number => comment_params[:stance])
         @stance.comments << @comment
         format.html { redirect_to "/#{params[:permalink]}", notice: '已成功發表評論！' }
         format.json { render action: 'show', status: :created, location: @comment }

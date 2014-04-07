@@ -1,9 +1,9 @@
 <div class="row">
 
   <% @topic.stances.sort!{|a,b| a.number <=> b.number}.each do |stance| %>
-  <div class="col-md-4">
+  <div class="col-md-<%= 12 / @topic.stances.count %>">
     <div class="bs-component">
-      <div class="panel <%= "panel-"+stance.panel unless stance.panel.nil? %>">
+      <div class="panel <%= stance.panel.nil? ? "panel-default" : "panel-"+stance.panel %>">
         <a  href="/<%= @topic.permalink %>/stance_<%= stance.number %>">
         <div class="panel-heading">
           <h3 class="panel-title"><%= stance.description %></h3>

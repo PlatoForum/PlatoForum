@@ -3,15 +3,7 @@
   <div class="col-md-12">
     <div class="bs-component">
 
-      <div class="panel 
-      <% if @stance.number == 1 %>
-        panel-success
-      <% elsif @stance.number == 2 %>
-        panel-warning
-      <% elsif @stance.number == 3 %>
-        panel-danger
-      <% end %>
-        ">
+      <div class="panel <%= @stance.panel.nil? ? "panel-default" : "panel-"+@stance.panel %>">
         <div class="panel-heading">
           <h3 class="panel-title">
             <% unless @stance.comments.count < 2 %>

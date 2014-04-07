@@ -23,35 +23,35 @@
     <div class="form-group <%= "has-error" unless @comment.errors[:subject].count ==0 %>">
       <label for="name" class="col-lg-2 control-label">主旨</label>
       <div class="col-lg-10">
-        <% unless @comment.errors[:subject].nil? %>
-        <label class="control-label" for="inputError"><%= @comment.errors[:subject].join("，") %></label>
-        <% end %>
         <%= f.text_field :subject, class: "form-control", placeholder: "評論主旨" %>
-        <span class="help-block">主旨只是輔助！最多十個字。</span>
+        <% unless @comment.errors[:subject].empty? %>
+        <label class="control-label" for="inputError"><%= @comment.errors[:subject].join("，") %></label>
+        <% end %><span class="help-block">主旨只是輔助！最多二十個字。</span>
       </div>
     </div>
     <div class="form-group <%= "has-error" unless @comment.errors[:body].count ==0 %>">
       <label for="description" class="col-lg-2 control-label">內容（必要）</label>
       <div class="col-lg-10">
-        <% unless @comment.errors[:body].nil? %>
+        <%= f.text_area :body, class: "form-control", placeholder: "評論內容", rows: "5" %>
+        <% unless @comment.errors[:body].empty? %>
         <label class="control-label" for="inputError"><%= @comment.errors[:body].join("，") %></label>
         <% end %>
-        <%= f.text_area :body, class: "form-control", placeholder: "評論內容", rows: "5" %>
       </div>
     </div>
+
+    <% unless @topic.topic_type == :open %>
     <div class="form-group <%= "has-error" unless @comment.errors[:stance].count ==0 %>">
       <label for="permalink" class="col-lg-2 control-label">立場（必要）</label>
       <div class="col-lg-10">
-        <% unless @comment.errors[:stance].nil? %>
-        <label class="control-label" for="inputError"><%= @comment.errors[:stance].join("，") %></label>
-        <% end %>
         <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="<%= @comment.stance %>">
         <div class="btn-group btn-group-justified" data-toggle="buttons-radio">
           <a href="#" id="button_like" onClick="click_like()" type="button" class="btn btn-success" value="1"><%= "✓ " if @comment.stance == 1 %> 支持</a>
           <a href="#" id="button_neutral" onClick="click_neutral()" type="button" class="btn btn-warning" value="0"><%= "✓ " if @comment.stance == 2 %>中立</a>
           <a href="#" id="button_dislike" onClick="click_dislike()" type="button" class="btn btn-danger" value="-1"><%= "✓ " if @comment.stance == 3 %>反對</a>
         </div>
-        <span class="help-block">這則評論對議題的立場</span>
+        <% unless @comment.errors[:stance].empty? %>
+        <label class="control-label" for="inputError"><%= @comment.errors[:stance].join("，") %></label>
+        <% end %><span class="help-block">這則評論對議題的立場</span>
       </div>
     </div>
     
@@ -80,6 +80,7 @@
         $("#comment_stance").val(3);
       }
     </script>
+    <% end %>
 
 
     <div class="form-group">

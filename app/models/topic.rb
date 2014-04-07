@@ -5,7 +5,7 @@ class Topic
   field :permalink, type: String
   field :doc, type: Time, default: Time.zone.now
   field :last_updated, type: Time
-  field :topic_type, type: Integer
+  field :topic_type, type: Symbol
   # topic_type :yesno, :open
 
   has_many :comments, class_name: "Comment", inverse_of: :topic, autosave: true, validate: false
@@ -19,7 +19,7 @@ class Topic
   validates_presence_of :permalink
   validates_uniqueness_of :permalink
   validates_format_of :permalink, :with => /\A\w+\z/
-  validates_length_of :name, :maximum => 10
+  validates_length_of :name, :maximum => 20
   validates_presence_of :topic_type
 
   validates_presence_of :doc
