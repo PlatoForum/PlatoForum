@@ -3,6 +3,7 @@ class SessionsController < ApplicationController
 
   def new
     session[:return_to] = request.referrer if session[:return_to].nil?
+    session[:return_to] = "/" if session[:return_to].nil?
     logger.info "Called by "+ session[:return_to]
 
     redirect_to "/auth/facebook"
@@ -19,8 +20,10 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    @return_to = session[:return_to]
     reset_session
-    logger.info "Called by "+ request.referrer
+    session[:return_to] = @return_to
+    #logger.info "Called by "+ request.referrer
     #session.delete(:user_id)
     #redirect_to root_url
     redirect_to request.referrer

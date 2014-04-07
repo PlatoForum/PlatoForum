@@ -7,7 +7,7 @@ class User
 
   has_and_belongs_to_many :subscriptions, class_name: "Topic", inverse_of: :subscribed_by, autosave: true
   has_many :read_comments, class_name: "Comment"
-  has_many :proxies
+  has_many :proxies, class_name: "Proxy", inverse_of: :user, autosave: true
 
   def self.create_with_omniauth(auth)
     create! do |user|
