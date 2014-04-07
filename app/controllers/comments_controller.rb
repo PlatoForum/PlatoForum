@@ -53,6 +53,10 @@ class CommentsController < ApplicationController
     # else
     
     @comment.owner = @proxy
+    @comment.stance = @topic.stances.find_by(:number => comment_params[:stance])
+
+    @stance = @topic.stances.find_by(:number => comment_params[:stance])
+    @stance.comments << @comment
     
     respond_to do |format|
       if @comment.save
@@ -63,11 +67,6 @@ class CommentsController < ApplicationController
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
-
-    @stance = @topic.stances.find_by(:number => @comment.stance)
-
-    @stance.comments << @comment
-
   end
 
   # PATCH/PUT /comments/1
@@ -134,21 +133,7 @@ class CommentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
       @comment = Comment.find(params[:id])
-
-      @stance = Stance.new
-
-      @stance.number = @comment.stance
-      if @stance.number == 1
-        @stance.description = "支持"
-      end
-      if @stance.number == 2
-        @stance.description = "中立"
-      end
-      if @stance.number == 3
-        @stance.description = "反對"
-      end
-      @stance.topic = @comment.topic
-
+      @stance = @comment.stance
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

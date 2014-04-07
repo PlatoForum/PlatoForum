@@ -34,7 +34,7 @@
                       <span class="label label-success">讚 <%= comment.likes.count %></span> 
                       <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
                     </td>
-                    <td>「<%= comment.subject == "" ? "沒有主旨" : comment.subject %>」<span class="text-<%= comment.stanceObj.panel.nil? ? "muted" : comment.stanceObj.panel %>"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
+                    <td>「<%= comment.subject == "" ? "沒有主旨" : comment.subject %>」<span class="text-<%= comment.stance.panel.nil? ? "muted" : comment.stance.panel %>"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
                     <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
                   </tr>
                 <% end %>
@@ -69,7 +69,7 @@
                       <span class="label label-success">讚 <%= comment.likes.count %></span> 
                       <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
                     </td>
-                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%>：<span class="text-<%= comment.stanceObj.panel.nil? ? "muted" : comment.stanceObj.panel %>"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%>：<span class="text-<%= comment.stance.panel.nil? ? "muted" : comment.stance.panel %>"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
                     <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
                   </tr>
                 <% end %>
@@ -104,7 +104,7 @@
                       <span class="label label-success">讚 <%= comment.likes.count %></span> 
                       <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
                     </td>
-                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%>：<span class="text-<%= comment.stanceObj.panel.nil? ? "muted" : comment.stanceObj.panel %>"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%>：<span class="text-<%= comment.stance.panel.nil? ? "muted" : comment.stance.panel %>"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
                     <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
                   </tr>
                 <% end %>
