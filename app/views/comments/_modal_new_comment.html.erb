@@ -1,0 +1,93 @@
+<div class="bs-component">
+  <div class="modal fade" id="modal_new_comment">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <% @comment = Comment.new %>
+        <% @comment.owner = @proxy %>
+
+        <%= form_for(@comment, url: "/#{@topic.permalink}/comments", :html => { class: "form-horizontal"}) do |f| %>
+
+          <fieldset>
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4>評論『<%= @topic.name %>』</h4>
+              <p class="text-muted"><%= @topic.description %></p>
+              <p>身份：<strong class="text-primary"><%= @proxy.display_name %></strong></p>
+            </div>
+
+            <div class="modal-body">
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label">主旨</label>
+              <div class="col-sm-10">
+                <%= f.text_field :subject, class: "form-control", placeholder: "評論主旨" %>
+                <span class="help-block">最多二十個字</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="description" class="col-sm-2 control-label">內容</label>
+              <div class="col-sm-10">
+                <%= f.text_area :body, class: "form-control", placeholder: "評論內容", rows: "5" %>
+                <span class="help-block">必要</span>
+              </div>
+            </div>
+
+            <% unless @topic.topic_type == :open %>
+            <div class="form-group">
+              <label for="permalink" class="col-sm-2 control-label">立場</label>
+              <div class="col-sm-10">
+                <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="">
+                <div class="btn-group btn-group-justified" data-toggle="buttons-radio">
+                  <a href="#" id="button_like" onClick="click_like()" type="button" class="btn btn-success" value="1">支持</a>
+                  <a href="#" id="button_neutral" onClick="click_neutral()" type="button" class="btn btn-warning" value="2">中立</a>
+                  <a href="#" id="button_dislike" onClick="click_dislike()" type="button" class="btn btn-danger" value="3">反對</a>
+                </div>
+                <span class="help-block">這則評論對議題的立場，必要</span>
+              </div>
+            </div>
+            
+            <script type="text/javascript">
+              function clear_buttons(){
+                var elem_like = document.getElementById("button_like").innerHTML = "支持";
+                var elem_neutral = document.getElementById("button_neutral").innerHTML = "中立";
+                var elem_dislike = document.getElementById("button_dislike").innerHTML = "反對";
+              }
+              function click_like(){
+                clear_buttons();
+
+                document.getElementById("button_like").innerHTML = "✓ 支持";
+                $("#comment_stance").val(1);
+              }
+              function click_neutral(){
+                clear_buttons();
+
+                document.getElementById("button_neutral").innerHTML = "✓ 中立";
+                $("#comment_stance").val(2);
+              }
+              function click_dislike(){
+                clear_buttons();
+
+                document.getElementById("button_dislike").innerHTML = "✓ 反對";
+                $("#comment_stance").val(3);
+              }
+            </script>
+            <% end %>
+            </div>
+
+            <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <%= f.submit "送出", :class => 'btn btn-primary'%>
+                <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
+              </div>
+            </div>
+            </div>
+
+          </fieldset>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

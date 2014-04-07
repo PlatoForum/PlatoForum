@@ -16,35 +16,7 @@
 </div>
 
 <% if @proxy_to_show == @proxy %>
-<div class="bs-component">
-  <div class="modal fade" id="modal_switch_real_id">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <h4>實名／匿名切換</h4>
-        </div>
-
-        <div class="modal-body">
-          <p class="text-muted">目前你在『<span class="text-primary"><%= @topic.name %></span>』議題下的身份是『<span class="text-primary"><%= @proxy.display_name %></span>』</p>
-          <% if @proxy.real_id %>
-            <p>當你將身份切換成匿名時，所有你在這個議題下的活動將會以假名『<span class="text-primary"><%= @proxy.pseudonym %></span>』名義呈現，其他使用者無法得到除了假名之外任何你的個人資訊。</p>
-          <% else %>
-            <p>當你將身份切換成實名時，所有你在這個議題下的活動將會以臉書姓名『<span class="text-primary"><%= @proxy.user.name %></span>』名義呈現，其他使用者可以連結至你的臉書頁面。</p>
-          <% end %>
-          <p class="text-default">這動作會影響所有你在這個議題下的活動，但不會影響你在其他議題的活動。你在每個議題下的身份是獨立的。</p>
-        </div>
-
-        <div class="modal-footer">
-          <% if @proxy.real_id %><a class="btn btn-primary" href="/<%= @topic.permalink %>/proxy_fake">切換成匿名</a>
-          <% else %><a class="btn btn-primary" href="/<%= @topic.permalink %>/proxy_real">切換成實名</a>
-          <% end %>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
+<%= render 'proxies/modal_switch_real' %>
 <% end %>
 
 <div class="row">
