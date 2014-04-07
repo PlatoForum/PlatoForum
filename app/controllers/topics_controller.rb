@@ -68,21 +68,22 @@ class TopicsController < ApplicationController
   # POST /topics.json
   def create
     @topic = Topic.new(topic_params)
+    @topic.doc = Time.zone.now
 
     @stance1 = Stance.new
     @stance1.number = 1
     @stance1.description = "支持"
-    @stance1.panel = "panel-success"
+    @stance1.panel = "success"
 
     @stance2 = Stance.new
     @stance2.number = 2
     @stance2.description = "中立"
-    @stance2.panel = "panel-warning"
+    @stance2.panel = "warning"
 
     @stance3 = Stance.new
     @stance3.number = 3
     @stance3.description = "反對"
-    @stance3.panel = "panel-danger"
+    @stance3.panel = "danger"
 
     @stance1.save
     @stance2.save

@@ -75,6 +75,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_proxy #require login and proxy
+    check_topic
     @user = User.find_by(:id => session[:user_id])
     @proxy = @user.proxies.find_by(:topic_id => @topic._id)
     return if @proxy

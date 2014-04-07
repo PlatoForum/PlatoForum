@@ -3,7 +3,7 @@
   <% @topic.stances.sort!{|a,b| a.number <=> b.number}.each do |stance| %>
   <div class="col-md-4">
     <div class="bs-component">
-      <div class="panel <%= stance.panel unless stance.panel.nil? %>">
+      <div class="panel <%= "panel-"+stance.panel unless stance.panel.nil? %>">
         <a  href="/<%= @topic.permalink %>/stance<%= stance.number %>">
         <div class="panel-heading">
           <h3 class="panel-title"><%= stance.description %></h3>
@@ -36,6 +36,8 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
   <% end %>
+</div>
+  
 

@@ -40,6 +40,7 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     @comment.topic = @topic
+    @comment.doc = Time.zone.now
     
     # @comment.stance = params[:comment][:stance].to_i
 

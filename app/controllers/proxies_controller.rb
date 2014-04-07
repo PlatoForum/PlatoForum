@@ -63,15 +63,11 @@ class ProxiesController < ApplicationController
   end
 
   def set_proxy_to_show
-    check_topic
     @proxy_to_show = Proxy.find_by(:id => params[:proxy])
     @topic = @proxy_to_show.topic
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_proxy
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def proxy_params
