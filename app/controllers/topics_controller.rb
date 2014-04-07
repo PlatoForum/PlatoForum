@@ -80,28 +80,43 @@ class TopicsController < ApplicationController
     @topic = Topic.new(topic_params)
     @topic.doc = Time.zone.now
 
-    @stance1 = Stance.new
-    @stance1.number = 1
-    @stance1.description = "支持"
-    @stance1.panel = "success"
+    unless topic_params[:topic_type].nil?
+      @topic.topic_type = topic_params[:topic_type] == 1 ? :open : :yesno
+    end
 
-    @stance2 = Stance.new
-    @stance2.number = 2
-    @stance2.description = "中立"
-    @stance2.panel = "warning"
+    if @topic.topic_type == 1 #open topic
+      @stance0 = Stance.new
+      @stance0.number = 0
+      @stance0.description = "未分類"
+      @stance0.panel = "default"
 
-    @stance3 = Stance.new
-    @stance3.number = 3
-    @stance3.description = "反對"
-    @stance3.panel = "danger"
+      @stance0.save
+      @topic.stances << @stance0
 
-    @stance1.save
-    @stance2.save
-    @stance3.save
+    else
+      @stance1 = Stance.new
+      @stance1.number = 1
+      @stance1.description = "支持"
+      @stance1.panel = "success"
 
-    @topic.stances << @stance1
-    @topic.stances << @stance2
-    @topic.stances << @stance3
+      @stance2 = Stance.new
+      @stance2.number = 2
+      @stance2.description = "中立"
+      @stance2.panel = "warning"
+
+      @stance3 = Stance.new
+      @stance3.number = 3
+      @stance3.description = "反對"
+      @stance3.panel = "danger"
+
+      @stance1.save
+      @stance2.save
+      @stance3.save
+
+      @topic.stances << @stance1
+      @topic.stances << @stance2
+      @topic.stances << @stance3
+    end
 
     respond_to do |format|
       if @topic.save
@@ -150,6 +165,6 @@ class TopicsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def topic_params
-      params.require(:topic).permit(:name,:description,:permalink)
+      params.require(:topic).permit(:name,:description,:permalink,:topic_type)
     end
 end

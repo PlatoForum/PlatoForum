@@ -12,6 +12,12 @@ class Comment
   has_and_belongs_to_many :likes, class_name: "Proxy", inverse_of: :approvals, validate: false
   has_and_belongs_to_many :dislikes, class_name: "Proxy", inverse_of: :disapprovals, validate: false
 
+  has_and_belongs_to_many :supporting, class_name: "Comment", inverse_of: :supported, validate: false
+  has_and_belongs_to_many :opposing, class_name: "Comment", inverse_of: :opposed, validate: false
+
+  has_and_belongs_to_many :supported, class_name: "Comment", inverse_of: :supporting, validate: false
+  has_and_belongs_to_many :opposed, class_name: "Comment", inverse_of: :opposing, validate: false
+
   validates_presence_of :owner
   validates_presence_of :doc
 

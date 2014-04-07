@@ -20,6 +20,7 @@ class Topic
   validates_uniqueness_of :permalink
   validates_format_of :permalink, :with => /\A\w+\z/
   validates_length_of :name, :maximum => 10
+  validates_presence_of :topic_type
 
   validates_presence_of :doc
 end
