@@ -4,6 +4,8 @@ class User
   field :provider, type: String
   field :uid, type: String
   field :name, type: String
+  #field :level, type: Interger, default: 0
+  # anonymous=0, user=2, moderator=3, admin=4
 
   has_and_belongs_to_many :subscriptions, class_name: "Topic", inverse_of: :subscribed_by, autosave: true
   has_many :read_comments, class_name: "Comment"

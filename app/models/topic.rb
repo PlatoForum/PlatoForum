@@ -23,4 +23,12 @@ class Topic
   validates_presence_of :topic_type
 
   validates_presence_of :doc
+
+  def display_time
+    if self.doc.strftime("%F") == Time.zone.now.strftime("%F")
+      return "今天 #{self.doc.strftime("%T")}"
+    else
+      return self.doc.strftime("%F")
+    end
+  end
 end

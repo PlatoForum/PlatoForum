@@ -21,11 +21,7 @@
         </a>
         <% @topics.sort!{ |a,b| b.doc <=> a.doc }.first(5).each do |topic| %>
         <a href="/<%= topic.permalink %>" class="list-group-item">
-          <% if topic.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
-            <span class="badge">今天 <%= topic.doc.strftime("%T") %></span><%= topic.name %>
-          <% else %>
-            <span class="badge"><%= topic.doc.strftime("%F") %></span><%= topic.name %>
-          <% end %>
+            <span class="badge pull-right"><%= topic.display_time %></span><%= topic.name %>
         </a>
         <% end %>
       </div>

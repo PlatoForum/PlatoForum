@@ -21,12 +21,12 @@
       <p class="text-muted"><%= @topic.description %></p>
     </legend>
     <div class="form-group <%= "has-error" unless @comment.errors[:subject].count ==0 %>">
-      <label for="name" class="col-lg-2 control-label">主旨</label>
+      <label for="name" class="col-lg-2 control-label">摘要</label>
       <div class="col-lg-10">
-        <%= f.text_field :subject, class: "form-control", placeholder: "評論主旨" %>
+        <%= f.text_field :subject, class: "form-control", placeholder: "評論摘要" %>
         <% unless @comment.errors[:subject].empty? %>
         <label class="control-label" for="inputError"><%= @comment.errors[:subject].join("，") %></label>
-        <% end %><span class="help-block">主旨只是輔助！最多二十個字。</span>
+        <% end %><span class="help-block">非必要，最多二十個字。</span>
       </div>
     </div>
     <div class="form-group <%= "has-error" unless @comment.errors[:body].count ==0 %>">

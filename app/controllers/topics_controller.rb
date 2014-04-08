@@ -148,7 +148,7 @@ class TopicsController < ApplicationController
   def destroy
     @topic.destroy
     respond_to do |format|
-      format.html { redirect_to topics_url }
+      format.html { redirect_to "/list" }
       format.json { head :no_content }
     end
   end

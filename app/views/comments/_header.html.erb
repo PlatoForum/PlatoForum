@@ -1,12 +1,18 @@
   <div class="page-header">
     <h1><strong><%= @topic.name %></strong></h1>
     <% if @topic.topic_type == :open %>
-      <span class="label label-default">開放式</span>
+      <span class="label label-default">開放式議題</span>
     <% else %>
-      <span class="label label-default">封閉式</span>
+      <span class="label label-default">封閉式議題</span>
     <% end %>
     <span class="label label-default"><%= @topic.subscribed_by.count %>人訂閱</span>
-    <% unless session[:user_id].nil? %><% if @user.subscriptions.find(@topic.id) %><span class="label label-default"><i class="fa fa-star fa-fw"></i> 已訂閱</span><% end %><% end %>
+    <% unless session[:user_id].nil? %>
+    <% if @user.subscriptions.find(@topic.id) %>
+      <a href="/<%= @topic.permalink %>/unsubscribe" class="label label-primary"><i class="fa fa-star"></i> 已訂閱</a>
+    <% else %>
+      <a href="/<%= @topic.permalink %>/subscribe" class="label label-primary"><i class="fa fa-star-o"></i> 未訂閱</a>
+    <% end %>
+    <% end %>
     <h4 class="text-muted"><%= @topic.description %></h4>
     <h4 class="text-muted">你的身份是「
       <% if session[:user_id].nil? %>
@@ -16,19 +22,16 @@
       <% end %>」
 
       <% unless session[:user_id].nil? %>
+        <button type="button" class="btn btn-primary" data-toggle="modal" href="#modal_new_comment"><i class="fa fa-comment"></i>  發表評論</button>
+
       <div class="btn-group">
-        <button type="button" class="btn btn-default" data-toggle="modal" href="#modal_new_comment"><i class="fa fa-comment"></i>  發表評論</button>
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">管理 <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <% if @user.subscriptions.find(@topic.id) %>
-            <li><a href="/<%= @topic.permalink %>/unsubscribe" role: "button"><i class="fa fa-star-o fa-fw"></i> 取消訂閱</a></li>
-          <% else %>
-            <li><a href="/<%= @topic.permalink %>/subscribe" role: "button"><i class="fa fa-star fa-fw"></i> 訂閱議題</a></li>
-          <% end %>
           <li><a href="/<%= @topic.permalink %>/edit" role: "button"><i class="fa fa-pencil-square-o fa-fw"></i> 編輯議題</a></li>
-          <li><a href="/topics/<%= @topic.id %>" data-method="delete" data-confirm="你確定嗎？這個動作無法還原！" rel="nofollow"><i class="fa fa-trash-o fa-fw"></i> 刪除議題</a></li>
+          <li><a href="#modal_delete_topic" data-toggle="modal" rel="nofollow"><i class="fa fa-trash-o fa-fw"></i> 刪除議題</a></li>
         </ul>
       </div>
+
       <% end %>
 
   </h4>
@@ -37,5 +40,5 @@
 <% unless session[:user_id].nil? %>
 <%= render 'proxies/modal_switch_real' %>
 <%= render 'comments/modal_new_comment' %>
-
+<%= render 'topics/modal_delete_topic' %>
 <% end %>

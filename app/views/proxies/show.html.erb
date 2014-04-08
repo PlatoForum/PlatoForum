@@ -1,6 +1,6 @@
 <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><%= link_to "主頁", root_path %></li>
-    <li><%= link_to "議題列表", "/list" %></li>
+    <li><%= link_to "議題", "/list" %></li>
     <li><%= link_to @topic.name, "/#{@topic.permalink}/" %></li>
     <li><%= @proxy_to_show.display_name %></li>
 </ul>
@@ -8,10 +8,10 @@
 <div class="page-header">
 	<h2><%= @proxy_to_show.display_name %><% if @proxy_to_show == @proxy %>（你）<% end %></h2>
     <% if @proxy_to_show.real_id %>
-      <a class="label label-default" <% if @proxy_to_show == @proxy %>data-toggle="modal" href="#modal_switch_real_id"<% end %>><i class="fa fa-unlock"></i> 實名</a>
-      <a href="<%= @proxy_to_show.display_link %>" target="_blank"><span class="label label-primary">Facebook</span></a>
+      <a class="label label-primary" <% if @proxy_to_show == @proxy %>data-toggle="modal" href="#modal_switch_real_id"<% end %>><i class="fa fa-unlock"></i> 實名</a>
+      <a href="<%= @proxy_to_show.display_link %>" target="_blank" class="label label-primary">facebook</a>
     <% else %>
-      <a class="label label-default" <% if @proxy_to_show == @proxy %>data-toggle="modal" href="#modal_switch_real_id"<% end %>><i class="fa fa-lock"></i> 匿名</a>
+      <a class="label label-primary" <% if @proxy_to_show == @proxy %>data-toggle="modal" href="#modal_switch_real_id"<% end %>><i class="fa fa-lock"></i> 匿名</a>
     <% end %>
 </div>
 
@@ -43,8 +43,8 @@
                       <span class="label label-success"><i class="fa fa-thumbs-up"></i> <%= comment.likes.count %></span> 
                       <span class="label label-danger"><i class="fa fa-thumbs-down"></i> <%= comment.dislikes.count %></span>
                     </td>
-                    <td>「<%= comment.subject == "" ? "沒有主旨" : comment.subject %>」<span class="text-<%= comment.stance.panel.nil? ? "muted" : comment.stance.panel %>"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
-                    <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
+                    <td>「<%= comment.subject == "" ? "沒有主旨" : comment.subject %>」<span class="text-<%= comment.stance.panel.nil? ? "muted" : comment.stance.panel %>"><%= comment.display_abstract %></span></td>
+                    <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
                   </tr>
                 <% end %>
               </tbody>

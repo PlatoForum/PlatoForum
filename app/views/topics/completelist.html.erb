@@ -1,6 +1,6 @@
 <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><%= link_to "主頁", root_path %></li>
-    <li class="active">議題列表</li>
+    <li class="active">議題</li>
 </ul>
 
 <%= render 'topics/modal_new_topic' %>
@@ -47,12 +47,7 @@
 			<tr onclick="document.location = '/<%= topic.permalink %>';">
 				<td align="right"><%= topic.name %></td>
 				<td class="text-muted"><%= topic.description[0,20] %><%= "⋯⋯" if topic.description.length > 20 %></td>
-				<td width="30"><% if topic.doc.strftime("%F") == Time.zone.now.strftime("%F") %>
-					            <span class="badge pull-right">今天 <%= topic.doc.strftime("%T") %></span>
-					          <% else %>
-					            <span class="badge pull-right"><%= topic.doc.strftime("%F") %></span>
-					          <% end %>
-				</td>
+				<td width="30"><span class="badge pull-right"><%= topic.display_time %></span></td>
 			</tr>
 		    <% end %>
 		<tbody>

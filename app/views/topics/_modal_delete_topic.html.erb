@@ -1,0 +1,29 @@
+<div class="bs-component">
+  <div class="modal fade" id="modal_delete_topic">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4>刪除議題</h4>
+            </div>
+
+            <div class="modal-body">
+              <p class="text-muted">
+                你確定要刪除議題『<span class="text-primary"><%= @topic.name %></span>』嗎？
+              </p>
+              <p class="text-danger">注意！這個動作無法復原！</p>
+            </div>
+
+            <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <a class="btn btn-primary" href="/topics/<%= @topic.id %>" data-method="delete" rel="nofollow"><i class="fa fa-trash-o fa-fw"></i> 確定</a>
+                <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
+              </div>
+            </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>

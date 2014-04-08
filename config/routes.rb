@@ -39,9 +39,11 @@ PlatoForum::Application.routes.draw do
   get 'list' => "topics#completelist"
   get 'subscriptions' => "topics#subscriptions"
  
-  get ':permalink/comments/new' => "comments#new"
+  #get ':permalink/comments/new' => "comments#new"
   post ':permalink/comments' => "comments#create"
-  get ':permalink/comment_:comment' => "comments#show"
+  post ':permalink/comment_:id/reply' => "comments#reply"
+  
+  get ':permalink/comment_:id' => "comments#show"
 
   get ':permalink/subscribe' => "topics#subscribe"
   get ':permalink/unsubscribe' => "topics#unsubscribe"

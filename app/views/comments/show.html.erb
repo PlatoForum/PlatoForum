@@ -1,6 +1,6 @@
 <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><%= link_to "主頁", root_path %></li>
-    <li><%= link_to "議題列表", "/list" %></li>
+    <li><%= link_to "議題", "/list" %></li>
     <li><%= link_to @topic.name, "/#{@topic.permalink}/" %></li>
     <li><%= link_to @stance.description, "/#{@topic.permalink}/stance_#{@stance.number}" %></li>
     <li class="active">檢視評論</li>
@@ -25,7 +25,7 @@
       </div>
       <div class="panel-body">
         <p class="text-default"><%= @comment.body %></p>
-        <p class="text-primary" align="right"><a href="/<%=@comment.topic.permalink%>/proxy_<%=@comment.owner.id%>"><%=@comment.owner.display_name%><% if (@comment.owner == @proxy)%>（你）<%end%></a><br>發表於 <%= @comment.doc.strftime("%F %T") %></p>
+        <p class="text-primary" align="right"><a href="/<%=@comment.topic.permalink%>/proxy_<%=@comment.owner.id%>"><%=@comment.owner.display_name%><% if (@comment.owner == @proxy)%>（你）<%end%></a><br>發表於 <%= @comment.display_time_detailed %></p>
       </div>
 
 
@@ -54,5 +54,9 @@
     </div>
     </div>
   <% end %>
-    </div>
+  </div>
+  <div align="right">
+    <a href="" class="btn btn-primary"><i class="fa fa-reply"></i> 回應</a>
+    <a href="#" class="btn btn-default" onClick="window.history.back(); return false;">返回</a>
+  </div>
 </div>

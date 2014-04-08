@@ -27,6 +27,7 @@
       }
       function returnPage(){
           window.location.href = localStorage.startingPage;
+          return false;
       }
     </script></head>
   <body>
@@ -34,12 +35,15 @@
 <%= render 'layouts/header' %>
 
 <div class="container" role="main">
+
+<% if false %><!-- turn off notification panel -->
   <% flash.each do |key, value| %>
     <div class="<%= flash_class(key) %>">
       <a href="#" class="close" data-dismiss="alert">&times;</a>
       <%= value %>
     </div>
   <% end %>
+<% end %>
 
   <%= yield %> <!-- Page Body -->
 </div> <!-- /container -->
