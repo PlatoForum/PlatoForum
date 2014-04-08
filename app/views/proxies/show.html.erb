@@ -8,10 +8,10 @@
 <div class="page-header">
 	<h2><%= @proxy_to_show.display_name %><% if @proxy_to_show == @proxy %>（你）<% end %></h2>
     <% if @proxy_to_show.real_id %>
-      <span class="label label-default" <% if @proxy_to_show == @proxy %>data-toggle="modal" href="#modal_switch_real_id"<% end %>><i class="fa fa-unlock"></i> 實名</span>
+      <a class="label label-default" <% if @proxy_to_show == @proxy %>data-toggle="modal" href="#modal_switch_real_id"<% end %>><i class="fa fa-unlock"></i> 實名</a>
       <a href="<%= @proxy_to_show.display_link %>" target="_blank"><span class="label label-primary">Facebook</span></a>
     <% else %>
-      <span class="label label-default" <% if @proxy_to_show == @proxy %>data-toggle="modal" href="#modal_switch_real_id"<% end %>><i class="fa fa-lock"></i> 匿名</span>
+      <a class="label label-default" <% if @proxy_to_show == @proxy %>data-toggle="modal" href="#modal_switch_real_id"<% end %>><i class="fa fa-lock"></i> 匿名</a>
     <% end %>
 </div>
 
