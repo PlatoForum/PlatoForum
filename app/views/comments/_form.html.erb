@@ -1,7 +1,6 @@
 <div class="well bs-component">
 
-<%= form_for(@comment, url: "/#{@topic.permalink}/comments", :html => { class: "form-horizontal"}) do |f| %>
-
+<%= form_for(@comment, url: @target.nil? ? "/#{@topic.permalink}/comments" : "/#{@topic.permalink}/comment_#{@target.id}/reply", :html => { class: "form-horizontal"}) do |f| %>
   <% if @comment.errors.any? %>
     <div class="bs-component">
       <div class="alert alert-dismissable alert-danger">
@@ -17,37 +16,35 @@
 
   <fieldset>
     <legend>
-      <h2>以『<%= @proxy.display_name %>』身份，對『<%= @topic.name %>』發表評論</h2>
-      <p class="text-muted"><%= @topic.description %></p>
-    </legend>
-    <div class="form-group <%= "has-error" unless @comment.errors[:subject].count ==0 %>">
-      <label for="name" class="col-lg-2 control-label">摘要</label>
-      <div class="col-lg-10">
-        <%= f.text_field :subject, class: "form-control", placeholder: "評論摘要" %>
-        <% unless @comment.errors[:subject].empty? %>
-        <label class="control-label" for="inputError"><%= @comment.errors[:subject].join("，") %></label>
-        <% end %><span class="help-block">非必要，最多二十個字。</span>
-      </div>
-    </div>
-    <div class="form-group <%= "has-error" unless @comment.errors[:body].count ==0 %>">
-      <label for="description" class="col-lg-2 control-label">內容（必要）</label>
-      <div class="col-lg-10">
-        <%= f.text_area :body, class: "form-control", placeholder: "評論內容", rows: "5" %>
-        <% unless @comment.errors[:body].empty? %>
-        <label class="control-label" for="inputError"><%= @comment.errors[:body].join("，") %></label>
+      <% if @target.nil? %>
+        <h2><%= @topic.name %></h2>
+        <p class="text-muted"><%= @topic.description %></p>
+        <p class="text-muted">身份：<span class="text-primary"><%= @proxy.display_name %></span></p>
+      <% else %>
+        <% if params[:comment][:stance] == "support" %>
+          <h2 class="text-success">支援評論</h2>
+          <p class="text-muted">對於<span class="text-primary"><%= @target.owner.display_name %></span>說：</p>
+          <p class="text-muted"><%= @target.body %></p>
+          <p class="text-muted">你（<span class="text-primary"><%= @proxy.display_name %></span>）表示<span class="text-success">支持！</span></p>
+        <% else %>
+          <h2 class="text-danger">反對評論</h2>
+          <p class="text-muted">對於<span class="text-primary"><%= @target.owner.display_name %></span>說：</p>
+          <p class="text-muted"><%= @target.body %></p>
+          <p class="text-muted">你（<span class="text-primary"><%= @proxy.display_name %></span>）表示<span class="text-danger">反對！</span></p>
         <% end %>
-      </div>
-    </div>
+      <% end %>
+    </legend>
 
+    <% if @target.nil? %>
     <% unless @topic.topic_type == :open %>
     <div class="form-group <%= "has-error" unless @comment.errors[:stance].count ==0 %>">
       <label for="permalink" class="col-lg-2 control-label">立場（必要）</label>
       <div class="col-lg-10">
         <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="<%= @comment.stance %>">
         <div class="btn-group btn-group-justified" data-toggle="buttons-radio">
-          <a href="#" id="button_like" onClick="click_like()" type="button" class="btn btn-success" value="1"><%= "✓ " if @comment.stance == 1 %> 支持</a>
-          <a href="#" id="button_neutral" onClick="click_neutral()" type="button" class="btn btn-warning" value="0"><%= "✓ " if @comment.stance == 2 %>中立</a>
-          <a href="#" id="button_dislike" onClick="click_dislike()" type="button" class="btn btn-danger" value="-1"><%= "✓ " if @comment.stance == 3 %>反對</a>
+          <a href="#" id="button_like" onClick="click_like()" type="button" class="btn btn-success" value="1"><%= "✓ " if @comment.stance.number == 1 %> 支持</a>
+          <a href="#" id="button_neutral" onClick="click_neutral()" type="button" class="btn btn-warning" value="0"><%= "✓ " if @comment.stance.number == 2 %>中立</a>
+          <a href="#" id="button_dislike" onClick="click_dislike()" type="button" class="btn btn-danger" value="-1"><%= "✓ " if @comment.stance.number == 3 %>反對</a>
         </div>
         <% unless @comment.errors[:stance].empty? %>
         <label class="control-label" for="inputError"><%= @comment.errors[:stance].join("，") %></label>
@@ -81,7 +78,29 @@
       }
     </script>
     <% end %>
+    <% else %>
+      <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="<%= params[:comment][:stance] %>">
+    <% end %>
 
+    <div class="form-group <%= "has-error" unless @comment.errors[:body].count ==0 %>">
+      <label for="description" class="col-lg-2 control-label">內容（必要）</label>
+      <div class="col-lg-10">
+        <%= f.text_area :body, class: "form-control", placeholder: "評論內容", rows: "5" %>
+        <% unless @comment.errors[:body].empty? %>
+        <label class="control-label" for="inputError"><%= @comment.errors[:body].join("，") %></label>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="form-group <%= "has-error" unless @comment.errors[:subject].count ==0 %>">
+      <label for="name" class="col-lg-2 control-label">摘要</label>
+      <div class="col-lg-10">
+        <%= f.text_field :subject, class: "form-control", placeholder: "評論摘要" %>
+        <% unless @comment.errors[:subject].empty? %>
+        <label class="control-label" for="inputError"><%= @comment.errors[:subject].join("，") %></label>
+        <% end %><span class="help-block">非必要，最多二十個字。</span>
+      </div>
+    </div>
 
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">

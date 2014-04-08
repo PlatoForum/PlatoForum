@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   
   #before_action :check_topic
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :before_edit, only: [:new, :create, :like, :neutral, :dislike]
+  before_action :before_edit, only: [:new, :create, :reply, :like, :neutral, :dislike]
   before_action :before_show, only: [:index, :show]
 
   # GET /:permalink/comments
@@ -30,10 +30,53 @@ class CommentsController < ApplicationController
     @comment = Comment.new
     @comment.owner = @proxy
   end
+  
+  def set_reply_relations
+    @target = Comment.find(params[:id])
+    if comment_params[:stance] == "support"
+      @target.supported << @comment
+    else #oppose
+      @target.opposed << @comment
+    end
+    @target.save
+  end
 
-  # GET /comments/1/edit
-  #def edit
-  #end
+  # POST /:permalink/comment_:id/reply
+  def reply
+    @comment = Comment.new(comment_params)
+    @comment.topic = @topic
+    @comment.doc = Time.zone.now
+    @comment.owner = @proxy
+
+    @target = Comment.find(params[:id])
+
+    if @topic.topic_type == :yesno
+      if comment_params[:stance] == "support"
+        @stance = @target.stance
+      else #oppose
+        @stance_number = 4 - @target.stance.number
+        @stance = @topic.stances.find_by(:number => @stance_number)
+      end
+      @comment.stance = @stance
+    else
+      @stance = @topic.stances.sort!{|b,a| a.comments.where(:owner => @proxy).count <=> b.comments.where(:owner => @proxy).count }.first
+      @comment.stance = @stance
+    end
+    
+    respond_to do |format|
+      if @comment.save
+        @stance.comments << @comment
+
+        set_reply_relations
+
+        format.html { redirect_to "/#{params[:permalink]}/comment_#{@target.id}", notice: '已成功發表評論！' }
+        format.json { render action: 'show', status: :created, location: @comment }
+      else
+        format.html { render action: 'new', notice: @errormessage }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   # POST /:permalink/comments
   # POST /:permalink/comments.json

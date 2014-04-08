@@ -20,24 +20,25 @@
       <% else %>
        <a data-toggle="modal" href="#modal_switch_real_id"><%= @proxy.display_name %></a>
       <% end %>」
-
-      <% unless session[:user_id].nil? %>
-        <button type="button" class="btn btn-primary" data-toggle="modal" href="#modal_new_comment"><i class="fa fa-comment"></i>  發表評論</button>
-
-      <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">管理 <span class="caret"></span></button>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li><a href="/<%= @topic.permalink %>/edit" role: "button"><i class="fa fa-pencil-square-o fa-fw"></i> 編輯議題</a></li>
-          <li><a href="#modal_delete_topic" data-toggle="modal" rel="nofollow"><i class="fa fa-trash-o fa-fw"></i> 刪除議題</a></li>
-        </ul>
-      </div>
-
-      <% end %>
-
   </h4>
   </div>
 
+
+
 <% unless session[:user_id].nil? %>
+
+<div class="nav navbar" align="right">
+<button type="button" class="btn btn-primary" data-toggle="modal" href="#modal_new_comment"><i class="fa fa-comment"></i>  發表評論</button>
+
+<div class="btn-group" align="left">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">管理 <span class="caret"></span></button>
+  <ul class="dropdown-menu dropdown-menu-right">
+    <li><a href="/<%= @topic.permalink %>/edit" role: "button"><i class="fa fa-pencil-square-o fa-fw"></i> 編輯議題</a></li>
+    <li><a href="#modal_delete_topic" data-toggle="modal" rel="nofollow"><i class="fa fa-trash-o fa-fw"></i> 刪除議題</a></li>
+  </ul>
+</div>
+</div>
+
 <%= render 'proxies/modal_switch_real' %>
 <%= render 'comments/modal_new_comment' %>
 <%= render 'topics/modal_delete_topic' %>
