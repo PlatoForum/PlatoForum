@@ -51,7 +51,8 @@ gem 'omniauth-facebook'
 
 gem 'therubyracer'
 gem 'less-rails'
-gem 'twitter-bootstrap-rails', '2.2.8'
+#gem 'twitter-bootstrap-rails', '2.2.8'
+#gem 'font-awesome-sass'
 
 # Use BSON::ObjectId field in Mongoid model
 gem 'bson'

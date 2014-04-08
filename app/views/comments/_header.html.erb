@@ -1,5 +1,10 @@
   <div class="page-header">
     <h1><strong><%= @topic.name %></strong></h1>
+    <% if @topic.topic_type == :open %>
+      <span class="label label-default">開放式</span>
+    <% else %>
+      <span class="label label-default">封閉式</span>
+    <% end %>
     <span class="label label-default"><%= @topic.subscribed_by.count %>人訂閱</span>
     <% unless session[:user_id].nil? %><% if @user.subscriptions.find(@topic.id) %><span class="label label-default">已訂閱</span><% end %><% end %>
     <h4 class="text-muted"><%= @topic.description %></h4>
@@ -14,7 +19,7 @@
       <div class="btn-group">
         <button type="button" class="btn btn-default" data-toggle="modal" href="#modal_new_comment">發表評論</button>
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu dropdown-menu-right">
           <% if @user.subscriptions.find(@topic.id) %>
             <li><a href="/<%= @topic.permalink %>/unsubscribe" role: "button">取消訂閱</a></li>
           <% else %>
