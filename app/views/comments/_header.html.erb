@@ -19,7 +19,7 @@
       <div class="btn-group">
         <button type="button" class="btn btn-default" data-toggle="modal" href="#modal_new_comment">發表評論</button>
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu dropdown-menu-right">
           <% if @user.subscriptions.find(@topic.id) %>
             <li><a href="/<%= @topic.permalink %>/unsubscribe" role: "button">取消訂閱</a></li>
           <% else %>
