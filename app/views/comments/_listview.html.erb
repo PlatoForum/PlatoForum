@@ -22,8 +22,8 @@
                 <% stance.comments.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
                   <tr onClick="document.location = '/comments/<%= comment.id %>';">
                     <td width="10">
-                      <span class="label label-success">讚 <%= comment.likes.count %></span> 
-                      <span class="label label-danger">爛 <%= comment.dislikes.count %></span>
+                      <span class="label label-success"><i class="fa fa-thumbs-up"></i> <%= comment.likes.count %></span> 
+                      <span class="label label-danger"><i class="fa fa-thumbs-down"></i> <%= comment.dislikes.count %></span>
                     </td>
                     <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
                     <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>

@@ -6,7 +6,7 @@
       <span class="label label-default">封閉式</span>
     <% end %>
     <span class="label label-default"><%= @topic.subscribed_by.count %>人訂閱</span>
-    <% unless session[:user_id].nil? %><% if @user.subscriptions.find(@topic.id) %><span class="label label-default">已訂閱</span><% end %><% end %>
+    <% unless session[:user_id].nil? %><% if @user.subscriptions.find(@topic.id) %><span class="label label-default"><i class="fa fa-star fa-fw"></i> 已訂閱</span><% end %><% end %>
     <h4 class="text-muted"><%= @topic.description %></h4>
     <h4 class="text-muted">你的身份是「
       <% if session[:user_id].nil? %>
@@ -17,16 +17,16 @@
 
       <% unless session[:user_id].nil? %>
       <div class="btn-group">
-        <button type="button" class="btn btn-default" data-toggle="modal" href="#modal_new_comment">發表評論</button>
+        <button type="button" class="btn btn-default" data-toggle="modal" href="#modal_new_comment"><i class="fa fa-comment"></i>  發表評論</button>
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right">
           <% if @user.subscriptions.find(@topic.id) %>
-            <li><a href="/<%= @topic.permalink %>/unsubscribe" role: "button">取消訂閱</a></li>
+            <li><a href="/<%= @topic.permalink %>/unsubscribe" role: "button"><i class="fa fa-star-o fa-fw"></i> 取消訂閱</a></li>
           <% else %>
-            <li><a href="/<%= @topic.permalink %>/subscribe" role: "button">訂閱議題</a></li>
+            <li><a href="/<%= @topic.permalink %>/subscribe" role: "button"><i class="fa fa-star fa-fw"></i> 訂閱議題</a></li>
           <% end %>
-          <li><a href="/<%= @topic.permalink %>/edit" role: "button">編輯議題</a></li>
-          <li><%= link_to "刪除議題", @topic, method: :delete, data: { confirm: '你確定嗎？這個動作無法還原！' }%></li>
+          <li><a href="/<%= @topic.permalink %>/edit" role: "button"><i class="fa fa-pencil-square-o fa-fw"></i> 編輯議題</a></li>
+          <li><a href="/topics/<%= @topic.id %>" data-method="delete" data-confirm="你確定嗎？這個動作無法還原！" rel="nofollow"><i class="fa fa-trash-o fa-fw"></i> 刪除議題</a></li>
         </ul>
       </div>
       <% end %>

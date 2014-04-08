@@ -19,8 +19,8 @@
         </div>
 
         <div class="modal-footer">
-          <% if @proxy.real_id %><a class="btn btn-primary" href="/<%= @topic.permalink %>/proxy_fake">切換成匿名</a>
-          <% else %><a class="btn btn-primary" href="/<%= @topic.permalink %>/proxy_real">切換成實名</a>
+          <% if @proxy.real_id %><a class="btn btn-primary" href="/<%= @topic.permalink %>/proxy_fake"><i class="fa fa-lock"></i> 切換成匿名</a>
+          <% else %><a class="btn btn-primary" href="/<%= @topic.permalink %>/proxy_real"><i class="fa fa-unlock"></i> 切換成實名</a>
           <% end %>
           <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
         </div>
