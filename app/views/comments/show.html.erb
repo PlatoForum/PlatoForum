@@ -2,7 +2,7 @@
     <li><%= link_to "主頁", root_path %></li>
     <li><%= link_to "議題", "/list" %></li>
     <li><%= link_to @topic.name, "/#{@topic.permalink}/" %></li>
-    <li><%= link_to <%= @stance.description.nil? ? "立場#{@stance.number}" : @stance.description %>, "/#{@topic.permalink}/stance_#{@stance.number}" %></li>
+    <li><%= link_to @stance.description.nil? ? "立場#{@stance.number}" : @stance.description, "/#{@topic.permalink}/stance_#{@stance.number}" %></li>
     <li class="active">檢視評論</li>
 </ul>
 
