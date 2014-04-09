@@ -38,7 +38,8 @@ class CommentsController < ApplicationController
     else #oppose
       @target.opposed << @comment
     end
-    @target.save
+    logger.error "LOGGED LINKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    @target.update
   end
 
   # POST /:permalink/comment_:id/reply

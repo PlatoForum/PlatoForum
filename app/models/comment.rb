@@ -63,4 +63,8 @@ class Comment
     end
   end
 
+  def importance_factor
+    return 2 * self.likes.count + self.dislikes.count
+  end
+
 end

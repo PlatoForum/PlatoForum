@@ -14,34 +14,70 @@
 <div class="row">
   <div class="col-md-4">
     <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title" align="right">這條評論回應的對象 <i class="fa fa-angle-double-left"></i></h3>
+      <% @replying = @comment.supporting + @comment.opposing %>
+      <div class="panel-heading"><span class="pull-right">這條評論回應的對象 <i class="fa fa-angle-double-left"></i></span>
+        <span data-toggle="tab" class="label label-primary" id="show_replying" href="#replying">全部 <%= @replying.count %></span>
+        <span data-toggle="tab" class="label label-success" id="show_supporting" href="#supporting">支援 <%= @comment.supporting.count %></span>
+        <span data-toggle="tab" class="label label-danger" id="show_opposing" href="#opposing" align="right">反駁 <%= @comment.opposing.count %></span>
       </div>
 
+
       <div class="panel-body">
-        
-        <% @replying = @comment.supporting + @comment.opposing %>
-        <table class="table table-striped table-hover ">
-          <% if @replying.count == 0 %>
-            <p class="text-muted">沒有⋯⋯</p>
-          <% else %>
-            <tbody>
-              <% @replying.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
-                <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
-                  <td width="10">
-                    <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= comment.likes.count %></span>
-                    <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= comment.dislikes.count %></span>
-                  </td>
-                  <td width="10">
-                    <span class="label label-<%= @comment.supported.find(comment.id) ? "success" : "danger" %>"><%= @comment.supported.find(comment.id) ? "支援" : "反駁" %></span>
-                  </td>
-                  <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span> <span class="label label-muted"><%= @comment.supporting.find(comment.id) ? "支援" : "反駁" %></span></td>
-                  <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          <% end %>
-        </table>
+
+        <div id="myTabContent" class="tab-content">
+          
+          <div class="tab-pane fade" id="supporting">
+            <table class="table table-striped table-hover">
+              <tbody>
+                <%= "毫無反應就只是個空清單" if @comment.supporting.count == 0 %>
+                <% @comment.supporting.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
+                  <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
+                    <td width="10">
+                      <span class="label label-success">支援</span>
+                    </td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>  
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div> 
+
+          <div class="tab-pane fade" id="opposing">
+            <table class="table table-striped table-hover">
+              <tbody>
+                <%= "毫無反應就只是個空清單" if @comment.opposing.count == 0 %>
+                <% @comment.opposing.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
+                  <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
+                    <td width="10">
+                      <span class="label label-danger">反駁</span>
+                    </td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tab-pane fade active in" id="replying">
+            <table class="table table-striped table-hover">
+              <tbody>
+                <%= "毫無反應就只是個空清單" if @replying.count == 0 %>
+                <% @replying.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
+                  <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
+                    <td width="10">
+                      <span class="label label-<%= @comment.supporting.find(comment.id) ? "success" : "danger" %>"><%= @comment.supporting.include?(comment) ? "支援" : "反駁" %></span>
+                    </td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div> 
+
+        </div>
 
       </div>
     </div>
@@ -55,101 +91,103 @@
       <div class="panel-body">
         <p class="text-default"><%= @comment.body %></p>
         <p class="text-primary" align="right"><a href="/<%=@comment.topic.permalink%>/proxy_<%=@comment.owner.id%>"><%=@comment.owner.display_name%><% if (@comment.owner == @proxy)%>（你）<%end%></a><br>發表於 <%= @comment.display_time_detailed %></p>
-        <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></span>
-        <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></span>
+
+        <% if session[:user_id].nil? %>
+          <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></span>
+          <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></span>
+        <% else %>
+          <% if @proxy.approvals.find(@comment.id) %>
+            <a class="label label-success" href="<%= neutral_comment_path(@comment) %>" data-method="put"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></a>
+          <% else %>
+            <a class="label label-success" href="<%= like_comment_path(@comment) %>" data-method="put"><i class="fa fa-thumbs-o-up fa-fw"></i> <%= @comment.likes.count %></a>
+          <% end %>
+          <% if @proxy.disapprovals.find(@comment.id) %>
+            <a class="label label-danger" href="<%= neutral_comment_path(@comment) %>" data-method="put"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></a>
+          <% else %>
+            <a class="label label-danger" href="<%= dislike_comment_path(@comment) %>" data-method="put"><i class="fa fa-thumbs-o-down fa-fw"></i> <%= @comment.dislikes.count %></a>
+          <% end %>
+        <% end %>
       </div>
 
-      <div class="panel-footer">
-            <% unless session[:user_id].nil? %>
-              <center><p class="text-muted">我覺得這條評論</p></center>
-              <div class="btn-group btn-group-justified">
-                <% if @proxy.approvals.find(@comment.id) %>
-                  <a href="" class="btn btn-success">✓ 讚</a>
-                  <%= link_to "沒感覺", neutral_comment_path(@comment), method: :put, class: 'btn btn-warning' %>
-                  <%= link_to "爛", dislike_comment_path(@comment), method: :put, class: 'btn btn-danger' %>
-                <% end %>
-                
-                <% if !@proxy.disapprovals.find(@comment.id) && !@proxy.approvals.find(@comment.id) %>
-                  <%= link_to "讚", like_comment_path(@comment), method: :put, class: 'btn btn-success' %>
-                  <a href="" class="btn btn-warning">✓ 沒感覺</a>
-                  <%= link_to "爛", dislike_comment_path(@comment), method: :put, class: 'btn btn-danger' %>
-                <% end %>
-                
-                <% if @proxy.disapprovals.find(@comment.id) %>
-                  <%= link_to "讚", like_comment_path(@comment), method: :put, class: 'btn btn-success' %>
-                  <%= link_to "沒感覺", neutral_comment_path(@comment), method: :put, class: 'btn btn-warning' %>
-                  <a href="" class="btn btn-danger">✓ 爛</a>
-                <% end %>
-              </div>
-            <% end %>
+      <div class="panel-footer" align="right">
+        <% unless session[:user_id].nil? %>
+          <a href="#modal_support_comment" data-toggle="modal" class="btn btn-success"><i class="fa fa-reply"></i> 支援</a>
+          <a href="#modal_oppose_comment" data-toggle="modal" class="btn btn-danger"><i class="fa fa-reply"></i> 反駁</a>
+        <% end %>
+        <a class="btn btn-default" onClick="window.history.back(); return false;">返回</a>
       </div>
     </div>
   </div>
   <div class="col-md-4">
     <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-angle-double-left"></i> 這條評論受到的回應</h3>
+      <% @replied = @comment.supported + @comment.opposed %>
+      <div class="panel-heading"><i class="fa fa-angle-double-left"></i> 這條評論受到的回應
+        <span class="nav navbar-right">
+        <span data-toggle="tab" class="label label-primary" id="show_replied" href="#replied">全部 <%= @replied.count %></span>
+        <span data-toggle="tab" class="label label-success" id="show_supported" href="#supported">支援 <%= @comment.supported.count %></span>
+        <span data-toggle="tab" class="label label-danger" id="show_opposed" href="#opposed" align="right">反駁 <%= @comment.opposed.count %></span>
+      </span>
       </div>
+
 
       <div class="panel-body">
 
-        <% @replied = @comment.supported + @comment.opposed %>
-        <table class="table table-striped table-hover ">
-          <% if @replied.count == 0 %>
-            <p class="text-muted">沒有⋯⋯</p>
-          <% else %>
-            <tbody>
+        <div id="myTabContent" class="tab-content">
 
-              <div class="btn-group">
-              <a class="btn btn-xs btn-default" id="show_replied" href="#comments_count">全部</a>
-              <a class="btn btn-xs btn-success" id="show_supported" href="#creation_time">支援</a>
-              <a class="btn btn-xs btn-danger" id="show_opposed" href="#subscription_count">反駁</a>
-              </div>
-              </ul>
-              <script type="text/javascript">
-                $( "#show_replied" ).click(function() {
-                  $('.opposed').faceIn();
-                  $( ".supported" ).fadeIn();
-                });
-                $( "#show_supported" ).click(function() {
-                  $( ".opposed" ).animate({opacity: 'toggle', width: 'toggle'}, 300);
-                  $( ".supported" ).fadeIn();
-                });
-                $( "#show_opposed" ).click(function() {
-                  $( ".opposed" ).fadeIn();
-                  $( ".supported" ).animate({opacity: 'toggle', height: 'toggle'});
-                });
-              </script>
-              <% @replied.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
-                <tr class="<%= @comment.supported.find(comment.id) ? "supported" : "opposed" %>" onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
-                  <td width="10">
-                    <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= comment.likes.count %></span>
-                    <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= comment.dislikes.count %></span>
-                  </td>
-                  <td width="10">
-                    <span class="label label-<%= @comment.supported.find(comment.id) ? "success" : "danger" %>"><%= @comment.supported.find(comment.id) ? "支援" : "反駁" %></span>
-                  </td>
-                  <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
-                  <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          <% end %>
-        </table>
+          <div class="tab-pane fade" id="supported">
+            <table class="table table-striped table-hover">
+              <tbody>
+                <%= "毫無反應就只是個空清單" if @comment.supported.count == 0 %>
+                <% @comment.supported.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
+                  <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
+                    <td width="10">
+                      <span class="label label-success">支援</span>
+                    </td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>  
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div> 
 
-      </div>
+          <div class="tab-pane fade" id="opposed">
+            <table class="table table-striped table-hover">
+              <tbody>
+                <%= "毫無反應就只是個空清單" if @comment.opposed.count == 0 %>
+                <% @comment.opposed.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
+                  <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
+                    <td width="10">
+                      <span class="label label-danger">反駁</span>
+                    </td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tab-pane fade active in" id="replied">
+            <table class="table table-striped table-hover">
+              <tbody>
+                <%= "毫無反應就只是個空清單" if @replied.count == 0 %>
+                <% @replied.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
+                  <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
+                    <td width="10">
+                      <span class="label label-<%= @comment.supported.find(comment.id) ? "success" : "danger" %>"><%= @comment.supported.include?(comment) ? "支援" : "反駁" %></span>
+                    </td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div> 
+
+        </div>
     </div>
   </div>
-</div>
-
-
-
-<div class="nav navbar" align="right">
-  <% unless session[:user_id].nil? %>
-    <a href="#modal_support_comment" data-toggle="modal" class="btn btn-success"><i class="fa fa-reply"></i> 支援</a>
-    <a href="#modal_oppose_comment" data-toggle="modal" class="btn btn-danger"><i class="fa fa-reply"></i> 反駁</a>
-  <% end %>
-  <a class="btn btn-default" onClick="window.history.back(); return false;">返回</a>
 </div>
 
 <% unless session[:user_id].nil? %>
