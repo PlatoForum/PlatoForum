@@ -1,10 +1,12 @@
 class Job
   include Mongoid::Document
 
-  field :action, type: Symbol # :like, :dislike, :unlike, :undislike, :create
+  field :action, type: Symbol 
+  # :like, :dislike, :unlike, :undislike, :create, :support, :oppose
   field :group, type: BSON::ObjectId
   field :who, type: BSON::ObjectId
   field :post, type: BSON::ObjectId
+  field :target, type: BSON::ObjectId
   field :message, type: String
   field :toc, type: Time
 

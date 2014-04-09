@@ -53,9 +53,11 @@ class CommentsController < ApplicationController
     if @topic.topic_type == :yesno
       if comment_params[:stance] == "support"
         @stance = @target.stance
+        action = :support
       else #oppose
         @stance_number = 4 - @target.stance.number
         @stance = @topic.stances.find_by(:number => @stance_number)
+        action = :oppose
       end
       @comment.stance = @stance
     else
@@ -63,6 +65,7 @@ class CommentsController < ApplicationController
       @comment.stance = @stance
     end
     
+    create_job(action, @target._id, @comment._id)
     respond_to do |format|
       if @comment.save
         @stance.comments << @comment
@@ -186,7 +189,11 @@ class CommentsController < ApplicationController
       job = Job.new
       job.action = action
       job.group = @topic._id
-      job.who = proxy_id
+      if action == :support || action == :oppose
+        job.target = proxy_id
+      else
+        job.who = proxy_id
+      end
       job.post = comment_id
       REDIS.publish "jobqueue", job.to_json
       return true
