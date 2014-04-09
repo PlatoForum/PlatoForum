@@ -5,13 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="PlatoForum Group">
 
     <title>PlatoForum</title>
 
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -32,22 +32,20 @@
     </script></head>
   <body>
 
-<%= render 'layouts/header' %>
+    <%= render 'layouts/header' %>
+    <div class="container" role="main">
+      <% if false %><!-- turn off notification panel -->
+        <% flash.each do |key, value| %>
+          <div class="<%= flash_class(key) %>">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <%= value %>
+          </div>
+        <% end %>
+      <% end %>
+      
+      <%= yield %> <!-- Page Body -->
+      <%= render 'layouts/footer' %>
+    </div> <!-- /container -->
 
-<div class="container" role="main">
-
-<% if false %><!-- turn off notification panel -->
-  <% flash.each do |key, value| %>
-    <div class="<%= flash_class(key) %>">
-      <a href="#" class="close" data-dismiss="alert">&times;</a>
-      <%= value %>
-    </div>
-  <% end %>
-<% end %>
-
-  <%= yield %> <!-- Page Body -->
-</div> <!-- /container -->
-<%= render 'layouts/footer' %>
-
-</body>
+  </body>
 </html>
