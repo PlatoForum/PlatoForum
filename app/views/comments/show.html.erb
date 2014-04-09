@@ -12,78 +12,8 @@
 </div>
 
 <div class="row">
-  <div class="col-md-4">
-    <div class="panel panel-default">
-      <% @replying = @comment.supporting + @comment.opposing %>
-      <div class="panel-heading"><span class="pull-right">這條評論回應的對象 <i class="fa fa-angle-double-left"></i></span>
-        <span data-toggle="tab" class="label label-primary" id="show_replying" href="#replying">全部 <%= @replying.count %></span>
-        <span data-toggle="tab" class="label label-success" id="show_supporting" href="#supporting">支援 <%= @comment.supporting.count %></span>
-        <span data-toggle="tab" class="label label-danger" id="show_opposing" href="#opposing" align="right">反駁 <%= @comment.opposing.count %></span>
-      </div>
 
-
-      <div class="panel-body">
-
-        <div id="myTabContent" class="tab-content">
-          
-          <div class="tab-pane fade" id="supporting">
-            <table class="table table-striped table-hover">
-              <tbody>
-                <%= "毫無反應就只是個空清單" if @comment.supporting.count == 0 %>
-                <% @comment.supporting.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
-                  <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
-                    <td width="10">
-                      <span class="label label-success">支援</span>
-                    </td>
-                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
-                    <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>  
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div> 
-
-          <div class="tab-pane fade" id="opposing">
-            <table class="table table-striped table-hover">
-              <tbody>
-                <%= "毫無反應就只是個空清單" if @comment.opposing.count == 0 %>
-                <% @comment.opposing.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
-                  <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
-                    <td width="10">
-                      <span class="label label-danger">反駁</span>
-                    </td>
-                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
-                    <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="tab-pane fade active in" id="replying">
-            <table class="table table-striped table-hover">
-              <tbody>
-                <%= "毫無反應就只是個空清單" if @replying.count == 0 %>
-                <% @replying.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
-                  <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
-                    <td width="10">
-                      <span class="label label-<%= @comment.supporting.find(comment.id) ? "success" : "danger" %>"><%= @comment.supporting.include?(comment) ? "支援" : "反駁" %></span>
-                    </td>
-                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
-                    <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div> 
-
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
+  <div class="col-md-4 col-md-push-4">
     <div class="panel <%= @comment.stance.panel.nil? ? "panel-default" : "panel-"+@comment.stance.panel %>">
       
       <div class="panel-heading">評論：<%= @comment.display_abstract %></div>
@@ -118,11 +48,83 @@
       </div>
     </div>
   </div>
+
+  <div class="col-md-4 col-md-pull-4">
+    <div class="panel panel-default">
+      <% @replying = @comment.supporting + @comment.opposing %>
+      <div class="panel-heading"><span class="pull-right">回應的對象 <i class="fa fa-caret-left hidden-sm hidden-xs"></i></span>
+        <span data-toggle="tab" class="label label-primary" id="show_replying" href="#replying">全部 <%= @replying.count %></span>
+        <span data-toggle="tab" class="label label-success" id="show_supporting" href="#supporting">支援 <%= @comment.supporting.count %></span>
+        <span data-toggle="tab" class="label label-danger" id="show_opposing" href="#opposing" align="right">反駁 <%= @comment.opposing.count %></span>
+      </div>
+
+
+      <div class="panel-body">
+
+        <div id="myTabContent" class="tab-content">
+          
+          <div class="tab-pane fade" id="supporting">
+            <table class="table table-striped table-hover">
+              <tbody>
+                <%= "無" if @comment.supporting.count == 0 %>
+                <% @comment.supporting.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
+                  <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
+                    <td width="10">
+                      <span class="label label-success">支援 <i class="fa fa-caret-left"> </i> </span>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div> 
+
+          <div class="tab-pane fade" id="opposing">
+            <table class="table table-striped table-hover">
+              <tbody>
+                <%= "無⋯⋯" if @comment.opposing.count == 0 %>
+                <% @comment.opposing.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
+                  <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
+                    <td width="10">
+                      <span class="label label-danger">反駁 <i class="fa fa-caret-left"> </i> </span>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tab-pane fade active in" id="replying">
+            <table class="table table-striped table-hover">
+              <tbody>
+                <%= "無⋯⋯" if @replying.count == 0 %>
+                <% @replying.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
+                  <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
+                    <td width="10">
+                      <span class="label label-<%= @comment.supporting.find(comment.id) ? "success" : "danger" %>"><%= @comment.supporting.include?(comment) ? "支援" : "反駁" %> <i class="fa fa-caret-left"> </i> </span>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div> 
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <div class="col-md-4">
     <div class="panel panel-default">
       <% @replied = @comment.supported + @comment.opposed %>
-      <div class="panel-heading"><i class="fa fa-angle-double-left"></i> 這條評論受到的回應
-        <span class="nav navbar-right">
+      <div class="panel-heading"><i class="fa fa-caret-left hidden-sm hidden-xs"></i> 受到的回應
+        <span class="my-right">
         <span data-toggle="tab" class="label label-primary" id="show_replied" href="#replied">全部 <%= @replied.count %></span>
         <span data-toggle="tab" class="label label-success" id="show_supported" href="#supported">支援 <%= @comment.supported.count %></span>
         <span data-toggle="tab" class="label label-danger" id="show_opposed" href="#opposed" align="right">反駁 <%= @comment.opposed.count %></span>
@@ -137,11 +139,11 @@
           <div class="tab-pane fade" id="supported">
             <table class="table table-striped table-hover">
               <tbody>
-                <%= "毫無反應就只是個空清單" if @comment.supported.count == 0 %>
+                <%= "無⋯⋯" if @comment.supported.count == 0 %>
                 <% @comment.supported.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
                   <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
                     <td width="10">
-                      <span class="label label-success">支援</span>
+                      <span class="label label-success"><i class="fa fa-caret-left"></i> 支援</span>
                     </td>
                     <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
                     <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>  
@@ -154,11 +156,11 @@
           <div class="tab-pane fade" id="opposed">
             <table class="table table-striped table-hover">
               <tbody>
-                <%= "毫無反應就只是個空清單" if @comment.opposed.count == 0 %>
+                <%= "無⋯⋯" if @comment.opposed.count == 0 %>
                 <% @comment.opposed.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
                   <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
                     <td width="10">
-                      <span class="label label-danger">反駁</span>
+                      <span class="label label-danger"><i class="fa fa-caret-left"></i> 反駁</span>
                     </td>
                     <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
                     <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
@@ -171,11 +173,11 @@
           <div class="tab-pane fade active in" id="replied">
             <table class="table table-striped table-hover">
               <tbody>
-                <%= "毫無反應就只是個空清單" if @replied.count == 0 %>
+                <%= "無⋯⋯" if @replied.count == 0 %>
                 <% @replied.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
                   <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
                     <td width="10">
-                      <span class="label label-<%= @comment.supported.find(comment.id) ? "success" : "danger" %>"><%= @comment.supported.include?(comment) ? "支援" : "反駁" %></span>
+                      <span class="label label-<%= @comment.supported.find(comment.id) ? "success" : "danger" %>"><i class="fa fa-caret-left"></i> <%= @comment.supported.include?(comment) ? "支援" : "反駁" %></span>
                     </td>
                     <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
                     <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
