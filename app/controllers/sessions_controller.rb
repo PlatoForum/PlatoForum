@@ -14,7 +14,10 @@ class SessionsController < ApplicationController
     user = User.where(:provider => auth['provider'],
                       :uid => auth['uid']).first || User.create_with_omniauth(auth)
     session[:user_id] = user.id
+    user.save
     
+    cookies.permanent[:token] = user.token
+
     redirect_to session.delete(:return_to)
     #redirect_to params[:lastpage]
   end
@@ -22,6 +25,7 @@ class SessionsController < ApplicationController
   def destroy
     #@return_to = session[:return_to]
     reset_session
+    cookies.delete :token
     #session[:return_to] = @return_to
     #logger.info "Called by "+ request.referrer
     #session.delete(:user_id)

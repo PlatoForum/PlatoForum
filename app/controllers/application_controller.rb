@@ -5,15 +5,18 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery with: :exception
   before_filter :check_user
 
-  helper_method :current_user, :current_proxy, :pseudonym_gen
+  helper_method :check_user, :current_user, :current_proxy, :pseudonym_gen
 
   private
 
   def check_user
     if session[:user_id]
-      @user = User.find(session[:user_id])
-    else
-      
+      @user ||= User.find(session[:user_id])
+    elsif cookies[:token]
+      @user ||= User.find_by(:token => cookies[:token])
+      if @user
+        session[:user_id] = @user.id
+      end
     end
   end
 

@@ -3,6 +3,7 @@ class User
   field :email, type: String
   field :provider, type: String
   field :uid, type: String
+  field :token, type: String
   field :name, type: String
   #field :level, type: Interger, default: 0
   # anonymous=0, user=2, moderator=8, admin=10
@@ -32,4 +33,8 @@ class User
   #  @pn.save!
   #  return pn
   #end
+  before_save :generate_token
+  def generate_token
+    self.token = SecureRandom.urlsafe_base64
+  end
 end
