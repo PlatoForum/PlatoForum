@@ -3,6 +3,7 @@ PlatoForum::Application.routes.draw do
   get "static/about"
   get "static/privacy_policy"
   get "static/contact"
+  get "cover/index"
   
   resources :stances
 

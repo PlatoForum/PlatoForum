@@ -192,18 +192,20 @@ class CommentsController < ApplicationController
     @user.read_comments << @comment
   end
 
-  def notify_new_reply    
-    note = Notification.new
-    if comment_params[:stance] == "support"
-      note.noti_type = :NewSupport
-    else #oppose
-      note.noti_type = :NewOppose
+  def notify_new_reply
+    unless @target.owner.user == @user
+      note = Notification.new
+      if comment_params[:stance] == "support"
+        note.noti_type = :NewSupport
+      else #oppose
+        note.noti_type = :NewOppose
+      end
+      note.source_id = @comment.id
+      note.destination_id = @target.id
+      note.doc = Time.zone.now
+      @target.owner.user.notifications << note
+      note.save 
     end
-    note.source_id = @comment.id
-    note.destination_id = @target.id
-    note.doc = Time.zone.now
-    @target.owner.user.notifications << note
-    note.save 
   end
 
   def notify_new_like

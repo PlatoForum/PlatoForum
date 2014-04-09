@@ -117,31 +117,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def display_message(notification)
-    if notification.noti_type == :NewComment 
-      comment = Comment.find(notification.source_id) 
-      return "#{comment.owner.display_name} 在 #{comment.topic.name} 中發佈了一則新評論 #{comment.display_abstract}" 
-    elsif notification.noti_type == :NewSupport 
-      comment = Comment.find(notification.source_id) 
-      target = Comment.find(notification.destination_id) 
-      return "#{comment.owner.display_name} 支援了你在 #{comment.topic.name} 上的評論 #{target.display_abstract}" 
-    elsif notification.noti_type == :NewOppose 
-      comment = Comment.find(notification.source_id) 
-      target = Comment.find(notification.destination_id) 
-      return "#{comment.owner.display_name} 反駁了你在 #{comment.topic.name} 上的評論 #{target.display_abstract}" 
-    elsif notification.noti_type == :NewLike 
-      someone = Proxy.find_by(:id => notification.source_id) 
-      target = Comment.find(notification.destination_id) 
-      return "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很讚！" 
-    elsif notification.noti_type == :NewDislike 
-      someone = Proxy.find_by(:id => notification.source_id) 
-      target = Comment.find(notification.destination_id) 
-      return "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很爛！" 
-    end 
-  end
-
-  def display_link(notification)
-
-  end
-
 end

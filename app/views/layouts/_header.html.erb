@@ -28,7 +28,8 @@
                 <li><a href="/signout" id="sign_out"><i class="fa fa-power-off fa-fw"></i> 登出</a></li>
               </ul></li>
                <% else %>
-                <li><%= link_to "用Facebook帳號登入", "/signin", id: "sign_in" %></li>
+                <li><a data-toggle="modal" href="#modal_privacy_policy">用Facebook帳號登入</a></li>
+
               <% end %>
               
             
@@ -36,3 +37,4 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
+    <%= render 'layouts/modal_privacy_policy' %>
