@@ -21,6 +21,8 @@ PlatoForum::Application.routes.draw do
 
   get 'user/panel' => 'users#panel'
   get 'user/activities' => 'users#activities'
+  get 'user/subscriptions' => "topics#subscriptions"
+  get 'user/notifications' => "users#notifications"
 
   get 'auth/:provider/callback' => 'sessions#create'
   get 'auth/failure' => redirect('/')
@@ -37,7 +39,6 @@ PlatoForum::Application.routes.draw do
   root 'topics#index'
 
   get 'list' => "topics#completelist"
-  get 'subscriptions' => "topics#subscriptions"
  
   #get ':permalink/comments/new' => "comments#new"
   post ':permalink/comments' => "comments#create"

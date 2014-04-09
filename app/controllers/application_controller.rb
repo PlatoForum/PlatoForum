@@ -3,13 +3,22 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   #before_filter :require_user
   #protect_from_forgery with: :exception
+  before_filter :check_user
 
   helper_method :current_user, :current_proxy, :pseudonym_gen
 
   private
 
+  def check_user
+    if session[:user_id]
+      @user = User.find(session[:user_id])
+    else
+      
+    end
+  end
+
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
   def current_proxy
@@ -17,7 +26,7 @@ class ApplicationController < ActionController::Base
       if @current_proxy and @current_proxy.topic._id == session[:topic_id]
         return @current_proxy
       else
-        @current_proxy = current_user.proxies.find_by(:topic_id => session[:topic_id]) 
+        @current_proxy = user.proxies.find_by(:topic_id => session[:topic_id]) 
       end
     end
   end
@@ -103,6 +112,33 @@ class ApplicationController < ActionController::Base
       
       set_proxy
     end
+  end
+
+  def display_message(notification)
+    if notification.noti_type == :NewComment 
+      comment = Comment.find(notification.source_id) 
+      return "#{comment.owner.display_name} 在 #{comment.topic.name} 中發佈了一則新評論 #{comment.display_abstract}" 
+    elsif notification.noti_type == :NewSupport 
+      comment = Comment.find(notification.source_id) 
+      target = Comment.find(notification.destination_id) 
+      return "#{comment.owner.display_name} 支援了你在 #{comment.topic.name} 上的評論 #{target.display_abstract}" 
+    elsif notification.noti_type == :NewOppose 
+      comment = Comment.find(notification.source_id) 
+      target = Comment.find(notification.destination_id) 
+      return "#{comment.owner.display_name} 反駁了你在 #{comment.topic.name} 上的評論 #{target.display_abstract}" 
+    elsif notification.noti_type == :NewLike 
+      someone = Proxy.find_by(:id => notification.source_id) 
+      target = Comment.find(notification.destination_id) 
+      return "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很讚！" 
+    elsif notification.noti_type == :NewDislike 
+      someone = Proxy.find_by(:id => notification.source_id) 
+      target = Comment.find(notification.destination_id) 
+      return "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很爛！" 
+    end 
+  end
+
+  def display_link(notification)
+
   end
 
 end

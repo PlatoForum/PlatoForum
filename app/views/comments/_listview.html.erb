@@ -21,10 +21,15 @@
               <tbody>
                 <% stance.comments.sort!{|b,a| a.importance_factor <=> b.importance_factor}.first(10).each do |comment| %>
                   <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
+                    <% unless session[:user_id].nil? %>
                     <td width="10">
-                      <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= comment.likes.count %></span>
-                      <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= comment.dislikes.count %></span>
+                      <% if @user.read_comments.find(comment.id) %>
+                        <span class="label label-default"><i class="fa fa-check fa-fw"></i> </span>
+                      <% else %>
+                        <span class="label label-warning"><i class="fa fa-exclamation fa-fw"></i> </span>
+                      <% end %>
                     </td>
+                    <% end %>
                     <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
                     <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
                   </tr>

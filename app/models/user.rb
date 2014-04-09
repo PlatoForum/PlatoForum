@@ -5,11 +5,12 @@ class User
   field :uid, type: String
   field :name, type: String
   #field :level, type: Interger, default: 0
-  # anonymous=0, user=2, moderator=3, admin=4
+  # anonymous=0, user=2, moderator=8, admin=10
 
   has_and_belongs_to_many :subscriptions, class_name: "Topic", inverse_of: :subscribed_by, autosave: true
-  has_many :read_comments, class_name: "Comment"
+  has_and_belongs_to_many :read_comments, class_name: "Comment", inverse_of: :read_by, autosave: true
   has_many :proxies, class_name: "Proxy", inverse_of: :user, autosave: true
+  has_many :notifications, class_name: "Notification", inverse_of: :target, autosave: true
 
   def self.create_with_omniauth(auth)
     create! do |user|

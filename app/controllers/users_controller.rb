@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :activities]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :activities, :notifications]
 
   # GET /users
   # GET /users.json
@@ -18,6 +18,9 @@ class UsersController < ApplicationController
 
   # GET /user/activities
   def activities
+  end
+
+  def notifications
   end
 
   # GET /users/new

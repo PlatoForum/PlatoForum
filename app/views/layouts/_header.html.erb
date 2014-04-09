@@ -18,9 +18,10 @@
               <li <% if request.fullpath == "/static/privacy_policy" %> class="active" <% end %> ><%= link_to "隱私權聲明", "/static/privacy_policy"  %></li>
               <% if current_user %>
               <li <% if request.fullpath.include? "/user/" %> class="active" <% end %> class="dropdown">
-              <a href="/fumou" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %><b class="caret"></b></a>
+              <a href="/fumou" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %> <span class="badge"><%= @user.notifications.where(:read => false).count if @user.notifications.where(:read => false).count != 0 %></span><b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="/subscriptions"><i class="fa fa-star fa-fw"></i> 訂閱清單</a></li>
+                <li><a href="/user/notifications"><i class="fa fa-bell fa-fw"></i> <%= @user.notifications.where(:read => false).count %> 則通知</a></li>
+                <li><a href="/user/subscriptions"><i class="fa fa-star fa-fw"></i> 訂閱清單</a></li>
                 <li><a href="/user/activities"><i class="fa fa-calendar fa-fw"></i> 活動記錄</a></li>
                 <li><a href="/user/panel"><i class="fa fa-cog fa-fw"></i> 個人設定</a></li>
                 <li class="divider"></li>

@@ -69,6 +69,15 @@
                 <%= "無" if @comment.supporting.count == 0 %>
                 <% @comment.supporting.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
                   <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
+                    <% unless session[:user_id].nil? %>
+                    <td width="10">
+                      <% if @user.read_comments.find(comment.id) %>
+                        <span class="label label-default"><i class="fa fa-check fa-fw"></i> </span>
+                      <% else %>
+                        <span class="label label-warning"><i class="fa fa-exclamation fa-fw"></i> </span>
+                      <% end %>
+                    </td>
+                    <% end %>
                     <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
                     <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
                     <td width="10">
@@ -86,6 +95,15 @@
                 <%= "無⋯⋯" if @comment.opposing.count == 0 %>
                 <% @comment.opposing.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
                   <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
+                    <% unless session[:user_id].nil? %>
+                    <td width="10">
+                      <% if @user.read_comments.find(comment.id) %>
+                        <span class="label label-default"><i class="fa fa-check fa-fw"></i> </span>
+                      <% else %>
+                        <span class="label label-warning"><i class="fa fa-exclamation fa-fw"></i> </span>
+                      <% end %>
+                    </td>
+                    <% end %>
                     <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
                     <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
                     <td width="10">
@@ -103,6 +121,15 @@
                 <%= "無⋯⋯" if @replying.count == 0 %>
                 <% @replying.sort!{|b,a| a.likes.count <=> b.likes.count}.first(10).each do |comment| %>
                   <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
+                    <% unless session[:user_id].nil? %>
+                    <td width="10">
+                      <% if @user.read_comments.find(comment.id) %>
+                        <span class="label label-default"><i class="fa fa-check fa-fw"></i> </span>
+                      <% else %>
+                        <span class="label label-warning"><i class="fa fa-exclamation fa-fw"></i> </span>
+                      <% end %>
+                    </td>
+                    <% end %>
                     <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
                     <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
                     <td width="10">
@@ -145,6 +172,15 @@
                     <td width="10">
                       <span class="label label-success"><i class="fa fa-caret-left"></i> 支援</span>
                     </td>
+                    <% unless session[:user_id].nil? %>
+                    <td width="10">
+                      <% if @user.read_comments.find(comment.id) %>
+                        <span class="label label-default"><i class="fa fa-check fa-fw"></i> </span>
+                      <% else %>
+                        <span class="label label-warning"><i class="fa fa-exclamation fa-fw"></i> </span>
+                      <% end %>
+                    </td>
+                    <% end %>
                     <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
                     <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>  
                   </tr>
@@ -162,6 +198,15 @@
                     <td width="10">
                       <span class="label label-danger"><i class="fa fa-caret-left"></i> 反駁</span>
                     </td>
+                    <% unless session[:user_id].nil? %>
+                    <td width="10">
+                      <% if @user.read_comments.find(comment.id) %>
+                        <span class="label label-default"><i class="fa fa-check fa-fw"></i> </span>
+                      <% else %>
+                        <span class="label label-warning"><i class="fa fa-exclamation fa-fw"></i> </span>
+                      <% end %>
+                    </td>
+                    <% end %>
                     <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
                     <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
                   </tr>
@@ -179,6 +224,15 @@
                     <td width="10">
                       <span class="label label-<%= @comment.supported.find(comment.id) ? "success" : "danger" %>"><i class="fa fa-caret-left"></i> <%= @comment.supported.include?(comment) ? "支援" : "反駁" %></span>
                     </td>
+                    <% unless session[:user_id].nil? %>
+                    <td width="10">
+                      <% if @user.read_comments.find(comment.id) %>
+                        <span class="label label-default"><i class="fa fa-check fa-fw"></i> </span>
+                      <% else %>
+                        <span class="label label-warning"><i class="fa fa-exclamation fa-fw"></i> </span>
+                      <% end %>
+                    </td>
+                    <% end %>
                     <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
                     <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>
                   </tr>
