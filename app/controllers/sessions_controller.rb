@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   def new
     session[:return_to] = request.referrer if session[:return_to].nil?
     
-    logger.info "Called by "+ session[:return_to]
+    #logger.info "Called by "+ session[:return_to]
 
     redirect_to "/auth/facebook"
   end

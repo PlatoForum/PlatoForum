@@ -8,11 +8,11 @@
 
 					  <tr onClick="document.location = '/notification_<%= notification.id %>';">
 						  <td width="10">
-					      <% if notification.read %>
-                  <span class="label label-default"><i class="fa fa-check fa-fw"></i> </span>
-                <% else %>
-                  <span class="label label-warning"><i class="fa fa-exclamation fa-fw"></i> </span>
-                <% end %>
+							<% if notification.read %>
+			                  <span class="label label-default"><i class="fa fa-check fa-fw"></i> </span>
+			                <% else %>
+			                  <span class="label label-warning"><i class="fa fa-exclamation fa-fw"></i> </span>
+			                <% end %>
 						  </td>
 						  <td class="text-<%= notification.read ? "muted" : "default" %>">
 				  	    <% if notification.noti_type == :NewComment %> 
