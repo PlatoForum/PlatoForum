@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
+
   def check_first_visit
     unless cookies[:visited]
       redirect_to "/cover"
@@ -76,11 +80,7 @@ class ApplicationController < ActionController::Base
     if !params[:id].nil?
       @topic = Comment.find(params[:id]).topic
     else
-      @topic = Topic.find_by(:permalink => params[:permalink])
-    end
-
-    if @topic.nil?
-      format.html { render text: "Error", status: 404 }
+      @topic = Topic.find_by(:permalink => params[:permalink]) || not_found
     end
   end
 

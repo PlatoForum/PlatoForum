@@ -4,7 +4,7 @@
       <div class="modal-content">
 
         <% @topic = Topic.new %>
-        <%= form_for(@topic, :html => { class: "form-horizontal"}) do |f| %>
+        <%= form_for(@topic, url: "/topics/create", :html => { class: "form-horizontal"}) do |f| %>
 
           <fieldset>
 

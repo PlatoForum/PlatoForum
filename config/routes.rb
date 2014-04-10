@@ -4,15 +4,11 @@ PlatoForum::Application.routes.draw do
   get "static/privacy_policy"
   get "static/contact"
   
-  resources :stances
-
-  resources :topics
-
-  resources :comments
-
-  resources :users
-
-  resources :proxies
+  #resources :stances
+  #resources :topics
+  #resources :comments
+  #resources :users
+  #resources :proxies
 
   #get ':topic_id' => "topic#show"
   #get ':topic_id/comments/new' => "comments#new"
@@ -38,6 +34,7 @@ PlatoForum::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'topics#index'
+  post 'topics/create' => "topics#create"
 
   get 'list' => "topics#completelist"
  

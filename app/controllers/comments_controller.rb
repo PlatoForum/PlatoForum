@@ -12,12 +12,8 @@ class CommentsController < ApplicationController
   # GET /:permalink/comments
   # GET /:permalink/comments.json
   def index
-    @topic = Topic.find_by(:permalink => params[:permalink])
-    if @topic.nil?()
-      format.html { render text: "Error", status: 404 }
-    else
-      @comments = @topic.comments
-    end
+    @topic = Topic.find_by(:permalink => params[:permalink]) || not_found
+    @comments = @topic.comments
   end
 
   # GET /:permalink/comment_:id
