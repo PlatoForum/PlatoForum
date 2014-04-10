@@ -15,7 +15,6 @@
               <li <% if !(request.fullpath.include? "/static/" or request.fullpath.include? "/user/" or request.fullpath == "/") %> class="active" <% end %>><%= link_to "議題", "/list"  %></li>
               <li <% if request.fullpath == "/static/about" %> class="active" <% end %> ><%= link_to "關於", "/cover" %></li>
               <li <% if request.fullpath == "/static/contact" %> class="active" <% end %> ><%= link_to "聯絡", "/static/contact"  %></li>
-              <li <% if request.fullpath == "/static/privacy_policy" %> class="active" <% end %> ><%= link_to "隱私權政策", "/static/privacy_policy"  %></li>
               <% if check_user %>
               <li <% if request.fullpath.include? "/user/" %> class="active" <% end %> class="dropdown">
               <a href="/fumou" class="dropdown-toggle" data-toggle="dropdown"><%= check_user.name %> <span class="badge"><%= @user.notifications.where(:read => false).count if @user.notifications.where(:read => false).count != 0 %></span><b class="caret"></b></a>
@@ -28,7 +27,7 @@
                 <li><a href="/signout" id="sign_out"><i class="fa fa-power-off fa-fw"></i> 登出</a></li>
               </ul></li>
                <% else %>
-                <li><a data-toggle="modal" href="#modal_privacy_policy">用Facebook帳號登入</a></li>
+                <li><a data-toggle="modal" href="#modal_agreement">用Facebook帳號登入</a></li>
 
               <% end %>
               
@@ -37,4 +36,4 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
-    <%= render 'layouts/modal_privacy_policy' %>
+    <%= render 'layouts/modal_agreement' %>

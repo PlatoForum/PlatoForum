@@ -5873,10 +5873,10 @@ button.close {
 .text-info:hover {
   color: #75caeb;
 }
-table a,
+/*table a,
 .table a {
   text-decoration: underline;
-}
+}*/
 table .success,
 .table .success,
 table .warning,

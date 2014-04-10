@@ -23,7 +23,22 @@ textarea {
 /* bootstrap styling */
 
 .table-hover > tbody > tr:hover > td {
-    cursor: pointer;
+  cursor: pointer;
+  background-color: #dddddd;
+}
+
+.table-well > tbody > tr:hover > td {
+  background-color: #cccccc;
+}
+
+.table-well > tbody > tr td:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.table-well > tbody > tr td:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .panel-success > a > .panel-heading {
@@ -112,4 +127,29 @@ a.list-group-item.active:hover, a.list-group-item.active:focus
 
 .my-right {
   float: right !important;
+}
+
+/* columns of same height styles */
+.container-md-height {
+    display:table;
+    padding-left:0px;
+    padding-right:0px;
+}
+.row-md-height {
+    display:table-row;
+}
+.col-md-height {
+    display:table-cell;
+    float:none;
+}
+
+/* vertical alignment styles */
+.col-top {
+    vertical-align:top;
+}
+.col-middle {
+    vertical-align:middle;
+}
+.col-bottom {
+    vertical-align:bottom;
 }

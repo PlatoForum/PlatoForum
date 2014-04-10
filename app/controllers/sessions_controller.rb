@@ -1,12 +1,17 @@
 class SessionsController < ApplicationController
-  skip_before_action :require_user, only: [:create]
+  skip_before_action :require_user, only: [:create, :new]
 
   def new
     session[:return_to] = request.referrer if session[:return_to].nil?
-    
-    #logger.info "Called by "+ session[:return_to]
+    if session[:return_to].match(/\/cover$/)
+      session[:return_to] = "/"
+    end
 
-    redirect_to "/auth/facebook"
+    if session[:user_id]
+      redirect_to session.delete(:return_to)
+    else
+      redirect_to "/auth/facebook"
+    end
   end
   
   def create
@@ -14,6 +19,7 @@ class SessionsController < ApplicationController
     user = User.where(:provider => auth['provider'],
                       :uid => auth['uid']).first || User.create_with_omniauth(auth)
     session[:user_id] = user.id
+    user.level = 2
     user.save
     
     cookies.permanent[:token] = user.token

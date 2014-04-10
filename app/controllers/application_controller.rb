@@ -3,11 +3,19 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   #before_filter :require_user
   #protect_from_forgery with: :exception
+  before_filter :check_first_visit
   before_filter :check_user
 
   helper_method :check_user, :current_user, :current_proxy, :pseudonym_gen
 
   private
+
+  def check_first_visit
+    unless cookies[:visited]
+      redirect_to "/cover"
+    end
+    cookies[:visited] = "YES"
+  end
 
   def check_user
     if session[:user_id]
