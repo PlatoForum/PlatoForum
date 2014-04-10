@@ -5,23 +5,8 @@
 	    
 				<tbody>
 					<% @user.notifications.each do |notification| %>
-			        <% if notification.noti_type == :NewComment %>
-					      <% comment = Comment.find(notification.source_id) %> 
-					      <% noti_url = "/#{comment.topic.permalink}/comment_#{comment.id}"  %>
-					    <% elsif notification.noti_type == :NewSupport  %>
-					      <% comment = Comment.find(notification.source_id)  %>
-					      <% noti_url = "/#{comment.topic.permalink}/comment_#{comment.id}" %>
-					    <% elsif notification.noti_type == :NewOppose  %>
-					      <% comment = Comment.find(notification.source_id)  %>
-					      <% noti_url = "/#{comment.topic.permalink}/comment_#{comment.id}" %>
-					    <% elsif notification.noti_type == :NewLike  %>
-					      <% target = Comment.find(notification.destination_id)  %>
-					      <% noti_url = "/#{target.topic.permalink}/comment_#{target.id}" %>
-					    <% elsif notification.noti_type == :NewDislike  %>
-					      <% target = Comment.find(notification.destination_id)  %>
-					      <% noti_url = "/#{target.topic.permalink}/comment_#{target.id}" %>
-					    <% end  %>
-					  <tr onClick="document.location = '<%= noti_url %>';">
+
+					  <tr onClick="document.location = '/notification_<%= notification.id %>';">
 						  <td width="10">
 					      <% if notification.read %>
                   <span class="label label-default"><i class="fa fa-check fa-fw"></i> </span>
@@ -53,7 +38,6 @@
 						  </td>
 				    	<td class="text-primary" align="right"><% if notification.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= notification.doc.strftime("%T") %><% else %><%= notification.doc.strftime("%F") %><% end %></td>
 			    	</tr>
-		    		<% notification.read = true %>
 		    	<% notification.save %>
 		    <% end %>
 			</tbody>

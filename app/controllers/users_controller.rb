@@ -20,6 +20,31 @@ class UsersController < ApplicationController
   def activities
   end
 
+  def notification
+    notification = Notification.find(params[:id])
+    if notification.noti_type == :NewComment 
+      comment = Comment.find(notification.source_id)  
+      noti_url = "/#{comment.topic.permalink}/comment_#{comment.id}"  
+    elsif notification.noti_type == :NewSupport  
+      comment = Comment.find(notification.source_id)  
+      noti_url = "/#{comment.topic.permalink}/comment_#{comment.id}" 
+    elsif notification.noti_type == :NewOppose  
+      comment = Comment.find(notification.source_id)  
+      noti_url = "/#{comment.topic.permalink}/comment_#{comment.id}" 
+    elsif notification.noti_type == :NewLike  
+      target = Comment.find(notification.destination_id)  
+      noti_url = "/#{target.topic.permalink}/comment_#{target.id}" 
+    elsif notification.noti_type == :NewDislike  
+      target = Comment.find(notification.destination_id)  
+      noti_url = "/#{target.topic.permalink}/comment_#{target.id}" 
+    end  
+
+    notification.read = true
+    notification.save
+    
+    redirect_to noti_url
+  end
+
   def notifications
   end
 
@@ -31,6 +56,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
   end
+
 
   # GET /:permalink/change_name
   def change_pseudonym
