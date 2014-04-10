@@ -23,7 +23,7 @@ PlatoForum::Application.routes.draw do
   get 'user/activities' => 'users#activities'
   get 'user/subscriptions' => "topics#subscriptions"
   get 'user/notifications' => "users#notifications"
-  get 'notifications_:id'=> "users#notification"
+  get 'notification_:id'=> "users#notification"
 
   get 'auth/:provider/callback' => 'sessions#create'
   get 'auth/failure' => redirect('/')
