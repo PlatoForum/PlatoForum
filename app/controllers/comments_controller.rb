@@ -35,10 +35,13 @@ class CommentsController < ApplicationController
     @target = Comment.find(params[:id])
     if comment_params[:stance] == "support"
       @target.supported << @comment
+      action = :support
     else #oppose
       @target.opposed << @comment
+      action = :oppose
     end
     @target.save
+    create_job(action, @target._id, @comment._id)
   end
 
   # POST /:permalink/comment_:id/reply
@@ -53,11 +56,9 @@ class CommentsController < ApplicationController
     if @topic.topic_type == :yesno
       if comment_params[:stance] == "support"
         @stance = @target.stance
-        action = :support
       else #oppose
         @stance_number = 4 - @target.stance.number
         @stance = @topic.stances.find_by(:number => @stance_number)
-        action = :oppose
       end
       @comment.stance = @stance
     else
@@ -65,7 +66,6 @@ class CommentsController < ApplicationController
       @comment.stance = @stance
     end
     
-    create_job(action, @target._id, @comment._id)
     respond_to do |format|
       if @comment.save
 
