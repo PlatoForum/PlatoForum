@@ -35,10 +35,13 @@ class CommentsController < ApplicationController
     @target = Comment.find(params[:id])
     if comment_params[:stance] == "support"
       @target.supported << @comment
+      action = :support
     else #oppose
       @target.opposed << @comment
+      action = :oppose
     end
     @target.save
+    create_job(action, @target._id, @comment._id)
   end
 
   # POST /:permalink/comment_:id/reply_old
@@ -270,7 +273,11 @@ class CommentsController < ApplicationController
       job = Job.new
       job.action = action
       job.group = @topic._id
-      job.who = proxy_id
+      if action == :support || action == :oppose
+        job.target = proxy_id
+      else
+        job.who = proxy_id
+      end
       job.post = comment_id
       REDIS.publish "jobqueue", job.to_json
       return true
