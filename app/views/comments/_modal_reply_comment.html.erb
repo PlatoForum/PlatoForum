@@ -1,3 +1,57 @@
+
+<div class="bs-component">
+  <div class="modal fade" id="modal_choose_old">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="text-default">選擇舊評論</h4>
+          <p class="text-muted">對於<span class="text-primary"><%= @comment.owner.display_name %></span>說：</p>
+          <p class="text-muted"><%= @comment.body %></p>
+          <p class="text-muted">你（<span class="text-primary"><%= @proxy.display_name %></span>）表示<span class="text-success stance_support">支持！</span><span class="text-danger stance_oppose">反對！</span></p>
+        </div>
+
+        <div class="modal-body">
+          <table class="table table-striped table-hover ">
+            <tbody>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>摘要</th>
+                  <th>內容</th>
+                  <th>時間</th>
+                </tr>
+              </thead>
+              <% @proxy.works.sort!{|b,a| a.doc <=> b.doc}.each do |comment| %>
+                <% unless comment == @comment or @comment.supported.find(comment) or @comment.opposed.find(comment) %>
+                  <tr onClick="set_old_post('<%= comment.id %>');">
+                    <td><i class="fa fa-check old_post_check" id="<%= comment.id %>"></i></td>
+                    <td id="abstract_<%= comment.id %>"><%= comment.subject %></td>
+                    <td><span class="text-muted"><%= comment.body.length <= 50 ? comment.body : comment.body[0,50] + "⋯⋯" %></span></td>
+                    <td style="display:none;" id="body_<%= comment.id %>"><%= comment.body  %></td>
+                    <td class="text-primary" id="time_<%= comment.id %>"><%= comment.display_time %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table> 
+        </div>
+
+        <div class="modal-footer">
+          <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+              <button href="#modal_reply_with_old" data-dismiss="modal" data-toggle="modal" class="btn btn-primary">確定</button>
+              <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="bs-component">
   <div class="modal fade" id="modal_support_comment">
     <div class="modal-dialog">
@@ -16,6 +70,7 @@
             <p class="text-muted">對於<span class="text-primary"><%= @comment.owner.display_name %></span>說：</p>
             <p class="text-muted"><%= @comment.body %></p>
             <p class="text-muted">你（<span class="text-primary"><%= @proxy.display_name %></span>）表示<span class="text-success">支持！</span></p>
+            <a href="#modal_choose_old" class="btn btn-default" data-dismiss="modal" data-toggle="modal" onclick="set_support()">使用舊評論回應</a>
           </div>
 
           <div class="modal-body">
@@ -71,6 +126,7 @@
             <p class="text-muted">對於<span class="text-primary"><%= @comment.owner.display_name %></span>說：</p>
             <p class="text-muted"><%= @comment.body %></p>
             <p class="text-muted">你（<span class="text-primary"><%= @proxy.display_name %></span>）表示<span class="text-danger">反對！</span></p>
+            <a href="#modal_choose_old" class="btn btn-default" data-dismiss="modal" data-toggle="modal" onclick="set_oppose()">使用舊評論回應</a>
           </div>
 
           <div class="modal-body">
@@ -108,3 +164,81 @@
     </div>
   </div>
 </div>
+
+<div class="bs-component">
+  <div class="modal fade" id="modal_reply_with_old">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="text-default">使用舊評論回應</h4>
+          <p class="text-muted">對於<span class="text-primary"><%= @comment.owner.display_name %></span>說：</p>
+          <p class="text-muted"><%= @comment.body %></p>
+          <p class="text-muted">你（<span class="text-primary"><%= @proxy.display_name %></span>）表示<span class="text-success stance_support">支持！</span><span class="text-danger stance_oppose">反對！</span></p>
+        </div>
+
+        <form accept-charset="UTF-8" action="/cleansite/comment_53486cb648737555a08b0100/reply_old" class="form-horizontal" id="reply" method="post">
+          <div class="modal-body">
+            <input class="form-control" id="old_stance" name="comment[stance]" type="hidden" value="">
+            <input class="form-control" id="old_id" name="comment[old_id]" type="hidden" value="">
+            <div class="form-group">
+              <label for="description" class="col-sm-2">時間</label>
+              <div class="col-sm-10">
+                <p class="text-primary" id="old_time">時間</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="description" class="col-sm-2">內容</label>
+              <div class="col-sm-10">
+                <p class="text-muted" id="old_body">內容</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="abstract" class="col-sm-2">摘要</label>
+              <div class="col-sm-10">
+                <p class="text-muted" id="old_abstract">摘要</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <input class="btn btn-primary" name="commit" type="submit" value="送出">
+                <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(function() {
+  $(".old_post_check").hide();
+});
+function set_support(){
+  $(".stance_oppose").hide();
+  $(".stance_support").show();
+  $("#old_stance").val("support");
+}
+function set_oppose(){
+  $(".stance_support").hide();
+  $(".stance_oppose").show();
+  $("#old_stance").val("oppose");
+}
+function set_old_post(id){
+  $("#old_id").val(id);
+  $(".old_post_check").hide();
+  $("#"+id).show();
+  $("#old_time").text($("#time_"+id).text());
+  $("#old_body").text($("#body_"+id).text());
+  $("#old_abstract").text($("#abstract_"+id).text());
+}
+</script>

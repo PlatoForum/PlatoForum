@@ -59,10 +59,12 @@
       $(function() {
         $("#like_check").hide();
         $("#dislike_check").hide();
-        <% if @comment.stance.number == 1 %>
-          $("#like_check").show();
-        <% else %>
-          $("#dislike_check").show();
+        <% unless @comment.stance.nil? %>
+          <% if @comment.stance.number == 1 %>
+            $("#like_check").show();
+          <% else %>
+            $("#dislike_check").show();
+          <% end %>
         <% end %>
       });
       function click_like(){

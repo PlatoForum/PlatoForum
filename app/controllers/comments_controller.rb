@@ -41,6 +41,20 @@ class CommentsController < ApplicationController
     @target.save
   end
 
+  # POST /:permalink/comment_:id/reply_old
+  def reply_old
+    
+    @target = Comment.find(params[:id])
+    @comment = Comment.find(comment_params[:old_id])
+
+    set_reply_relations
+
+    respond_to do |format|
+      format.html { redirect_to "/#{params[:permalink]}/comment_#{@target.id}", notice: '已成功回應評論！' }
+      format.json { render action: 'show', status: :created, location: @comment }
+    end
+  end
+
   # POST /:permalink/comment_:id/reply
   def reply
     @comment = Comment.new(comment_params)
@@ -73,7 +87,7 @@ class CommentsController < ApplicationController
 
         set_reply_relations
 
-        format.html { redirect_to "/#{params[:permalink]}/comment_#{@target.id}", notice: '已成功發表評論！' }
+        format.html { redirect_to "/#{params[:permalink]}/comment_#{@target.id}", notice: '已成功回應評論！' }
         format.json { render action: 'show', status: :created, location: @comment }
       else
         format.html { render action: 'new', notice: @errormessage }
@@ -246,7 +260,7 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:subject, :body, :stance)
+      params.require(:comment).permit(:subject, :body, :stance, :old_id)
     end
 
     def create_job(action, proxy_id, comment_id)

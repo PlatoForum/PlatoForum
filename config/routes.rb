@@ -49,6 +49,7 @@ PlatoForum::Application.routes.draw do
   #get ':permalink/comments/new' => "comments#new"
   post ':permalink/comments' => "comments#create"
   post ':permalink/comment_:id/reply' => "comments#reply"
+  post ':permalink/comment_:id/reply_old' => "comments#reply_old"
   
   get ':permalink/comment_:id' => "comments#show"
 
