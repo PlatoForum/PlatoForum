@@ -178,7 +178,7 @@
           <p class="text-muted">你（<span class="text-primary"><%= @proxy.display_name %></span>）表示<span class="text-success stance_support">支持！</span><span class="text-danger stance_oppose">反對！</span></p>
         </div>
 
-        <form accept-charset="UTF-8" action="/cleansite/comment_53486cb648737555a08b0100/reply_old" class="form-horizontal" id="reply" method="post">
+        <form accept-charset="UTF-8" action="/<%= @topic.permalink %>/comment_<%= @comment.id %>/reply_old" class="form-horizontal" id="reply" method="post">
           <div class="modal-body">
             <input class="form-control" id="old_stance" name="comment[stance]" type="hidden" value="">
             <input class="form-control" id="old_id" name="comment[old_id]" type="hidden" value="">

@@ -51,6 +51,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(comment_params[:old_id])
 
     set_reply_relations
+    notify_new_reply
 
     respond_to do |format|
       format.html { redirect_to "/#{params[:permalink]}/comment_#{@target.id}", notice: '已成功回應評論！' }
