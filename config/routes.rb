@@ -5,7 +5,7 @@ PlatoForum::Application.routes.draw do
   get "static/contact"
   
   #resources :stances
-  resources :topics
+  #resources :topics
   #resources :comments
   #resources :users
   #resources :proxies

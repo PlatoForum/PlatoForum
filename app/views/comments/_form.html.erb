@@ -42,18 +42,12 @@
       <div class="col-lg-10">
         <% if @comment.stance.nil? %>
           <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="">
-          <div class="btn-group btn-group-justified" data-toggle="buttons-radio">
-            <a href="#" id="button_like" onClick="click_like()" type="button" class="btn btn-success" value="1">支持</a>
-            <a href="#" id="button_neutral" onClick="click_neutral()" type="button" class="btn btn-warning" value="2">中立</a>
-            <a href="#" id="button_dislike" onClick="click_dislike()" type="button" class="btn btn-danger" value="3">反對</a>
-          </div>
+          <button id="button_like" onClick="click_like()" type="button" class="btn btn-success" value="1"><i class="fa fa-check" id="like_check"></i> 支持</button>
+          <button id="button_dislike" onClick="click_dislike()" type="button" class="btn btn-danger" value="3"><i class="fa fa-check" id="dislike_check"></i> 反對</button>
         <% else %>
           <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="<%= @comment.stance.number %>">
-          <div class="btn-group btn-group-justified" data-toggle="buttons-radio">
-            <a href="#" id="button_like" onClick="click_like()" type="button" class="btn btn-success" value="1"><%= "✓ " if @comment.stance.number == 1 %> 支持</a>
-            <a href="#" id="button_neutral" onClick="click_neutral()" type="button" class="btn btn-warning" value="0"><%= "✓ " if @comment.stance.number == 2 %>中立</a>
-            <a href="#" id="button_dislike" onClick="click_dislike()" type="button" class="btn btn-danger" value="-1"><%= "✓ " if @comment.stance.number == 3 %>反對</a>
-          </div>
+          <button id="button_like" onClick="click_like()" type="button" class="btn btn-success" value="1"><i class="fa fa-check" id="like_check"></i> 支持</button>
+          <button id="button_dislike" onClick="click_dislike()" type="button" class="btn btn-danger" value="3"><i class="fa fa-check" id="dislike_check"></i> 反對</button>
         <% end %>
         <% unless @comment.errors[:stance].empty? %>
         <label class="control-label" for="inputError"><%= @comment.errors[:stance].join("，") %></label>
@@ -62,27 +56,25 @@
     </div>
     
     <script type="text/javascript">
-      function clear_buttons(){
-        var elem_like = document.getElementById("button_like").innerHTML = "支持";
-        var elem_neutral = document.getElementById("button_neutral").innerHTML = "中立";
-        var elem_dislike = document.getElementById("button_dislike").innerHTML = "反對";
-      }
+      $(function() {
+        $("#like_check").hide();
+        $("#dislike_check").hide();
+        <% if @comment.stance.number == 1 %>
+          $("#like_check").show();
+        <% else %>
+          $("#dislike_check").show();
+        <% end %>
+      });
       function click_like(){
-        clear_buttons();
-
-        document.getElementById("button_like").innerHTML = "✓ 支持";
+        // clear_buttons();
+        $("#like_check").show();
+        $("#dislike_check").hide();
         $("#comment_stance").val(1);
       }
-      function click_neutral(){
-        clear_buttons();
-
-        document.getElementById("button_neutral").innerHTML = "✓ 中立";
-        $("#comment_stance").val(2);
-      }
       function click_dislike(){
-        clear_buttons();
-
-        document.getElementById("button_dislike").innerHTML = "✓ 反對";
+        // clear_buttons();
+        $("#like_check").hide();
+        $("#dislike_check").show();
         $("#comment_stance").val(3);
       }
     </script>
