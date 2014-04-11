@@ -33,14 +33,14 @@
                       <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></span>
                     <% else %>
                       <% if @proxy.approvals.find(@comment.id) %>
-                        <a class="label label-success" href="<%= neutral_comment_path(@comment) %>" data-method="put"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></a>
+                        <span id="like_label"><a class="label label-success" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></a></span>
                       <% else %>
-                        <a class="label label-success" href="<%= like_comment_path(@comment) %>" data-method="put"><i class="fa fa-thumbs-o-up fa-fw"></i> <%= @comment.likes.count %></a>
+                        <span id="like_label"><a class="label label-success" href="<%= like_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-o-up fa-fw"></i> <%= @comment.likes.count %></a></span>
                       <% end %>
                       <% if @proxy.disapprovals.find(@comment.id) %>
-                        <a class="label label-danger" href="<%= neutral_comment_path(@comment) %>" data-method="put"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></a>
+                        <span id="dislike_label"><a class="label label-danger" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
                       <% else %>
-                        <a class="label label-danger" href="<%= dislike_comment_path(@comment) %>" data-method="put"><i class="fa fa-thumbs-o-down fa-fw"></i> <%= @comment.dislikes.count %></a>
+                        <span id="dislike_label"><a class="label label-danger" href="<%= dislike_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-o-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
                       <% end %>
                     <% end %>
                   </h4>
@@ -71,9 +71,9 @@
       <h4 align="center" class="text-muted visible-sm visible-xs">評論回應的對象</h4>
       <% @replying = @comment.supporting + @comment.opposing %>
       <div class="panel-heading" align="center">
-        <span data-toggle="tab" class="label label-primary" id="show_replying" href="#replying">全部 <%= @replying.count %></span>
-        <span data-toggle="tab" class="label label-success" id="show_supporting" href="#supporting">支援 <%= @comment.supporting.count %></span>
-        <span data-toggle="tab" class="label label-danger" id="show_opposing" href="#opposing" align="right">反駁 <%= @comment.opposing.count %></span>
+        <a data-toggle="tab" class="label label-primary" id="show_replying" href="#replying">全部 <%= @replying.count %></a>
+        <a data-toggle="tab" class="label label-success" id="show_supporting" href="#supporting">支援 <%= @comment.supporting.count %></a>
+        <a data-toggle="tab" class="label label-danger" id="show_opposing" href="#opposing" align="right">反駁 <%= @comment.opposing.count %></a>
       </div>
 
       <div class="panel-body">
@@ -162,10 +162,10 @@
       <h4 align="center" class="text-muted visible-sm visible-xs">評論受到的回應</h4>
       <% @replied = @comment.supported + @comment.opposed %>
       <div class="panel-heading" align="center">
-          <span data-toggle="tab" class="label label-primary" id="show_replied" href="#replied">全部 <%= @replied.count %></span>
-          <span data-toggle="tab" class="label label-success" id="show_supported" href="#supported">支援 <%= @comment.supported.count %></span>
-          <span data-toggle="tab" class="label label-danger" id="show_opposed" href="#opposed" align="right">反駁 <%= @comment.opposed.count %>
-        </span>
+          <a data-toggle="tab" class="label label-primary" id="show_replied" href="#replied">全部 <%= @replied.count %></a>
+          <a data-toggle="tab" class="label label-success" id="show_supported" href="#supported">支援 <%= @comment.supported.count %></a>
+          <a data-toggle="tab" class="label label-danger" id="show_opposed" href="#opposed" align="right">反駁 <%= @comment.opposed.count %>
+        </a>
       </div>
 
       <div class="panel-body">

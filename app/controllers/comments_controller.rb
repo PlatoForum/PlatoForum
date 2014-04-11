@@ -146,18 +146,24 @@ class CommentsController < ApplicationController
       create_job(:undislike, @proxy._id, @c._id) if @proxy.disapprovals.delete(@c)
       # redirect_to "/comments/#{@c.id}"
       notify_new_like
+      @action = "like"
       respond_to do |format|
         format.html { redirect_to request.referrer, notice: "你覺得『#{@c.subject}』讚！" }
+        format.js { render 'opinions'}
+        format.json { head :no_content }
       end
   end
 
   def neutral
-      c = Comment.find_by(:id => params[:id])
-      create_job(:unlike, @proxy._id, c._id) if @proxy.approvals.delete(c) 
-      create_job(:undislike, @proxy._id, c._id) if @proxy.disapprovals.delete(c)
+      @c = Comment.find_by(:id => params[:id])
+      create_job(:unlike, @proxy._id, @c._id) if @proxy.approvals.delete(@c) 
+      create_job(:undislike, @proxy._id, @c._id) if @proxy.disapprovals.delete(@c)
       # redirect_to "/comments/#{c.id}"
+      @action = "neutral"
       respond_to do |format|
         format.html { redirect_to request.referrer, notice: "你對『#{c.subject}』沒有感覺" }
+        format.js {render 'opinions'}
+        format.json { head :no_content }
       end
   end
 
@@ -169,8 +175,11 @@ class CommentsController < ApplicationController
       create_job(:unlike, @proxy._id, @c._id) if @proxy.approvals.delete(@c) 
       # redirect_to "/comments/#{@c.id}"
       notify_new_dislike
+      @action = "dislike"
       respond_to do |format|
         format.html { redirect_to request.referrer, notice: "你覺得『#{@c.subject}』爛！" }
+        format.js {render 'opinions'}
+        format.json { head :no_content }
       end
   end
 

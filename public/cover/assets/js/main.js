@@ -24,6 +24,18 @@ $(document).ready(function(){
     }
   });
 
+  $('.jump').singlePageNav({
+    offset: $('#navbar').outerHeight(),
+    filter: ':not(.external)',
+    speed: 750,
+    currentClass: 'active',
+
+    beforeStart: function() {
+    },
+    onComplete: function() {
+    }
+  });
+
   // Sticky Navbar Affix
   $('#navbar').affix({
     offset: {

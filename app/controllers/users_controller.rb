@@ -20,6 +20,9 @@ class UsersController < ApplicationController
   def activities
   end
 
+  def achievements
+  end
+
   def notification
     notification = Notification.find(params[:id])
     if notification.noti_type == :NewComment 

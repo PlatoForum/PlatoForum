@@ -19,6 +19,7 @@ PlatoForum::Application.routes.draw do
   get 'user/activities' => 'users#activities'
   get 'user/subscriptions' => "topics#subscriptions"
   get 'user/notifications' => "users#notifications"
+  get 'user/achievements' => "user#achievements"
   get 'notification_:id'=> "users#notification"
 
   get 'auth/:provider/callback' => 'sessions#create'
@@ -26,9 +27,9 @@ PlatoForum::Application.routes.draw do
   get "signin" => "sessions#new", :as => "signin"
   get "signout" => "sessions#destroy", :as => "signout"
 
-  put "like/:id" => "comments#like", as: 'like_comment'
-  put "dislike/:id" => "comments#dislike", as: 'dislike_comment'
-  put "neutral/:id" => "comments#neutral", as: 'neutral_comment'
+  get "like/:id" => "comments#like", as: 'like_comment'
+  get "dislike/:id" => "comments#dislike", as: 'dislike_comment'
+  get "neutral/:id" => "comments#neutral", as: 'neutral_comment'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
