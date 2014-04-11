@@ -95,10 +95,10 @@ class TopicsController < ApplicationController
       @stance1.description = "支持"
       @stance1.panel = "success"
 
-      @stance2 = Stance.new
-      @stance2.number = 2
-      @stance2.description = "中立"
-      @stance2.panel = "warning"
+      # @stance2 = Stance.new
+      # @stance2.number = 2
+      # @stance2.description = "中立"
+      # @stance2.panel = "warning"
 
       @stance3 = Stance.new
       @stance3.number = 3
@@ -106,11 +106,11 @@ class TopicsController < ApplicationController
       @stance3.panel = "danger"
 
       @stance1.save
-      @stance2.save
+      # @stance2.save
       @stance3.save
 
       @topic.stances << @stance1
-      @topic.stances << @stance2
+      # @topic.stances << @stance2
       @topic.stances << @stance3
     end
 
