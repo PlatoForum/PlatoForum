@@ -6,7 +6,7 @@
       <div class="panel <%= stance.panel.nil? ? "panel-default" : "panel-"+stance.panel %>">
         <a  href="/<%= @topic.permalink %>/stance_<%= stance.number %>">
         <div class="panel-heading">
-          <h3 class="panel-title"><%= stance.description.nil? ? "立場" + stance.number : stance.description %></h3>
+          <h3 class="panel-title"><%= stance.description.nil? ? "立場#{stance.number}"  : stance.description %></h3>
         </div>
         </a>
 
