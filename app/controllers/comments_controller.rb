@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   
   #before_action :check_topic
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :before_edit, only: [:new, :create, :reply, :like, :neutral, :dislike]
+  before_action :before_edit, only: [:new, :create, :reply, :like, :neutral, :dislike, :reply, :reply_old]
   before_action :before_show, only: [:index, :show]
 
   # GET /:permalink/comments
