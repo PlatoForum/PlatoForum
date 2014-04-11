@@ -15,21 +15,29 @@ class ApplicationController < ActionController::Base
   end
 
   def check_first_visit
-    unless cookies[:visited]
+    unless cookies[:visited] == "YES"
       redirect_to "/cover"
     end
-    cookies[:visited] = "YES"
+    cookies[:visited] = { value: "YES" , expires: 1.year.from_now }
   end
 
   def check_user
     if session[:user_id]
-      @user ||= User.find(session[:user_id])
-    elsif cookies[:token]
-      @user ||= User.find_by(:token => cookies[:token])
+      @user = User.find(session[:user_id])
+      return @user
+    end
+    if cookies[:token]
+      @user = User.find_by(:token => cookies[:token])
       if @user
         session[:user_id] = @user.id
+        return @user
       end
     end
+
+    @user = User.find_by(:level => 0) || User.new
+    @user.level = 0
+    @user.name = "路人"
+    @user.save
   end
 
   def current_user

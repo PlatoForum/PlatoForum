@@ -29,7 +29,7 @@
 		            <table class="table table-striped table-hover ">
 		              <tbody>
 		                <% proxy.works.sort!{|b,a| a.doc <=> b.doc}.each do |comment| %>
-		                  <tr onClick="document.location = '/comments/<%= comment.id %>';">
+		                  <tr onClick="document.location = '/<%= comment.topic.permalink %>/comment_<%= comment.id %>';">
 		                    <td width="10">
 		                        <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= comment.likes.count %></span>
 		                        <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= comment.dislikes.count %></span>
@@ -64,7 +64,7 @@
 		            <table class="table table-striped table-hover ">
 		              <tbody>
 		                <% proxy.approvals.sort!{|b,a| a.doc <=> b.doc}.each do |comment| %>
-		                  <tr onClick="document.location = '/comments/<%= comment.id %>';">
+		                  <tr onClick="document.location = '/<%= comment.topic.permalink %>/comment_<%= comment.id %>';">
 		                    <td width="10">
 		                        <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= comment.likes.count %></span>
 		                        <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= comment.dislikes.count %></span>
@@ -99,7 +99,7 @@
 		            <table class="table table-striped table-hover ">
 		              <tbody>
 		                <% proxy.disapprovals.sort!{|b,a| a.doc <=> b.doc}.each do |comment| %>
-		                  <tr onClick="document.location = '/comments/<%= comment.id %>';">
+		                  <tr onClick="document.location = '/<%= comment.topic.permalink %>/comment_<%= comment.id %>';">
 		                    <td width="10">
 		                        <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= comment.likes.count %></span>
 		                        <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= comment.dislikes.count %></span>

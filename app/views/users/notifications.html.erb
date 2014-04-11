@@ -34,6 +34,8 @@
 						      <% someone = Proxy.find_by(:id => notification.source_id) %> 
 						      <% target = Comment.find(notification.destination_id) %> 
 						      <%= "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很爛！" %>
+						    <% elsif notification.noti_type == :Other %>
+						    	<%= "#{notification.source_id}" %>
 						      <% end %>
 						  </td>
 				    	<td class="text-primary" align="right"><% if notification.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= notification.doc.strftime("%T") %><% else %><%= notification.doc.strftime("%F") %><% end %></td>

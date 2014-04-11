@@ -5,7 +5,7 @@ class User
   field :uid, type: String
   field :token, type: String
   field :name, type: String
-  field :level, type: Symbol
+  field :level, type: Integer
   # :anonymous, :user=2, robot=4, moderator=8, admin=10
 
   has_and_belongs_to_many :subscriptions, class_name: "Topic", inverse_of: :subscribed_by, autosave: true
@@ -33,8 +33,32 @@ class User
   #  @pn.save!
   #  return pn
   #end
-  before_save :generate_token
+  #before_save :generate_token
   def generate_token
     self.token = SecureRandom.urlsafe_base64
+  end
+
+  def comment_count
+    total_count = 0
+    self.proxies.each do |proxy|
+      total_count += proxy.works.count
+    end
+    return total_count
+  end
+
+  def like_count
+    total_count = 0
+    self.proxies.each do |proxy|
+      total_count += proxy.approvals.count
+    end
+    return total_count
+  end
+
+  def dislike_count
+    total_count = 0
+    self.proxies.each do |proxy|
+      total_count += proxy.disapprovals.count
+    end
+    return total_count
   end
 end

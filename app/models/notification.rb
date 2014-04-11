@@ -2,7 +2,7 @@ class Notification
   include Mongoid::Document
   
   field :noti_type, type: Symbol
-  # :NewComment, :NewSupport, :NewOppose, :NewLike, :NewDislike
+  # :NewComment, :NewSupport, :NewOppose, :NewLike, :NewDislike, :Other
 
   field :source_id, type: String
   field :destination_id, type: String

@@ -14,12 +14,13 @@ PlatoForum::Application.routes.draw do
   #get ':topic_id/comments/new' => "comments#new"
 
   #get ':lastpage/auth/:provider/callback' => 'sessions#create'
+  get 'admin' => 'admins#admin'
 
   get 'user/panel' => 'users#panel'
   get 'user/activities' => 'users#activities'
   get 'user/subscriptions' => "topics#subscriptions"
   get 'user/notifications' => "users#notifications"
-  get 'user/achievements' => "user#achievements"
+  get 'user/achievements' => "users#achievements"
   get 'notification_:id'=> "users#notification"
 
   get 'auth/:provider/callback' => 'sessions#create'
