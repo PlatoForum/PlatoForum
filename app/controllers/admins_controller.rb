@@ -21,7 +21,7 @@ class AdminsController < ApplicationController
 	@target_user = User.find(params[:id])
 	respond_to do |format|
 	  if @target_user.update(user_params)
-	    format.html { redirect_to "/user/admin", notice: 'User was successfully updated.' }
+	    format.html { redirect_to "/admin", notice: 'User was successfully updated.' }
 	    format.json { head :no_content }
 	  else
 	    format.html { render action: 'edit' }
@@ -36,7 +36,7 @@ class AdminsController < ApplicationController
 		@target_user = User.find(params[:id])
 		@target_user.destroy
 		respond_to do |format|
-		  format.html { redirect_to "/user/admin" }
+		  format.html { redirect_to "/admin" }
 		  format.json { head :no_content }
 		end
 	end
