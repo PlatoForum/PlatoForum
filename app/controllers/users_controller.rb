@@ -92,6 +92,15 @@ class UsersController < ApplicationController
   def notifications
   end
 
+  def noti_clear
+    @user.notifications.each do |noti|
+      noti.read = true
+      noti.save
+    end
+
+    redirect_to "/user/notifications"
+  end
+
   # GET /users/new
   def new
     @user = User.new
@@ -100,7 +109,6 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
   end
-
 
   # GET /:permalink/change_name
   def change_pseudonym

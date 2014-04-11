@@ -25,6 +25,7 @@ PlatoForum::Application.routes.draw do
   get 'user/activities' => 'users#activities'
   get 'user/subscriptions' => "topics#subscriptions"
   get 'user/notifications' => "users#notifications"
+  get 'user/notifications/clear' => "users#noti_clear"
   get 'user/achievements' => "users#achievements"
   get 'notification_:id'=> "users#notification"
 
