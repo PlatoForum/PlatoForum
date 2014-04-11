@@ -4,40 +4,47 @@ PlatoForum::Application.routes.draw do
   get "static/privacy_policy"
   get "static/contact"
   
-  resources :stances
-
+  #resources :stances
   resources :topics
-
-  resources :comments
-
-  resources :users
-
-  resources :proxies
+  #resources :comments
+  #resources :users
+  #resources :proxies
 
   #get ':topic_id' => "topic#show"
   #get ':topic_id/comments/new' => "comments#new"
 
   #get ':lastpage/auth/:provider/callback' => 'sessions#create'
+  get 'admin' => 'admins#admin'
+
+  get 'admin/edit_user/:id' => 'admins#edit_user'
+  patch 'admin/edit_user/:id' => 'admins#update_user'
+  get 'admin/kill_user/:id' => 'admins#destroy_user'
+  post 'admin/broadcast' => 'admins#broadcast'
 
   get 'user/panel' => 'users#panel'
   get 'user/activities' => 'users#activities'
+  get 'user/subscriptions' => "topics#subscriptions"
+  get 'user/notifications' => "users#notifications"
+  get 'user/notifications/clear' => "users#noti_clear"
+  get 'user/achievements' => "users#achievements"
+  get 'notification_:id'=> "users#notification"
 
   get 'auth/:provider/callback' => 'sessions#create'
   get 'auth/failure' => redirect('/')
   get "signin" => "sessions#new", :as => "signin"
   get "signout" => "sessions#destroy", :as => "signout"
 
-  put "like/:id" => "comments#like", as: 'like_comment'
-  put "dislike/:id" => "comments#dislike", as: 'dislike_comment'
-  put "neutral/:id" => "comments#neutral", as: 'neutral_comment'
+  get "like/:id" => "comments#like", as: 'like_comment'
+  get "dislike/:id" => "comments#dislike", as: 'dislike_comment'
+  get "neutral/:id" => "comments#neutral", as: 'neutral_comment'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   root 'topics#index'
+  post 'topics/create' => "topics#create"
 
   get 'list' => "topics#completelist"
-  get 'subscriptions' => "topics#subscriptions"
  
   #get ':permalink/comments/new' => "comments#new"
   post ':permalink/comments' => "comments#create"

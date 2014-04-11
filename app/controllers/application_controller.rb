@@ -3,13 +3,46 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   #before_filter :require_user
   #protect_from_forgery with: :exception
+  before_filter :check_first_visit
+  before_filter :check_user
 
-  helper_method :current_user, :current_proxy, :pseudonym_gen
+  helper_method :check_user, :current_user, :current_proxy, :pseudonym_gen
 
   private
 
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
+
+  def check_first_visit
+    unless cookies[:visited] == "YES"
+      redirect_to "/cover"
+    end
+    cookies[:visited] = { value: "YES" , expires: 1.year.from_now }
+  end
+
+  def check_user
+    if session[:user_id]
+      @user = User.find(session[:user_id])
+      return @user
+    end
+    if cookies[:token]
+      @user = User.find_by(:token => cookies[:token])
+      if @user
+        session[:user_id] = @user.id
+        return @user
+      end
+    end
+
+    @user = User.find_by(:level => 0) || User.new
+    @user.level = 0
+    @user.name = "路人"
+    @user.save
+    return @user
+  end
+
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
   def current_proxy
@@ -17,7 +50,7 @@ class ApplicationController < ActionController::Base
       if @current_proxy and @current_proxy.topic._id == session[:topic_id]
         return @current_proxy
       else
-        @current_proxy = current_user.proxies.find_by(:topic_id => session[:topic_id]) 
+        @current_proxy = user.proxies.find_by(:topic_id => session[:topic_id]) 
       end
     end
   end
@@ -56,11 +89,7 @@ class ApplicationController < ActionController::Base
     if !params[:id].nil?
       @topic = Comment.find(params[:id]).topic
     else
-      @topic = Topic.find_by(:permalink => params[:permalink])
-    end
-
-    if @topic.nil?
-      format.html { render text: "Error", status: 404 }
+      @topic = Topic.find_by(:permalink => params[:permalink]) || not_found
     end
   end
 

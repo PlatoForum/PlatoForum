@@ -1,0 +1,136 @@
+a {
+  .transition(color 0.5s);
+  outline: none !important;
+}
+
+img {
+  max-width: 100%;
+}
+
+.nav > li > a {
+  .transition(background 0.5s);
+}
+
+//
+// Form
+// --------------------------------------------------
+.form-control {
+  box-shadow: none !important;
+  .transition(border 0.5s);
+
+  &:focus {
+    border-color: @gray-dark;
+  }
+}
+
+.input-circle {
+  border-radius: 30px;
+}
+
+.carousel-control {
+  .fa {
+    top: 50%;
+    margin-top: -10px;
+    position: absolute;
+  }
+}
+
+//
+// Buttons
+// --------------------------------------------------
+.btn {
+  border: none !important;
+  padding: 7px 22px;
+  outline: none !important;
+  .transition(background 0.5s);
+}
+
+.btn-lg {
+  padding: 11px 26px 12px;
+  border-radius: 30px;
+}
+
+.btn-sm {
+  padding: 6px 20px;
+}
+
+.btn-xs {
+  padding: 2px 15px;
+}
+
+//
+// Jumbotron
+// --------------------------------------------------
+.jumbotron {
+  margin-bottom: 0;
+  background: url(../../images/bg-1.jpg) @brand-primary;
+}
+
+//
+// Page Header
+// --------------------------------------------------
+.page-header {
+  margin: 0;
+  padding: 30px 0;
+  background: url(../../images/bg-1.jpg) @brand-primary;
+  color: #fff;
+  border: none;
+  
+  h1 {
+    margin: 0;
+  }
+}
+
+//
+// Image Hover Effect
+// --------------------------------------------------
+.hover-effect {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+
+  .overlay {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: transparent;
+    position: absolute;
+    top: 0;
+    color: #fff;
+    text-align: center;
+    line-height: 100%;
+    .transition(all 0.5s);
+  }
+
+  .fa {
+    top: 60%;
+    margin-top: -15px;
+    position: absolute;
+    left: 50%;
+    margin-left: -15px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    color: transparent;
+    .transition(all 0.5s);
+  }
+
+  &:hover {
+    .overlay {
+      background: @brand-danger;
+    }
+
+    .fa {
+      top: 50%;
+      color: #fff;
+    }
+  }
+}
+
+//
+// Paralax Background
+// --------------------------------------------------
+.parallax-background {
+  background-position: 50% 0;
+  background-attachment: fixed;
+}

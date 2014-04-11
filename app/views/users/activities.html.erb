@@ -29,12 +29,10 @@
 		            <table class="table table-striped table-hover ">
 		              <tbody>
 		                <% proxy.works.sort!{|b,a| a.doc <=> b.doc}.each do |comment| %>
-		                  <tr onClick="document.location = '/comments/<%= comment.id %>';">
-		                    <td width="88">
-		                        <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= comment.likes.count %></span> 
-		                        <span class="label label-success"><i class="fa fa-reply fa-fw"></i> <%= comment.supported.count %></span>
+		                  <tr onClick="document.location = '/<%= comment.topic.permalink %>/comment_<%= comment.id %>';">
+		                    <td width="10">
+		                        <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= comment.likes.count %></span>
 		                        <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= comment.dislikes.count %></span>
-		                        <span class="label label-danger"><i class="fa fa-reply fa-fw"></i> <%= comment.opposed.count %></span>
 		                      </td>
 		                    <td>「<%= comment.subject == "" ? "沒有主旨" : comment.subject %>」<span class="text-<%= comment.stance.panel.nil? ? "muted" : comment.stance.panel %>"><%= comment.display_abstract %></span></td>
 		                    <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
@@ -66,12 +64,10 @@
 		            <table class="table table-striped table-hover ">
 		              <tbody>
 		                <% proxy.approvals.sort!{|b,a| a.doc <=> b.doc}.each do |comment| %>
-		                  <tr onClick="document.location = '/comments/<%= comment.id %>';">
-		                    <td width="88">
-		                        <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= comment.likes.count %></span> 
-		                        <span class="label label-success"><i class="fa fa-reply fa-fw"></i> <%= comment.supported.count %></span>
+		                  <tr onClick="document.location = '/<%= comment.topic.permalink %>/comment_<%= comment.id %>';">
+		                    <td width="10">
+		                        <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= comment.likes.count %></span>
 		                        <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= comment.dislikes.count %></span>
-		                        <span class="label label-danger"><i class="fa fa-reply fa-fw"></i> <%= comment.opposed.count %></span>
 		                      </td>
 		                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-<%= comment.stance.panel.nil? ? "muted" : comment.stance.panel %>"><%= comment.display_abstract %></span></td>
 		                    <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
@@ -103,12 +99,10 @@
 		            <table class="table table-striped table-hover ">
 		              <tbody>
 		                <% proxy.disapprovals.sort!{|b,a| a.doc <=> b.doc}.each do |comment| %>
-		                  <tr onClick="document.location = '/comments/<%= comment.id %>';">
-		                    <td width="88">
-		                        <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= comment.likes.count %></span> 
-		                        <span class="label label-success"><i class="fa fa-reply fa-fw"></i> <%= comment.supported.count %></span>
+		                  <tr onClick="document.location = '/<%= comment.topic.permalink %>/comment_<%= comment.id %>';">
+		                    <td width="10">
+		                        <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= comment.likes.count %></span>
 		                        <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= comment.dislikes.count %></span>
-		                        <span class="label label-danger"><i class="fa fa-reply fa-fw"></i> <%= comment.opposed.count %></span>
 		                      </td>
 		                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-<%= comment.stance.panel.nil? ? "muted" : comment.stance.panel %>"><%= comment.display_abstract %></span></td>
 		                    <td class="text-primary visible-sm" align="right"><%= comment.display_time %></td>

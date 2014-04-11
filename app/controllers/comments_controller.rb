@@ -12,17 +12,17 @@ class CommentsController < ApplicationController
   # GET /:permalink/comments
   # GET /:permalink/comments.json
   def index
-    @topic = Topic.find_by(:permalink => params[:permalink])
-    if @topic.nil?()
-      format.html { render text: "Error", status: 404 }
-    else
-      @comments = @topic.comments
-    end
+    @topic = Topic.find_by(:permalink => params[:permalink]) || not_found
+    @comments = @topic.comments
   end
 
-  # GET /comments/1
+  # GET /:permalink/comment_:id
   # GET /comments/1.json
   def show
+    unless session[:user_id].nil?
+      @user.read_comments << Comment.find(params[:id])
+      @user.save
+    end
   end
 
   # GET /:permalink/comments/new
@@ -68,6 +68,10 @@ class CommentsController < ApplicationController
     create_job(action, @target._id, @comment._id)
     respond_to do |format|
       if @comment.save
+
+        notify_new_comment
+        notify_new_reply
+
         @stance.comments << @comment
 
         set_reply_relations
@@ -100,6 +104,7 @@ class CommentsController < ApplicationController
     
     respond_to do |format|
       if @comment.save
+        notify_new_comment
         @stance.comments << @comment
         format.html { redirect_to "/#{params[:permalink]}", notice: '已成功發表評論！' }
         format.json { render action: 'show', status: :created, location: @comment }
@@ -137,37 +142,102 @@ class CommentsController < ApplicationController
 
   # LIKE/NERUTRAL/DISLIKE /comments/1/(ACTION)
   def like
-      c = Comment.find_by(:id => params[:id])
-      c.likes << @proxy
-      c.save
-      create_job(:like, @proxy._id, c._id) 
-      create_job(:undislike, @proxy._id, c._id) if @proxy.disapprovals.delete(c)
-      # redirect_to "/comments/#{c.id}"
+      @c = Comment.find_by(:id => params[:id])
+      @c.likes << @proxy
+      @c.save
+      create_job(:like, @proxy._id, @c._id) 
+      create_job(:undislike, @proxy._id, @c._id) if @proxy.disapprovals.delete(@c)
+      # redirect_to "/comments/#{@c.id}"
+      notify_new_like
+      @action = "like"
       respond_to do |format|
-        format.html { redirect_to "/comments/#{c.id}", notice: "你覺得『#{c.subject}』讚！" }
+        format.html { redirect_to request.referrer, notice: "你覺得『#{@c.subject}』讚！" }
+        format.js { render 'opinions'}
+        format.json { head :no_content }
       end
   end
 
   def neutral
-      c = Comment.find_by(:id => params[:id])
-      create_job(:unlike, @proxy._id, c._id) if @proxy.approvals.delete(c) 
-      create_job(:undislike, @proxy._id, c._id) if @proxy.disapprovals.delete(c)
+      @c = Comment.find_by(:id => params[:id])
+      create_job(:unlike, @proxy._id, @c._id) if @proxy.approvals.delete(@c) 
+      create_job(:undislike, @proxy._id, @c._id) if @proxy.disapprovals.delete(@c)
       # redirect_to "/comments/#{c.id}"
+      @action = "neutral"
       respond_to do |format|
-        format.html { redirect_to "/comments/#{c.id}", notice: "你對『#{c.subject}』沒有感覺" }
+        format.html { redirect_to request.referrer, notice: "你對『#{c.subject}』沒有感覺" }
+        format.js {render 'opinions'}
+        format.json { head :no_content }
       end
   end
 
   def dislike
-      c = Comment.find_by(:id => params[:id])
-      c.dislikes << @proxy
-      c.save
-      create_job(:dislike, @proxy._id, c._id)
-      create_job(:unlike, @proxy._id, c._id) if @proxy.approvals.delete(c) 
-      # redirect_to "/comments/#{c.id}"
+      @c = Comment.find_by(:id => params[:id])
+      @c.dislikes << @proxy
+      @c.save
+      create_job(:dislike, @proxy._id, @c._id)
+      create_job(:unlike, @proxy._id, @c._id) if @proxy.approvals.delete(@c) 
+      # redirect_to "/comments/#{@c.id}"
+      notify_new_dislike
+      @action = "dislike"
       respond_to do |format|
-        format.html { redirect_to "/comments/#{c.id}", notice: "你覺得『#{c.subject}』爛！" }
+        format.html { redirect_to request.referrer, notice: "你覺得『#{@c.subject}』爛！" }
+        format.js {render 'opinions'}
+        format.json { head :no_content }
       end
+  end
+
+  def notify_new_comment
+    @topic.subscribed_by.each do |subscriber|
+      unless subscriber == @user
+        note = Notification.new
+        note.noti_type = :NewComment
+        note.source_id = @comment.id
+        note.doc = Time.zone.now
+        subscriber.notifications << note
+        note.save 
+      end
+    end
+    @user.read_comments << @comment
+  end
+
+  def notify_new_reply
+    unless @target.owner.user == @user
+      note = Notification.new
+      if comment_params[:stance] == "support"
+        note.noti_type = :NewSupport
+      else #oppose
+        note.noti_type = :NewOppose
+      end
+      note.source_id = @comment.id
+      note.destination_id = @target.id
+      note.doc = Time.zone.now
+      @target.owner.user.notifications << note
+      note.save 
+    end
+  end
+
+  def notify_new_like
+    unless @c.owner.user == @user
+      note = Notification.new
+      note.noti_type = :NewLike
+      note.source_id = @proxy.id
+      note.destination_id = @c.id
+      note.doc = Time.zone.now
+      @c.owner.user.notifications << note
+      note.save 
+    end
+  end
+
+  def notify_new_dislike
+    unless @c.owner.user == @user    
+      note = Notification.new
+      note.noti_type = :NewDislike
+      note.source_id = @proxy.id
+      note.destination_id = @c.id
+      note.doc = Time.zone.now
+      @c.owner.user.notifications << note
+      note.save 
+    end
   end
 
   private

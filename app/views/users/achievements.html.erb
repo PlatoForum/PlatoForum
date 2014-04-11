@@ -1,0 +1,140 @@
+<div class="well well-sm">
+	<h3 align="center">成就</h3>
+	<hr>
+	<div class="row">
+		<% ach_count = 0 %>
+
+		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+			<h2 class="text-warning"><i class="fa fa-comments fa-4x"></i></h2>
+			<p>潑辣婦人<br>
+			<span class="text-muted">歡迎加入潑辣婦人！</span></p>
+		</div>
+		<% ach_count += 1 %>
+
+		<% if @user.comment_count > 0 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-edit fa-4x"></i></h2>
+				<p>初出茅廬<br>
+				<span class="text-muted">撰寫一則評論</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+		
+		<% if @user.comment_count >= 5 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-edit fa-4x"></i></h2>
+				<p>信口雌黃<br>
+				<span class="text-muted">撰寫五則評論</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+
+		<% if @user.comment_count >= 10 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-edit fa-4x"></i></h2>
+				<p>耍嘴皮子<br>
+				<span class="text-muted">撰寫十則評論</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+
+		<% if @user.comment_count >= 20 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-edit fa-4x"></i></h2>
+				<p>能言善辯<br>
+				<span class="text-muted">撰寫二十則評論</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+
+		<% if @user.like_count > 0 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-thumbs-up fa-4x"></i></h2>
+				<p>表達善意<br>
+				<span class="text-muted">覺得一篇評論讚</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+
+		<% if @user.like_count >= 5 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-thumbs-up fa-4x"></i></h2>
+				<p>笑口常開<br>
+				<span class="text-muted">覺得五篇評論讚</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+
+		<% if @user.dislike_count > 0 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-thumbs-down fa-4x"></i></h2>
+				<p>第一滴血<br>
+				<span class="text-muted">覺得一篇評論爛</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+
+		<% if @user.dislike_count >= 5 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-thumbs-down fa-4x"></i></h2>
+				<p>獨居老人<br>
+				<span class="text-muted">覺得五篇評論爛</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+
+		<% if @user.read_comments.count > 0 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-comment fa-4x"></i></h2>
+				<p>開眼<br>
+				<span class="text-muted">閱讀一則評論</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+
+		<% if @user.read_comments.count >= 5 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-comment fa-4x"></i></h2>
+				<p>思想開放<br>
+				<span class="text-muted">閱讀五則評論</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+
+		<% if @user.read_comments.count >= 10 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-comment fa-4x"></i></h2>
+				<p>道聽途說<br>
+				<span class="text-muted">閱讀十則評論</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+
+		<% if @user.read_comments.count >= 20 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-comment fa-4x"></i></h2>
+				<p>飽讀詩書<br>
+				<span class="text-muted">閱讀二十則評論</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+	</div>
+	<hr>
+	<div class="row">
+
+		<div class="col-sm-2" align="center">
+			<p>
+				成就總數<br><span class="text-muted">（<%= ach_count %>／20）</span>
+			</p>
+		</div>
+
+
+		<div class="col-sm-10">
+			<div class="progress progress-striped">
+			  <div class="progress-bar progress-bar-primary" style="width: <%= ach_count * 5 %>%"></div>
+			</div>
+		</div>
+
+
+	</div>
+</div>

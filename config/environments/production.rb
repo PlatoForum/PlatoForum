@@ -79,4 +79,8 @@ PlatoForum::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   ENV["REDISTOGO_URL"] = 'redis://redistogo:982c75e48017ec010893a064a1794d72@grideye.redistogo.com:10330/'
+
+  config.assets.precompile += ['application.css', 'cover.css']
+  # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
+  #config.assets.precompile += %w( *.css *.js )
 end

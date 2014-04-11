@@ -18,6 +18,8 @@ class Comment
   has_and_belongs_to_many :supported, class_name: "Comment", inverse_of: :supporting, validate: false
   has_and_belongs_to_many :opposed, class_name: "Comment", inverse_of: :opposing, validate: false
 
+  has_and_belongs_to_many :read_by, class_name: "User", inverse_of: :read_comments
+
   validates_presence_of :owner
   validates_presence_of :doc
 
@@ -61,6 +63,10 @@ class Comment
     else
       return self.doc.strftime("%F %T")
     end
+  end
+
+  def importance_factor
+    return 2 * self.likes.count + self.dislikes.count
   end
 
 end
