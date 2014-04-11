@@ -38,6 +38,7 @@ class ApplicationController < ActionController::Base
     @user.level = 0
     @user.name = "路人"
     @user.save
+    return @user
   end
 
   def current_user

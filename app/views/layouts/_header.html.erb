@@ -12,18 +12,23 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
               <li <% if request.fullpath == "/" %> class="active" <% end %>><%= link_to "主頁", "/"  %></li>
-              <li <% if !(request.fullpath.include? "/static/" or request.fullpath.include? "/user/" or request.fullpath == "/") %> class="active" <% end %>><%= link_to "議題", "/list"  %></li>
+              <li <% if !(request.fullpath.include? "/static/" or request.fullpath.include? "/user/" or request.fullpath.include? "/admin" or request.fullpath == "/") %> class="active" <% end %>><%= link_to "議題", "/list"  %></li>
               <li <% if request.fullpath == "/static/about" %> class="active" <% end %> ><%= link_to "關於", "/static/about" %></li>
               <li <% if request.fullpath == "/static/contact" %> class="active" <% end %> ><%= link_to "聯絡", "/static/contact"  %></li>
               <% if @user.level > 0 %>
-              <li <% if request.fullpath.include? "/user/" %> class="active" <% end %> class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= check_user.name %> <span class="badge"><%= @user.notifications.where(:read => false).count if @user.notifications.where(:read => false).count != 0 %></span><b class="caret"></b></a>
+              <li <% if request.fullpath.include? "/user/" or request.fullpath.include? "/admin" %> class="active" <% end %> class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= check_user.name %> <span class="badge" id="noti_count"><%= @user.notifications.where(:read => false).count if @user.notifications.where(:read => false).count != 0 %></span><b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="/user/notifications"><i class="fa fa-bell fa-fw"></i> <%= @user.notifications.where(:read => false).count %> 則通知</a></li>
                 <li><a href="/user/subscriptions"><i class="fa fa-star fa-fw"></i> 訂閱清單</a></li>
                 <li><a href="/user/achievements"><i class="fa fa-trophy fa-fw"></i> 成就</a></li>
                 <li><a href="/user/activities"><i class="fa fa-calendar fa-fw"></i> 活動記錄</a></li>
-                <li><a href="/user/panel"><i class="fa fa-cog fa-fw"></i> 個人設定<% @user.level%></a></li>
+                <li><a href="/user/panel"><i class="fa fa-cog fa-fw"></i> 個人設定</a></li>
+                <% if @user.level >= 10 %>
+                  <li class="divider"></li>
+                  <li><a href="#modal_broadcast" data-toggle="modal"><i class="fa fa-bullhorn fa-fw"></i> 廣播</a></li>
+                  <li><a href="/admin"><i class="fa fa-cogs fa-fw"></i> 管理頁面</a></li>
+                <% end %>
                 <li class="divider"></li>
                 <li><a href="/signout" id="sign_out"><i class="fa fa-power-off fa-fw"></i> 登出</a></li>
               </ul></li>
@@ -31,10 +36,10 @@
                 <li><a data-toggle="modal" href="#modal_agreement">用Facebook帳號登入</a></li>
 
               <% end %>
-              
             
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
     <%= render 'layouts/modal_agreement' %>
+    <%= render 'admins/modal_broadcast' if @user.level >= 10 %>

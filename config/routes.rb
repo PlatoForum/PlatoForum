@@ -16,6 +16,11 @@ PlatoForum::Application.routes.draw do
   #get ':lastpage/auth/:provider/callback' => 'sessions#create'
   get 'admin' => 'admins#admin'
 
+  get 'admin/edit_user/:id' => 'admins#edit_user'
+  patch 'admin/edit_user/:id' => 'admins#update_user'
+  get 'admin/kill_user/:id' => 'admins#destroy_user'
+  post 'admin/broadcast' => 'admins#broadcast'
+
   get 'user/panel' => 'users#panel'
   get 'user/activities' => 'users#activities'
   get 'user/subscriptions' => "topics#subscriptions"

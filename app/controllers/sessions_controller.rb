@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
     user = User.where(:provider => auth['provider'],
                       :uid => auth['uid']).first || User.create_with_omniauth(auth)
     session[:user_id] = user.id
-    user.level = 2
+    user.level = 2 if user.level.nil?
     
     cookies.permanent[:token] = user.generate_token
     user.save

@@ -1,0 +1,33 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+
+    <%= form_for(@target_user, url: "/admin/edit_user/#{@target_user.id}",:html => { class: "form-horizontal"}) do |f| %>
+    <div class="bs-component">
+      <div class="modal-header">
+        <h3><%= @target_user.name %></h3>
+        <p class="text-muted">編輯使用者資料</p>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="level" class="col-sm-2 control-label">等級</label>
+          <div class="col-sm-10">
+            <%= f.text_field :level, class: "form-control", placeholder: "等級" %>
+            <span class="help-block">超級使用者（10）、管理員（8）、機器人（4）、使用者（2）、水桶（1）、未登入路人（0）</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-lg-10 col-lg-offset-2">
+            <%= f.submit "送出", :class => 'btn btn-primary'%>
+            <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
+  </div>
+</div>

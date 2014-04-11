@@ -82,6 +82,42 @@
 			</div>
 			<% ach_count += 1 %>
 		<% end %>
+
+		<% if @user.read_comments.count > 0 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-comment fa-4x"></i></h2>
+				<p>開眼<br>
+				<span class="text-muted">閱讀一則評論</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+
+		<% if @user.read_comments.count >= 5 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-comment fa-4x"></i></h2>
+				<p>思想開放<br>
+				<span class="text-muted">閱讀五則評論</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+
+		<% if @user.read_comments.count >= 10 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-comment fa-4x"></i></h2>
+				<p>道聽途說<br>
+				<span class="text-muted">閱讀十則評論</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
+
+		<% if @user.read_comments.count >= 20 %>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
+				<h2 class="text-warning"><i class="fa fa-comment fa-4x"></i></h2>
+				<p>飽讀詩書<br>
+				<span class="text-muted">閱讀二十則評論</span></p>
+			</div>
+			<% ach_count += 1 %>
+		<% end %>
 	</div>
 	<hr>
 	<div class="row">

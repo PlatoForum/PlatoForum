@@ -1,0 +1,50 @@
+<div class="bs-component">
+  <div class="modal fade" id="modal_broadcast">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      <form accept-charset="UTF-8" action="/admin/broadcast" class="form-horizontal" id="broadcast" method="post" data-remote="true">
+
+          <fieldset>
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4>廣播</h4>
+              <p class="text-muted">對所有使用者送出通知</p>
+            </div>
+            
+            <div class="modal-body">
+
+
+            <div class="form-group">
+              <label for="description" class="col-sm-2 control-label">內容</label>
+              <div class="col-sm-10">
+                <input class="form-control" id="source_id" name="broadcast[source_id]" placeholder="廣播內容">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label">連結</label>
+              <div class="col-sm-10">
+                <input class="form-control" id="destination_id" name="broadcast[destination_id]" placeholder="http://" value="http://">
+                <span class="help-block">完整網址</span>
+              </div>
+            </div>
+            
+            </div>
+
+            <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <input class="btn btn-primary" name="commit" type="submit" value="送出">
+                <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
+              </div>
+            </div>
+            </div>
+
+          </fieldset>
+
+      </div>
+    </div>
+  </div>
+</div>

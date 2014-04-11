@@ -6,7 +6,7 @@ class User
   field :token, type: String
   field :name, type: String
   field :level, type: Integer
-  # :anonymous, :user=2, robot=4, moderator=8, admin=10
+  # :anonymous=0, :user=2, robot=4, moderator=8, admin=10
 
   has_and_belongs_to_many :subscriptions, class_name: "Topic", inverse_of: :subscribed_by, autosave: true
   has_and_belongs_to_many :read_comments, class_name: "Comment", inverse_of: :read_by, autosave: true

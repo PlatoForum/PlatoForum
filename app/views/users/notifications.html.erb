@@ -6,7 +6,7 @@
 				<tbody>
 					<% @user.notifications.sort!{|b,a| a.doc <=> b.doc}.each do |notification| %>
 
-					  <tr onClick="document.location = '/notification_<%= notification.id %>';">
+					  <tr onClick="document.location = '/notification_<%= notification.id %>';" >
 						  <td width="10">
 							<% if notification.read %>
 			                  <span class="label label-default"><i class="fa fa-check fa-fw"></i> </span>
@@ -35,6 +35,8 @@
 						      <% target = Comment.find(notification.destination_id) %> 
 						      <%= "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很爛！" %>
 						    <% elsif notification.noti_type == :Other %>
+						    	<%= "#{notification.source_id}" %>
+						    <% elsif notification.noti_type == :Announcement %>
 						    	<%= "#{notification.source_id}" %>
 						      <% end %>
 						  </td>

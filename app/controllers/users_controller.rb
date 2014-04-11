@@ -28,6 +28,8 @@ class UsersController < ApplicationController
       "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很爛！"
     elsif notification.noti_type == :Other
       notification.source_id
+    elsif notification.noti_type == :Announcement
+      notification.source_id
     end
   end
 
@@ -42,6 +44,7 @@ class UsersController < ApplicationController
           when :NewLike then "/#{target.topic.permalink}/comment_#{target.id}"
           when :NewDislike then "/#{target.topic.permalink}/comment_#{target.id}"
           when :Other then notification.destination_id
+          when :Announcement then notification.destination_id
       end
   end
 
@@ -127,30 +130,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
-  def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /users/1
-  # DELETE /users/1.json
-  def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url }
-      format.json { head :no_content }
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -163,6 +142,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :name)
+      params.require(:user).permit(:email, :name, :level)
     end
 end
