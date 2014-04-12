@@ -5,3 +5,17 @@
  .text-white {
  	color:#ffffff;
  }
+section{ position:relative; }
+section span.anchor{ position:absolute; top:-70px;}
+
+.stroked {
+   text-shadow:
+   -1px -1px 0 #222,
+   0px -1px 0 #222,
+   1px -1px 0 #222,
+   -1px 0px 0 #222,
+   1px 0px 0 #222,
+   -1px 1px 0 #222,
+   0px -1px 0 #222,
+   1px 1px 0 #222;  
+}
