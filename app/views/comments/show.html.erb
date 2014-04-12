@@ -53,8 +53,8 @@
 
             <div class="panel-footer" align="right">
               <% unless session[:user_id].nil? %>
-                <a href="#modal_support_comment" data-toggle="modal" class="btn btn-success"><i class="fa fa-reply"></i> 支援</a>
-                <a href="#modal_oppose_comment" data-toggle="modal" class="btn btn-danger"><i class="fa fa-reply"></i> 反駁</a>
+                <a href="#modal_reply_comment" data-toggle="modal" class="btn btn-success" onclick="set_support();"><i class="fa fa-reply"></i> 支援</a>
+                <a href="#modal_reply_comment" data-toggle="modal" class="btn btn-danger" onclick="set_oppose();"><i class="fa fa-reply"></i> 反駁</a>
               <% end %>
               <a class="btn btn-default" onClick="window.history.back(); return false;">返回</a>
             </div>

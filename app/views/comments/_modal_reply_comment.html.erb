@@ -17,8 +17,7 @@
             <tbody>
               <thead>
                 <tr>
-                  <th></th>
-                  <th>摘要</th>
+                  <th>＃</th>
                   <th>內容</th>
                   <th>時間</th>
                 </tr>
@@ -27,7 +26,7 @@
                 <% unless comment == @comment or @comment.supported.find(comment) or @comment.opposed.find(comment) %>
                   <tr onClick="set_old_post('<%= comment.id %>');">
                     <td><i class="fa fa-check old_post_check" id="<%= comment.id %>"></i></td>
-                    <td id="abstract_<%= comment.id %>"><%= comment.subject %></td>
+                    <td style="display:none;" id="abstract_<%= comment.id %>"><%= comment.subject %></td>
                     <td><span class="text-muted"><%= comment.body.length <= 50 ? comment.body : comment.body[0,50] + "⋯⋯" %></span></td>
                     <td style="display:none;" id="body_<%= comment.id %>"><%= comment.body  %></td>
                     <td class="text-primary" id="time_<%= comment.id %>"><%= comment.display_time %></td>
@@ -41,7 +40,8 @@
         <div class="modal-footer">
           <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
-              <button href="#modal_reply_with_old" data-dismiss="modal" data-toggle="modal" class="btn btn-primary">確定</button>
+              <button href="#modal_reply_comment" data-dismiss="modal" data-toggle="modal" class="btn btn-default"><i class="fa fa-reply"></i> 發表新評論</button>
+              <button href="#modal_reply_with_old" data-dismiss="modal" data-toggle="modal" class="btn btn-primary" id="old_chosen">確定</button>
               <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
             </div>
           </div>
@@ -53,24 +53,24 @@
 </div>
 
 <div class="bs-component">
-  <div class="modal fade" id="modal_support_comment">
+  <div class="modal fade" id="modal_reply_comment">
     <div class="modal-dialog">
       <div class="modal-content">
 
-        <% @support = Comment.new %>
-        <% @support.owner = @proxy %>
+        <% @reply = Comment.new %>
+        <% @reply.owner = @proxy %>
 
-        <%= form_for(@support, url: "/#{@topic.permalink}/comment_#{@comment.id}/reply", :html => { class: "form-horizontal"}) do |f| %>
+        <%= form_for(@reply, url: "/#{@topic.permalink}/comment_#{@comment.id}/reply", :html => { class: "form-horizontal"}) do |f| %>
         <fieldset>
-          <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="support">
+          <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="">
 
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="text-success">支援評論</h4>
+            <h4 class="text-success stance_support">支援評論</h4><h4 class="text-danger stance_oppose">支援評論</h4>
             <p class="text-muted">對於<span class="text-primary"><%= @comment.owner.display_name %></span>說：</p>
             <p class="text-muted"><%= @comment.body %></p>
-            <p class="text-muted">你（<span class="text-primary"><%= @proxy.display_name %></span>）表示<span class="text-success">支持！</span></p>
-            <a href="#modal_choose_old" class="btn btn-default" data-dismiss="modal" data-toggle="modal" onclick="set_support()">使用舊評論回應</a>
+            <p class="text-muted">你（<span class="text-primary"><%= @proxy.display_name %></span>）表示<span class="text-success stance_support">支持！</span><span class="text-danger stance_oppose">反對！</span></p>
+            <a href="#modal_choose_old" class="btn btn-default" data-dismiss="modal" data-toggle="modal">使用舊評論回應</a>
           </div>
 
           <div class="modal-body">
@@ -94,69 +94,12 @@
           <div class="modal-footer">
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
-
-                <%= f.submit "送出", :class => 'btn btn-primary'%>
+                <%= f.submit "送出", :class => 'btn btn-primary' %>
                 <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
               </div>
             </div>
           </div>
 
-        </fieldset>
-        <% end %>
-
-      </div>
-    </div>
-  </div>
-</div>
-<div class="bs-component">
-  <div class="modal fade" id="modal_oppose_comment">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
-        <% @oppose = Comment.new %>
-        <% @oppose.owner = @proxy %>
-
-        <%= form_for(@oppose, url: "/#{@topic.permalink}/comment_#{@comment.id}/reply", :html => { class: "form-horizontal"}) do |f| %>
-        <fieldset>
-          <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="oppose">
-
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="text-danger">反駁評論</h4>
-            <p class="text-muted">對於<span class="text-primary"><%= @comment.owner.display_name %></span>說：</p>
-            <p class="text-muted"><%= @comment.body %></p>
-            <p class="text-muted">你（<span class="text-primary"><%= @proxy.display_name %></span>）表示<span class="text-danger">反對！</span></p>
-            <a href="#modal_choose_old" class="btn btn-default" data-dismiss="modal" data-toggle="modal" onclick="set_oppose()">使用舊評論回應</a>
-          </div>
-
-          <div class="modal-body">
-            <div class="form-group">
-              <label for="description" class="col-sm-2 control-label">內容</label>
-              <div class="col-sm-10">
-                <%= f.text_area :body, class: "form-control", placeholder: "評論內容", rows: "5" %>
-                <span class="help-block">必要</span>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="name" class="col-sm-2 control-label">摘要</label>
-              <div class="col-sm-10">
-                <%= f.text_field :subject, class: "form-control", placeholder: "評論摘要" %>
-                <span class="help-block">非必要，最多二十個字</span>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="modal-footer">
-            <div class="form-group">
-              <div class="col-lg-10 col-lg-offset-2">
-
-                <%= f.submit "送出", :class => 'btn btn-primary'%>
-                <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
-              </div>
-            </div>
-          </div>
         </fieldset>
         <% end %>
 
@@ -207,6 +150,7 @@
           <div class="modal-footer">
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
+                <button href="#modal_choose_old" data-dismiss="modal" data-toggle="modal" class="btn btn-default"><i class="fa fa-reply"></i> 重選</button>
                 <input class="btn btn-primary" name="commit" type="submit" value="送出">
                 <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
               </div>
@@ -222,16 +166,19 @@
 <script type="text/javascript">
 $(function() {
   $(".old_post_check").hide();
+  $("#old_chosen").attr("disabled", true);
 });
 function set_support(){
   $(".stance_oppose").hide();
   $(".stance_support").show();
   $("#old_stance").val("support");
+  $("#comment_stance").val("support");
 }
 function set_oppose(){
   $(".stance_support").hide();
   $(".stance_oppose").show();
   $("#old_stance").val("oppose");
+  $("#comment_stance").val("oppose");
 }
 function set_old_post(id){
   $("#old_id").val(id);
@@ -240,5 +187,6 @@ function set_old_post(id){
   $("#old_time").text($("#time_"+id).text());
   $("#old_body").text($("#body_"+id).text());
   $("#old_abstract").text($("#abstract_"+id).text());
+  $("#old_chosen").attr("disabled", false);
 }
 </script>
