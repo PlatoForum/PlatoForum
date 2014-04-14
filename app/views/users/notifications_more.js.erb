@@ -1,0 +1,5 @@
+$('#noti_list').append("<%= escape_javascript(render 'users/notifications_more')%>")
+$('#show_more').attr("href", "/user/notifications/more/<%= params[:offset].to_i + 5 %>")
+<% if @user.notifications.count <= params[:offset].to_i + 5  %>
+$('#show_more').parent().hide()
+<% end %>

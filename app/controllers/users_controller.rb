@@ -89,6 +89,11 @@ class UsersController < ApplicationController
     redirect_to notification_url(notification)
   end
 
+  def notifications_more
+    logger.error params[:offset]
+    @notifications = @user.notifications.sort!{|b,a| a.doc <=> b.doc}[ params[:offset].to_i , 5]
+  end
+
   def notifications
   end
 
