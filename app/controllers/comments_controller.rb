@@ -54,7 +54,7 @@ class CommentsController < ApplicationController
     notify_new_reply
 
     respond_to do |format|
-      format.html { redirect_to "/#{params[:permalink]}/comment_#{@target.id}", notice: '已成功回應評論！' }
+      format.html { redirect_to request.referrer, notice: '已成功回應評論！' }
       format.json { render action: 'show', status: :created, location: @comment }
     end
   end
@@ -91,7 +91,7 @@ class CommentsController < ApplicationController
 
         set_reply_relations
 
-        format.html { redirect_to "/#{params[:permalink]}/comment_#{@target.id}", notice: '已成功回應評論！' }
+        format.html { redirect_to request.referrer, notice: '已成功回應評論！' }
         format.json { render action: 'show', status: :created, location: @comment }
       else
         format.html { render action: 'new', notice: @errormessage }
@@ -121,7 +121,7 @@ class CommentsController < ApplicationController
       if @comment.save
         notify_new_comment
         @stance.comments << @comment
-        format.html { redirect_to "/#{params[:permalink]}", notice: '已成功發表評論！' }
+        format.html { redirect_to  request.referrer, notice: '已成功發表評論！' }
         format.json { render action: 'show', status: :created, location: @comment }
       else
         format.html { render action: 'new', notice: @errormessage }

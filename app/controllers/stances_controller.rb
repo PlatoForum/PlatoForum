@@ -1,8 +1,8 @@
 class StancesController < ApplicationController
-  before_action :set_stance, only: [:show, :edit, :update, :destroy]
+  before_action :set_stance, only: [:show, :edit, :update, :destroy, :show_more_importance, :show_more_time]
   
   before_action :before_edit, only: [:new, :create, :like, :neutral, :dislike]
-  before_action :before_show, only: [:index, :show]
+  before_action :before_show, only: [:index, :show, :show_more_importance, :show_more_time]
 
   # GET /stances
   # GET /stances.json
@@ -14,6 +14,14 @@ class StancesController < ApplicationController
   # GET /stances/1.json
   # GET /:permalink/:stance
   def show
+  end
+
+  def show_more_importance
+    @comments = @stance.comments.sort!{|b,a| a.importance_factor <=> b.importance_factor}[ params[:offset].to_i , 5]
+  end
+
+  def show_more_time
+    @comments = @stance.comments.sort!{|b,a| a.doc <=> b.doc}[ params[:offset].to_i , 5]
   end
 
   # GET /stances/new

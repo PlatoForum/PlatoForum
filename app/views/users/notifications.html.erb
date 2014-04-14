@@ -4,7 +4,7 @@
 		<table class="table table-striped table-hover ">
 
 			<tbody id="noti_list">
-				<% @user.notifications.sort!{|b,a| a.doc <=> b.doc}[0,5].each do |notification| %>
+				<% @user.notifications.sort!{|b,a| a.doc <=> b.doc}.first(5).each do |notification| %>
 
 				<tr onClick="document.location = '/notification_<%= notification.id %>';" >
 					<td width="10">
@@ -46,9 +46,10 @@
 			</tbody>
 
 		</table>
-	</div>
-	<div class="panel-footer">
-		<a id="show_more" href="/user/notifications/more/5" data-remote="true">顯示更多</a>
+
+		<% if @user.notifications.count > 5 %>
+			<center><a id="show_more" href="/user/notifications/more/5" data-remote="true">顯示更多</a></center>
+		<% end %>
 	</div>
 </div>
 

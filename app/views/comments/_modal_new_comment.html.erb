@@ -6,7 +6,7 @@
         <% @comment = Comment.new %>
         <% @comment.owner = @proxy %>
 
-        <%= form_for(@comment, url: "/#{@topic.permalink}/comments", :html => { class: "form-horizontal"}) do |f| %>
+        <%= form_for(@comment, url: "/#{@topic.permalink}/comments", :html => { class: "form-horizontal" }) do |f| %>
 
           <fieldset>
 
