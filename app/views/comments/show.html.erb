@@ -94,7 +94,7 @@
                       <% end %>
                     </td>
                     <% end %>
-                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-success"><%= comment.display_abstract %></span></td>
                     <td width="10">
                       <span class="text-success"><i class="fa fa-caret-left"> </i> </span>
                     </td>
@@ -118,7 +118,7 @@
                       <% end %>
                     </td>
                     <% end %>
-                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-danger"><%= comment.display_abstract %></span></td>
                     <td width="10">
                       <span class="text-danger"><i class="fa fa-caret-left"> </i> </span>
                     </td>
@@ -142,7 +142,7 @@
                       <% end %>
                     </td>
                     <% end %>
-                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-<%= @comment.supporting.find(comment.id) ? "success" : "danger" %>"><%= comment.display_abstract %></span></td>
                     <td width="10">
                       <span class="text-<%= @comment.supporting.find(comment.id) ? "success" : "danger" %>"><i class="fa fa-caret-left"> </i> </span>
                     </td>
@@ -189,7 +189,7 @@
                       <% end %>
                     </td>
                     <% end %>
-                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-success"><%= comment.display_abstract %></span></td>
                   </tr>
                 <% end %>
               </tbody>
@@ -213,7 +213,7 @@
                       <% end %>
                     </td>
                     <% end %>
-                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-danger"><%= comment.display_abstract %></span></td>
                   </tr>
                 <% end %>
               </tbody>
@@ -237,7 +237,7 @@
                       <% end %>
                     </td>
                     <% end %>
-                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-<%= @comment.supported.find(comment.id) ? "success" : "danger" %>"><%= comment.display_abstract %></span></td>
                   </tr>
                 <% end %>
               </tbody>
