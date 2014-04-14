@@ -22,8 +22,8 @@
             
             <div class="panel-heading">評論：<%= @comment.display_abstract %></div>
 
-            <div class="panel-body">
-              <p class="text-default"><%= @comment.body %></p>
+            <div class="panel-body text-default">
+              <%=  auto_link(simple_format(sanitize @comment.body, tags: %w(a p br)), :all, :target => '_blank') %>
 
               <div class="row">
                 <div class="col-xs-4">

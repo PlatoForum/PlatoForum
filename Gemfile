@@ -68,3 +68,6 @@ gem 'json'
 
 # Use rails_12factor for assets pipelining
 gem 'rails_12factor'
+
+# Use rails_autolink to displat hyperlinks in posts
+gem 'rails_autolink'

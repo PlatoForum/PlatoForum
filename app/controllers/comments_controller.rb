@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  
+  include ActionView::Helpers::TextHelper
   #require login to view comments
   #after_filter :require_user
   #protect_from_forgery with: :exception

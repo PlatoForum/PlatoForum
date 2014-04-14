@@ -25,5 +25,7 @@ module PlatoForum
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :zh
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
+    
+    config.action_view.sanitized_allowed_tags = %w(table tr th td thead tbody tfoot)
   end
 end

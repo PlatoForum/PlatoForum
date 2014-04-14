@@ -79,6 +79,7 @@ class TopicsController < ApplicationController
   def create
     @topic = Topic.new(topic_params)
     @topic.doc = Time.zone.now
+    @topic.permalink = @topic.id if @topic.permalink.empty?
 
     if @topic.topic_type == :open #open topic
       @stance1 = Stance.new
