@@ -3,6 +3,7 @@ class Comment
   field :subject, type: String
   field :body, type: String
   field :doc, type: Time, default: Time.zone.now
+  #field :importance_factor, type: Integer
   #field :stance, type: Integer
 
   belongs_to :owner, class_name: "Proxy", inverse_of: :works, autosave: true
@@ -66,7 +67,7 @@ class Comment
   end
 
   def importance_factor
-    return 2 * self.likes.count + self.dislikes.count
+    return 2 * self.likes.count + self.dislikes.count + 2 * self.supported.count + self.opposed.count
   end
 
 end
