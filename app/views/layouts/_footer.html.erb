@@ -1,5 +1,7 @@
 <footer class="footer">
   <div class="container text-center">
-    <p>Copyright &copy; 2014 PlatoForum group. <%= link_to "Privacy Policy", "/static/privacy_policy"  %></p>
+    <p>Copyright &copy; 2014 PlatoForum group. <a data-toggle="modal" href="#modal_privacy_policy">隱私權政策</a></p>
   </div>
 </footer>
+
+<%= render 'layouts/modal_privacy_policy' %>
