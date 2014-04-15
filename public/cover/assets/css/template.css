@@ -19,3 +19,8 @@ section span.anchor{ position:absolute; top:-70px;}
 .centered-pills ul.nav-pills { display:inline-block; }
 .centered-pills li { display:inline; }
 .centered-pills a { float:left; }
+
+ul.my-pills > li > a {
+	font-size: 18px;
+	font-family: 'Roboto Slab',Georgia,"Times New Roman",Times,serif;
+}
