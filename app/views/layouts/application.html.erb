@@ -30,7 +30,19 @@
           window.location.href = localStorage.startingPage;
           return false;
       }
-    </script></head>
+    </script>
+    <script>
+   
+    $( document ).ready(function() {
+      if ($.cookie('visited') != "YES")
+      {
+        $.cookie('visited', 'YES', { expires: 365, path: '/' });
+        window.location.replace("/cover");
+      }
+    });
+   
+    </script>
+  </head>
   <body>
 
     <%= render 'layouts/header' %>
