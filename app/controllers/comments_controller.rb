@@ -123,9 +123,11 @@ class CommentsController < ApplicationController
         notify_new_comment
         @stance.comments << @comment
         format.html { redirect_to "/#{@comment.topic.permalink}", notice: '已成功發表評論！' }
+        format.js { render 'create_success' }
         format.json { render action: 'show', status: :created, location: @comment }
       else
         format.html { render action: 'new', notice: @errormessage }
+        format.js { render 'create_failed' }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end

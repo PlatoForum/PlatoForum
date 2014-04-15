@@ -1,6 +1,6 @@
 <% content_for :title, @topic.name + " | " + @comment.display_abstract %>
 <% content_for :og_title, "評論「" + @topic.name + "」" %>
-<% content_for :og_description, @comment.display_abstract %>
+<% content_for :og_description, @comment.body %>
 
 <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><%= link_to "主頁", root_path %></li>
@@ -61,7 +61,7 @@
                 <a href="#modal_reply_comment" data-toggle="modal" class="btn btn-danger" onclick="set_oppose();"><i class="fa fa-reply"></i> 反駁</a>
               <% end %>
               <a title="分享到Facebook" href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]=<%= request.original_url %>" class="btn btn-primary" onclick="window.open(this.href, '分享到Facebook',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-share"></i> facebook</a>
+'left=20,top=20,width=700,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-share"></i> facebook</a>
               <a class="btn btn-default" onClick="window.history.back(); return false;">返回</a>
             </div>
           </div>
