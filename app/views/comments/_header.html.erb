@@ -28,7 +28,8 @@
 <% if @user.level >= 2 %>
 
 <div class="nav navbar" align="right">
-  <a title="分享到Facebook" href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]=<%= request.original_url %>" target="_blank" class="btn btn-primary"><i class="fa fa-share"></i> facebook</a>
+  <a title="分享到Facebook" href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]=<%= request.original_url %>" class="btn btn-primary" onclick="window.open(this.href, '分享到Facebook',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-share"></i> facebook</a>
   <button type="button" class="btn btn-primary" data-toggle="modal" href="#modal_new_comment"><i class="fa fa-comment"></i>  發表評論</button>
 
   <% if @user.level >= 8 %>

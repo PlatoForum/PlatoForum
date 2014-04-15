@@ -122,7 +122,7 @@ class CommentsController < ApplicationController
       if @comment.save
         notify_new_comment
         @stance.comments << @comment
-        format.html { redirect_to  request.referrer, notice: '已成功發表評論！' }
+        format.html { redirect_to "/#{@comment.topic.permalink}", notice: '已成功發表評論！' }
         format.json { render action: 'show', status: :created, location: @comment }
       else
         format.html { render action: 'new', notice: @errormessage }
