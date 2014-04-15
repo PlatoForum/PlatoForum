@@ -14,3 +14,8 @@ section span.anchor{ position:absolute; top:-70px;}
 .stroked {
 	-webkit-text-stroke: 1px #888888;
 }
+
+.centered-pills { text-align:center; }
+.centered-pills ul.nav-pills { display:inline-block; }
+.centered-pills li { display:inline; }
+.centered-pills a { float:left; }
