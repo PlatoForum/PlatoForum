@@ -1,5 +1,6 @@
 class TopicsController < ApplicationController
   before_action :set_topic, only: [:show, :edit, :update, :destroy]
+  before_action :before_show, only: [:show]
 
   # GET /topics
   # GET /topics.json
@@ -21,11 +22,10 @@ class TopicsController < ApplicationController
     @topics = @user.subscriptions 
   end
 
-  # GET /topics/1
-  # GET /topics/1.json
-  # This is no longer used
+  # GET /:permalink/comments
+  # GET /:permalink/comments.json
   def show 
-    #session[:topic_id] = params[:id]
+    @comments = @topic.comments
   end
 
   # GET /topics/new

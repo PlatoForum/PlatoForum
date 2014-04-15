@@ -11,6 +11,7 @@ class CommentsController < ApplicationController
 
   # GET /:permalink/comments
   # GET /:permalink/comments.json
+  # MOVED TO TOPICS#SHOW
   def index
     @topic = Topic.find_by(:permalink => params[:permalink]) || not_found
     @comments = @topic.comments
