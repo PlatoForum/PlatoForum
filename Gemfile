@@ -43,7 +43,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 # Use MongoDB
-gem 'mongoid'#, git: 'https://github.com/mongoid/mongoid.git'
+gem 'mongoid', github: 'mongoid/mongoid'
 
 # Use Facebook Authentication
 gem 'omniauth'
