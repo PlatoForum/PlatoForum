@@ -18,7 +18,7 @@ a:hover {
 .my-jumbo {
   background: url(/assets/bg.png);
   background-position:center;
-  background-size:100% auto;
+  background-size:200% auto;
 }
 
 .text-whiter {
