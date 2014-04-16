@@ -10,6 +10,7 @@ class Proxy
   has_many :works, class_name: "Comment", inverse_of: :owner, autosave: true, validate: false
   has_and_belongs_to_many :approvals, class_name: "Comment", inverse_of: :likes, validate: false
   has_and_belongs_to_many :disapprovals, class_name: "Comment", inverse_of: :dislikes, validate: false
+  has_and_belongs_to_many :read_comments, class_name: "Comment", inverse_of: :read_by, autosave: true
 
   validates_presence_of :user
   validates_presence_of :topic

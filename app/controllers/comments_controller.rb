@@ -21,8 +21,8 @@ class CommentsController < ApplicationController
   # GET /comments/1.json
   def show
     unless session[:user_id].nil?
-      @user.read_comments << Comment.find(params[:id])
-      @user.save
+      @proxy.read_comments << Comment.find(params[:id])
+      @proxy.save
     end
   end
 

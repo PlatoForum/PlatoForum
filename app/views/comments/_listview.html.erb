@@ -23,7 +23,7 @@
                   <tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
                     <% unless session[:user_id].nil? %>
                     <td width="10">
-                      <% if @user.read_comments.find(comment.id) %>
+                      <% if @proxy.read_comments.find(comment.id) %>
                         <span class="label label-default"><i class="fa fa-check fa-fw"></i> </span>
                       <% else %>
                         <span class="label label-warning"><i class="fa fa-exclamation fa-fw"></i> </span>

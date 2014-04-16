@@ -83,7 +83,7 @@
 			<% ach_count += 1 %>
 		<% end %>
 
-		<% if @user.read_comments.count > 0 %>
+		<% if @user.read_comments_count > 0 %>
 			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
 				<h2 class="text-warning"><i class="fa fa-comment fa-4x"></i></h2>
 				<p>開眼<br>
@@ -92,7 +92,7 @@
 			<% ach_count += 1 %>
 		<% end %>
 
-		<% if @user.read_comments.count >= 5 %>
+		<% if @user.read_comments_count >= 5 %>
 			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
 				<h2 class="text-warning"><i class="fa fa-comment fa-4x"></i></h2>
 				<p>思想開放<br>
@@ -101,7 +101,7 @@
 			<% ach_count += 1 %>
 		<% end %>
 
-		<% if @user.read_comments.count >= 10 %>
+		<% if @user.read_comments_count >= 10 %>
 			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
 				<h2 class="text-warning"><i class="fa fa-comment fa-4x"></i></h2>
 				<p>道聽途說<br>
@@ -110,7 +110,7 @@
 			<% ach_count += 1 %>
 		<% end %>
 
-		<% if @user.read_comments.count >= 20 %>
+		<% if @user.read_comments_count >= 20 %>
 			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" align="center">
 				<h2 class="text-warning"><i class="fa fa-comment fa-4x"></i></h2>
 				<p>飽讀詩書<br>
