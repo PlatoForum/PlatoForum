@@ -41,6 +41,7 @@ class CommentsController < ApplicationController
       @target.opposed << @comment
       action = :oppose
     end
+    @target.update_importance_factor
     @target.save
     create_job(action, @target._id, @comment._id)
   end
@@ -109,6 +110,7 @@ class CommentsController < ApplicationController
     @comment.doc = Time.zone.now
     
     @comment.owner = @proxy
+    @proxy.read_comments << @comment
 
     if @topic.topic_type == :yesno
       @stance = @topic.stances.find_by(:number => comment_params[:stance])
@@ -162,6 +164,7 @@ class CommentsController < ApplicationController
   def like
       @c = Comment.find_by(:id => params[:id])
       @c.likes << @proxy
+      @c.update_importance_factor
       @c.save
       create_job(:like, @proxy._id, @c._id) 
       create_job(:undislike, @proxy._id, @c._id) if @proxy.disapprovals.delete(@c)
@@ -180,6 +183,8 @@ class CommentsController < ApplicationController
       create_job(:unlike, @proxy._id, @c._id) if @proxy.approvals.delete(@c) 
       create_job(:undislike, @proxy._id, @c._id) if @proxy.disapprovals.delete(@c)
       # redirect_to "/comments/#{c.id}"
+      @c.update_importance_factor
+      @c.save
       @action = "neutral"
       respond_to do |format|
         format.html { redirect_to request.referrer, notice: "你對『#{c.subject}』沒有感覺" }
@@ -191,6 +196,7 @@ class CommentsController < ApplicationController
   def dislike
       @c = Comment.find_by(:id => params[:id])
       @c.dislikes << @proxy
+      @c.update_importance_factor
       @c.save
       create_job(:dislike, @proxy._id, @c._id)
       create_job(:unlike, @proxy._id, @c._id) if @proxy.approvals.delete(@c) 
@@ -215,7 +221,6 @@ class CommentsController < ApplicationController
         note.save 
       end
     end
-    @user.read_comments << @comment
   end
 
   def notify_new_reply
