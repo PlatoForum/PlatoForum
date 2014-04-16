@@ -1,0 +1,47 @@
+.text-primary {
+	color: #e06c00;
+}
+
+a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus {
+	background-color: #e06c00;
+	border-color: transparent;
+}
+
+a {
+	color: #e06c00;
+}
+
+a:hover {
+	color: #e06c00;
+}
+
+.my-jumbo {
+  background: url(/assets/bg.png);
+  background-position:center;
+  background-size:100% auto;
+}
+
+.text-whiter {
+  color:#a62c00;
+}
+
+.text-white {
+  color:#ffffff;
+}
+
+.text-white > a {
+  color:#bb3f00;
+}
+
+.text-white > a:hover {
+  color:#eeeeee;
+  text-decoration:none;
+}
+
+.navbar-default .navbar-brand {
+	color:#111111;
+}
+
+.badge {
+	background-color: #e06c00;
+}
