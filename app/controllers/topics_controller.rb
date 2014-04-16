@@ -85,7 +85,7 @@ class TopicsController < ApplicationController
     if @topic.topic_type == :open #open topic
       @stance1 = Stance.new
       @stance1.number = 1
-      @stance1.description = "未分類"
+      #@stance1.description = "未分類"
       @stance1.panel = "default"
 
       @stance1.save
