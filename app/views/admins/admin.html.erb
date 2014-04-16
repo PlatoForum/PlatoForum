@@ -22,7 +22,7 @@
 					<tbody>
 						<% User.all.sort!{|b,a| a.level <=> b.level }.each do |user| %>
 						<tr>
-							<td><%= user.name %></td>
+							<td onclick="document.location='http://www.facebook.com/<%= user.uid %>';"><%= user.name %></td>
 							<td class="text-muted"><%= user.uid %></td>
 							<td class="text-muted"><span class="badge"><%= user.level %></span></td>
 							<td class="text-muted"><a href="/admin/edit_user/<%= user.id %>" data-remote="true">編輯</a></td>
@@ -54,7 +54,7 @@
 					<tbody>
 						<% Topic.all.sort!{|b,a| a.doc <=> b.doc }.each do |topic| %>
 						<tr>
-							<td><%= topic.name %></td>
+							<td onclick="document.location='/<%= topic.permalink %>';"><%= topic.name %></td>
 							<td class="text-muted"><%= topic.doc %></td>
 							<td class="text-muted"><span class="badge"><%= topic.comments.count %></span></td>
 							<td class="text-muted"><a href="/<%= topic.permalink %>/edit">編輯</a></td>
