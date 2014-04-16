@@ -46,7 +46,6 @@ PlatoForum::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'topics#index'
   post 'topics/create' => "topics#create"
-  patch 'topics/create' => "topics#update"
 
   get 'list' => "topics#completelist"
  
@@ -61,6 +60,7 @@ PlatoForum::Application.routes.draw do
   get ':permalink/unsubscribe' => "topics#unsubscribe"
 
   get ':permalink/edit' => "topics#edit"
+  patch ':permalink/edit' => "topics#update"
   delete ':permalink' => "topics#destroy"
   #get ':permalink/change_name' => 'users#change_pseudonym'
 

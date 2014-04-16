@@ -1,0 +1,91 @@
+
+<div class="well bs-component">
+
+<%= form_for(@topic, url: "/#{@topic.permalink}/edit", :html => { class: "form-horizontal"}) do |f| %>
+
+  <% if @topic.errors.any? %>
+    <div class="bs-component">
+      <div class="alert alert-dismissable alert-danger">
+        <strong><%=@topic.errors.count %> 項錯誤：</strong>
+        <ul>
+        <% @topic.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <legend>議題</legend>
+
+    <div class="form-group">
+      <label for="topic_type" class="col-lg-2 control-label">類型</label>
+      <div class="col-lg-10">
+        <input class="form-control" id="topic_type" name="topic[topic_type]" placeholder="議題類型" type="hidden" value="<%= @topic.topic_type %>">
+        <ul class="nav nav-pills" style="margin-bottom: 15px;">
+          <li <% if @topic.topic_type == :yesno %>class="active"<% end %>><a href="#yesno" onClick="click_yesno()" data-toggle="tab">封閉式</a></li>
+          <li <% if @topic.topic_type == :open %>class="active"<% end %>><a href="#open" onClick="click_open()" data-toggle="tab">開放式</a></li>
+        </ul>
+        <% unless @topic.errors[:topic_type].empty? %>
+        <label class="control-label" for="inputError"><%= @topic.errors[:topic_type].join("，") %></label>
+        <% end %>
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+      function click_open(){
+        $("#topic_type").val("open");
+      }
+      function click_yesno(){
+        $("#topic_type").val("yesno");
+      }
+    </script>
+
+    <div class="form-group <%= "has-error" unless @topic.errors[:name].count ==0 %>">
+      <label for="name" class="col-lg-2 control-label">名稱（必要）</label>
+      <div class="col-lg-10">
+        <%= f.text_field :name, class: "form-control", placeholder: "議題名稱" %>
+        <% unless @topic.errors[:name].empty? %>
+        <label class="control-label" for="inputError"><%= @topic.errors[:name].join("，") %></label>
+        <% end %><span class="help-block">最多二十個字</span>
+      </div>
+    </div>
+
+    <div class="form-group <%= "has-error" unless @topic.errors[:description].count ==0 %>">
+      <label for="description" class="col-lg-2 control-label">描述</label>
+      <div class="col-lg-10">
+        <%= f.text_area :description, class: "form-control", placeholder: "議題描述", rows: "3" %>
+        <div id="myTabContent" class="tab-content">
+          <div class="tab-pane fade <% if @topic.topic_type == :yesno %>active in<% end %>" id="yesno">
+            <span class="help-block">簡單描述議論的目標，使用可以讓人『支持』或『反對』的形式。<br>例如『你覺得香蕉好吃嗎？』而不是『你對香蕉有什麼看法？』</span>
+          </div>
+          <div class="tab-pane fade <% if @topic.topic_type == :open %>active in<% end %>" id="open">
+            <span class="help-block">簡單描述議論的目標，使用可以讓人自由回答的形式。<br>例如『你對香蕉有什麼看法？』而不是『你覺得香蕉好吃嗎？』</span>
+          </div>
+        </div>
+        <% unless @topic.errors[:description].empty? %>
+        <label class="control-label" for="inputError"><%= @topic.errors[:description].join("，") %></label>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="form-group <%= "has-error" unless @topic.errors[:permalink].count ==0 %>">
+      <label for="permalink" class="col-lg-2 control-label">永久連結（必要）</label>
+      <div class="col-lg-10">
+        <%= f.text_field :permalink, class: "form-control", placeholder: "永久連結" %>
+        <% unless @topic.errors[:permalink].empty? %>
+        <label class="control-label" for="inputError"><%= @topic.errors[:permalink].join("，") %></label>
+        <% end %><span class="help-block">作為議題網址使用。只能使用英文字母、數字和底線。</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <%= f.submit "送出", :class => 'btn btn-primary'%>
+        <button onclick="window.history.go(-1); return false;" class="btn btn-default">返回</button>
+      </div>
+    </div>
+  </fieldset>
+<% end %>
+</div>
