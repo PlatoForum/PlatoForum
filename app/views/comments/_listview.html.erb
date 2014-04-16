@@ -30,7 +30,7 @@
                       <% end %>
                     </td>
                     <% end %>
-                    <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                    <td><span class="text-muted"><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%></span>：<span class="text-default"><%= comment.display_abstract %></span></td>
                     <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
                   </tr>
                 <% end %>

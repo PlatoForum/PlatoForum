@@ -43,7 +43,7 @@
                         <% end %>
                       </td>
                       <% end %>
-                      <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%>：<span class="text-muted"><%= comment.display_abstract %></span></td>
+                      <td><span class="text-muted"><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%></span>：<span class="text-default"><%= comment.display_abstract %></span></td>
                       <td class="text-primary hidden-xs" align="right"><%= comment.display_time %></td>
                     </tr>
                     <% end %>
@@ -69,7 +69,7 @@
                         <% end %>
                       </td>
                       <% end %>
-                      <td><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.pseudonym%><%end%>：<span class="text-muted"><%= comment.body[0,20] %><%= "⋯⋯" if comment.body.length > 20 %></span></td>
+                      <td><span class="text-muted"><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%></span>：<span class="text-default"><%= comment.display_abstract %></span></td>
                       <td class="text-primary hidden-xs" align="right"><%= comment.display_time %></td>
                     </tr>
                     <% end %>
