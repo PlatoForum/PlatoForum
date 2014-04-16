@@ -7,19 +7,23 @@
 
 <div class="page-header">
 	<h2><%= @proxy_to_show.display_name %><% if @proxy_to_show == @proxy %>（你）<% end %></h2>
-    <% if @proxy_to_show.real_id %>
-      <% if @proxy_to_show == @proxy %>
-        <a class="label label-primary" data-toggle="modal" href="#modal_switch_real_id"><i class="fa fa-unlock"></i> 實名</a>
+    <% if @proxy_to_show.user.id.to_s != "aaaaaaaaaaaaaaaaaaaaaaaa" %>
+      <% if @proxy_to_show.real_id %>
+        <% if @proxy_to_show == @proxy %>
+          <a class="label label-primary" data-toggle="modal" href="#modal_switch_real_id"><i class="fa fa-unlock"></i> 實名</a>
+        <% else %>
+          <span class="label label-default"><i class="fa fa-unlock"></i> 實名</span>
+        <% end %>
+        <a href="<%= @proxy_to_show.display_link %>" target="_blank" class="label label-primary">facebook</a>
       <% else %>
-        <span class="label label-default"><i class="fa fa-unlock"></i> 實名</span>
+        <% if @proxy_to_show == @proxy %>
+          <a class="label label-primary" data-toggle="modal" href="#modal_switch_real_id"><i class="fa fa-lock"></i> 匿名</a>
+        <% else %>
+          <span class="label label-default"><i class="fa fa-lock"></i> 匿名</span>
+        <% end %>
       <% end %>
-      <a href="<%= @proxy_to_show.display_link %>" target="_blank" class="label label-primary">facebook</a>
     <% else %>
-      <% if @proxy_to_show == @proxy %>
-        <a class="label label-primary" data-toggle="modal" href="#modal_switch_real_id"><i class="fa fa-lock"></i> 匿名</a>
-      <% else %>
-        <span class="label label-default"><i class="fa fa-lock"></i> 匿名</span>
-      <% end %>
+      <p class="text-danger">自動發文機器人。僅此一隻絕無分號。</p>
     <% end %>
 </div>
 

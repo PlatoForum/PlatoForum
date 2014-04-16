@@ -1,5 +1,5 @@
 class AdminsController < ApplicationController
-	before_filter :check_level
+	before_filter :check_level, :except => [:de_robot]
 
 	def check_level
 		check_user
@@ -9,6 +9,24 @@ class AdminsController < ApplicationController
 	end
 
 	def admin
+	end
+
+	def robot
+		session[:user_id_backup] = session.delete(:user_id)
+		@user = User.find("aaaaaaaaaaaaaaaaaaaaaaaa")
+		session[:user_id] = @user._id
+		redirect_to request.referrer
+	end
+
+	def de_robot
+		#logger.error @user.id
+		if @user.id.to_s != "aaaaaaaaaaaaaaaaaaaaaaaa"
+		#	logger.error @user.id
+			redirect_to "/" and return
+		end
+		session[:user_id] = session.delete(:user_id_backup)
+		@user = User.find(session[:user_id])
+		redirect_to "/" and return
 	end
 
 	def edit_user

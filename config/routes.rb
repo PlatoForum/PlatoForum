@@ -20,6 +20,8 @@ PlatoForum::Application.routes.draw do
   patch 'admin/edit_user/:id' => 'admins#update_user'
   get 'admin/kill_user/:id' => 'admins#destroy_user'
   post 'admin/broadcast' => 'admins#broadcast'
+  get 'admin/robot' => 'admins#robot'
+  get 'admin/de_robot' => 'admins#de_robot'
 
   get 'user/panel' => 'users#panel'
   get 'user/activities' => 'users#activities'
@@ -58,6 +60,7 @@ PlatoForum::Application.routes.draw do
   get ':permalink/unsubscribe' => "topics#unsubscribe"
 
   get ':permalink/edit' => "topics#edit"
+  delete ':permalink' => "topics#destroy"
   #get ':permalink/change_name' => 'users#change_pseudonym'
 
   get ':permalink/proxy_real' => "proxies#make_real"

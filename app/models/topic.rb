@@ -8,9 +8,9 @@ class Topic
   field :topic_type, type: Symbol
   # topic_type :yesno, :open
 
-  has_many :comments, class_name: "Comment", inverse_of: :topic, autosave: true, validate: false
-  has_many :stances, class_name: "Stance", inverse_of: :topic, autosave: true, validate: false
-  has_many :proxies
+  has_many :comments, class_name: "Comment", inverse_of: :topic, autosave: true, validate: false, dependent: :destroy
+  has_many :stances, class_name: "Stance", inverse_of: :topic, autosave: true, validate: false, dependent: :destroy
+  has_many :proxies, class_name: "Proxy", inverse_of: :topic, autosave: true, validate: false, dependent: :destroy
 
   has_and_belongs_to_many :subscribed_by, class_name: "User", inverse_of: :subscriptions, autosave: true, validate: false
 

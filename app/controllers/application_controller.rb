@@ -86,6 +86,7 @@ class ApplicationController < ActionController::Base
  
   # This part for comment and stance
   def check_topic
+    return if @topic
     if !params[:id].nil?
       @topic = Comment.find(params[:id]).topic
     else
@@ -112,6 +113,7 @@ class ApplicationController < ActionController::Base
     @proxy.topic = @topic
     @proxy.user = @user
     @proxy.pseudonym = pseudonym_gen
+    @proxy.real_id = true if @user.id.to_s == "aaaaaaaaaaaaaaaaaaaaaaaa"
     @proxy.save!
   end
 
