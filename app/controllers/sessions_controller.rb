@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class SessionsController < ApplicationController
   skip_before_action :require_user, only: [:create, :new]
 

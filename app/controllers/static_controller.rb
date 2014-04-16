@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class StaticController < ApplicationController
   def about
   end

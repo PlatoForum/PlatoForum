@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class CommentsController < ApplicationController
   include ActionView::Helpers::TextHelper
   #require login to view comments

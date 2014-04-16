@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class ProxiesController < ApplicationController
   before_action :set_proxy, only: [:edit, :update, :destroy, :make_real, :make_fake]
   before_action :set_proxy_to_show, only: [:show]

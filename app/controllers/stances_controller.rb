@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class StancesController < ApplicationController
   before_action :set_stance, only: [:show, :edit, :update, :destroy, :show_more_importance, :show_more_time]
   

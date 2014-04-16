@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class TopicsController < ApplicationController
   before_action :set_topic, only: [:show, :edit, :update, :destroy]
   before_action :before_show, only: [:show]
