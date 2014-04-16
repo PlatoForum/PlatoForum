@@ -1,6 +1,6 @@
 <% content_for :title, @topic.name %>
 <% content_for :og_title, "議題：" + @topic.name %>
-<% content_for :og_description, "立場：" + (@stance.description.nil? ? ("立場" + @stance.number) : @stance.description) %>
+<% content_for :og_description, "立場：" + (@stance.description.nil? ? "立場#{@stance.number}" : @stance.description) %>
 
 <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><%= link_to "主頁", root_path %></li>
