@@ -15,6 +15,7 @@ class CommentsController < ApplicationController
   def index
     @topic = Topic.find_by(:permalink => params[:permalink]) || not_found
     @comments = @topic.comments
+    @comments.each.update_importance_factor
   end
 
   # GET /:permalink/comment_:id

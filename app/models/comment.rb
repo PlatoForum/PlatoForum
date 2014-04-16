@@ -3,7 +3,7 @@ class Comment
   field :subject, type: String
   field :body, type: String
   field :doc, type: Time, default: Time.zone.now
-  field :importance_factor, type: Integer
+  field :importance_factor, type: Integer, default: 0
   #field :importance_factor, type: Integer
   #field :stance, type: Integer
 
