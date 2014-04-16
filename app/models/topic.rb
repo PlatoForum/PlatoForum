@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Topic
   include Mongoid::Document
   field :name, type: String

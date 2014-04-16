@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class Comment
   include Mongoid::Document
   field :subject, type: String
