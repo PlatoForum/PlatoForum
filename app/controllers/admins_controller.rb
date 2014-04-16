@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class AdminsController < ApplicationController
 	before_filter :check_level, :except => [:de_robot]
 
