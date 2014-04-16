@@ -2,8 +2,12 @@
 	color: #e06c00;
 }
 
+.text-primary, .text-primary:hover {
+	color: #e06c00;
+}
+
 a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus {
-	background-color: #e06c00;
+	background-color: #555;
 	border-color: transparent;
 }
 
@@ -22,7 +26,7 @@ a:hover {
 }
 
 .text-whiter {
-  color:#a62c00;
+  color:#ffffff;
 }
 
 .text-white {
@@ -34,7 +38,7 @@ a:hover {
 }
 
 .text-white > a:hover {
-  color:#eeeeee;
+  color:#ffffff;
   text-decoration:none;
 }
 
