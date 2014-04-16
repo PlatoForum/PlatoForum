@@ -43,7 +43,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 # Use MongoDB
-gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
+gem 'mongoid'#, git: 'https://github.com/mongoid/mongoid.git'
 
 # Use Facebook Authentication
 gem 'omniauth'
@@ -56,7 +56,7 @@ gem 'therubyracer'
 
 # Use BSON::ObjectId field in Mongoid model
 gem 'bson'
-gem 'moped', github: 'mongoid/moped'
+gem 'moped'#, github: 'mongoid/moped'
 
 # Use Redis server for job queuing
 gem 'redis'
