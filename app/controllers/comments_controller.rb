@@ -150,13 +150,14 @@ class CommentsController < ApplicationController
     end
   end
 
-  # DELETE /comments/1
-  # DELETE /comments/1.json
+  # DELETE /:permalink/comment_:id
   def destroy
-    @permalink = @comment.topic.permalink
+    unless @user.level >= 8
+      redirect_to "/#{params[:permalink]}/comment_#{params[:id]}" and return
+    end
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to "/#{@permalink}" }
+      format.html { redirect_to "/#{params[:permalink]}" }
       format.json { head :no_content }
     end
   end
