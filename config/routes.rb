@@ -46,6 +46,7 @@ PlatoForum::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'topics#index'
   post 'topics/create' => "topics#create"
+  patch 'topics/create' => "topics#update"
 
   get 'list' => "topics#completelist"
  
