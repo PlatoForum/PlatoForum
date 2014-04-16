@@ -68,4 +68,8 @@ class User
     end
     return total_count
   end
+
+  def is_robot?
+    return self.id.to_s == "aaaaaaaaaaaaaaaaaaaaaaaa"
+  end
 end

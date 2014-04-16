@@ -105,6 +105,28 @@
       </div>
     </div>
 
+    <% if @user.is_robot? %>
+      <div class="form-group <%= "has-error" unless @comment.errors[:tag].count ==0 %>">
+        <label for="tag" class="col-lg-2 control-label">標簽</label>
+        <div class="col-lg-10">
+          <div class="row">
+            <div class="col-xs-4">
+              <%= f.text_field :tag, class: "form-control", placeholder: "來源標簽" %>
+              <% unless @comment.errors[:tag].empty? %>
+              <label class="control-label" for="inputError"><%= @comment.errors[:tag].join("，") %></label>
+              <% end %>
+            </div>
+            <div class="col-xs-8">
+              <%= f.text_field :tag_url, class: "form-control", placeholder: "來源網址" %>
+              <% unless @comment.errors[:tag_url].empty? %>
+              <label class="control-label" for="inputError"><%= @comment.errors[:tag_url].join("，") %></label>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
         <%= f.submit "送出", :class => 'btn btn-primary'%>

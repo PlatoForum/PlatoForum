@@ -1,2 +1,75 @@
-<h1><strong>個人設定</strong></h1>
-<p class="text-primary">已登入為 <%= current_user.name %>（<%= session[:user_id]%>）</p>
+<div class="row">
+	<div class="col-xs-12">
+		<h2 align="center">個人設定</h2>
+	</div>
+	<div class="col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">全域隱私設定</h3>
+			</div>
+			<div class="panel-body">
+				<table class="table table-striped table-panel">
+					<thead>
+						<tr>
+							<th>項目</th>
+							<th>設定</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>在設定為「實名」的議題下允許別人連結至我的facebook個人頁面</td>
+							<td>允許</td>
+						</tr>
+						<tr>
+							<td>允許別人檢視我在一個議題下的所有活動</td>
+							<td>允許</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">議題隱私設定</h3>
+			</div>
+			<div class="panel-body">
+				<table class="table table-striped table-panel">
+					<thead>
+						<tr>
+							<th align="right">議題</th>
+							<th>顯示名稱</th>
+							<th>發文數量</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @user.proxies.each do |proxy| %>
+						<tr>
+							<td><a href="/<%= proxy.topic.permalink %>"><%= proxy.topic.name %></a></td>
+							<td><a href="/<%= proxy.topic.permalink %>/proxy_<%= proxy.id %>" id="name_<%= proxy.topic.id %>"><%= proxy.display_name %></a></td>
+							<td><%= proxy.works.count %></td>
+							<td>
+								<a id="fake_<%= proxy.topic.id %>" href="/<%= proxy.topic.permalink %>/proxy_fake" data-remote="true"><i class="fa fa-lock fa-fw"></i> 切換為匿名</a>
+				        <a id="real_<%= proxy.topic.id %>" href="/<%= proxy.topic.permalink %>/proxy_real" data-remote="true"><i class="fa fa-unlock fa-fw"></i> 切換為實名</a>
+				      </td>
+				      <script type="text/javascript">
+							$(function() {
+								<% if proxy.real_id %>
+                	$("#real_<%= proxy.topic.id %>").hide();
+                <% else %>
+                	$("#fake_<%= proxy.topic.id %>").hide();
+                <% end %>
+              });
+              </script>
+						</tr>
+					  <% end %>
+					<tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</div>
+

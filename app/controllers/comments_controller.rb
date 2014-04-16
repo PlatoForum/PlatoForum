@@ -273,7 +273,7 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:subject, :body, :stance, :old_id)
+      params.require(:comment).permit(:subject, :body, :stance, :old_id, :tag, :tag_url)
     end
 
     def create_job(action, proxy_id, comment_id)

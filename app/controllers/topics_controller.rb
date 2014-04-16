@@ -86,7 +86,7 @@ class TopicsController < ApplicationController
       @stance1 = Stance.new
       @stance1.number = 1
       #@stance1.description = "未分類"
-      @stance1.panel = "default"
+      #@stance1.panel = "default"
 
       @stance1.save
       @topic.stances << @stance1

@@ -1,0 +1,3 @@
+$('#name_<%= @topic.id %>').html("<%= @proxy.display_name %>")
+$('#<%= @switch_to %>_<%= @topic.id %>').hide()
+$('#<%= @switch_from %>_<%= @topic.id %>').show()

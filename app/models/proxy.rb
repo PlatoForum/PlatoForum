@@ -49,4 +49,7 @@ class Proxy
     end
   end
 
+  def is_robot?
+    return self.user.id.to_s == "aaaaaaaaaaaaaaaaaaaaaaaa"
+  end
  end

@@ -16,13 +16,16 @@ class AdminsController < ApplicationController
 		session[:user_id_backup] = session.delete(:user_id)
 		@user = User.find("aaaaaaaaaaaaaaaaaaaaaaaa")
 		session[:user_id] = @user._id
-		redirect_to request.referrer
+		if request.post?
+			redirect_to "/"
+		else
+			redirect_to request.referrer
+		end
 	end
 
 	def de_robot
 		#logger.error @user.id
-		if @user.id.to_s != "aaaaaaaaaaaaaaaaaaaaaaaa"
-		#	logger.error @user.id
+		unless @user.is_robot?
 			redirect_to "/" and return
 		end
 		session[:user_id] = session.delete(:user_id_backup)

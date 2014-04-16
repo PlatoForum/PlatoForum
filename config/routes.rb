@@ -71,6 +71,7 @@ PlatoForum::Application.routes.draw do
   get ':permalink/stance_:stance' => "stances#show"
   get ':permalink/proxy_:proxy' => "proxies#show"
 
+  get ':permalink/comments' => "topics#show"
   get ':permalink' => "topics#show"
 
   # Example of regular route:

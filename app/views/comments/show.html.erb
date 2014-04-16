@@ -27,6 +27,9 @@
             <div class="panel-heading">評論：<%= @comment.display_abstract %></div>
 
             <div class="panel-body text-default">
+              <% unless @comment.tag.nil? %>
+                <p class="text-primary">轉錄自 <a class="label label-primary" href=<%= @comment.tag_url.nil? ? "#" : @comment.tag_url %>><%= @comment.tag %></a></p>
+              <% end %>
               <%=  auto_link(simple_format(sanitize @comment.body, tags: %w(a p br)), :all, :target => '_blank') %>
 
               <div class="row">
@@ -50,7 +53,9 @@
                   </h4>
                 </div>
                 <div class="col-xs-8">
-                  <p class="text-primary" align="right"><a href="/<%=@comment.topic.permalink%>/proxy_<%=@comment.owner.id%>"><%=@comment.owner.display_name%><% if (@comment.owner == @proxy)%>（你）<%end%></a><br>發表於 <%= @comment.display_time_detailed %></p>
+                  <p class="text-primary" align="right">
+                    <a href="/<%=@comment.topic.permalink%>/proxy_<%=@comment.owner.id%>"><%=@comment.owner.display_name%><% if (@comment.owner == @proxy)%>（你）<%end%></a><br>
+                    發表於 <%= @comment.display_time_detailed %></p>
                 </div>
               </div>
             </div>

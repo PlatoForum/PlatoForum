@@ -64,6 +64,24 @@
                 <span class="help-block">非必要，最多二十個字</span>
               </div>
             </div>
+
+            <% if @user.is_robot? %>
+              <div class="form-group <%= "has-error" unless @comment.errors[:tag].count ==0 %>">
+                <label for="tag" class="col-sm-2 col-xs-12 control-label">標簽</label>
+                <div class="col-sm-3 col-xs-4">
+                  <%= f.text_field :tag, class: "form-control", placeholder: "標簽" %>
+                  <% unless @comment.errors[:tag].empty? %>
+                  <label class="control-label" for="inputError"><%= @comment.errors[:tag].join("，") %></label>
+                  <% end %>
+                </div>
+                <div class="col-sm-7 col-xs-8">
+                  <%= f.text_field :tag_url, class: "form-control", placeholder: "來源網址" %>
+                  <% unless @comment.errors[:tag_url].empty? %>
+                  <label class="control-label" for="inputError"><%= @comment.errors[:tag_url].join("，") %></label>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
             
             </div>
 

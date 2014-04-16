@@ -28,18 +28,24 @@ class ProxiesController < ApplicationController
   def make_real
     @proxy.real_id = true
     @proxy.save
+    @switch_to = "real"
+    @switch_from = "fake"
     respond_to do |format|
       format.html { redirect_to request.referrer, notice: '成功切換成實名' }
       format.json { render action: 'show', status: :created, location: @proxy }
+      format.js { render 'switch_real_id'}
     end
   end
 
   def make_fake
     @proxy.real_id = false
     @proxy.save
+    @switch_to = "fake"
+    @switch_from = "real"
     respond_to do |format|
       format.html { redirect_to request.referrer, notice: '成功切換成匿名' }
       format.json { render action: 'show', status: :created, location: @proxy }
+      format.js { render 'switch_real_id' }
     end
   end
 
