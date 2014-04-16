@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/mongoid/mongoid.git
+  remote: https://github.com/mongoid/mongoid.git
   revision: da35e0cd0fc17651c263e0f74d90b0adf5fbb409
   specs:
     mongoid (4.0.0.beta1)
