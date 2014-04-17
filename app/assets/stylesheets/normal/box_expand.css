@@ -1,0 +1,57 @@
+.expandable-boxes {
+  position: relative;
+}
+
+.expandable-box {
+  box-sizing: border-box;
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+  
+  &.open {
+    width: 99%;
+    margin: 0;
+  }
+  
+  &.out {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    border: none;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+  }
+}
+
+@media all and (max-width: 2000px) {
+  .expandable-box-3 {
+    width: 32%;
+    float: left;
+    margin: 0 1% 20px 0;
+    
+  }
+
+  .expandable-box-2 {
+    width: 49%;
+    float: left;
+    margin: 0 1% 20px 0;
+  }
+}
+
+@media all and (max-width: 1000px) {
+  .expandable-box-3 {
+    width: 99%;
+    float: left;
+    padding: 0px;
+    
+  }
+
+  .expandable-box-2 {
+    width: 99%;
+    float: left;
+    padding: 0px;
+  }
+}

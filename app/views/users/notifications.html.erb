@@ -48,9 +48,16 @@
 		</table>
 
 		<% if @user.notifications.count > 5 %>
-			<center><a id="show_more" href="/user/notifications/more/5" data-remote="true">顯示更多⋯⋯</a></center>
+			<center><a id="show_more" href="/user/notifications/more/5" data-remote="true">顯示更多⋯⋯</a><i id="spin" class="fa fa-spinner fa-spin" style="display: none;"></i></center>
 		<% end %>
 	</div>
 </div>
+
+<script type="text/javascript">
+$("#show_more").click(function (){
+	$("#show_more").hide();
+	$("#spin").show();
+});
+</script>
 
 <div id="noti_content" class="modal fade"></div>

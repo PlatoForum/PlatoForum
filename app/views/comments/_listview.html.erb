@@ -1,15 +1,12 @@
 <div class="row">
+  <div class="col-xs-12">
+<div class="expandable-boxes">
   <% only_one_stance = (@topic.stances.count == 1) %>
   <% @topic.stances.sort!{|a,b| a.number <=> b.number}.each do |stance| %>
-  <div id="btn_stance<%= stance.number %>" class="btn_stance col-md-1">
-    <p class="bs-component">
-      <a class="btn btn-block <%= stance.panel.nil? ? "btn-default" : "btn-"+stance.panel %>"><%= stance.description.nil? ? "立場#{stance.number}"  : stance.description %></a>
-    </p>
-  </div>
-  <div id="col_stance<%= stance.number %>" class="col_stance col-md-<%= 12 / @topic.stances.count %>">
-    <div class="bs-component">
+
+  <div <% unless only_one_stance %>class="expandable-box expandable-box-<%= @topic.stances.count %>"<% end %>>
       <div class="panel <%= stance.panel.nil? ? "panel-default" : "panel-"+stance.panel %>">
-        <a id="click_stance<%= stance.number %>" class="click_stance">
+        <a class="expand-btn">
         <div class="panel-heading">
           <h3 class="panel-title">
             <% if only_one_stance %>
@@ -53,43 +50,12 @@
           <% end %>
           
           <% if stance.comments.count > 5 %>
-          <center><a id="show_more_stance<%= stance.number %>" href="/<%= @topic.permalink %>/comments/more_stance_<%= stance.number %>/5" data-remote="true">更多⋯⋯</a></center>
+          <center><a id="show_more_stance<%= stance.number %>" href="/<%= @topic.permalink %>/comments/more_stance_<%= stance.number %>/5" data-remote="true">更多⋯⋯</a><i id="spin_stance<%= stance.number %>" class="fa fa-spinner fa-spin" style="display: none;"></i></center>
           <% end %>
         </div>
       </div>
     </div>
-    </div>
-    <script type="text/javascript">
-      $("#click_stance<%= stance.number %>").click(function (){
-        if ($("#click_stance<%= stance.number %>").hasClass("expanded")) {
-          $(".btn_stance").hide();
-          $(".col_stance").show();
-          $(".col_stance").removeClass("col-md-<%= 13 - @topic.stances.count %> panel-expanded").addClass("col-md-<%= 12 / @topic.stances.count %>");
-          $(".click_stance").removeClass("expanded");
-        }
-        else {
-          $(".col_stance").hide();
-          $(".btn_stance").show();
-          $("#btn_stance<%= stance.number %>").hide()
-          $("#col_stance<%= stance.number %>").toggle()
-          $("#col_stance<%= stance.number %>").removeClass("col-md-<%= 12 / @topic.stances.count %>").addClass( "col-md-<%= 13 - @topic.stances.count %>" );
-          $(".click_stance").addClass( "expanded" );
-        }
-      });
-      $("#btn_stance<%= stance.number %>").click(function (){
-        $(".col_stance").hide();
-        $(".btn_stance").show();
-        $("#btn_stance<%= stance.number %>").hide()
-        $("#col_stance<%= stance.number %>").show()
-        $("#col_stance<%= stance.number %>").removeClass("col-md-<%= 12 / @topic.stances.count %>").addClass( "col-md-<%= 13 - @topic.stances.count %>" );
-      });
-    </script>
   <% end %>
 </div>
-  
-<script type="text/javascript">
-  $(function() {
-    $(".btn_stance").hide();
-  });
-</script>
-
+</div>
+</div>
