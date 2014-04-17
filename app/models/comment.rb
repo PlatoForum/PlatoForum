@@ -47,8 +47,12 @@ class Comment
     return true
   end
 
+  def display_body_short
+    return body.length > 60 ? self.body[0,60] + "⋯⋯" : self.body
+  end
+
   def display_abstract
-    if self.subject.empty?
+    if self.subject.nil? || self.subject.empty?
       return body.length > 20 ? self.body[0,20] + "⋯⋯" : self.body
     else
       return self.subject
@@ -56,11 +60,11 @@ class Comment
   end
 
   def display_abstract_long
-    if self.subject.empty?
+    if self.subject.nil? || self.subject.empty?
       return body.length > 60 ? self.body[0,60] + "⋯⋯" : self.body
     else
       return self.subject
-    end  
+    end
   end
 
   def display_time
