@@ -74,6 +74,7 @@ class CommentsController < ApplicationController
     @comment.topic = @topic
     @comment.doc = Time.zone.now
     @comment.owner = @proxy
+    @proxy.read_comments << @comment
 
     @target = Comment.find(params[:id])
 
