@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
   $('.expand-btn').click(function(e) {
     var expandable = $(this).parent().parent()
     if(expandable.hasClass('open')) {
