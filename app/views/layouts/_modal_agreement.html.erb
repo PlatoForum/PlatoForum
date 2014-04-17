@@ -41,7 +41,7 @@
             <div class="modal-footer">
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
-                <a href="/signin" class="btn btn-primary"><i class="fa fa-check"></i> 同意並登入</a>
+                <a href="#" class="btn btn-primary" id="fb_login_confirmed"><i class="fa fa-check"></i> 同意並登入</a>
                 <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
               </div>
             </div>
@@ -50,3 +50,12 @@
     </div>
   </div>
 </div>
+
+<script>
+$( "#fb_login_confirmed" ).click(function() {
+  $("#modal_agreement").modal("hide");
+  $.cookie('registered', 'YES', { expires: 365, path: '/' });
+  window.location.replace("/signin");
+});
+
+</script>
