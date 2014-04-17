@@ -77,7 +77,7 @@
 
   <div class="col-md-3 col-md-pull-6">
     <div class="well well-sm">
-      <h4 align="center" class="text-muted visible-sm visible-xs">評論回應的對象</h4>
+      <h4 align="center" class="text-muted">評論回應的對象</h4>
       <% @replying = @comment.supporting + @comment.opposing %>
       <div class="panel-heading" align="center">
         <a data-toggle="tab" class="label label-primary" id="show_replying" href="#replying">全部 <%= @replying.count %></a>
@@ -168,7 +168,7 @@
 
   <div class="col-md-3">
     <div class="well well-sm">
-      <h4 align="center" class="text-muted visible-sm visible-xs">評論受到的回應</h4>
+      <h4 align="center" class="text-muted">評論受到的回應</h4>
       <% @replied = @comment.supported + @comment.opposed %>
       <div class="panel-heading" align="center">
           <a data-toggle="tab" class="label label-primary" id="show_replied" href="#replied">全部 <%= @replied.count %></a>

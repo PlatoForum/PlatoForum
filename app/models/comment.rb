@@ -55,6 +55,14 @@ class Comment
     end  
   end
 
+  def display_abstract_long
+    if self.subject.empty?
+      return body.length > 60 ? self.body[0,60] + "⋯⋯" : self.body
+    else
+      return self.subject
+    end  
+  end
+
   def display_time
     if self.doc.strftime("%F") == Time.zone.now.strftime("%F")
       return "今天 #{self.doc.strftime("%T")}"

@@ -8,7 +8,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h4 class="text-default">選擇舊評論</h4>
           <p class="text-muted">對於<span class="text-primary"><%= @comment.owner.display_name %></span>說：</p>
-          <p class="text-muted"><%= @comment.body %></p>
+          <p class="text-muted"><%= @comment.display_abstract_long %></p>
           <p class="text-muted">你（<span class="text-primary"><%= @proxy.display_name %></span>）表示<span class="text-success stance_support">支持！</span><span class="text-danger stance_oppose">反對！</span></p>
         </div>
 
@@ -117,7 +117,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h4 class="text-default">使用舊評論回應</h4>
           <p class="text-muted">對於<span class="text-primary"><%= @comment.owner.display_name %></span>說：</p>
-          <p class="text-muted"><%= @comment.body %></p>
+          <p class="text-muted"><%= @comment.display_abstract_long %></p>
           <p class="text-muted">你（<span class="text-primary"><%= @proxy.display_name %></span>）表示<span class="text-success stance_support">支持！</span><span class="text-danger stance_oppose">反對！</span></p>
         </div>
 
