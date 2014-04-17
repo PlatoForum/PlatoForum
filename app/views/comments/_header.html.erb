@@ -8,7 +8,7 @@
     <span class="label label-default"><%= @topic.subscribed_by.count %>人訂閱</span>
     <% unless session[:user_id].nil? %>
     <% if @user.subscriptions.find(@topic.id) %>
-      <a href="/<%= @topic.permalink %>/unsubscribe" class="label label-primary"><i class="fa fa-star"></i> 已訂閱</a>
+      <a href="/<%= @topic.permalink %>/unsubscribe" class="label label-primary"><i class="fa fa-star"></i> 訂閱</a>
     <% else %>
       <a href="/<%= @topic.permalink %>/subscribe" class="label label-primary"><i class="fa fa-star-o"></i> 未訂閱</a>
     <% end %>

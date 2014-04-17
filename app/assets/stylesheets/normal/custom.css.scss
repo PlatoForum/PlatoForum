@@ -20,6 +20,33 @@ textarea {
   width: 100%;
 }
 
+@media all and (max-width: 2000px) { /* screen size until 1200px */
+  .pf-body {
+    font-size: 1.2em;
+  }
+  .btn {
+    font-size: 14px;
+  }
+}
+
+@media all and (max-width: 1000px) { /* screen size until 1000px */
+  .pf-body {
+    font-size: 1.1em;
+  }
+  .btn {
+    font-size: 13px;
+  }
+}
+
+@media all and (max-width: 500px) { /* screen size until 500px */
+  .pf-body {
+    font-size: 1em;
+  }
+  .btn {
+    font-size: 12px;
+  }
+}
+
 a {
   word-wrap: break-word;
   word-break: break-all;
