@@ -20,7 +20,6 @@
   <div class="col-md-6 col-md-push-3">
     <table>
       <tr>
-        <td width="30" class="hidden-sm hidden-xs"><i class="fa fa-caret-left fa-fw fa-2x"> </i></td>
         <td width="2000">
           <div class="panel <%= @comment.stance.panel.nil? ? "panel-default" : "panel-"+@comment.stance.panel %>">
             
@@ -35,7 +34,7 @@
               <div class="row">
                 <div class="col-xs-4">
                   <h4 align=>
-                    <% if session[:user_id].nil? %>
+                    <% if session[:user_id].nil? or @user.is_robot? %>
                       <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></span>
                       <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></span>
                     <% else %>
@@ -61,7 +60,7 @@
             </div>
 
             <div class="panel-footer" align="right">
-              <% unless session[:user_id].nil? %>
+              <% unless session[:user_id].nil? or @comment.tag.empty? %>
                 <a href="#modal_reply_comment" data-toggle="modal" class="btn btn-success" onclick="set_support();"><i class="fa fa-reply"></i> 支援</a>
                 <a href="#modal_reply_comment" data-toggle="modal" class="btn btn-danger" onclick="set_oppose();"><i class="fa fa-reply"></i> 反駁</a>
               <% end %>
@@ -71,7 +70,6 @@
             </div>
           </div>
           </td>
-        <td width="30" class="hidden-sm hidden-xs"> <i class="fa fa-caret-left fa-fw fa-2x"></i></td>
       </tr>
     </table>
   </div>
