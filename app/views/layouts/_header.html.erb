@@ -38,7 +38,7 @@
                 <li><a href="/signout" id="sign_out"><i class="fa fa-power-off fa-fw"></i> 登出</a></li>
               </ul></li>
                <% else %>
-                <li><a data-toggle="modal" href="#modal_agreement">用Facebook帳號登入</a></li>
+                <li><a data-toggle="modal" id="fb_login" href="#modal_agreement">用Facebook帳號登入</a></li>
 
               <% end %>
             
@@ -46,5 +46,17 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
+
+        <script>
+   
+    $( "#fb_login" ).click(function() {
+      if ($.cookie('registered') != "YES")
+      {
+        $.cookie('visited', 'YES', { expires: 365, path: '/' });
+        //window.location.replace("/cover");
+      }
+    });
+   
+    </script>
     <%= render 'layouts/modal_agreement' %>
     <%= render 'admins/modal_broadcast' if @user.level >= 10 %>
