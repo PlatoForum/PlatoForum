@@ -40,7 +40,7 @@
                     </td>
                     <% end %>
                     <td><span class="text-muted"><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%></span>：<% if first_item %><%= comment.subject %><br><% end %><span class="text-default"><%= first_item ? comment.display_body_short : comment.display_abstract %></span></td>
-                    <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
+                    <td class="show_time text-primary" style="display: none;" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
                   </tr>
                   <% first_item = false %>
                 <% end %>
