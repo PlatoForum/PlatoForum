@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
   #before_action :check_topic
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   before_action :before_edit, only: [:new, :create, :reply, :like, :neutral, :dislike, :reply, :reply_old]
-  before_action :before_show, only: [:index, :show]
+  before_action :before_show, only: [:index, :show, :show_more]
 
   # GET /:permalink/comments
   # GET /:permalink/comments.json
@@ -16,6 +16,12 @@ class CommentsController < ApplicationController
   def index
     @topic = Topic.find_by(:permalink => params[:permalink]) || not_found
     @comments = @topic.comments
+  end
+
+  # GET /:permalink/comments/more_stance_:stance/:offset
+  def show_more
+    @stance = @topic.stances.find_by(:number => params[:stance])
+    @comments = @stance.comments.sort!{|b,a| a.importance_factor <=> b.importance_factor}[ params[:offset].to_i , 5]
   end
 
   # GET /:permalink/comment_:id

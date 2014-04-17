@@ -1,0 +1,5 @@
+$('#comment_list_stance<%= @stance.number %>').append("<%= escape_javascript(render 'comments/show_more')%>")
+$('#show_more_stance<%= @stance.number %>').attr("href", "/<%= @topic.permalink %>/comments/more_stance_<%= @stance.number %>/<%= params[:offset].to_i + 5 %>")
+<% if @stance.comments.count <= params[:offset].to_i + 5  %>
+$('#show_more_stance<%= @stance.number %>').parent().hide()
+<% end %>

@@ -84,7 +84,8 @@ a {
 }
 
 .panel-success > a > .panel-heading:hover, .panel-success > a > .panel-heading:focus {
-    background-color: #38c63c;
+  cursor: pointer;
+  background-color: #38c63c;
 }
 
 .panel-warning > a > .panel-heading {
@@ -94,7 +95,8 @@ a {
 }
 
 .panel-warning > a > .panel-heading:hover, .panel-warning > a > .panel-heading:focus {
-    background-color: #ff952b;
+  cursor: pointer;
+  background-color: #ff952b;
 }
 .panel-danger > a > .panel-heading {
   color: #ffffff;
@@ -103,7 +105,8 @@ a {
 }
 
 .panel-danger > a > .panel-heading:hover, .panel-danger > a > .panel-heading:focus {
-    background-color: #ff5146;
+  cursor: pointer;
+  background-color: #ff5146;
 }
 
 .panel-primary > a > .panel-heading {
@@ -113,6 +116,7 @@ a {
 }
 
 .panel-primary > a > .panel-heading:hover, .panel-primary > a > .panel-heading:focus {
+  cursor: pointer;
   background-color: #259cca;
 }
 
@@ -122,12 +126,18 @@ a {
   border-color: transparent;
 }
 
-.panel-default > a > .panel-heading:hover, .panel-primary > a > .panel-heading:focus {
+.panel-default > a > .panel-heading:hover, .panel-default > a > .panel-heading:focus {
+  cursor: pointer;
   background-color: #e5e5e5;
 }
 
-.panel > a:hover, .pavel > a:focus{
+.panel > a:hover, .panel > a:focus{
+  cursor: pointer;
   text-decoration:none;
+}
+
+.click_stance:hover {
+ cursor:pointer;
 }
 
 a.list-group-item.active:hover, a.list-group-item.active:focus
