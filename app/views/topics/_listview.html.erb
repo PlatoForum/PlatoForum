@@ -50,7 +50,7 @@
             <h4 class="list-group-item-heading"><i class="fa fa-star fa-fw"></i> 訂閱議題</h4>
           </a>
           <% @user = User.find_by(:id => session[:user_id] ) %>
-          <% @user.subscriptions.sort!.first(10).each do |topic| %>
+          <% @user.subscriptions.sort!.first(5).each do |topic| %>
           <a href="/<%= topic.permalink %>" class="list-group-item">
             <span class="badge"><%= topic.comments.count %></span><%= topic.name %>
           </a>

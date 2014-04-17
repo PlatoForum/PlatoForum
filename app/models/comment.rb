@@ -55,7 +55,7 @@ class Comment
     if self.subject.nil? || self.subject.empty?
       return body.length > 20 ? self.body[0,20] + "⋯⋯" : self.body
     else
-      return self.subject
+      return self.subject + "⋯⋯"
     end  
   end
 
@@ -63,7 +63,7 @@ class Comment
     if self.subject.nil? || self.subject.empty?
       return body.length > 60 ? self.body[0,60] + "⋯⋯" : self.body
     else
-      return self.subject
+      return self.subject + "⋯⋯"
     end
   end
 
