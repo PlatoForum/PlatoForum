@@ -1,4 +1,4 @@
-<% @comments.sort!{|b,a| a.importance_factor <=> b.importance_factor}.each do |comment| %>
+<% @comments.each do |comment| %>
 <tr id="tr_<%= comment.id %>" onclick="click_tr('<%= comment.id %>');">
   <% unless session[:user_id].nil? %>
   <td width="10" id="read_<%= comment.id %>">
