@@ -31,6 +31,10 @@ class CommentsController < ApplicationController
       @proxy.read_comments << Comment.find(params[:id])
       @proxy.save
     end
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /:permalink/comments/new

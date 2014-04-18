@@ -4,12 +4,13 @@ $(function() {
     if(expandable.hasClass('open')) {
       $('.expandable-box.out').not(expandable).removeClass('out');
       expandable.removeClass('open');
-      $(".show_time").hide();
+      $(".td_short").show();
+      $(".td_full").hide();
+      $(".show_comment_tr").removeClass("open");
     }
     else {
       $('.expandable-box').not(expandable).addClass('out');
       expandable.addClass('open');
-      $(".show_time").show();
     }
   });
 });

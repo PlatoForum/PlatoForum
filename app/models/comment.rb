@@ -31,7 +31,7 @@ class Comment
 
   validates :body, presence: true
   validates :stance, presence: true
-  validates_length_of :subject, :maximum => 20
+  validates_length_of :subject, :maximum => 50
 
   after_create :create_job
   def create_job

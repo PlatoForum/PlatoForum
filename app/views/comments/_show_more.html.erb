@@ -1,7 +1,7 @@
 <% @comments.sort!{|b,a| a.importance_factor <=> b.importance_factor}.each do |comment| %>
-<tr onClick="document.location = '/<%= @topic.permalink%>/comment_<%= comment.id %>';">
+<tr id="tr_<%= comment.id %>" onclick="click_tr('<%= comment.id %>');">
   <% unless session[:user_id].nil? %>
-  <td width="10">
+  <td width="10" id="read_<%= comment.id %>">
     <% if @proxy.read_comments.find(comment.id) %>
       <span class="label label-default"><i class="fa fa-check fa-fw"></i> </span>
     <% else %>
@@ -9,7 +9,9 @@
     <% end %>
   </td>
   <% end %>
-  <td><span class="text-muted"><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%></span>：<span class="text-default"><%= comment.display_abstract %></span></td>
-  <td class="text-primary visible-sm" align="right"><% if comment.doc.strftime("%F") == Time.zone.now.strftime("%F") %>今天 <%= comment.doc.strftime("%T") %><% else %><%= comment.doc.strftime("%F") %><% end %></td>
+  <td class="td_short" id="td_<%= comment.id %>_short">
+    <span class="text-muted"><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%></span>：<span class="text-default"><%= comment.display_abstract %></span>
+  </td>
+  <td class="td_full" id="td_<%= comment.id %>_full" style="display: none;"></td>
 </tr>
 <% end %>
