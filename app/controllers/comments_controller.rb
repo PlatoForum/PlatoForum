@@ -6,9 +6,9 @@ class CommentsController < ApplicationController
   #protect_from_forgery with: :exception
   
   #before_action :check_topic
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_comment, only: [:show, :show_reply, :edit, :update, :destroy]
   before_action :before_edit, only: [:new, :create, :reply, :like, :neutral, :dislike, :reply, :reply_old]
-  before_action :before_show, only: [:index, :show, :show_more]
+  before_action :before_show, only: [:index, :show, :show_more, :show_reply]
 
   # GET /:permalink/comments
   # GET /:permalink/comments.json
@@ -49,6 +49,9 @@ class CommentsController < ApplicationController
       format.html
       format.js
     end
+  end
+
+  def show_reply
   end
 
   # GET /:permalink/comments/new
