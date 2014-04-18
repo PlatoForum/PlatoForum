@@ -1,2 +1,2 @@
-$('#like_label').html("<%= escape_javascript(render 'comments/labels/like_label')%>")
-$('#dislike_label').html("<%= escape_javascript(render 'comments/labels/dislike_label')%>")
+$('#like_label_<%= @c.id %>').html("<%= escape_javascript(render 'comments/labels/like_label')%>")
+$('#dislike_label_<%= @c.id %>').html("<%= escape_javascript(render 'comments/labels/dislike_label')%>")

@@ -60,6 +60,9 @@
 </div>
 
 <script type="text/javascript">
+function expand(data) {
+
+}
 function click_tr(data) {
   if( !$("#tr_"+data).hasClass('open') )
   {
@@ -82,7 +85,9 @@ function click_tr(data) {
     }
     else {
       $("#td_"+data+"_short").hide();
+      $("#td_"+data+"_full").addClass("out");
       $("#td_"+data+"_full").show();
+      $("#td_"+data+"_full").removeClass("out").addClass("open");
     }        
   }
   else

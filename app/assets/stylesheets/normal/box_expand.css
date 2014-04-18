@@ -1,3 +1,27 @@
+.td_full {
+  box-sizing: border-box;
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+
+  &.open {
+    width: 99%;
+    margin: 0;
+  }
+  
+  &.out {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    border: none;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+  }
+}
+
 .expandable-boxes {
   position: relative;
 }

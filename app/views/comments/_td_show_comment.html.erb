@@ -11,14 +11,14 @@
 		<span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></span>
 		<% else %>
 		<% if @proxy.approvals.find(@comment.id) %>
-		<span id="like_label"><a title="收回讚" class="label label-success" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></a></span>
+		<span id="like_label_<%= @comment.id %>"><a title="收回讚" class="label label-success" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></a></span>
 		<% else %>
-		<span id="like_label"><a title="讚！" class="label label-success" href="<%= like_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-o-up fa-fw"></i> <%= @comment.likes.count %></a></span>
+		<span id="like_label_<%= @comment.id %>"><a title="讚！" class="label label-success" href="<%= like_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-o-up fa-fw"></i> <%= @comment.likes.count %></a></span>
 		<% end %>
 		<% if @proxy.disapprovals.find(@comment.id) %>
-		<span id="dislike_label"><a title="收回爛" class="label label-danger" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
+		<span id="dislike_label_<%= @comment.id %>"><a title="收回爛" class="label label-danger" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
 		<% else %>
-		<span id="dislike_label"><a title="爛！" class="label label-danger" href="<%= dislike_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-o-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
+		<span id="dislike_label_<%= @comment.id %>"><a title="爛！" class="label label-danger" href="<%= dislike_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-o-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
 		<% end %>
 		<% end %>
 		<a href="/<%= @comment.topic.permalink%>/comment_<%= @comment.id %>" class="label label-primary">檢視完整頁面</a>
