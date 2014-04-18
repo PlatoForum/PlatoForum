@@ -289,9 +289,6 @@ class CommentsController < ApplicationController
     end
 
     def create_job(action, proxy_id, comment_id)
-      if @topic.topic_type == :yesno
-        return true
-      end
       job = Job.new
       job.action = action
       job.group = @topic._id
