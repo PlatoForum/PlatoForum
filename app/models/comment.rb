@@ -18,11 +18,19 @@ class Comment
   has_and_belongs_to_many :likes, class_name: "Proxy", inverse_of: :approvals, validate: false
   has_and_belongs_to_many :dislikes, class_name: "Proxy", inverse_of: :disapprovals, validate: false
 
-  has_and_belongs_to_many :supporting, class_name: "Comment", inverse_of: :supported, validate: false
-  has_and_belongs_to_many :opposing, class_name: "Comment", inverse_of: :opposed, validate: false
+  has_and_belongs_to_many :supporting, class_name: "Comment", inverse_of: :supported, validate: false, order: 'importance_factor DESC'
+  has_and_belongs_to_many :opposing, class_name: "Comment", inverse_of: :opposed, validate: false, order: 'importance_factor DESC'
 
-  has_and_belongs_to_many :supported, class_name: "Comment", inverse_of: :supporting, validate: false
-  has_and_belongs_to_many :opposed, class_name: "Comment", inverse_of: :opposing, validate: false
+  def replying
+    return (self.supporting + self.opposing).sort!{|b,a| a.importance_factor <=> b.importance_factor}
+  end
+
+  def replied
+    return (self.supported + self.opposed).sort!{|b,a| a.importance_factor <=> b.importance_factor}
+  end
+
+  has_and_belongs_to_many :supported, class_name: "Comment", inverse_of: :supporting, validate: false, order: 'importance_factor DESC'
+  has_and_belongs_to_many :opposed, class_name: "Comment", inverse_of: :opposing, validate: false, order: 'importance_factor DESC'
 
   has_and_belongs_to_many :read_by, class_name: "Proxy", inverse_of: :read_comments
 
@@ -52,7 +60,7 @@ class Comment
     if self.subject.nil? || self.subject.empty?
       return body.length > 20 ? self.body[0,20] + "⋯⋯" : self.body
     else
-      return self.subject + "⋯⋯"
+      return self.subject
     end  
   end
 
@@ -60,7 +68,7 @@ class Comment
     if self.subject.nil? || self.subject.empty?
       return body.length > 60 ? self.body[0,60] + "⋯⋯" : self.body
     else
-      return self.subject + "⋯⋯"
+      return self.subject
     end
   end
 

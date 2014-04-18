@@ -3,13 +3,13 @@
       <div class="modal-dialog">
         <div class="modal-content">
 
-          <% if @user.level < 8 %>
+          <% if @user.level < 2 %>
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
               <h4>發起議題</h4>
             </div>
             <div class="modal-body">
-              <p class="text-danger">（發起議題功能在beta測試階段暫不開放）</p>
+              <p class="text-danger">權限不足，請先登入</p>
             </div>
             <div class="modal-footer">
               <div class="col-sm-10 col-sm-offset-2">
@@ -76,7 +76,10 @@
                   <div class="col-sm-10">
 
                     <%= f.text_field :permalink, class: "form-control", placeholder: "永久連結" %>
-                    <span class="help-block">作為議題網址使用。只能使用英文字母、數字和底線</span>
+                    <span class="help-block">
+                      作為議題網址使用。只能使用英文字母、數字和底線。<br>
+                      例如「plato_forum_is_so_good」
+                    </span>
                   </div>
                 </div>
               </div>

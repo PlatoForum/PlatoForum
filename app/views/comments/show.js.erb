@@ -1,4 +1,4 @@
-$("#td_<%= @comment.id %>_full").html("<%= escape_javascript(render 'td_show_comment') %>");
-$("#read_<%= @comment.id %>").html("<span class='label label-default'><i class='fa fa-check fa-fw'></i> </span>");
-$("#tr_<%= @comment.id %>").addClass('loaded');
-$("#main-container").html($("#td_<%= @comment.id %>_full").html());
+$("#comment_pool").append("<%= escape_javascript(render 'td_show_comment') %>");
+$(".read_<%= @comment.id %>").html("<span class='label label-default'><i class='fa fa-check fa-fw'></i> </span>");
+$("#comment_pool").addClass('<%= @comment.id %>');
+$("#main-container").html($("#comment_<%= @comment.id %>_full").html());

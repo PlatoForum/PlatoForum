@@ -25,6 +25,19 @@ class CommentsController < ApplicationController
     @comments = @stance.comments[ params[:offset].to_i , 5]
   end
 
+  # GET /link_comment_:id
+  # GET /comments/1.json
+  # def show_link
+  #   unless session[:user_id].nil?
+  #     @proxy.read_comments << Comment.find(params[:id])
+  #     @proxy.save
+  #   end
+  #   respond_to do |format|
+  #     format.html
+  #     format.js
+  #   end
+  # end
+
   # GET /:permalink/comment_:id
   # GET /comments/1.json
   def show

@@ -57,6 +57,7 @@ PlatoForum::Application.routes.draw do
   
   get ':permalink/comment_:id' => "comments#show"
   get 'comment_:id' => "comments#show"
+  #get 'link_comment_:id' => "comments#show_link"
   get ':permalink/comments/more_stance_:stance/:offset' => "comments#show_more"
 
   get ':permalink/subscribe' => "topics#subscribe"

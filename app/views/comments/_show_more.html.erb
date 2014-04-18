@@ -12,6 +12,5 @@
   <td class="td_short" id="td_<%= comment.id %>_short">
     <span class="text-muted"><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%></span>：<span class="text-default"><%= comment.display_abstract %></span>
   </td>
-  <td class="td_full" id="td_<%= comment.id %>_full" style="display: none;"></td>
 </tr>
 <% end %>
