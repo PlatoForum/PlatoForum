@@ -7,6 +7,7 @@ class Topic
   field :doc, type: Time, default: Time.zone.now
   field :last_updated, type: Time
   field :topic_type, type: Symbol
+  field :creator, type: String
   # topic_type :yesno, :open
 
   has_many :comments, class_name: "Comment", inverse_of: :topic, autosave: true, validate: false, dependent: :destroy

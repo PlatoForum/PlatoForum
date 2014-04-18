@@ -73,6 +73,9 @@ class TopicsController < ApplicationController
 
   # GET /topics/1/edit
   def edit
+    unless @user.level >= 8 or @topic.creator == @user.id.to_s
+      redirect_to "/" and return
+    end
   end
 
   # POST /topics
@@ -81,6 +84,7 @@ class TopicsController < ApplicationController
     @topic = Topic.new(topic_params)
     @topic.doc = Time.zone.now
     @topic.permalink = @topic.id if @topic.permalink.empty?
+    @topic.creator = @user.id
 
     if @topic.topic_type == :open #open topic
       @stance1 = Stance.new
@@ -148,6 +152,9 @@ class TopicsController < ApplicationController
   # DELETE /topics/1
   # DELETE /topics/1.json
   def destroy
+    unless @user.level >= 8 or @topic.creator == @user.id.to_s
+      redirect_to "/" and return
+    end
     @topic.destroy
     respond_to do |format|
       format.html { redirect_to "/list" }

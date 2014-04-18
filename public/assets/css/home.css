@@ -51,3 +51,8 @@ a:hover {
 .badge {
 	background-color: #e06c00;
 }
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+  color: #ffffff;
+  background-color: #e06c00;
+}
