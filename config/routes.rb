@@ -56,6 +56,7 @@ PlatoForum::Application.routes.draw do
   get ':permalink/comment_:id/delete' => "comments#destroy"
   
   get ':permalink/comment_:id' => "comments#show"
+  get 'comment_:id' => "comments#show"
   get ':permalink/comments/more_stance_:stance/:offset' => "comments#show_more"
 
   get ':permalink/subscribe' => "topics#subscribe"

@@ -1,5 +1,5 @@
 <% @comments.each do |comment| %>
-<tr id="tr_<%= comment.id %>" onclick="click_tr('<%= comment.id %>');">
+<tr class="show_comment_tr" id="tr_<%= comment.id %>" onclick="click_tr('<%= comment.id %>');">
   <% unless session[:user_id].nil? %>
   <td width="10" id="read_<%= comment.id %>">
     <% if @proxy.read_comments.find(comment.id) %>
