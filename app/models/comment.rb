@@ -35,9 +35,6 @@ class Comment
 
   after_create :create_job
   def create_job
-    if self.topic.topic_type == :yesno
-      return true
-    end
     @job = Job.new
     @job.group = self.topic._id
     @job.who = self.owner._id
