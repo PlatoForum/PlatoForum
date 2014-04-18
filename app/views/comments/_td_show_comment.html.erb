@@ -1,23 +1,31 @@
-<p class="text-muted"><% if (@comment.owner == @proxy)%>你<%else%><%=@comment.owner.display_name%><%end%>：</p>
 <% unless @comment.subject.nil? || @comment.subject.empty? %><p class="text-default"><strong><%= @comment.subject %></strong></p><% end %>
 <% unless @comment.tag.nil? or @comment.tag.empty? %>
 <p class="text-primary">轉錄自 <a class="label label-primary" target="_blank" href=<%= @comment.tag_url.nil? ? "#" : @comment.tag_url %>><%= @comment.tag %></a></p>
 <% end %>
 <%=  auto_link(simple_format(sanitize @comment.body, tags: %w(a p br)), :all, :target => '_blank') %>
 
-<% if session[:user_id].nil? or @user.is_robot? %>
-  <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></span>
-  <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></span>
-<% else %>
-  <% if @proxy.approvals.find(@comment.id) %>
-    <span id="like_label"><a title="收回讚" class="label label-success" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></a></span>
-  <% else %>
-    <span id="like_label"><a title="讚！" class="label label-success" href="<%= like_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-o-up fa-fw"></i> <%= @comment.likes.count %></a></span>
-  <% end %>
-  <% if @proxy.disapprovals.find(@comment.id) %>
-    <span id="dislike_label"><a title="收回爛" class="label label-danger" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
-  <% else %>
-    <span id="dislike_label"><a title="爛！" class="label label-danger" href="<%= dislike_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-o-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
-  <% end %>
-<% end %>
-<a href="/<%= @comment.topic.permalink%>/comment_<%= @comment.id %>" class="label label-primary">檢視完整頁面</a>
+<div class="row">
+	<div class="col-xs-4">
+		<% if session[:user_id].nil? or @user.is_robot? %>
+		<span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></span>
+		<span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></span>
+		<% else %>
+		<% if @proxy.approvals.find(@comment.id) %>
+		<span id="like_label"><a title="收回讚" class="label label-success" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></a></span>
+		<% else %>
+		<span id="like_label"><a title="讚！" class="label label-success" href="<%= like_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-o-up fa-fw"></i> <%= @comment.likes.count %></a></span>
+		<% end %>
+		<% if @proxy.disapprovals.find(@comment.id) %>
+		<span id="dislike_label"><a title="收回爛" class="label label-danger" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
+		<% else %>
+		<span id="dislike_label"><a title="爛！" class="label label-danger" href="<%= dislike_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-o-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
+		<% end %>
+		<% end %>
+		<a href="/<%= @comment.topic.permalink%>/comment_<%= @comment.id %>" class="label label-primary">檢視完整頁面</a>
+	</div>
+	<div class="col-xs-8">
+		<p class="text-primary" align="right">
+			<%=@comment.owner.display_name%><% if (@comment.owner == @proxy)%>（你）<%end%><br>
+			發表於 <%= @comment.display_time_detailed %></p>
+		</div>
+	</div>

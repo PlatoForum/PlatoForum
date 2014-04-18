@@ -25,7 +25,7 @@
             <table class="table table-striped table-hover ">
               <tbody id="comment_list_stance<%= stance.number %>">
                 <% first_item = true %>
-                <% stance.comments.first(5).each do |comment| %>
+                <% stance.comments[0,5].each do |comment| %>
                   <tr id="tr_<%= comment.id %>" onclick="click_tr('<%= comment.id %>');">
                     <% unless session[:user_id].nil? %>
                     <td width="10" id="read_<%= comment.id %>">
