@@ -5,7 +5,7 @@ class Stance
   field :description, type: String
   field :panel, type: String
 
-  has_many :comments, class_name: "Comment", inverse_of: :stance, autosave: true, dependent: :destroy
+  has_many :comments, class_name: "Comment", inverse_of: :stance, autosave: true, dependent: :destroy, order: 'importance_factor DESC'
 
   belongs_to :topic, class_name: "Topic", inverse_of: :stances, autosave: true
   
