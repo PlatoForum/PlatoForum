@@ -73,7 +73,7 @@ function click_tr(data) {
 
       $("#td_"+data+"_short").hide();
       $("#td_"+data+"_full").show();
-      $("#td_"+data+"_full").html("<i class='fa fa-spin fa-spinner fa-2x'></i>");
+      $("#td_"+data+"_full").html("<center><i class='fa fa-spin fa-spinner fa-2x'></i></center>");
 
       $.ajax({
         url: "/<%= @topic.permalink%>/comment_" + data,
