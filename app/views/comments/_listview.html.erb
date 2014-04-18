@@ -12,7 +12,7 @@
             <% if only_one_stance %>
               未分類
             <% else %>
-              <%= stance.description.nil? ? stance.comments.sort!{|b,a| a.importance_factor <=> b.importance_factor}[0].body[0,10] + "⋯⋯" : stance.description %>
+              <%= stance.description.nil? ? stance.comments[0].body[0,10] + "⋯⋯" : stance.description %>
             <% end %>
           </h3>
         </div>
@@ -25,7 +25,7 @@
             <table class="table table-striped table-hover ">
               <tbody id="comment_list_stance<%= stance.number %>">
                 <% first_item = true %>
-                <% stance.comments.sort!{|b,a| a.importance_factor <=> b.importance_factor}.first(5).each do |comment| %>
+                <% stance.comments[0,5].each do |comment| %>
                   <tr id="tr_<%= comment.id %>" onclick="click_tr('<%= comment.id %>');">
                     <% unless session[:user_id].nil? %>
                     <td width="10" id="read_<%= comment.id %>">

@@ -21,7 +21,8 @@ class CommentsController < ApplicationController
   # GET /:permalink/comments/more_stance_:stance/:offset
   def show_more
     @stance = @topic.stances.find_by(:number => params[:stance])
-    @comments = @stance.comments.sort!{|b,a| a.importance_factor <=> b.importance_factor}[ params[:offset].to_i , 5]
+    #@comments = @stance.comments.sort!{|b,a| a.importance_factor <=> b.importance_factor}[ params[:offset].to_i , 5]
+    @comments = @stance.comments[ params[:offset].to_i , 5]
   end
 
   # GET /:permalink/comment_:id
