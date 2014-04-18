@@ -12,7 +12,7 @@
                   <% if only_one_stance %>
                     未分類
                   <% else %>
-                    <i class="fa fa-caret-left fa-fw stance-back" style="display: none;"></i> <%= stance.description.nil? ? stance.comments[0].body[0,10] + "⋯⋯" : stance.description %>
+                    <i class="fa fa-caret-left fa-fw stance-back" style="display: none;"></i> <%= stance.description.nil? ? "立場：" + stance.comments[0].body[0,10] + "⋯⋯" : stance.description %>
                   <% end %>
                 </h3>
               </div>
@@ -36,7 +36,8 @@
                         </td>
                         <% end %>
                         <td class="td_short" id="td_<%= comment.id %>_short">
-                          <span class="text-muted"><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%></span>：<span class="text-default"><%= comment.display_abstract %></span>
+                          <span class="text-muted"><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%></span><br>
+                          <span class="text-default"><%= comment.display_abstract_long %></span>
                         </td>
                       </tr>
                     <% end %>

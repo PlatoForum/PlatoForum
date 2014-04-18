@@ -20,7 +20,7 @@ textarea {
   width: 100%;
 }
 
-@media all and (max-width: 2000px) { /* screen size until 1200px */
+@media all and (max-width: 2000px) {
   .pf-body {
     font-size: 1.2em;
   }
@@ -29,7 +29,7 @@ textarea {
   }
 }
 
-@media all and (max-width: 1000px) { /* screen size until 1000px */
+@media all and (max-width: 992px) {
   .pf-body {
     font-size: 1.1em;
   }
@@ -38,7 +38,7 @@ textarea {
   }
 }
 
-@media all and (max-width: 500px) { /* screen size until 500px */
+@media all and (max-width: 768px) {
   .pf-body {
     font-size: 1em;
   }

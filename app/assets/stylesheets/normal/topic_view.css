@@ -6,6 +6,10 @@
   background-color: #cccccc !important;
 }
 
+tr.unread {
+  font-weight: 600;
+}
+
 #comment_pool {
   visibility:hidden;
 }
@@ -36,6 +40,7 @@
   &.side {
     width: 30%;
     margin: 0 1% 20px 0;
+    font-size: 0.9em;
   }
 }
 
@@ -43,7 +48,6 @@
   width: 32%;
   float: left;
   margin: 0 1% 20px 0;
-  
 }
 
 .expandable-box-2 {
