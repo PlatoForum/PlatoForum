@@ -1,0 +1,52 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h4 class="text-default">評論：<%= @comment.display_abstract %></h4>
+    </div>
+
+    <div class="modal-body">
+      <% unless @comment.tag.nil? or @comment.tag.empty? %>
+        <p class="text-primary">轉錄自 <a class="label label-primary" target="_blank" href=<%= @comment.tag_url.nil? ? "#" : @comment.tag_url %>><%= @comment.tag %></a></p>
+      <% end %>
+      <%=  auto_link(simple_format(sanitize @comment.body, tags: %w(a p br)), :all, :target => '_blank') %>
+
+      <div class="row">
+        <div class="col-xs-4">
+          <h4 align=>
+            <% if session[:user_id].nil? or @user.is_robot? %>
+              <span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></span>
+              <span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></span>
+            <% else %>
+              <% if @proxy.approvals.find(@comment.id) %>
+                <span id="like_label"><a title="收回讚" class="label label-success" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></a></span>
+              <% else %>
+                <span id="like_label"><a title="讚！" class="label label-success" href="<%= like_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-o-up fa-fw"></i> <%= @comment.likes.count %></a></span>
+              <% end %>
+              <% if @proxy.disapprovals.find(@comment.id) %>
+                <span id="dislike_label"><a title="收回爛" class="label label-danger" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
+              <% else %>
+                <span id="dislike_label"><a title="爛！" class="label label-danger" href="<%= dislike_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-o-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
+              <% end %>
+            <% end %>
+          </h4>
+        </div>
+        <div class="col-xs-8">
+          <p class="text-primary" align="right">
+            <a href="/<%=@comment.topic.permalink%>/proxy_<%=@comment.owner.id%>"><%=@comment.owner.display_name%><% if (@comment.owner == @proxy)%>（你）<%end%></a><br>
+            發表於 <%= @comment.display_time_detailed %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <a href="/<%= @comment.topic.permalink%>/comment_<%= @comment.id %>" class="btn btn-default">完整頁面</a>
+          <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

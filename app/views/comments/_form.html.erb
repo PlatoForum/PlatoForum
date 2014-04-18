@@ -101,7 +101,7 @@
         <%= f.text_field :subject, class: "form-control", placeholder: "評論摘要" %>
         <% unless @comment.errors[:subject].empty? %>
         <label class="control-label" for="inputError"><%= @comment.errors[:subject].join("，") %></label>
-        <% end %><span class="help-block">非必要，最多二十個字。</span>
+        <% end %><span class="help-block">非必要，最多五十個字。</span>
       </div>
     </div>
 
