@@ -25,7 +25,7 @@
               <% @proxy.works.sort!{|b,a| a.doc <=> b.doc}.each do |comment| %>
                 <% unless comment == @comment or @comment.supported.find(comment) or @comment.opposed.find(comment) %>
                   <tr onClick="set_old_post('<%= comment.id %>');">
-                    <td><i class="fa fa-check old_post_check" id="<%= comment.id %>"></i></td>
+                    <td><i class="fa fa-check old_post_check" id="check_<%= comment.id %>_<%= @comment.id %>"></i></td>
                     <td style="display:none;" id="abstract_<%= comment.id %>"><%= comment.subject %></td>
                     <td><span class="text-muted"><%= comment.body.length <= 50 ? comment.body : comment.body[0,50] + "⋯⋯" %></span></td>
                     <td style="display:none;" id="body_<%= comment.id %>"><%= comment.body  %></td>
@@ -41,7 +41,7 @@
           <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
               <button href="#modal_reply_comment" data-dismiss="modal" data-toggle="modal" class="btn btn-default"><i class="fa fa-reply"></i> 發表新評論</button>
-              <button href="#modal_reply_with_old" data-dismiss="modal" data-toggle="modal" class="btn btn-primary" id="old_chosen">確定</button>
+              <button href="#modal_reply_with_old" data-dismiss="modal" data-toggle="modal" class="btn btn-primary" id="old_chosen_<%= @comment.id %>">確定</button>
               <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
             </div>
           </div>
@@ -62,7 +62,7 @@
 
         <%= form_for(@reply, url: "/#{@topic.permalink}/comment_#{@comment.id}/reply", :html => { class: "form-horizontal"}) do |f| %>
         <fieldset>
-          <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="">
+          <input class="form-control" id="comment_stance_<%= @comment.id %>" name="comment[stance]" placeholder="立場" type="hidden" value="">
 
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -123,26 +123,26 @@
 
         <form accept-charset="UTF-8" action="/<%= @topic.permalink %>/comment_<%= @comment.id %>/reply_old" class="form-horizontal" id="reply" method="post">
           <div class="modal-body">
-            <input class="form-control" id="old_stance" name="comment[stance]" type="hidden" value="">
-            <input class="form-control" id="old_id" name="comment[old_id]" type="hidden" value="">
+            <input class="form-control" id="old_stance_<%= @comment.id %>" name="comment[stance]" type="hidden" value="">
+            <input class="form-control" id="old_id_<%= @comment.id %>" name="comment[old_id]" type="hidden" value="">
             <div class="form-group">
               <label for="description" class="col-sm-2">舊評論<br>發表時間</label>
               <div class="col-sm-10">
-                <p class="text-primary" id="old_time">時間</p>
+                <p class="text-primary" id="old_time_<%= @comment.id %>">時間</p>
               </div>
             </div>
 
             <div class="form-group">
               <label for="description" class="col-sm-2">內容</label>
               <div class="col-sm-10">
-                <p class="text-muted" id="old_body">內容</p>
+                <p class="text-muted" id="old_body_<%= @comment.id %>">內容</p>
               </div>
             </div>
 
             <div class="form-group">
               <label for="abstract" class="col-sm-2">摘要</label>
               <div class="col-sm-10">
-                <p class="text-muted" id="old_abstract">摘要</p>
+                <p class="text-muted" id="old_abstract_<%= @comment.id %>">摘要</p>
               </div>
             </div>
           </div>
@@ -166,27 +166,27 @@
 <script type="text/javascript">
 $(function() {
   $(".old_post_check").hide();
-  $("#old_chosen").attr("disabled", true);
+  $("#old_chosen_<%= @comment.id %>").attr("disabled", true);
 });
 function set_support(){
   $(".stance_oppose").hide();
   $(".stance_support").show();
-  $("#old_stance").val("support");
-  $("#comment_stance").val("support");
+  $("#old_stance_<%= @comment.id %>").val("support");
+  $("#comment_stance_<%= @comment.id %>").val("support");
 }
 function set_oppose(){
   $(".stance_support").hide();
   $(".stance_oppose").show();
-  $("#old_stance").val("oppose");
-  $("#comment_stance").val("oppose");
+  $("#old_stance_<%= @comment.id %>").val("oppose");
+  $("#comment_stance_<%= @comment.id %>").val("oppose");
 }
 function set_old_post(id){
-  $("#old_id").val(id);
+  $("#old_id_<%= @comment.id %>").val(id);
   $(".old_post_check").hide();
-  $("#"+id).show();
-  $("#old_time").text($("#time_"+id).text());
-  $("#old_body").text($("#body_"+id).text());
-  $("#old_abstract").text($("#abstract_"+id).text());
-  $("#old_chosen").attr("disabled", false);
+  $("#check_"+id+"_<%= @comment.id %>").show();
+  $("#old_time_<%= @comment.id %>").text($("#time_"+id).text());
+  $("#old_body_<%= @comment.id %>").text($("#body_"+id).text());
+  $("#old_abstract_<%= @comment.id %>").text($("#abstract_"+id).text());
+  $("#old_chosen_<%= @comment.id %>").attr("disabled", false);
 }
 </script>
