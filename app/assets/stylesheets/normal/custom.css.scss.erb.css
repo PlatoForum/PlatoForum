@@ -52,13 +52,9 @@ textarea {
   }
 }
 
-p, td {
+a, p, td {
   word-wrap: break-word;
-}
-
-a {
-  word-wrap: break-word;
-  word-break: break-all;
+  word-break: break-word;
 }
 
 /* bootstrap styling */
