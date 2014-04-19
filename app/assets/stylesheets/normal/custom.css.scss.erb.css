@@ -52,11 +52,12 @@ textarea {
   }
 }
 
-a, p, td {
+p, td {
   word-wrap: break-word;
 }
 
 a {
+  word-wrap: break-word;
   word-break: break-all;
 }
 
