@@ -25,7 +25,6 @@ $(document).keydown(function (e) {
     $('.expandable-box-main').addClass("out");
     $('.stance-back').hide();
     $('.show_comment_tr.open').removeClass('open');
-    return false;
   }
 });
 

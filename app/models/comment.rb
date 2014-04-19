@@ -90,7 +90,7 @@ class Comment
     end
   end
 
-  def update_importance_factor
-    self.importance_factor = 2 * self.likes.count + self.dislikes.count + 2 * self.supported.count + self.opposed.count
-  end
+  # def update_importance_factor
+  #   self.importance_factor = 2 * self.likes.count + self.dislikes.count + 2 * self.supported.count + self.opposed.count
+  # end
 end

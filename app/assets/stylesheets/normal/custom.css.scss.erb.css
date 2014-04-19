@@ -54,7 +54,6 @@ textarea {
 
 a, p, td {
   word-wrap: break-word;
-  word-break: break-all;
 }
 
 /* bootstrap styling */
