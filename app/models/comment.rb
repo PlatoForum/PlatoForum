@@ -10,6 +10,7 @@ class Comment
   #field :stance, type: Integer
   field :tag, type: String
   field :tag_url, type: String
+  field :neighbors, type: Array
 
   belongs_to :owner, class_name: "Proxy", inverse_of: :works, autosave: true
   belongs_to :topic, class_name: "Topic", inverse_of: :comments, autosave: true
