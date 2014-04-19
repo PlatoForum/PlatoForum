@@ -50,6 +50,7 @@ PlatoForum::Application.routes.draw do
   post 'topics/create' => "topics#create"
 
   get 'list' => "topics#completelist"
+  post 'list' => "topics#completelist"
  
   #get ':permalink/comments/new' => "comments#new"
   post ':permalink/comments' => "comments#create"
