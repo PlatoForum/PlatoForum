@@ -56,6 +56,10 @@ a, p, td {
   word-wrap: break-word;
 }
 
+a {
+  word-break: break-all;
+}
+
 /* bootstrap styling */
 
 .table-hover > tbody > tr:hover > td {
