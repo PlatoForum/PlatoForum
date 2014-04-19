@@ -8,7 +8,7 @@ class Topic
   field :last_updated, type: Time
   field :topic_type, type: Symbol
   field :creator, type: String
-  # topic_type :yesno, :open
+  # topic_type :none, :yesno, :open
 
   has_many :comments, class_name: "Comment", inverse_of: :topic, autosave: true, validate: false, dependent: :destroy
   has_many :stances, class_name: "Stance", inverse_of: :topic, autosave: true, validate: false, dependent: :destroy
