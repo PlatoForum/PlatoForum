@@ -17,7 +17,7 @@
                       <% if only_one_stance %>
                         未分類
                       <% else %>
-                        <%= stance.description.nil? ? "立場：" + stance.comments[0].display_abstract_long : stance.description %>
+                        <%= stance.display_description %>
                       <% end %>
                     </td>
                   </tr></tbody></table>

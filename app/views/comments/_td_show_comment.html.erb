@@ -1,5 +1,8 @@
 <div class="td_full" id="comment_<%= @comment.id %>_full" style="display: none;">
-	<% unless @comment.subject.nil? || @comment.subject.empty? %><h3 class="text-default"><%= @comment.subject %></h3><% end %>
+	<h3 class="text-default">
+	<% if @comment.subject.nil? || @comment.subject.empty? %>沒有主旨<% else %><%= @comment.subject %><% end %>
+	</h3>
+	<p class="text-muted">立場：<span class="text-<%= @comment.stance.panel.nil? ? 'muted' : @comment.stance.panel %>"><%= @comment.stance.display_description %></span></p>
 	<% unless @comment.tag.nil? or @comment.tag.empty? %>
 	<p class="text-primary">轉錄自 <a class="label label-primary" target="_blank" href=<%= @comment.tag_url.nil? ? "#" : @comment.tag_url %>><%= @comment.tag %></a></p>
 	<% end %>

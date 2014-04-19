@@ -18,7 +18,7 @@ $(function() {
 });
 
 $(document).keydown(function (e) {
-  if (e.which === 8 || e.which === 27) {
+  if ((e.which === 8 || e.which === 27) && !$('.modal').hasClass('in') ) {
     $('.expandable-box.out').removeClass('out');
     $('.expandable-box.open').removeClass('open');
     $('.expandable-box.side').removeClass('side');
