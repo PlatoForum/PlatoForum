@@ -1,0 +1,7 @@
+<% if @user.allow_list_comments %>
+	$("#allow_list_comments").html("允許");
+	$("#allow_list_comments_link").html("設為禁止");
+<% else %>
+	$("#allow_list_comments").html("禁止");
+	$("#allow_list_comments_link").html("設為允許");
+<% end %>

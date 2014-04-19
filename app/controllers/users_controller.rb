@@ -1,6 +1,6 @@
 # encoding: UTF-8
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :activities, :notifications, :notification]
+  before_action :set_user
   # GET /users
   # GET /users.json
   def index
@@ -56,6 +56,16 @@ class UsersController < ApplicationController
 
   # GET /user/panel
   def panel
+  end
+
+  def toggle_show_FB
+    @user.allow_show_FB = !@user.allow_show_FB
+    @user.save
+  end
+
+  def toggle_list_comments
+    @user.allow_list_comments = !@user.allow_list_comments
+    @user.save
   end
 
   # GET /user/activities
