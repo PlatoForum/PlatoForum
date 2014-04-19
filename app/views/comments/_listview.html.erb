@@ -4,7 +4,7 @@
       <% only_one_stance = (@topic.stances.count == 1) %>
       <% @topic.stances.sort!{|a,b| a.number <=> b.number}.each do |stance| %>
 
-      <div <% unless only_one_stance %>class="expandable-box expandable-box-<%= @topic.stances.count %>"<% end %>>
+      <div class="expandable-box expandable-box-<%= @topic.stances.count %>">
           <div class="panel <%= stance.panel.nil? ? "panel-default" : "panel-"+stance.panel %>">
             <a class="expand-btn">
               <div class="panel-heading" valign="center">
