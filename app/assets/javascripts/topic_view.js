@@ -17,6 +17,18 @@ $(function() {
   });
 });
 
+$(document).keydown(function (e) {
+  if ((e.which === 8 || e.which === 27) && !$('.modal').hasClass('in') ) {
+    $('.expandable-box.out').removeClass('out');
+    $('.expandable-box.open').removeClass('open');
+    $('.expandable-box.side').removeClass('side');
+    $('.expandable-box-main').addClass("out");
+    $('.stance-back').hide();
+    $('.show_comment_tr.open').removeClass('open');
+    return false;
+  }
+});
+
 function click_tr(data) {
   $('.stance-back').show();
   $('.show_comment_tr.open').not($("#tr_"+data)).removeClass('open');

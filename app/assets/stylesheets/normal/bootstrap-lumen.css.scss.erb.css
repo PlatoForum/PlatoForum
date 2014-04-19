@@ -271,9 +271,11 @@ th {
 html {
   font-size: 62.5%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 body {
-  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica"文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", DFKai-SB, Arial, sans-serif;
+  font-family: "文泉驛正黑", "WenQuanYi Zen Hei", "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #555555;
@@ -1693,7 +1695,6 @@ output {
   width: 100%;
   height: 36px;
   padding: 6px 12px;
-  font-size: 14px;
   line-height: 1.42857143;
   color: #555555;
   background-color: #ffffff;
@@ -1704,6 +1705,7 @@ output {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -webkit-font-smoothing: antialiased;
 }
 .form-control:focus {
   border-color: #66afe9;
@@ -2008,6 +2010,7 @@ select[multiple].input-lg {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 .btn:focus,
 .btn:active:focus,
@@ -3735,6 +3738,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-width: 1px 0 0;
 }
 .navbar-brand {
+  font-family: "Source Sans Pro";
   float: left;
   padding: 5px 15px;
   font-size: 20px;
@@ -4266,7 +4270,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   font-size: 75%;
   font-weight: bold;
   line-height: 1;
-  color: #ffffff;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
@@ -4287,6 +4290,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .label-default {
   background-color: #999999;
+  color: #ffffff;
 }
 .label-default[href]:hover,
 .label-default[href]:focus {
@@ -4294,6 +4298,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .label-primary {
   background-color: #158cba;
+  color: #ffffff;
 }
 .label-primary[href]:hover,
 .label-primary[href]:focus {
@@ -4301,6 +4306,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .label-success {
   background-color: #28b62c;
+  color: #ffffff;
 }
 .label-success[href]:hover,
 .label-success[href]:focus {
@@ -4315,6 +4321,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .label-warning {
   background-color: #ff851b;
+  color: #ffffff;
 }
 .label-warning[href]:hover,
 .label-warning[href]:focus {
@@ -4322,6 +4329,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .label-danger {
   background-color: #ff4136;
+  color: #ffffff;
 }
 .label-danger[href]:hover,
 .label-danger[href]:focus {

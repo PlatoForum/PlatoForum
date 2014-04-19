@@ -1,0 +1,138 @@
+.show_comment_tr.open > td {
+  background-color: #cccccc !important;
+}
+
+tr.unread {
+  font-weight: 600;
+}
+
+#comment_pool {
+  visibility:hidden;
+}
+
+.expandable-boxes {
+  position: relative;
+}
+
+.expandable-box {
+  box-sizing: border-box;
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+  
+  &.open {
+    width: 99%;
+    margin: 0;
+    font-size: 1em;
+  }
+  
+  &.out {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    border: none;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+  }
+
+  &.side {
+    width: 30%;
+    margin: 0 1% 20px 0;
+    font-size: 0.9em;
+  }
+}
+
+.expandable-box-3 {
+  width: 32%;
+  float: left;
+  margin: 0 1% 20px 0;
+  font-size: 0.9em;
+}
+
+.expandable-box-2 {
+  width: 49%;
+  float: left;
+  margin: 0 1% 20px 0;
+  font-size: 0.9em;
+}
+
+.expandable-box-1 {
+  width: 99%;
+  float: left;
+  margin: 0 1% 20px 0;
+  font-size: 1em;
+}
+
+.expandable-box-main {
+  width: 68%;
+  float: left;
+  margin: 0 1% 20px 0;
+}
+
+@media all and (max-width: 767px) {
+  .expandable-box {
+    box-sizing: border-box;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    
+    &.open {
+      width: 99%;
+      margin: 0;
+    }
+    
+    &.out {
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      border: none;
+      padding: 0;
+      margin: 0;
+      opacity: 0;
+    }
+
+    &.side {
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      border: none;
+      padding: 0;
+      margin: 0;
+      opacity: 0;
+    }
+  }
+
+  .expandable-box-3 {
+    width: 99%;
+    float: left;
+    padding: 0px;
+    
+  }
+
+  .expandable-box-2 {
+    width: 99%;
+    float: left;
+    padding: 0px;
+  }
+
+  .expandable-box-1 {
+    width: 99%;
+    float: left;
+    padding: 0px;
+  }
+
+  .expandable-box-main {
+    width: 99%;
+    float: left;
+    margin: 0 1% 20px 0;
+  }
+}
+
+.well-sm {
+  background-color: #ffffff;
+}

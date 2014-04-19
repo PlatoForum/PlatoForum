@@ -40,6 +40,7 @@ class Comment
 
   validates :body, presence: true
   validates :stance, presence: true
+  validates :subject, presence: true
   validates_length_of :subject, :maximum => 50
 
   after_create :create_job
@@ -54,7 +55,7 @@ class Comment
   end
 
   def display_body_short
-    return body.length > 60 ? self.body[0,60] + "⋯⋯" : self.body
+    return body.length > 100 ? self.body[0,100] + "⋯⋯" : self.body
   end
 
   def display_abstract
@@ -67,7 +68,7 @@ class Comment
 
   def display_abstract_long
     if self.subject.nil? || self.subject.empty?
-      return body.length > 60 ? self.body[0,60] + "⋯⋯" : self.body
+      return body.length > 100 ? self.body[0,100] + "⋯⋯" : self.body
     else
       return self.subject
     end

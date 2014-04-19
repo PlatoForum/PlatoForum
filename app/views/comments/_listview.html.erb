@@ -4,16 +4,23 @@
       <% only_one_stance = (@topic.stances.count == 1) %>
       <% @topic.stances.sort!{|a,b| a.number <=> b.number}.each do |stance| %>
 
-      <div <% unless only_one_stance %>class="expandable-box expandable-box-<%= @topic.stances.count %>"<% end %>>
+      <div class="expandable-box expandable-box-<%= @topic.stances.count %>">
           <div class="panel <%= stance.panel.nil? ? "panel-default" : "panel-"+stance.panel %>">
             <a class="expand-btn">
-              <div class="panel-heading">
+              <div class="panel-heading" valign="center">
                 <h3 class="panel-title">
-                  <% if only_one_stance %>
-                    未分類
-                  <% else %>
-                    <i class="fa fa-caret-left fa-fw stance-back" style="display: none;"></i> <%= stance.description.nil? ? "立場：" + stance.comments[0].body[0,10] + "⋯⋯" : stance.description %>
-                  <% end %>
+                  <table><tbody><tr>
+                    <td width="10" class="stance-back" style="display: none;">
+                      <span class="label"><i class="fa fa-caret-left fa-fw"></i>返回</span>
+                    </td>
+                    <td align="center" width="3000">
+                      <% if only_one_stance %>
+                        未分類
+                      <% else %>
+                        <%= stance.display_description %>
+                      <% end %>
+                    </td>
+                  </tr></tbody></table>
                 </h3>
               </div>
             </a>
