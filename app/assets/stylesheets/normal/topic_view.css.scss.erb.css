@@ -1,7 +1,3 @@
-.expandable-boxes {
-  position: relative;
-}
-
 .show_comment_tr.open > td {
   background-color: #cccccc !important;
 }
@@ -12,6 +8,10 @@ tr.unread {
 
 #comment_pool {
   visibility:hidden;
+}
+
+.expandable-boxes {
+  position: relative;
 }
 
 .expandable-box {
@@ -25,6 +25,7 @@ tr.unread {
   &.open {
     width: 99%;
     margin: 0;
+    font-size: 1em;
   }
   
   &.out {
@@ -48,12 +49,14 @@ tr.unread {
   width: 32%;
   float: left;
   margin: 0 1% 20px 0;
+  font-size: 0.9em;
 }
 
 .expandable-box-2 {
   width: 49%;
   float: left;
   margin: 0 1% 20px 0;
+  font-size: 0.9em;
 }
 
 .expandable-box-main {

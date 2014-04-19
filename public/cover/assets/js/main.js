@@ -1,4 +1,23 @@
+
+
+$(window).scroll(function() {
+  $('#talking_man').each(function(){
+    var imagePos = $(this).offset().top;
+
+    var topOfWindow = $(window).scrollTop();
+    if (imagePos < topOfWindow+300) {
+      $(this).show();
+      $(this).addClass("slideLeft");
+    }
+  });
+
+});
+
+
+
 $(document).ready(function(){
+
+  $('#talking_man').hide();
 
   // Add "loaded" class when a section has been loaded
   $(window).scroll(function() { 

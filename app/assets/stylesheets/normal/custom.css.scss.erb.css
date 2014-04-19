@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro);
 /* theme */
 
 body {
@@ -18,6 +19,10 @@ textarea {
   resize: vertical;
 
   width: 100%;
+}
+
+.help-block {
+  font-size: 0.9em;
 }
 
 @media all and (max-width: 2000px) {
@@ -47,7 +52,7 @@ textarea {
   }
 }
 
-a {
+a, p, td {
   word-wrap: break-word;
   word-break: break-all;
 }
