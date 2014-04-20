@@ -85,8 +85,8 @@ PlatoForum::Application.routes.draw do
 
   # FB Notification Binding
   post 'fbcanvas' => "facebook#canvas"
-  post 'fbcanvas/list' => "facebook#about"
-  post 'fbcanvas/bar' => "facebook#about"
+  post 'fbcanvas/list' => "facebook#list"
+  post 'fbcanvas/bar' => "facebook#bar"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
