@@ -4,9 +4,9 @@ class SessionsController < ApplicationController
 
   def new
     session[:return_to] = request.referrer if session[:return_to].nil?
-    if session[:return_to].match(/\/cover$/)
+    #if session[:return_to].match(/\/cover$/)
       session[:return_to] = "/"
-    end
+    #end
 
     if session[:user_id]
       redirect_to session.delete(:return_to)

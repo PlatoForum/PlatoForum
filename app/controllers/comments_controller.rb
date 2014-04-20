@@ -248,7 +248,8 @@ class CommentsController < ApplicationController
         note.source_id = @comment.id
         note.doc = Time.zone.now
         subscriber.notifications << note
-        note.save 
+        note.save
+        note.push_notification
       end
     end
   end
@@ -265,7 +266,8 @@ class CommentsController < ApplicationController
       note.destination_id = @target.id
       note.doc = Time.zone.now
       @target.owner.user.notifications << note
-      note.save 
+      note.save
+      note.push_notification
     end
   end
 
@@ -277,7 +279,8 @@ class CommentsController < ApplicationController
       note.destination_id = @c.id
       note.doc = Time.zone.now
       @c.owner.user.notifications << note
-      note.save 
+      note.save
+      note.push_notification
     end
   end
 
@@ -289,7 +292,8 @@ class CommentsController < ApplicationController
       note.destination_id = @c.id
       note.doc = Time.zone.now
       @c.owner.user.notifications << note
-      note.save 
+      note.save
+      note.push_notification
     end
   end
 

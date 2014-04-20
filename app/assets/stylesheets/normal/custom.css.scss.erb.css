@@ -1,4 +1,3 @@
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro);
 /* theme */
 
 body {
@@ -54,6 +53,7 @@ textarea {
 
 a, p, td {
   word-wrap: break-word;
+  word-break: break-word;
 }
 
 /* bootstrap styling */

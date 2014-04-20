@@ -50,6 +50,11 @@ PlatoForum::Application.routes.draw do
   post 'topics/create' => "topics#create"
 
   get 'list' => "topics#completelist"
+
+  # FB Notification Binding
+  get 'fbcanvas' => "facebook#canvas"
+  post 'fbcanvas' => "facebook#canvas"
+  post 'fbcanvas/notification/:id' => "facebook#notification"
  
   #get ':permalink/comments/new' => "comments#new"
   post ':permalink/comments' => "comments#create"

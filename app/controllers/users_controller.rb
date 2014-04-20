@@ -3,6 +3,8 @@ class UsersController < ApplicationController
   before_action :set_user
   # GET /users
   # GET /users.json
+  helper_method :notification_message, :notification_url
+
   def index
     @users = User.all
   end

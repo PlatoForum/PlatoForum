@@ -17,9 +17,38 @@ class Notification
 
   #before_save :app_notify
 
-  def app_notify
-    if target.level == 10
-      GRAPH_API.put_connections(target.uid, "notifications", template: "test_notification", href: "list/")
+  def push_notification
+    if self.target.level == 10
+      GRAPH_API.put_connections(self.target.uid, "notifications", template: self.display_message, href: "notification/#{self.id}")
+    end
+  end
+
+  def display_message
+    case self.noti_type
+      when :NewComment then
+        comment = Comment.find(self.source_id) 
+        return "#{comment.owner.display_name} 在 #{comment.topic.name} 中發佈了一則新評論 #{comment.display_abstract}" 
+      when :NewSupport then
+        comment = Comment.find(self.source_id) 
+        target = Comment.find(self.destination_id) 
+        return "#{comment.owner.display_name} 支援了你在 #{comment.topic.name} 上的評論 #{target.display_abstract}" 
+      when :NewOppose then
+        comment = Comment.find(self.source_id) 
+        target = Comment.find(self.destination_id) 
+        return "#{comment.owner.display_name} 反駁了你在 #{comment.topic.name} 上的評論 #{target.display_abstract}" 
+      when :NewLike then
+        someone = Proxy.find_by(:id => self.source_id) 
+        target = Comment.find(self.destination_id) 
+        return "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很讚！" 
+      when :NewDislike then
+        someone = Proxy.find_by(:id => self.source_id) 
+        target = Comment.find(self.destination_id) 
+        return "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很爛！"
+      when :Other then
+        return self.source_id
+      when :Announcement then
+        return self.source_id
+>>>>>>> 0be1aa4aa6dd8040d6f7290b3fcf558a1336714d
     end
   end
 end
