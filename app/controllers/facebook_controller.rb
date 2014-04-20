@@ -19,12 +19,10 @@ class FacebookController < ApplicationController
     end
   end
 
+  def notification
+  	@notification = Notification.find(params[:id])
+  end
+
 	def canvas
-	end
-
-	def list
-	end
-
-	def bar
 	end
 end

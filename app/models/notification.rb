@@ -19,7 +19,7 @@ class Notification
 
   def push_notification
     if self.target.level == 10
-      GRAPH_API.put_connections(self.target.uid, "notifications", template: self.display_message, href: "/notification/#{self.id}")
+      GRAPH_API.put_connections(self.target.uid, "notifications", template: self.display_message, href: "notification/#{self.id}")
     end
   end
 
