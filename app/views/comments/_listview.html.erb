@@ -19,8 +19,10 @@
                       <% else %>
                         <%= stance.display_description %>
                       <% end %>
-                      <br>
-                      <span class="text-muted">關鍵字：<%= stance.display_keywords %></span>
+                      <% unless stance.keywords.nil? %>
+                        <br>
+                        <span class="text-muted-inverse">關鍵字：<%= stance.display_keywords %></span>
+                      <% end %>
                     </td>
                   </tr></tbody></table>
                 </h3>
