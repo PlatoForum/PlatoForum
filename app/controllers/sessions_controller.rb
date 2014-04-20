@@ -19,6 +19,10 @@ class SessionsController < ApplicationController
     auth = request.env["omniauth.auth"]
     user = User.where(:provider => auth['provider'],
                       :uid => auth['uid']).first || User.create_with_omniauth(auth)
+
+    user.omnitoken = auth[:credentials][:token]
+    user.omnitoken_expires_at = Time.at(auth[:credentials][:expires_at])
+
     session[:user_id] = user.id
     user.level = 2 if user.level.nil?
     

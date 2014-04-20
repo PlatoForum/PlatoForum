@@ -74,3 +74,6 @@ gem 'rails_12factor'
 
 # Use rails_autolink to displat hyperlinks in posts
 gem 'rails_autolink'
+
+# Use Koala to access the Facebook API
+gem 'koala'
