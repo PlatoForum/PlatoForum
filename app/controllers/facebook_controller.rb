@@ -1,6 +1,7 @@
 # encoding: UTF-8
 class FacebookController < ApplicationController
-	
+	layout "facebook"
+
   def fb_liked?
     session[:signed_request]['page']['liked'] if session[:signed_request]
   end
@@ -19,7 +20,6 @@ class FacebookController < ApplicationController
   end
 
 	def canvas
-		redirect_to "/"
 	end
 
 	def list

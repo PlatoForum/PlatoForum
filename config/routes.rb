@@ -50,6 +50,12 @@ PlatoForum::Application.routes.draw do
   post 'topics/create' => "topics#create"
 
   get 'list' => "topics#completelist"
+
+  # FB Notification Binding
+  get 'fbcanvas' => "facebook#canvas"
+  post 'fbcanvas' => "facebook#canvas"
+  post 'fbcanvas/list' => "users#notifications"
+  post 'fbcanvas/bar' => "facebook#bar"
  
   #get ':permalink/comments/new' => "comments#new"
   post ':permalink/comments' => "comments#create"
@@ -81,12 +87,6 @@ PlatoForum::Application.routes.draw do
 
   get ':permalink/comments' => "topics#show"
   get ':permalink' => "topics#show"
-
-
-  # FB Notification Binding
-  post 'fbcanvas' => "facebook#canvas"
-  post 'fbcanvas/list' => "users#notifications"
-  post 'fbcanvas/bar' => "facebook#bar"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
