@@ -50,7 +50,7 @@ PlatoForum::Application.routes.draw do
   post 'topics/create' => "topics#create"
 
   get 'list' => "topics#completelist"
-  post 'list' => "topics#completelist"
+  post 'fbcanvas' => "static#about"
  
   #get ':permalink/comments/new' => "comments#new"
   post ':permalink/comments' => "comments#create"
