@@ -69,7 +69,7 @@ class CommentsController < ApplicationController
       @target.opposed << @comment
       action = :oppose
     end
-    @target.update_importance_factor
+    #@target.update_importance_factor
     @target.save
     create_job(action, @target._id, @comment._id)
   end
@@ -194,7 +194,7 @@ class CommentsController < ApplicationController
   def like
       @c = Comment.find_by(:id => params[:id])
       @c.likes << @proxy
-      @c.update_importance_factor
+      #@c.update_importance_factor
       @c.save
       create_job(:like, @proxy._id, @c._id) 
       create_job(:undislike, @proxy._id, @c._id) if @proxy.disapprovals.delete(@c)
@@ -213,7 +213,7 @@ class CommentsController < ApplicationController
       create_job(:unlike, @proxy._id, @c._id) if @proxy.approvals.delete(@c) 
       create_job(:undislike, @proxy._id, @c._id) if @proxy.disapprovals.delete(@c)
       # redirect_to "/comments/#{c.id}"
-      @c.update_importance_factor
+      #@c.update_importance_factor
       @c.save
       @action = "neutral"
       respond_to do |format|
@@ -226,7 +226,7 @@ class CommentsController < ApplicationController
   def dislike
       @c = Comment.find_by(:id => params[:id])
       @c.dislikes << @proxy
-      @c.update_importance_factor
+      #@c.update_importance_factor
       @c.save
       create_job(:dislike, @proxy._id, @c._id)
       create_job(:unlike, @proxy._id, @c._id) if @proxy.approvals.delete(@c) 

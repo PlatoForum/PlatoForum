@@ -24,6 +24,8 @@ PlatoForum::Application.routes.draw do
   get 'admin/de_robot' => 'admins#de_robot'
 
   get 'user/panel' => 'users#panel'
+  get 'user/toggle_show_FB' => 'users#toggle_show_FB'
+  get 'user/toggle_list_comments' => 'users#toggle_list_comments'
   get 'user/activities' => 'users#activities'
   get 'user/subscriptions' => "topics#subscriptions"
   get 'user/notifications' => "users#notifications"

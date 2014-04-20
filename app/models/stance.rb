@@ -10,7 +10,7 @@ class Stance
   belongs_to :topic, class_name: "Topic", inverse_of: :stances, autosave: true
 
   def display_description
-  	return self.description.nil? ? "立場：" + self.comments[0].display_abstract_long : self.description
+  	return self.description.nil? ? self.comments[0].display_abstract_long : self.description
   end
   
 end

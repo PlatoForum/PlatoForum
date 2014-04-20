@@ -17,12 +17,12 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>在設定為「實名」的議題下允許別人連結至我的facebook個人頁面</td>
-							<td>允許</td>
+							<td class="text-muted">在我設定為「實名評論」的議題下<span id="allow_show_FB" class="text-default"><%= @user.allow_show_FB? ? "允許" : "禁止"%></span>別人連結至我的facebook個人頁面</td>
+							<td><a id="allow_show_FB_link" href="/user/toggle_show_FB" data-remote="true">設為<%= !@user.allow_show_FB? ? "允許" : "禁止" %></a></td>
 						</tr>
 						<tr>
-							<td>允許別人檢視我在一個議題下的所有活動</td>
-							<td>允許</td>
+							<td class="text-muted"><span id="allow_list_comments" class="text-default"><%= @user.allow_list_comments? ? "允許" : "禁止"%></span>別人檢視我在議題下的「活動記錄」</td>
+							<td width="100"><a id="allow_list_comments_link" href="/user/toggle_list_comments" data-remote="true">設為<%= !@user.allow_list_comments? ? "允許" : "禁止"%></a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -40,8 +40,7 @@
 						<tr>
 							<th align="right">議題</th>
 							<th>顯示名稱</th>
-							<th>發文數量</th>
-							<th></th>
+							<th>設定</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -49,8 +48,7 @@
 						<tr>
 							<td><a href="/<%= proxy.topic.permalink %>"><%= proxy.topic.name %></a></td>
 							<td><a href="/<%= proxy.topic.permalink %>/proxy_<%= proxy.id %>" id="name_<%= proxy.topic.id %>"><%= proxy.display_name %></a></td>
-							<td><%= proxy.works.count %></td>
-							<td>
+							<td width="150">
 								<a id="fake_<%= proxy.topic.id %>" href="/<%= proxy.topic.permalink %>/proxy_fake" data-remote="true"><i class="fa fa-lock fa-fw"></i> 切換為匿名</a>
 				        <a id="real_<%= proxy.topic.id %>" href="/<%= proxy.topic.permalink %>/proxy_real" data-remote="true"><i class="fa fa-unlock fa-fw"></i> 切換為實名</a>
 				      </td>

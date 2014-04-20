@@ -1,0 +1,7 @@
+<% if @user.allow_show_FB %>
+	$("#allow_show_FB").html("允許");
+	$("#allow_show_FB_link").html("設為禁止");
+<% else %>
+	$("#allow_show_FB").html("禁止");
+	$("#allow_show_FB_link").html("設為允許");
+<% end %>

@@ -25,35 +25,36 @@ $(document).keydown(function (e) {
     $('.expandable-box-main').addClass("out");
     $('.stance-back').hide();
     $('.show_comment_tr.open').removeClass('open');
-    return false;
   }
 });
 
 function click_tr(data) {
-  $('.stance-back').show();
-  $('.show_comment_tr.open').not($("#tr_"+data)).removeClass('open');
-  $("#tr_"+data).addClass("open");
+  if ( !$("#tr_"+data).hasClass("open") ) {
+    $('.stance-back').show();
+    $('.show_comment_tr.open').not($("#tr_"+data)).removeClass('open');
+    $("#tr_"+data).addClass("open");
 
-  var expandable = $("#tr_"+data).parents().eq(4);;
-  $('.expandable-box').not(expandable).addClass('out');
-  expandable.addClass('side');
-  $('.expandable-box-main').removeClass('out');
+    var expandable = $("#tr_"+data).parents().eq(4);;
+    $('.expandable-box').not(expandable).addClass('out');
+    expandable.addClass('side');
+    $('.expandable-box-main').removeClass('out');
 
-  if ( !$("#comment_pool").hasClass(data) ) {
+    if ( !$("#comment_pool").hasClass(data) ) {
 
-    $("#main-container").html("<center><i class='fa fa-spin fa-spinner fa-2x'></i></center>");
+      $("#main-container").html("<center><i class='fa fa-spin fa-spinner fa-2x'></i></center>");
 
-    $.ajax({
-      url: "/comment_" + data,
-      dataType: "script"
-    });
+      $.ajax({
+        url: "/comment_" + data,
+        dataType: "script"
+      });
+    }
+    else {
+      $("#main-container").html($("#comment_"+data+"_full").html());
+    }        
+
+    var aTag = $("div[name='main-well']");
+    $('html,body').animate({scrollTop: aTag.offset().top - 70},'slow');
   }
-  else {
-    $("#main-container").html($("#comment_"+data+"_full").html());
-  }        
-
-  var aTag = $("div[name='main-well']");
-  $('html,body').animate({scrollTop: aTag.offset().top - 70},'slow');
   return false;
 };
 
