@@ -1,3 +1,5 @@
+require 'net/http'
+
 class Notification
   include Mongoid::Document
   
@@ -13,4 +15,9 @@ class Notification
 
   belongs_to :target, class_name: "User", inverse_of: :notifications, autosave: true
 
+  #before_save :push_notification
+
+  def app_notify
+    #GRAPH_API.put_connections(target.uid, "notifications", template: "foo", href: "bar")
+  end
 end

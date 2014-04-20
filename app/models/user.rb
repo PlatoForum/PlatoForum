@@ -4,6 +4,8 @@ class User
   field :provider, type: String
   field :uid, type: String
   field :token, type: String
+  field :omnitoken, type: String
+  field :omnitoken_expires_at, type: Time
   field :name, type: String
   field :level, type: Integer
   # :anonymous=0, :user=2, robot=4, moderator=8, admin=10
@@ -22,7 +24,13 @@ class User
       if auth['info']
         user.name = auth['info']['name'] || ""
       end
+      user.omnitoken = auth[:credentials][:token]
+      user.omnitoken_expires_at = Time.at(auth[:credentials][:expires_at])
     end
+  end
+
+  def facebook
+    @facebook ||= Koala::Facebook::API.new(omnitoken)
   end
 
   #def get_proxy_by_topic(topic_id)
