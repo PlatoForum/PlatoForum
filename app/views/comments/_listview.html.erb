@@ -14,14 +14,13 @@
                       <span class="label"><i class="fa fa-caret-left fa-fw"></i>返回</span>
                     </td>
                     <td align="center" width="3000">
-                      <p>
-                        <% if only_one_stance %>
-                          未分類
-                        <% else %>
-                          <%= stance.display_description %>
-                        <% end %>
-                      </p>
-                      <p>關鍵字：<%= stance.display_keywords %></p>
+                      <% if only_one_stance %>
+                        未分類
+                      <% else %>
+                        <%= stance.display_description %>
+                      <% end %>
+                      <br>
+                      <span class="text-muted">關鍵字：<%= stance.display_keywords %></span>
                     </td>
                   </tr></tbody></table>
                 </h3>
