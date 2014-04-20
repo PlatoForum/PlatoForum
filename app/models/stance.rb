@@ -11,8 +11,8 @@ class Stance
   belongs_to :topic, class_name: "Topic", inverse_of: :stances, autosave: true
 
   def display_description
-  	return self.description.nil? ? self.comments[0].display_abstract : self.description
-  	#return self.keywords.join('、')
+  	#return self.description.nil? ? self.comments[0].display_abstract : self.description
+  	return self.keywords.join('、')
   end
   
 end
