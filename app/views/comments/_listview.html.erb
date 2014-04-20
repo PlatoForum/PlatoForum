@@ -19,7 +19,7 @@
                       <% else %>
                         <%= stance.display_description %>
                       <% end %>
-                      <% unless stance.keywords.nil? %>
+                      <% unless stance.keywords.nil? or stance.keywords.empty? %>
                         <br>
                         <span class="text-muted-inverse">關鍵字：<%= stance.display_keywords %></span>
                       <% end %>
