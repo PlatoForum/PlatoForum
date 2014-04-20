@@ -25,28 +25,28 @@ class Notification
 
   def display_message
     case self.noti_type
-      when :NewComment
+      when :NewComment then
         comment = Comment.find(self.source_id) 
         return "#{comment.owner.display_name} 在 #{comment.topic.name} 中發佈了一則新評論 #{comment.display_abstract}" 
-      when :NewSupport
+      when :NewSupport then
         comment = Comment.find(self.source_id) 
         target = Comment.find(self.destination_id) 
         return "#{comment.owner.display_name} 支援了你在 #{comment.topic.name} 上的評論 #{target.display_abstract}" 
-      when :NewOppose 
+      when :NewOppose then
         comment = Comment.find(self.source_id) 
         target = Comment.find(self.destination_id) 
         return "#{comment.owner.display_name} 反駁了你在 #{comment.topic.name} 上的評論 #{target.display_abstract}" 
-      when :NewLike 
+      when :NewLike then
         someone = Proxy.find_by(:id => self.source_id) 
         target = Comment.find(self.destination_id) 
         return "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很讚！" 
-      when :NewDislike 
+      when :NewDislike then
         someone = Proxy.find_by(:id => self.source_id) 
         target = Comment.find(self.destination_id) 
         return "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很爛！"
-      when :Other
+      when :Other then
         return self.source_id
-      when :Announcement
+      when :Announcement then
         return self.source_id
     end
   end
