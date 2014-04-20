@@ -86,39 +86,39 @@ class TopicsController < ApplicationController
     @topic.permalink = @topic.id if @topic.permalink.empty?
     @topic.creator = @user.id
 
-    if @topic.topic_type == :open #open topic
-      @stance1 = Stance.new
-      @stance1.number = 1
-      #@stance1.description = "未分類"
-      #@stance1.panel = "default"
+    # if @topic.topic_type == :open #open topic
+    #   @stance1 = Stance.new
+    #   @stance1.number = 1
+    #   #@stance1.description = "未分類"
+    #   #@stance1.panel = "default"
 
-      @stance1.save
-      @topic.stances << @stance1
+    #   @stance1.save
+    #   @topic.stances << @stance1
 
-    else #yes/no topic
-      @stance1 = Stance.new
-      @stance1.number = 1
-      @stance1.description = "支持"
-      @stance1.panel = "success"
+    # else #yes/no topic
+    #   @stance1 = Stance.new
+    #   @stance1.number = 1
+    #   @stance1.description = "支持"
+    #   @stance1.panel = "success"
 
-      # @stance2 = Stance.new
-      # @stance2.number = 2
-      # @stance2.description = "中立"
-      # @stance2.panel = "warning"
+    #   # @stance2 = Stance.new
+    #   # @stance2.number = 2
+    #   # @stance2.description = "中立"
+    #   # @stance2.panel = "warning"
 
-      @stance3 = Stance.new
-      @stance3.number = 3
-      @stance3.description = "反對"
-      @stance3.panel = "danger"
+    #   @stance3 = Stance.new
+    #   @stance3.number = 3
+    #   @stance3.description = "反對"
+    #   @stance3.panel = "danger"
 
-      @stance1.save
-      # @stance2.save
-      @stance3.save
+    #   @stance1.save
+    #   # @stance2.save
+    #   @stance3.save
 
-      @topic.stances << @stance1
-      # @topic.stances << @stance2
-      @topic.stances << @stance3
-    end
+    #   @topic.stances << @stance1
+    #   # @topic.stances << @stance2
+    #   @topic.stances << @stance3
+    # end
 
     respond_to do |format|
       if @topic.save

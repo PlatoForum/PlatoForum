@@ -35,6 +35,7 @@
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">管理 <span class="caret"></span></button>
       <ul class="dropdown-menu dropdown-menu-right">
         <li><a href="/<%= @topic.permalink %>/edit" role: "button"><i class="fa fa-pencil-square-o fa-fw"></i> 編輯議題</a></li>
+        <li><a href="#modal_edit_stances" data-toggle="modal"><i class="fa fa-group fa-fw"></i> 編輯立場</a></li>
         <% if @user.level == 10 %>
         <li><a href="#modal_delete_topic" data-toggle="modal" rel="nofollow"><i class="fa fa-trash-o fa-fw"></i> 刪除議題</a></li>
         <% end %>
@@ -43,9 +44,10 @@
   <% end %>
 </div>
 
-<%= render 'proxies/modal_switch_real' %>
-<%= render 'comments/modal_new_comment' %>
-<%= render 'topics/modal_delete_topic' %>
+<%= render 'proxies/modal_switch_real' unless @user.level == 0 or @user.is_robot? %>
+<%= render 'comments/modal_new_comment' if @user.level >= 2 %>
+<%= render 'topics/modal_delete_topic' if @user.level == 10 %>
+<%= render 'topics/modal_edit_stances' if @user.level >= 8 or @topic.creator == @user.id.to_s %>
 <% end %>
 
   </div>

@@ -99,19 +99,9 @@ class CommentsController < ApplicationController
 
     @target = Comment.find(params[:id])
 
-    if @topic.topic_type == :yesno
-      if comment_params[:stance] == "support"
-        @stance = @target.stance
-      else #oppose
-        @stance_number = 4 - @target.stance.number
-        @stance = @topic.stances.find_by(:number => @stance_number)
-      end
-      @comment.stance = @stance
-    else
-      @stance = @topic.stances.sort!{|b,a| a.comments.where(:owner => @proxy).count <=> b.comments.where(:owner => @proxy).count }.first
-      @comment.stance = @stance
-    end
-    
+    @stance = @topic.stances.find(params[:comment][:stance2])
+    @comment.stance = @stance
+
     respond_to do |format|
       if @comment.save
 
@@ -141,13 +131,8 @@ class CommentsController < ApplicationController
     @comment.owner = @proxy
     @proxy.read_comments << @comment
 
-    if @topic.topic_type == :yesno
-      @stance = @topic.stances.find_by(:number => comment_params[:stance])
-      @comment.stance = @stance
-    else
-      @stance = @topic.stances.sort!{|b,a| a.comments.where(:owner => @proxy).count <=> b.comments.where(:owner => @proxy).count }.first
-      @comment.stance = @stance
-    end
+    @stance = @topic.stances.find(comment_params[:stance])
+    @comment.stance = @stance
     
     respond_to do |format|
       if @comment.save

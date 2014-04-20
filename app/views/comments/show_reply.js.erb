@@ -1,7 +1,7 @@
 $("#reply_modals").html("<%= escape_javascript(render 'modal_reply_comment')%>")
 <% if params[:stance] == "support" %>
-	set_support()
+	set_support_<%= @comment.id %>()
 <% else %>
-	set_oppose()
+	set_oppose_<%= @comment.id %>()
 <% end %>
 $("#modal_reply_comment").modal("show")

@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
     cookies.permanent[:token] = user.generate_token
     user.save
 
-    redirect_to session.delete(:return_to)
+    redirect_to session.delete(:return_to) || "/"
     #redirect_to params[:lastpage]
   end
 

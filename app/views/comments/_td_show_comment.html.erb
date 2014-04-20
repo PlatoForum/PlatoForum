@@ -19,13 +19,13 @@
 				<% else %>
 					<span class="like_label_<%= @comment.id %>"><a title="讚！" class="label label-success" href="<%= like_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></a></span>
 				<% end %>
-	      <a href="/comment_<%= @comment.id %>/reply_support" data-remote="true" class="label label-success" onclick="set_support();"><i class="fa fa-reply"></i> 支援</a>
+	      <a href="/comment_<%= @comment.id %>/reply_support" data-remote="true" class="label label-success"><i class="fa fa-reply"></i> 支援</a>
 				<% if @proxy.disapprovals.find(@comment.id) %>
 					<span class="dislike_label_<%= @comment.id %>"><a title="收回爛" class="label label-danger" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-check fa-fw"></i> <%= @comment.dislikes.count %></a></span>
 				<% else %>
 					<span class="dislike_label_<%= @comment.id %>"><a title="爛！" class="label label-danger" href="<%= dislike_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
 				<% end %>
-        <a href="/comment_<%= @comment.id %>/reply_oppose" data-remote="true" class="label label-danger" onclick="set_oppose();"><i class="fa fa-reply"></i> 反駁</a>
+        <a href="/comment_<%= @comment.id %>/reply_oppose" data-remote="true" class="label label-danger"><i class="fa fa-reply"></i> 反駁</a>
       <% end %>
 			<a title="分享到Facebook" href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]=http://platoforum.herokuapp.com/<%= @topic.permalink%>/comment_<%= @comment.id %>" class="label label-primary" onclick="window.open(this.href, '分享到Facebook',
 				'left=20,top=20,width=700,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-share"></i> facebook</a>

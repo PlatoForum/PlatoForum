@@ -82,6 +82,12 @@ PlatoForum::Application.routes.draw do
   get ':permalink/stance_:stance/more_importance/:offset' => "stances#show_more_importance"
   get ':permalink/stance_:stance/more_time/:offset' => "stances#show_more_time"
   get ':permalink/stance_:stance' => "stances#show"
+
+  get ':permalink/stances/new' => "stances#new"
+  post ':permalink/stances' => "stances#create"
+  get ':permalink/stance_:stance/edit' => "stances#edit"
+  patch ':permalink/stance_:stance/edit'=> "stances#update"
+
   get ':permalink/proxy_:proxy' => "proxies#show"
 
   get ':permalink/comments' => "topics#show"
