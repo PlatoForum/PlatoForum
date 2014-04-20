@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery with: :exception
   #before_filter :check_first_visit
   before_filter :check_user
+  after_filter :allow_iframe
 
   helper_method :check_user, :current_user, :current_proxy, :pseudonym_gen
 
@@ -28,6 +29,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def allow_iframe
+    response.headers["X-Frame-Options"] = "GOFORIT"
+  end
 
   def not_found
     raise ActionController::RoutingError.new('Not Found')
