@@ -57,7 +57,8 @@
       <div class="col-md-5 hidden-sm hidden-xs" align="center">
         <canvas id="topic_statistics" width="300" height="300"></canvas>
         <script type="text/javascript">
-          var data = [
+        $(function(){
+                    var data = [
             <% @topic.stances.each do |stance| %>
             {
               value: <%= stance.comments.count %>,
@@ -98,7 +99,8 @@
             onAnimationComplete : null
           }
           var ctx = document.getElementById("topic_statistics").getContext("2d");
-          var myNewChart = new Chart(ctx).Doughnut(data,options);
+          var myNewChart = new Chart(ctx).Doughnut(data,options); 
+        })
         </script>
       </div>
     </div>
