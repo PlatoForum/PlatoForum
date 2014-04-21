@@ -21,7 +21,7 @@
         <p class="text-muted"><%= @topic.description %></p>
         <p class="text-muted">身份：<span class="text-primary"><%= @proxy.display_name %></span></p>
       <% else %>
-        <% if params[:comment][:stance] == "support" %>
+        <% if params[:comment][:opinion] == "support" %>
           <h2 class="text-success">支援評論</h2>
           <p class="text-muted">對於<span class="text-primary"><%= @target.owner.display_name %></span>說：</p>
           <p class="text-muted"><%= @target.body %></p>
@@ -35,54 +35,32 @@
       <% end %>
     </legend>
 
-    <% if @target.nil? %>
-    <% unless @topic.topic_type == :open %>
-    <div class="form-group <%= "has-error" unless @comment.errors[:stance].count ==0 %>">
-      <label for="permalink" class="col-lg-2 control-label">立場（必要）</label>
-      <div class="col-lg-10">
-        <% if @comment.stance.nil? %>
-          <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="">
-          <button id="button_like" onClick="click_like()" type="button" class="btn btn-success" value="1"><i class="fa fa-check" id="like_check"></i> 支持</button>
-          <button id="button_dislike" onClick="click_dislike()" type="button" class="btn btn-danger" value="3"><i class="fa fa-check" id="dislike_check"></i> 反對</button>
-        <% else %>
-          <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="<%= @comment.stance.number %>">
-          <button id="button_like" onClick="click_like()" type="button" class="btn btn-success" value="1"><i class="fa fa-check" id="like_check"></i> 支持</button>
-          <button id="button_dislike" onClick="click_dislike()" type="button" class="btn btn-danger" value="3"><i class="fa fa-check" id="dislike_check"></i> 反對</button>
+    <div class="form-group">
+      <label for="permalink" class="col-sm-2 control-label">立場</label>
+      <div class="col-sm-10">
+        <% @topic.stances.each do |stance| %>
+          <button id="button_<%= stance.id %>" onClick="set_stance('<%= stance.id %>')" type="button" class="btn btn-<%= stance.panel.nil? ? "default" : stance.panel %>"><i class="fa fa-check checks" id="check_<%= stance.id %>"></i> <%= stance.display_description %></button>
         <% end %>
-        <% unless @comment.errors[:stance].empty? %>
-        <label class="control-label" for="inputError"><%= @comment.errors[:stance].join("，") %></label>
-        <% end %><span class="help-block">這則評論對議題的立場</span>
+        <span class="help-block">這則評論對議題的立場，必要</span>
       </div>
     </div>
-    
     <script type="text/javascript">
       $(function() {
-        $("#like_check").hide();
-        $("#dislike_check").hide();
-        <% unless @comment.stance.nil? %>
-          <% if @comment.stance.number == 1 %>
-            $("#like_check").show();
-          <% else %>
-            $("#dislike_check").show();
-          <% end %>
-        <% end %>
+        $(".checks").hide();
+        <% unless @comment.stance.nil? %>set_stance('<%= @comment.stance.id %>');<% end %>
       });
-      function click_like(){
+      function set_stance(stance){
         // clear_buttons();
-        $("#like_check").show();
-        $("#dislike_check").hide();
-        $("#comment_stance").val(1);
-      }
-      function click_dislike(){
-        // clear_buttons();
-        $("#like_check").hide();
-        $("#dislike_check").show();
-        $("#comment_stance").val(3);
+        $(".checks").hide();
+        $("#check_"+stance).show();
+        $("#comment_stance").val(stance);
       }
     </script>
-    <% end %>
-    <% else %>
-      <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="<%= params[:comment][:stance] %>">
+
+      <input class="form-control" id="comment_stance" name="comment[stance]" placeholder="立場" type="hidden" value="">
+        
+    <% unless @target.nil? %>
+      <input class="form-control" id="comment_opinion" name="comment[opinion]" placeholder="立場" type="hidden" value="<%= params[:comment][:opinion] %>">
     <% end %>
 
     <div class="form-group <%= "has-error" unless @comment.errors[:body].count ==0 %>">

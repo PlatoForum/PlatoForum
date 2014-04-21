@@ -17,21 +17,21 @@ $(function() {
   });
 });
 
-function toggleExpand(e) {
-
-}
-
 $(document).keydown(function (e) {
   if ((e.which === 8 || e.which === 27) && !$('.modal').hasClass('in') ) {
-    $('.expandable-box.out').removeClass('out');
-    $('.expandable-box.open').removeClass('open');
-    $('.expandable-box.side').removeClass('side');
-    $('.expandable-box-main').addClass("out");
-    $('.stance-back').hide();
-    $('.show_comment_tr.open').removeClass('open');
+    hideMain();
     return false;
   }
 });
+
+function hideMain() {
+  $('.expandable-box.out').removeClass('out');
+  $('.expandable-box.open').removeClass('open');
+  $('.expandable-box.side').removeClass('side');
+  $('.expandable-box-main').addClass("out");
+  $('.stance-back').hide();
+  $('.show_comment_tr.open').removeClass('open');
+}
 
 function click_tr(data) {
   if ( !$("#tr_"+data).hasClass("open") ) {

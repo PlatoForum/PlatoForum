@@ -62,7 +62,7 @@ class CommentsController < ApplicationController
   
   def set_reply_relations
     @target = Comment.find(params[:id])
-    if comment_params[:stance] == "support"
+    if params[:comment][:opinion] == "support"
       @target.supported << @comment
       action = :support
     else #oppose
@@ -99,7 +99,7 @@ class CommentsController < ApplicationController
 
     @target = Comment.find(params[:id])
 
-    @stance = @topic.stances.find(params[:comment][:stance2])
+    @stance = @topic.stances.find(params[:comment][:stance])
     @comment.stance = @stance
 
     respond_to do |format|

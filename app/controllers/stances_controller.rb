@@ -38,11 +38,15 @@ class StancesController < ApplicationController
   # POST /stances.json
   def create
     @stance = Stance.new(stance_params)
+    @stance.topic = @topic
 
     respond_to do |format|
       if @stance.save
+        @topic.stances << @stance
+        @topic.save
+
         format.html { redirect_to @stance, notice: 'Stance was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @stance }
+        format.js
       else
         format.html { render action: 'new' }
         format.json { render json: @stance.errors, status: :unprocessable_entity }
@@ -56,7 +60,7 @@ class StancesController < ApplicationController
     respond_to do |format|
       if @stance.update(stance_params)
         format.html { redirect_to @stance, notice: 'Stance was successfully updated.' }
-        format.json { head :no_content }
+        format.js
       else
         format.html { render action: 'edit' }
         format.json { render json: @stance.errors, status: :unprocessable_entity }
@@ -79,7 +83,7 @@ class StancesController < ApplicationController
     def set_stance
       @topic = Topic.find_by(:permalink => params[:permalink])
       #@stance = Stance.find(params[:id]) # use integer for now
-      @stance = @topic.stances.find_by(:number => params[:stance].to_i)
+      @stance = @topic.stances.find(params[:id])
 
       unless session[:user_id].nil?
         @user = User.find(session[:user_id])
@@ -89,6 +93,6 @@ class StancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def stance_params
-      params[:stance]
+      params.require(:stance).permit(:description, :panel)
     end
 end

@@ -1,3 +1,33 @@
+.fixed-button {
+  opacity: .5;
+  filter: alpha(opacity=50);
+  background: #333;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  text-align: center;
+  border-radius: 4px;
+  z-index: 9999;
+
+  color: #fff;
+  display: block;
+  line-height: 40px;
+  width: 40px;
+  height: 40px;
+
+  position: fixed;
+  bottom: 50%;
+  right: 70px;
+
+  -webkit-transition: color .3s;
+  transition: color .3s;
+  outline: 0!important;
+}
+
+.fixed-button:hover {
+  color: #000;
+}
+
 .show_comment_tr.open > td {
   background-color: #cccccc !important;
 }
@@ -43,6 +73,13 @@ tr.unread {
     margin: 0 1% 20px 0;
     font-size: 0.9em;
   }
+}
+
+.expandable-box-4 {
+  width: 24%;
+  float: left;
+  margin: 0 1% 20px 0;
+  font-size: 0.9em;
 }
 
 .expandable-box-3 {
@@ -105,6 +142,13 @@ tr.unread {
       margin: 0;
       opacity: 0;
     }
+  }
+
+  .expandable-box-4 {
+    width: 99%;
+    float: left;
+    padding: 0px;
+    
   }
 
   .expandable-box-3 {

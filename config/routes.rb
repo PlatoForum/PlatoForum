@@ -85,8 +85,8 @@ PlatoForum::Application.routes.draw do
 
   get ':permalink/stances/new' => "stances#new"
   post ':permalink/stances' => "stances#create"
-  get ':permalink/stance_:stance/edit' => "stances#edit"
-  patch ':permalink/stance_:stance/edit'=> "stances#update"
+  get ':permalink/stance_:id/edit' => "stances#edit"
+  patch ':permalink/stance_:id'=> "stances#update"
 
   get ':permalink/proxy_:proxy' => "proxies#show"
 

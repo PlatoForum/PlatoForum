@@ -86,6 +86,13 @@ class TopicsController < ApplicationController
     @topic.permalink = @topic.id if @topic.permalink.empty?
     @topic.creator = @user.id
 
+    @default_stance = Stance.new
+    @default_stance.description = "未分類"
+    @default_stance.panel = "default"
+    @topic.stances << @default_stance
+    @default_stance.save
+    
+
     # if @topic.topic_type == :open #open topic
     #   @stance1 = Stance.new
     #   @stance1.number = 1

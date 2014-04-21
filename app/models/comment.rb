@@ -1,5 +1,11 @@
 # encoding: UTF-8
 
+class String
+  def strip_links
+    ActionController::Base.helpers.strip_links(self)
+  end
+end
+
 class Comment
   include Mongoid::Document
   field :subject, type: String
@@ -55,20 +61,23 @@ class Comment
   end
 
   def display_body_short
-    return body.length > 100 ? self.body[0,100] + "⋯⋯" : self.body
+    stripped = self.body.strip_links
+    return stripped.length > 100 ? stripped[0,100] + "⋯⋯" : stripped
   end
 
   def display_abstract
+    stripped = self.body.strip_links
     if self.subject.nil? || self.subject.empty?
-      return body.length > 20 ? self.body[0,20] + "⋯⋯" : self.body
+      return stripped.length > 20 ? stripped[0,20] + "⋯⋯" : stripped
     else
       return self.subject
     end  
   end
 
   def display_abstract_long
+    stripped = self.body.strip_links
     if self.subject.nil? || self.subject.empty?
-      return body.length > 100 ? self.body[0,100] + "⋯⋯" : self.body
+      return stripped.length > 100 ? stripped[0,100] + "⋯⋯" : stripped
     else
       return self.subject
     end

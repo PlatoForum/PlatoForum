@@ -8,6 +8,8 @@ class Topic
   field :last_updated, type: Time
   field :topic_type, type: Symbol, default: :yesno
   field :creator, type: String
+
+  #embeds_one :default_stance, class_name: "Stance"
   # topic_type :none, :yesno, :open
 
   has_many :comments, class_name: "Comment", inverse_of: :topic, autosave: true, validate: false, dependent: :destroy

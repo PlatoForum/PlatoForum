@@ -32,8 +32,8 @@
 			<% @topics.sort!{ |a,b| b.comments.count <=> a.comments.count }.each do |topic| %>
 			<tr onclick="document.location = '/<%= topic.permalink %>';">
 				<td align="right"><%= topic.name %></td>
-				<td class="text-muted hidden-lg"><%= topic.description[0,20] %><%= "⋯⋯" if topic.description.length > 20 %></td>
-				<td class="text-muted visible-lg"><%= topic.description[0,60] %><%= "⋯⋯" if topic.description.length > 60 %></td>
+				<td class="text-muted hidden-lg"><%= strip_links(topic.description)[0,20] %><%= "⋯⋯" if strip_links(topic.description).length > 20 %></td>
+				<td class="text-muted visible-lg"><%= strip_links(topic.description)[0,60] %><%= "⋯⋯" if strip_links(topic.description).length > 60 %></td>
 				<td width="30"><span class="badge"><%= topic.comments.count %></span></td>
 			</tr>
 		    <% end %>
@@ -47,8 +47,8 @@
 			<% @topics.sort!{ |a,b| b.doc <=> a.doc }.each do |topic| %>
 			<tr onclick="document.location = '/<%= topic.permalink %>';">
 				<td align="right"><%= topic.name %></td>
-				<td class="text-muted hidden-lg"><%= topic.description[0,20] %><%= "⋯⋯" if topic.description.length > 20 %></td>
-				<td class="text-muted visible-lg"><%= topic.description[0,60] %><%= "⋯⋯" if topic.description.length > 60 %></td>
+				<td class="text-muted hidden-lg"><%= strip_links(topic.description)[0,20] %><%= "⋯⋯" if strip_links(topic.description).length > 20 %></td>
+				<td class="text-muted visible-lg"><%= strip_links(topic.description)[0,60] %><%= "⋯⋯" if strip_links(topic.description).length > 60 %></td>
 				<td width="30"><span class="badge pull-right"><%= topic.display_time %></span></td>
 			</tr>
 		    <% end %>
@@ -61,8 +61,8 @@
 			<% @topics.sort!{|a,b| b.subscribed_by.count <=> a.subscribed_by.count}.each do |topic| %>
 			<tr onclick="document.location = '/<%= topic.permalink %>';">
 				<td align="right"><%= topic.name %></td>
-				<td class="text-muted hidden-lg"><%= topic.description[0,20] %><%= "⋯⋯" if topic.description.length > 20 %></td>
-				<td class="text-muted visible-lg"><%= topic.description[0,60] %><%= "⋯⋯" if topic.description.length > 60 %></td>
+				<td class="text-muted hidden-lg"><%= strip_links(topic.description)[0,20] %><%= "⋯⋯" if strip_links(topic.description).length > 20 %></td>
+				<td class="text-muted visible-lg"><%= strip_links(topic.description)[0,60] %><%= "⋯⋯" if strip_links(topic.description).length > 60 %></td>
 				<td width="30"><span class="badge"><%= topic.subscribed_by.count %></span></td>
 			</tr>
 		    <% end %>

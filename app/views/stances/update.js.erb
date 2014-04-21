@@ -1,0 +1,8 @@
+$("#descr_<%= @stance.id %>").html("<%= @stance.description %>");
+$("#panel_<%= @stance.id %>").html("<span class='label label-<%= @stance.panel %>'><%= @stance.color_name %></span>");
+
+$("#modal_edit_stance").modal("hide");
+$("#modal_edit_stances").modal("show")
+
+$("#btn_return").hide();
+$("#btn_apply").show();
