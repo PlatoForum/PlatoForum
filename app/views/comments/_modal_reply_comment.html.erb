@@ -74,6 +74,15 @@
           </div>
 
           <div class="modal-body">
+
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label">主旨</label>
+              <div class="col-sm-10">
+                <%= f.text_field :subject, class: "form-control", placeholder: "評論主旨" %>
+                <span class="help-block">必要，最多五十個字</span>
+              </div>
+            </div>
+            
             <div class="form-group">
               <label for="permalink" class="col-sm-2 control-label">立場</label>
               <div class="col-sm-10">
@@ -104,23 +113,27 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <label for="name" class="col-sm-2 control-label">主旨</label>
-              <div class="col-sm-10">
-                <%= f.text_field :subject, class: "form-control", placeholder: "評論主旨" %>
-                <span class="help-block">必要，最多五十個字</span>
-              </div>
-            </div>
           </div>
 
           <div class="modal-footer">
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
-                <%= f.submit "送出", :class => 'btn btn-primary' %>
+                <span class="btn btn-primary" disabled id="btn_reply_comment_spin"><i class="fa fa-spinner fa-spin"></i> </span>
+                <%= f.submit "送出", :class => 'btn btn-primary', :id => "btn_reply_comment" %>
                 <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
               </div>
             </div>
           </div>
+
+            <script type="text/javascript">
+              $("#btn_reply_comment").click(function() {
+                $("#btn_reply_comment").hide();
+                $("#btn_reply_comment_spin").show();
+              });
+              $(function() {
+                $("#btn_reply_comment_spin").hide();
+              });
+            </script>
 
         </fieldset>
         <% end %>

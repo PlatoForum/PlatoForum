@@ -84,7 +84,7 @@ class CommentsController < ApplicationController
     notify_new_reply
 
     respond_to do |format|
-      format.html { redirect_to request.referrer, notice: '已成功回應評論！' }
+      format.html { redirect_to "/#{@topic.permalink}/comment_#{@target.id}", notice: '已成功回應評論！' }
       format.json { render action: 'show', status: :created, location: @comment }
     end
   end
@@ -112,7 +112,7 @@ class CommentsController < ApplicationController
 
         set_reply_relations
 
-        format.html { redirect_to request.referrer, notice: '已成功回應評論！' }
+        format.html { redirect_to "/#{@topic.permalink}/comment_#{@comment.id}", notice: '已成功回應評論！' }
         format.json { render action: 'show', status: :created, location: @comment }
       else
         format.html { render action: 'new', notice: @errormessage }
@@ -242,7 +242,7 @@ class CommentsController < ApplicationController
   def notify_new_reply
     unless @target.owner.user == @user
       note = Notification.new
-      if comment_params[:stance] == "support"
+      if params[:comment][:opinion] == "support"
         note.noti_type = :NewSupport
       else #oppose
         note.noti_type = :NewOppose

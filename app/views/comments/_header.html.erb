@@ -1,6 +1,7 @@
   <div class="page-header">
 
     <div class="row">
+      <div class="col-md-6">
       <h1><%= @topic.name %></h1>
       <% if @topic.topic_type == :open %>
       <span class="label label-default">開放式議題</span>
@@ -26,11 +27,12 @@
           <% end %>」
         </h4>
       </div>
+    </div>
 
       <% if @user.level >= 2 %>
 
       <div class="nav navbar" align="right">
-        
+
         <button type="button" class="btn btn-primary" data-toggle="modal" href="#modal_new_comment"><i class="fa fa-comment"></i>  發表評論</button>
 
         <% if @user.level >= 8 || @topic.creator == @user.id.to_s %>
