@@ -8,13 +8,12 @@ class User
   field :omnitoken_expires_at, type: Time
   field :name, type: String
   field :level, type: Integer
+  field :last_login, type: Hash
+  
   # :anonymous=0, :user=2, robot=4, moderator=8, admin=10
   field :privacy_settings, type: Hash, default: {show_FB: true, list_comments: true}
   field :noti_settings, type: Hash, default: { NewComment: false, NewLike: false, NewDislike: false,
         NewOppose: true, NewSupport: true, Announcement: true, Other: false }
-
-  field :allow_show_FB, type: Boolean, default: true
-  field :allow_list_comments, type: Boolean, default: true
 
   has_and_belongs_to_many :subscriptions, class_name: "Topic", inverse_of: :subscribed_by, autosave: true
   has_many :proxies, class_name: "Proxy", inverse_of: :user, autosave: true, dependent: :destroy

@@ -41,6 +41,7 @@ class ApplicationController < ActionController::Base
       if @user and @user.omnitoken.nil? and !@user.is_robot?
         reset_session
         cookies.delete :token
+        @user = nil
       end
 
       if @user and @user.privacy_settings.nil?
@@ -53,7 +54,10 @@ class ApplicationController < ActionController::Base
         @user.save
       end
 
-      unless @user
+      if @user
+        @user.last_login = {ip: request.remote_ip, time: Time.zone.now}
+        @user.save
+      else
         unless anonymous_user = User.find_by(:level => 0)
           anonymous_user = User.new
           anonymous_user.level = 0
