@@ -30,36 +30,38 @@ class ApplicationController < ActionController::Base
 
   def check_user
 
-    if session[:user_id]
-      @user = User.find(session[:user_id])
-    elsif cookies[:token] and cookie_user = User.find_by(:token => cookies[:token])
-      @user = cookie_user
-      session[:user_id] = @user.id
-    end
-    
-    if @user and @user.omnitoken.nil? and !@user.is_robot?
-      reset_session
-      cookies.delete :token
-    end
-
-    if @user and @user.privacy_settings.nil?
-      @user.privacy_settings = {show_FB: true, list_comments: true}
-      @user.save
-    end
-
-    if @user and @user.noti_settings.nil?
-      @user.noti_settings = {NewComment: false, NewLike: false, NewDislike: false, NewOppose: true, NewSupport: true, Announcement: true, Other: false }
-      @user.save
-    end
-
-    unless @user
-      unless anonymous_user = User.find_by(:level => 0)
-        anonymous_user = User.new
-        anonymous_user.level = 0
-        anonymous_user.name = "路人"
-        anonymous_user.save
+    unless @user 
+      if session[:user_id]
+        @user = User.find(session[:user_id])
+      elsif cookies[:token] and cookie_user = User.find_by(:token => cookies[:token])
+        @user = cookie_user
+        session[:user_id] = @user.id
       end
-      @user = anonymous_user
+      
+      if @user and @user.omnitoken.nil? and !@user.is_robot?
+        reset_session
+        cookies.delete :token
+      end
+
+      if @user and @user.privacy_settings.nil?
+        @user.privacy_settings = {show_FB: true, list_comments: true}
+        @user.save
+      end
+
+      if @user and @user.noti_settings.nil?
+        @user.noti_settings = {NewComment: false, NewLike: false, NewDislike: false, NewOppose: true, NewSupport: true, Announcement: true, Other: false }
+        @user.save
+      end
+
+      unless @user
+        unless anonymous_user = User.find_by(:level => 0)
+          anonymous_user = User.new
+          anonymous_user.level = 0
+          anonymous_user.name = "路人"
+          anonymous_user.save
+        end
+        @user = anonymous_user
+      end
     end
 
     return @user

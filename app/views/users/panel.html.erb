@@ -3,6 +3,7 @@
 		<h2 align="center">個人設定</h2>
 	</div>
 
+	<% unless @user.proxies.count == 0 %>
 	<div class="col-md-6">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -32,6 +33,7 @@
 			</div>
 		</div>
 	</div>
+	<% end %>
 
 	<div class="col-md-6">
 		<div class="panel panel-default">
