@@ -35,16 +35,6 @@
       <% end %>
     </legend>
 
-    <div class="form-group <%= "has-error" unless @comment.errors[:subject].count ==0 %>">
-      <label for="name" class="col-lg-2 control-label">主旨</label>
-      <div class="col-lg-10">
-        <%= f.text_field :subject, class: "form-control", placeholder: "評論主旨" %>
-        <% unless @comment.errors[:subject].empty? %>
-        <label class="control-label" for="inputError"><%= @comment.errors[:subject].join("，") %></label>
-        <% end %><span class="help-block">必要，最多五十個字。</span>
-      </div>
-    </div>
-
     <div class="form-group">
       <label for="permalink" class="col-sm-2 control-label">立場</label>
       <div class="col-sm-10">
@@ -72,6 +62,16 @@
     <% unless @target.nil? %>
       <input class="form-control" id="comment_opinion" name="comment[opinion]" placeholder="立場" type="hidden" value="<%= params[:comment][:opinion] %>">
     <% end %>
+
+    <div class="form-group <%= "has-error" unless @comment.errors[:subject].count ==0 %>">
+      <label for="name" class="col-lg-2 control-label">主旨</label>
+      <div class="col-lg-10">
+        <%= f.text_field :subject, class: "form-control", placeholder: "評論主旨" %>
+        <% unless @comment.errors[:subject].empty? %>
+        <label class="control-label" for="inputError"><%= @comment.errors[:subject].join("，") %></label>
+        <% end %><span class="help-block">必要，最多五十個字。</span>
+      </div>
+    </div>
 
     <div class="form-group <%= "has-error" unless @comment.errors[:body].count ==0 %>">
       <label for="description" class="col-lg-2 control-label">內容（必要）</label>

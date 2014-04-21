@@ -30,6 +30,7 @@
                     <td><span class="text-muted"><%= comment.body.length <= 50 ? comment.body : comment.body[0,50] + "⋯⋯" %></span></td>
                     <td style="display:none;" id="body_<%= comment.id %>"><%= comment.body  %></td>
                     <td class="text-primary" id="time_<%= comment.id %>"><%= comment.doc.strftime("%F %T") %></td>
+                    <td style="display: none;" id="stance_<%= comment.id %>"><span class="text-<%= comment.stance.panel.nil? ? 'muted' : comment.stance.panel %>"><%= comment.stance.display_description %></span></td>
                   </tr>
                 <% end %>
               <% end %>
@@ -160,6 +161,21 @@
           <div class="modal-body">
             <input class="form-control" id="old_opinion_<%= @comment.id %>" name="comment[opinion]" type="hidden" value="">
             <input class="form-control" id="old_id_<%= @comment.id %>" name="comment[old_id]" type="hidden" value="">
+
+            <div class="form-group">
+              <label for="stance" class="col-sm-2">立場</label>
+              <div class="col-sm-10">
+                <p id="old_stance_<%= @comment.id %>">立場</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="abstract" class="col-sm-2">主旨</label>
+              <div class="col-sm-10">
+                <p class="text-muted" id="old_abstract_<%= @comment.id %>">主旨</p>
+              </div>
+            </div>
+
             <div class="form-group">
               <label for="description" class="col-sm-2">舊評論<br>發表時間</label>
               <div class="col-sm-10">
@@ -171,13 +187,6 @@
               <label for="description" class="col-sm-2">內容</label>
               <div class="col-sm-10">
                 <p class="text-muted" id="old_body_<%= @comment.id %>">內容</p>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="abstract" class="col-sm-2">主旨</label>
-              <div class="col-sm-10">
-                <p class="text-muted" id="old_abstract_<%= @comment.id %>">主旨</p>
               </div>
             </div>
           </div>
@@ -219,6 +228,7 @@ function set_old_post_<%= @comment.id %>(id){
   $("#old_id_<%= @comment.id %>").val(id);
   $(".old_post_check").hide();
   $("#check_"+id+"_<%= @comment.id %>").show();
+  $("#old_stance_<%= @comment.id %>").html($("#stance_"+id).html());
   $("#old_time_<%= @comment.id %>").text($("#time_"+id).text());
   $("#old_body_<%= @comment.id %>").text($("#body_"+id).text());
   $("#old_abstract_<%= @comment.id %>").text($("#abstract_"+id).text());
