@@ -169,6 +169,7 @@ class UsersController < ApplicationController
     def set_user
       check_user
       if @user.level == 0
+        session[:return_to]=url_for(params)
         redirect_to "/signin"
       end
     end
