@@ -9,6 +9,9 @@ class User
   field :name, type: String
   field :level, type: Integer
   # :anonymous=0, :user=2, robot=4, moderator=8, admin=10
+  field :privacy_settings, type: Hash, default: {show_FB: true, list_comments: true}
+  field :noti_settings, type: Hash, default: { NewComment: false, NewLike: false, NewDislike: false,
+        NewOppose: true, NewSupport: true, Announcement: true, Other: false }
 
   field :allow_show_FB, type: Boolean, default: true
   field :allow_list_comments, type: Boolean, default: true

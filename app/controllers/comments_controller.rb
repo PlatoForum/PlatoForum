@@ -231,10 +231,10 @@ class CommentsController < ApplicationController
         note = Notification.new
         note.noti_type = :NewComment
         note.source_id = @comment.id
-        note.doc = Time.zone.now
+
         subscriber.notifications << note
         note.save
-        note.push_notification
+        #note.push_notification
       end
     end
   end
@@ -252,7 +252,7 @@ class CommentsController < ApplicationController
       note.doc = Time.zone.now
       @target.owner.user.notifications << note
       note.save
-      note.push_notification
+      #note.push_notification
     end
   end
 
@@ -265,7 +265,7 @@ class CommentsController < ApplicationController
       note.doc = Time.zone.now
       @c.owner.user.notifications << note
       note.save
-      note.push_notification
+      #note.push_notification
     end
   end
 
@@ -278,7 +278,7 @@ class CommentsController < ApplicationController
       note.doc = Time.zone.now
       @c.owner.user.notifications << note
       note.save
-      note.push_notification
+      #note.push_notification
     end
   end
 

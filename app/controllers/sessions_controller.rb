@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
 
     session[:user_id] = user.id
     user.level = 2 if user.level.nil?
-    
+
     cookies.permanent[:token] = user.generate_token
     user.save
 

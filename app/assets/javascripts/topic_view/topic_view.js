@@ -31,6 +31,9 @@ function hideMain() {
   $('.expandable-box-main').addClass("out");
   $('.stance-back').hide();
   $('.show_comment_tr.open').removeClass('open');
+
+  var aTag = $("div[name='main-well']");
+  $('html,body').animate({scrollTop: aTag.offset().top - 70},'slow');
 }
 
 function click_tr(data) {

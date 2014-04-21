@@ -42,6 +42,16 @@ class ApplicationController < ActionController::Base
       cookies.delete :token
     end
 
+    if @user and @user.privacy_settings.nil?
+      @user.privacy_settings = {show_FB: true, list_comments: true}
+      @user.save
+    end
+
+    if @user and @user.noti_settings.nil?
+      @user.noti_settings = {NewComment: false, NewLike: false, NewDislike: false, NewOppose: true, NewSupport: true, Announcement: true, Other: false }
+      @user.save
+    end
+
     unless @user
       unless anonymous_user = User.find_by(:level => 0)
         anonymous_user = User.new

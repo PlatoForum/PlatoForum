@@ -26,6 +26,7 @@ PlatoForum::Application.routes.draw do
   get 'user/panel' => 'users#panel'
   get 'user/toggle_show_FB' => 'users#toggle_show_FB'
   get 'user/toggle_list_comments' => 'users#toggle_list_comments'
+  get 'user/toggle_noti_:type' => 'users#toggle_noti'
   get 'user/activities' => 'users#activities'
   get 'user/subscriptions' => "topics#subscriptions"
   get 'user/notifications' => "users#notifications"
@@ -76,8 +77,7 @@ PlatoForum::Application.routes.draw do
   delete ':permalink' => "topics#destroy"
   #get ':permalink/change_name' => 'users#change_pseudonym'
 
-  get ':permalink/proxy_real' => "proxies#make_real"
-  get ':permalink/proxy_fake' => "proxies#make_fake"
+  get ':permalink/proxy_toggle' => "proxies#toggle_real"
 
   get ':permalink/stance_:stance/more_importance/:offset' => "stances#show_more_importance"
   get ':permalink/stance_:stance/more_time/:offset' => "stances#show_more_time"

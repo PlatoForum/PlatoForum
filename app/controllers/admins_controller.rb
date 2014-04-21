@@ -82,7 +82,7 @@ class AdminsController < ApplicationController
       note.doc = Time.zone.now
       user.notifications << note
       note.save
-      note.push_notification
+      #note.push_notification
     end
     respond_to do |format|
 	  	format.html { redirect_to request.referrer, notice: 'Broadcasted!' }

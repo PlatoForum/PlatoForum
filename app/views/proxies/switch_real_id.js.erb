@@ -1,3 +1,7 @@
 $('#name_<%= @topic.id %>').html("<%= @proxy.display_name %>")
-$('#<%= @switch_to %>_<%= @topic.id %>').hide()
-$('#<%= @switch_from %>_<%= @topic.id %>').show()
+
+<% if @proxy.real_id %>
+	$('#label_real_<%= @topic.id %>').html("<i class='fa fa-lock fa-fw'></i> 切換為匿名")
+<% else %>
+$('#label_real_<%= @topic.id %>').html("<i class='fa fa-unlock fa-fw'></i> 切換為實名")
+<% end %>

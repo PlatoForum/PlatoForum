@@ -61,12 +61,20 @@ class UsersController < ApplicationController
   end
 
   def toggle_show_FB
-    @user.allow_show_FB = !@user.allow_show_FB
+    @user.privacy_settings["show_FB"] = !@user.privacy_settings["show_FB"]
+    #@user.allow_show_FB = !@user.allow_show_FB
     @user.save
   end
 
   def toggle_list_comments
-    @user.allow_list_comments = !@user.allow_list_comments
+    @user.privacy_settings["list_comments"] = !@user.privacy_settings["list_comments"]
+    #@user.allow_list_comments = !@user.allow_list_comments
+    @user.save
+  end
+
+  def toggle_noti
+    @user.noti_settings[params[:type]] = !@user.noti_settings[params[:type]]
+    @user.noti_settings["NewDislike"] = @user.noti_settings["NewLike"]
     @user.save
   end
 

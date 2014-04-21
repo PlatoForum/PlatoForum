@@ -14,7 +14,7 @@
         <% else %>
           <span class="label label-default"><i class="fa fa-unlock"></i> 實名</span>
         <% end %>
-        <% if @proxy_to_show.user.allow_show_FB %>
+        <% if @proxy_to_show.user.privacy_settings["show_FB"] %>
           <a href="<%= @proxy_to_show.display_link %>" target="_blank" class="label label-primary">facebook</a>
         <% end %>
       <% else %>
@@ -33,7 +33,7 @@
 <%= render 'proxies/modal_switch_real' %>
 <% end %>
 
-<% if @proxy_to_show.user.allow_list_comments %>
+<% if @proxy_to_show.user.privacy_settings["list_comments"] %>
 <div class="row">
 
   <div class="col-md-4">

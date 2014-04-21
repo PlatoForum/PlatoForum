@@ -2,33 +2,7 @@
 	<div class="col-xs-12">
 		<h2 align="center">個人設定</h2>
 	</div>
-	<div class="col-md-6">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">全域隱私設定</h3>
-			</div>
-			<div class="panel-body">
-				<table class="table table-striped table-panel">
-					<thead>
-						<tr>
-							<th>項目</th>
-							<th>設定</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="text-muted">在我設定為「實名評論」的議題下<span id="allow_show_FB" class="text-default"><%= @user.allow_show_FB? ? "允許" : "禁止"%></span>別人連結至我的facebook個人頁面</td>
-							<td><a id="allow_show_FB_link" href="/user/toggle_show_FB" data-remote="true">設為<%= !@user.allow_show_FB? ? "允許" : "禁止" %></a></td>
-						</tr>
-						<tr>
-							<td class="text-muted"><span id="allow_list_comments" class="text-default"><%= @user.allow_list_comments? ? "允許" : "禁止"%></span>別人檢視我在議題下的「活動記錄」</td>
-							<td width="100"><a id="allow_list_comments_link" href="/user/toggle_list_comments" data-remote="true">設為<%= !@user.allow_list_comments? ? "允許" : "禁止"%></a></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+
 	<div class="col-md-6">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -49,18 +23,8 @@
 							<td><a href="/<%= proxy.topic.permalink %>"><%= proxy.topic.name %></a></td>
 							<td><a href="/<%= proxy.topic.permalink %>/proxy_<%= proxy.id %>" id="name_<%= proxy.topic.id %>"><%= proxy.display_name %></a></td>
 							<td width="150">
-								<a id="fake_<%= proxy.topic.id %>" href="/<%= proxy.topic.permalink %>/proxy_fake" data-remote="true"><i class="fa fa-lock fa-fw"></i> 切換為匿名</a>
-				        <a id="real_<%= proxy.topic.id %>" href="/<%= proxy.topic.permalink %>/proxy_real" data-remote="true"><i class="fa fa-unlock fa-fw"></i> 切換為實名</a>
-				      </td>
-				      <script type="text/javascript">
-							$(function() {
-								<% if proxy.real_id %>
-                	$("#real_<%= proxy.topic.id %>").hide();
-                <% else %>
-                	$("#fake_<%= proxy.topic.id %>").hide();
-                <% end %>
-              });
-              </script>
+								<a id="label_real_<%= proxy.topic.id %>" href="/<%= proxy.topic.permalink %>/proxy_toggle" data-remote="true"><% if proxy.real_id %><i class="fa fa-lock fa-fw"></i> 切換為匿名<% else %><i class="fa fa-unlock fa-fw"></i> 切換為實名<% end %></a>
+							</td>
 						</tr>
 					  <% end %>
 					<tbody>
@@ -69,5 +33,78 @@
 		</div>
 	</div>
 
+	<div class="col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">全域隱私設定</h3>
+			</div>
+			<div class="panel-body">
+				<table class="table table-striped table-panel">
+					<thead>
+						<tr>
+							<th>項目</th>
+							<th>設定</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>在我設定為「實名評論」的議題下<span id="allow_show_FB" class="text-danger"><%= @user.privacy_settings["show_FB"] ? "允許" : "禁止"%></span>別人連結至我的facebook個人頁面</td>
+							<td><a id="allow_show_FB_link" href="/user/toggle_show_FB" data-remote="true">設為<%= !@user.privacy_settings["show_FB"] ? "允許" : "禁止" %></a></td>
+						</tr>
+						<tr>
+							<td><span id="allow_list_comments" class="text-danger"><%= @user.privacy_settings["list_comments"] ? "允許" : "禁止"%></span>別人檢視我在議題下的「活動記錄」</td>
+							<td width="100"><a id="allow_list_comments_link" href="/user/toggle_list_comments" data-remote="true">設為<%= !@user.privacy_settings["list_comments"] ? "允許" : "禁止"%></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Facebook通知設定</h3>
+			</div>
+			<div class="panel-body">
+				<table class="table table-striped table-panel">
+					<thead>
+						<tr>
+							<th>項目</th>
+							<th>設定</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>我訂閱的議題有新評論時，<span id="label_NewComment" class="text-danger"><%= "不要" unless @user.noti_settings["NewComments"] %>通知我</td>
+							<td><a id="toggle_NewComment" href="/user/toggle_noti_NewComment" data-remote="true"><%= !@user.noti_settings["NewComments"] ? "開啓" : "關閉" %></a></td>
+						</tr>
+						<tr>
+							<td>我發表的評論受到支援時，<span id="label_NewSupport" class="text-danger"><%= "不要" unless @user.noti_settings["NewSupport"] %>通知我</td>
+							<td><a id="toggle_NewSupport" href="/user/toggle_noti_NewSupport" data-remote="true"><%= !@user.noti_settings["NewSupport"] ? "開啓" : "關閉" %></a></td>
+						</tr>
+						<tr>
+							<td>我發表的評論受到反駁時，<span id="label_NewOppose" class="text-danger"><%= "不要" unless @user.noti_settings["NewOppose"] %>通知我</td>
+							<td><a id="toggle_NewOppose" href="/user/toggle_noti_NewOppose" data-remote="true"><%= !@user.noti_settings["NewOppose"] ? "開啓" : "關閉" %></a></td>
+						</tr>
+						<tr>
+							<td>有人覺得我發表的評論「讚」或「爛」時，<span id="label_NewLike" class="text-danger"><%= "不要" unless @user.noti_settings["NewLike"] %>通知我</td>
+							<td><a id="toggle_NewLike" href="/user/toggle_noti_NewLike" data-remote="true"><%= !@user.noti_settings["NewLike"] ? "開啓" : "關閉" %></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
+
+<script type="text/javascript">
+$(function(){
+	$('a').click(function (){
+		if ($(this).attr("data-remote")) {
+			$(this).html("<i class='fa fa-spinner fa-spin'></i>");
+		}
+	});
+});
+</script>
 

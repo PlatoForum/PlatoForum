@@ -16,9 +16,11 @@ class Notification
   belongs_to :target, class_name: "User", inverse_of: :notifications, autosave: true
 
   #before_save :push_notification
+  after_create :push_notification
 
   def push_notification
-    if self.target.level == 10
+    if self.target.noti_settings and self.target.noti_settings[self.noti_type.to_s]
+      #logger.error "Pushed!"
       GRAPH_API.put_connections(self.target.uid, "notifications", template: self.display_message, href: "notification/#{self.id}")
     end
   end

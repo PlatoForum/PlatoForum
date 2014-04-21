@@ -32,7 +32,7 @@
 		</div>
 		<div class="col-xs-4">
 			<p class="text-primary" align="right">
-				<%=@comment.owner.display_name%><% if (@comment.owner == @proxy)%>（你）<%end%><br>
+				<a href="/<%=@comment.topic.permalink%>/proxy_<%=@comment.owner.id%>"><%=@comment.owner.display_name%><% if (@comment.owner == @proxy)%>（你）<%end%></a><br>
 				<%= @comment.display_time_detailed %></p>
 			</div>
 		</div>
