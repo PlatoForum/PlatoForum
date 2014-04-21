@@ -28,4 +28,22 @@ class Stance
     end
   end
 
+  def color_code
+    case self.panel
+    when "default" then return "#f5f5f5"
+    when "success" then return "#28b62c"
+    when "danger" then return "#ff4136"
+    when "primary" then return "#158cba"
+    when "warning" then return "#ff851b"
+    end
+  end
+
+  def color_inverse_code
+    if self.panel == "default"
+      return "#333333"
+    else
+      return "#ffffff"
+    end
+  end
+
 end

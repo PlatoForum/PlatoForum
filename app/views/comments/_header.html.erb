@@ -1,7 +1,7 @@
   <div class="page-header">
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-7">
       <h1><%= @topic.name %></h1>
       <% if @topic.topic_type == :open %>
       <span class="label label-default">開放式議題</span>
@@ -26,12 +26,10 @@
           <a data-toggle="modal" href="#modal_switch_real_id"><%= @proxy.display_name %></a>
           <% end %>」
         </h4>
-      </div>
-    </div>
 
       <% if @user.level >= 2 %>
 
-      <div class="nav navbar" align="right">
+      <div class="nav navbar" align="left">
 
         <button type="button" class="btn btn-primary" data-toggle="modal" href="#modal_new_comment"><i class="fa fa-comment"></i>  發表評論</button>
 
@@ -54,5 +52,57 @@
       <%= render 'topics/modal_delete_topic' if @user.level == 10 %>
       <%= render 'topics/modal_edit_stances' if @user.level >= 8 or @topic.creator == @user.id.to_s %>
       <% end %>
+
+      </div>
+      <div class="col-md-5 hidden-sm hidden-xs" align="center">
+        <canvas id="topic_statistics" width="300" height="300"></canvas>
+        <script type="text/javascript">
+          $(function(){
+              var data = [
+              <% @topic.stances.each do |stance| %>
+              {
+                value: <%= stance.comments.count %>,
+                color: "<%= stance.color_code %>",
+                label : "<%= stance.description %>",
+                labelColor : "<%= stance.color_inverse_code %>",
+                labelFontSize : "14px"
+              },
+              <% end %>
+            ]
+
+            var options = {
+              //Boolean - Whether we should show a stroke on each segment
+              segmentShowStroke : true,
+              
+              //String - The colour of each segment stroke
+              segmentStrokeColor : "#fff",
+              
+              //Number - The width of each segment stroke
+              segmentStrokeWidth : 2,
+              
+              //Boolean - Whether we should animate the chart 
+              animation : true,
+              
+              //Number - Amount of animation steps
+              animationSteps : 100,
+              
+              //String - Animation easing effect
+              animationEasing : "easeOutBounce",
+              
+              //Boolean - Whether we animate the rotation of the Pie
+              animateRotate : true,
+
+              //Boolean - Whether we animate scaling the Pie from the centre
+              animateScale : false,
+              
+              //Function - Will fire on animation completion.
+              onAnimationComplete : null
+            }
+            var ctx = document.getElementById("topic_statistics").getContext("2d");
+            var myNewChart = new Chart(ctx).Doughnut(data,options);
+          })
+        </script>
+      </div>
+    </div>
 
     </div>
