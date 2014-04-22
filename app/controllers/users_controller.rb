@@ -116,6 +116,35 @@ class UsersController < ApplicationController
   end
 
   def notifications
+    @user.notifications.each do |noti|
+      case noti.noti_type
+      when :NewComment then
+        if Comment.find(noti.source_id).nil?
+          noti.destroy
+          next
+        end
+      when :NewSupport then
+        if Comment.find(noti.source_id).nil?
+          noti.destroy
+          next
+        end
+      when :NewOppose then 
+        if Comment.find(noti.source_id).nil?
+          noti.destroy
+          next
+        end
+      when :NewLike then
+        if Comment.find(noti.destination_id).nil?
+          noti.destroy
+          next
+        end
+      when :NewDislike then
+        if Comment.find(noti.destination_id).nil?
+          noti.destroy
+          next
+        end
+      end
+    end
   end
 
   def noti_clear

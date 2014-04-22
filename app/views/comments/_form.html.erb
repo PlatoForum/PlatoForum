@@ -48,12 +48,10 @@
       $(function() {
         $(".checks").hide();
         <% unless @comment.stance.nil? %>set_stance('<%= @comment.stance.id %>');<% end %>
-      });
-      $(function() {
         $("textarea").change(function(){
-          $(this).text("BOC is so handsome!!")
-        }
-      })
+          $(this).text("BOC is so handsome!!");
+        });
+      });
       function set_stance(stance){
         // clear_buttons();
         $(".checks").hide();
