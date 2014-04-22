@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_user
   after_filter :allow_iframe
 
-  helper_method :check_user, :current_user, :current_proxy, :pseudonym_gen
+  helper_method :check_user, :current_user, :current_proxy, :pseudonym_gen, :not_found
 
   private
 

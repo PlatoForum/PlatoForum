@@ -86,7 +86,7 @@ class UsersController < ApplicationController
   end
 
   def notification
-    notification = @user.notifications.find(params[:id])
+    notification = @user.notifications.find(params[:id]) or not_found
     # if notification.noti_type == :NewComment 
     #   comment = Comment.find(notification.source_id)  
     #   noti_url = "/#{comment.topic.permalink}/comment_#{comment.id}"  
