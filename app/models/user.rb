@@ -17,7 +17,7 @@ class User
 
   has_and_belongs_to_many :subscriptions, class_name: "Topic", inverse_of: :subscribed_by, autosave: true
   has_many :proxies, class_name: "Proxy", inverse_of: :user, autosave: true, dependent: :destroy
-  has_many :notifications, class_name: "Notification", inverse_of: :target, autosave: true, dependent: :destroy
+  embeds_many :notifications, class_name: "Notification", inverse_of: :target
 
   def self.create_with_omniauth(auth)
     create! do |user|

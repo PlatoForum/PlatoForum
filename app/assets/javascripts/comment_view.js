@@ -1,3 +1,5 @@
+/* Hsuan Lee @ 2014.04.20 */
+
 function click_comment_link(data) {
   $('.show_comment_tr.open').removeClass('open');
 

@@ -2,6 +2,7 @@ require 'net/http'
 
 class Notification
   include Mongoid::Document
+  embedded_in :target
   
   field :noti_type, type: Symbol
   # :NewComment, :NewSupport, :NewOppose, :NewLike, :NewDislike, :Other
@@ -13,15 +14,15 @@ class Notification
 
   field :read, type: Boolean, default: false
 
-  belongs_to :target, class_name: "User", inverse_of: :notifications, autosave: true
+  #belongs_to :target, class_name: "User", inverse_of: :notifications, autosave: true
 
   #before_save :push_notification
   after_create :push_notification
 
   def push_notification
     if (self.target.noti_settings and self.target.noti_settings[self.noti_type.to_s]) or noti_type == :Announcement
-      #logger.error "Pushed!"
-      GRAPH_API.put_connections(self.target.uid, "notifications", template: self.display_message, href: "notification/#{self.id}")
+      logger.error "Pushed!"
+      #GRAPH_API.put_connections(self.target.uid, "notifications", template: self.display_message, href: "notification/#{self.id}")
     end
   end
 
