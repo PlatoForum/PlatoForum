@@ -39,11 +39,11 @@ class Notification
         target = Comment.find(self.destination_id) 
         return "#{comment.owner.display_name} 反駁了你在 #{comment.topic.name} 上的評論 #{target.display_abstract}" 
       when :NewLike then
-        someone = Proxy.find_by(:id => self.source_id) 
+        someone = Proxy.find(self.source_id) 
         target = Comment.find(self.destination_id) 
         return "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很讚！" 
       when :NewDislike then
-        someone = Proxy.find_by(:id => self.source_id) 
+        someone = Proxy.find(self.source_id) 
         target = Comment.find(self.destination_id) 
         return "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很爛！"
       when :Other then
