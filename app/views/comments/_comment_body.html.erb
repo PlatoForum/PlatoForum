@@ -15,16 +15,16 @@
 	</div>
 
     <script>
-      $(document).ready(function(){
+      $( document ).ajaxComplete(function(){
         var imgStr = "\.(jpg|gif|png)+" 
         var youtubeStr = "https://www.youtube.com/"
-        $("#comment_body_<%= @comment.id%>").filter(function(){
-          var url = $(this).attr("href");
-          if( url.match(imgStr)) {
-            $(this).text("").append($("<img>").attr("src",url));
-          }
+        $("#comment_body_<%= @comment.id%> a").filter(function(){
+	          var url = $(this).attr("href");
+	          if( url.match(imgStr)) {
+	            $(this).text("").append($("<img>").attr("src",url).addClass("comment_img"));
+	          }
+	        });
         });
-      });
     </script>
 	<div class="row">
 		<div class="col-xs-8">
