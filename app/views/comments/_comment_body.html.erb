@@ -1,31 +1,41 @@
 	<h3 class="text-default">
-	<% if @comment.subject.nil? || @comment.subject.empty? %>沒有主旨<% else %><%= @comment.subject %><% end %>
+		<% if @comment.subject.nil? || @comment.subject.empty? %>沒有主旨<% else %><%= @comment.subject %><% end %>
 	</h3>
 	<p class="text-muted">立場：<span class="text-<%= @comment.stance.panel.nil? ? 'muted' : @comment.stance.panel %>"><%= @comment.stance.display_description %></span></p>
 	<% unless @comment.tag.nil? or @comment.tag.empty? %>
 	<p class="text-primary">轉錄自 <a class="label label-primary" target="_blank" href=<%= @comment.tag_url.nil? ? "#" : @comment.tag_url %>><%= @comment.tag %></a></p>
 	<% end %>
+	<div id="comment_body_<%= @comment.id%>">
 	<%=  auto_link(simple_format(sanitize @comment.body, tags: %w(a p br)), :all, :target => '_blank') %>
+	<% @comment.updates.each do |update| %>
+		<hr>
+		<p class="text-muted"><%= update.display_time_detailed %> 補充</p>
+		<%=  auto_link(simple_format(sanitize update.content, tags: %w(a p br)), :all, :target => '_blank') %>
+	<% end %>
+	</div>
 
 	<div class="row">
 		<div class="col-xs-8">
-			<% if @user.level < 2 or @user.is_robot? %>
-				<span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></span>
-				<span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></span>
+			<% if @user.level < 2 or @user.is_robot? or @user == @comment.owner.user %>
+			<span class="label label-success"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></span>
+			<span class="label label-danger"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></span>
 			<% else %>
-				<% if @proxy.approvals.find(@comment.id) %>
-					<span class="like_label_<%= @comment.id %>"><a title="收回讚" class="label label-success" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-check fa-fw"></i> <%= @comment.likes.count %></a></span>
-				<% else %>
-					<span class="like_label_<%= @comment.id %>"><a title="讚！" class="label label-success" href="<%= like_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></a></span>
-				<% end %>
-	      <a href="/comment_<%= @comment.id %>/reply_support" data-remote="true" class="label label-success"><i class="fa fa-reply"></i> 支援</a>
-				<% if @proxy.disapprovals.find(@comment.id) %>
-					<span class="dislike_label_<%= @comment.id %>"><a title="收回爛" class="label label-danger" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-check fa-fw"></i> <%= @comment.dislikes.count %></a></span>
-				<% else %>
-					<span class="dislike_label_<%= @comment.id %>"><a title="爛！" class="label label-danger" href="<%= dislike_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
-				<% end %>
-        <a href="/comment_<%= @comment.id %>/reply_oppose" data-remote="true" class="label label-danger"><i class="fa fa-reply"></i> 反駁</a>
-      <% end %>
+			<% if @proxy.approvals.find(@comment.id) %>
+			<span class="like_label_<%= @comment.id %>"><a title="收回讚" class="label label-success" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-check fa-fw"></i> <%= @comment.likes.count %></a></span>
+			<% else %>
+			<span class="like_label_<%= @comment.id %>"><a title="讚！" class="label label-success" href="<%= like_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-up fa-fw"></i> <%= @comment.likes.count %></a></span>
+			<% end %>
+			<a href="/comment_<%= @comment.id %>/reply_support" data-remote="true" class="label label-success"><i class="fa fa-reply"></i> 支援</a>
+			<% if @proxy.disapprovals.find(@comment.id) %>
+			<span class="dislike_label_<%= @comment.id %>"><a title="收回爛" class="label label-danger" href="<%= neutral_comment_path(@comment) %>" data-remote="true"><i class="fa fa-check fa-fw"></i> <%= @comment.dislikes.count %></a></span>
+			<% else %>
+			<span class="dislike_label_<%= @comment.id %>"><a title="爛！" class="label label-danger" href="<%= dislike_comment_path(@comment) %>" data-remote="true"><i class="fa fa-thumbs-down fa-fw"></i> <%= @comment.dislikes.count %></a></span>
+			<% end %>
+			<a href="/comment_<%= @comment.id %>/reply_oppose" data-remote="true" class="label label-danger"><i class="fa fa-reply"></i> 反駁</a>
+			<% end %>
+			<% if @user == @comment.owner.user %>
+			<a data-toggle="modal" href="#modal_new_update" class="label label-primary"><i class="fa fa-reply"></i> 補充</a>
+			<% end %>
 			<a title="分享到Facebook" href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]=http://platoforum.herokuapp.com/<%= @topic.permalink%>/comment_<%= @comment.id %>" class="label label-primary" onclick="window.open(this.href, '分享到Facebook',
 				'left=20,top=20,width=700,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-share"></i> facebook</a>
 		</div>
@@ -33,46 +43,101 @@
 			<p class="text-primary" align="right">
 				<a href="/<%=@comment.topic.permalink%>/proxy_<%=@comment.owner.id%>"><%=@comment.owner.display_name%><% if (@comment.owner == @proxy)%>（你）<%end%></a><br>
 				<%= @comment.display_time_detailed %></p>
-			</div>
 		</div>
-		<hr>
-		<div class="row">
-			<div class="col-md-6">
-				<div class="well well-sm">
-					<h4 align="center" class="text-muted">回應的對象</h4>
-					
-					<div class="panel-body">
-						<table class="table table-striped table-hover table-well">
-							<tbody>
-								<% @comment.replying.each do |comment| %>
-								<tr onClick="click_comment_link('<%= comment.id %>');" class="tr_<%= comment.id %> <%= "unread" unless (@user.level == 0) or @proxy.read_comments.find(comment.id) %>">
-									<td><span class="text-default"><%= comment.display_abstract %></span></td>
-									<td width="75" style="font-size: 0.9em;"><span class="text-<%= @comment.supporting.find(comment.id) ? 'success' : 'danger' %>"><i class="fa fa-reply fa-fw"></i> <%= @comment.supporting.find(comment.id) ? '支援' : '反駁' %></span></td>
-								</tr>
-								<% end %>
-							</tbody>
-						</table>
-					</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="well well-sm">
+				<h4 align="center" class="text-muted">回應的對象</h4>
+
+				<div class="panel-body">
+					<table class="table table-striped table-hover table-well">
+						<tbody>
+							<% @comment.replying.each do |comment| %>
+							<tr onClick="click_comment_link('<%= comment.id %>');" class="tr_<%= comment.id %> <%= "unread" unless (@user.level == 0) or @proxy.read_comments.find(comment.id) %>">
+								<td><span class="text-default"><%= comment.display_abstract %></span></td>
+								<td width="75" style="font-size: 0.9em;"><span class="text-<%= @comment.supporting.find(comment.id) ? 'success' : 'danger' %>"><i class="fa fa-reply fa-fw"></i> <%= @comment.supporting.find(comment.id) ? '支援' : '反駁' %></span></td>
+							</tr>
+							<% end %>
+						</tbody>
+					</table>
 				</div>
 			</div>
+		</div>
 
-			<div class="col-md-6">
-				<div class="well well-sm">
-					<h4 align="center" class="text-muted">受到的回應</h4>
+		<div class="col-md-6">
+			<div class="well well-sm">
+				<h4 align="center" class="text-muted">受到的回應</h4>
 
-					<div class="panel-body">
+				<div class="panel-body">
 
-						<table class="table table-striped table-hover table-well">
-							<tbody>
-								<% @comment.replied.each do |comment| %>
-								<tr onClick="click_comment_link('<%= comment.id %>');" class="tr_<%= comment.id %> <%= "unread" unless (@user.level == 0) or @proxy.read_comments.find(comment.id) %>">
-									<td width="75" style="font-size: 0.9em;"><span class="text-<%= @comment.supported.find(comment.id) ? 'success' : 'danger' %>"><i class="fa fa-reply fa-fw"></i> <%= @comment.supported.find(comment.id) ? '支援' : '反駁' %></span></td>
-									<td><span class="text-default"><%= comment.display_abstract %></span></td>
-								</tr>
-								<% end %>
-							</tbody>
-						</table>
-					</div>
+					<table class="table table-striped table-hover table-well">
+						<tbody>
+							<% @comment.replied.each do |comment| %>
+							<tr onClick="click_comment_link('<%= comment.id %>');" class="tr_<%= comment.id %> <%= "unread" unless (@user.level == 0) or @proxy.read_comments.find(comment.id) %>">
+								<td width="75" style="font-size: 0.9em;"><span class="text-<%= @comment.supported.find(comment.id) ? 'success' : 'danger' %>"><i class="fa fa-reply fa-fw"></i> <%= @comment.supported.find(comment.id) ? '支援' : '反駁' %></span></td>
+								<td><span class="text-default"><%= comment.display_abstract %></span></td>
+							</tr>
+							<% end %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="bs-component">
+		<div class="modal fade" id="modal_new_update" data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<% @update = Update.new %>
+					<% @update.comment = @comment %>
+
+					<%= form_for(@update, url: "/#{@topic.permalink}/comment_#{@comment.id}/new_update", :html => { class: "form-horizontal" }, remote: true) do |f| %>
+
+					<fieldset>
+
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4>補充「<%= @comment.subject %>」</h4>
+						</div>
+
+						<div class="modal-body">
+
+							<div class="form-group">
+								<label for="name" class="col-sm-2 control-label">內容</label>
+								<div class="col-sm-10">
+									<%= f.text_area :content, class: "form-control", placeholder: "補充內容", id: "update_content_#{@comment.id}", rows: "3" %>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="modal-footer">
+							<div class="form-group">
+								<div class="col-lg-10 col-lg-offset-2">
+									<span class="btn btn-primary" disabled id="btn_new_update_spin_<%= @comment.id %>"><i class="fa fa-spinner fa-spin"></i> </span>
+									<%= f.submit "送出", :class => 'btn btn-primary', :id => "btn_new_update_#{@comment.id}"%>
+									<button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
+								</div>
+							</div>
+						</div>
+
+						<script type="text/javascript">
+						$("#btn_new_update_<%= @comment.id %>").click(function() {
+							$("#btn_new_update_<%= @comment.id %>").hide();
+							$("#btn_new_update_spin_<%= @comment.id %>").show();
+						});
+						$(function() {
+							$("#btn_new_update_spin_<%= @comment.id %>").hide();
+						});
+						</script>
+
+					</fieldset>
+					<% end %>
+
 				</div>
 			</div>
 		</div>

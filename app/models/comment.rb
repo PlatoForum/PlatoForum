@@ -6,6 +6,21 @@ class String
   end
 end
 
+class Update
+  include Mongoid::Document
+  embedded_in :comment
+  field :content, type: String
+  field :doc, type: Time, default: Time.zone.now
+
+  def display_time_detailed
+    if self.doc.strftime("%F") == Time.zone.now.strftime("%F")
+      return "今天 #{self.doc.strftime("%T")}"
+    else
+      return self.doc.strftime("%F %T")
+    end
+  end
+end
+
 class Comment
   include Mongoid::Document
   field :subject, type: String
@@ -17,6 +32,8 @@ class Comment
   field :tag, type: String
   field :tag_url, type: String
   field :neighbors, type: Array
+
+  embeds_many :updates, class_name: "Update", order: 'doc ASC'
 
   belongs_to :owner, class_name: "Proxy", inverse_of: :works, autosave: true
   belongs_to :topic, class_name: "Topic", inverse_of: :comments, autosave: true
@@ -103,3 +120,4 @@ class Comment
   #   self.importance_factor = 2 * self.likes.count + self.dislikes.count + 2 * self.supported.count + self.opposed.count
   # end
 end
+

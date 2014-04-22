@@ -1,0 +1,3 @@
+<hr>
+<p class="text-muted"><%= @update.display_time_detailed %> 補充</p>
+<%=  auto_link(simple_format(sanitize @update.content, tags: %w(a p br)), :all, :target => '_blank') %>

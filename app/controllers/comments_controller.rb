@@ -6,8 +6,8 @@ class CommentsController < ApplicationController
   #protect_from_forgery with: :exception
   
   #before_action :check_topic
-  before_action :set_comment, only: [:show, :show_reply, :edit, :update, :destroy]
-  before_action :before_edit, only: [:new, :create, :reply, :like, :neutral, :dislike, :reply, :reply_old]
+  before_action :set_comment, only: [:show, :show_reply, :edit, :update, :destroy, :new_update]
+  before_action :before_edit, only: [:new, :create, :reply, :like, :neutral, :dislike, :reply, :reply_old, :new_update]
   before_action :before_show, only: [:index, :show, :show_more, :show_reply]
 
   # GET /:permalink/comments
@@ -72,6 +72,21 @@ class CommentsController < ApplicationController
     #@target.update_importance_factor
     @target.save
     create_job(action, @target._id, @comment._id)
+  end
+
+  def new_update
+    if @user != @comment.owner.user
+      redirect_to request.referrer or "/"
+    end
+
+    @update = Update.new
+    @update.content = params[:update][:content]
+    @comment.updates << @update
+
+    respond_to do |format|
+      format.html
+      format.js 
+    end
   end
 
   # POST /:permalink/comment_:id/reply_old
@@ -292,6 +307,10 @@ class CommentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
       params.require(:comment).permit(:subject, :body, :stance, :old_id, :tag, :tag_url)
+    end
+
+    def update_params
+      params.require(:update).permit(:content)
     end
 
     def create_job(action, proxy_id, comment_id)
