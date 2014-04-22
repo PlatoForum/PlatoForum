@@ -29,7 +29,7 @@
                 <p class="text-muted">這裡有點冷清⋯⋯</p>
               <% else %>
                 <table class="table table-striped table-hover ">
-                  <tbody id="comment_list_stance<%= stance.number %>">
+                  <tbody id="comment_list_stance<%= stance.id %>">
                     <% stance.comments[0,5].each do |comment| %>
                       <tr class="show_comment_tr" id="tr_<%= comment.id %>" onclick="click_tr('<%= comment.id %>');">
                         <% unless session[:user_id].nil? %>
