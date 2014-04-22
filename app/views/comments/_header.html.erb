@@ -28,9 +28,7 @@
         </h4>
 
       <% if @user.level >= 2 %>
-
-      <div class="nav navbar" align="left">
-
+      <div class="nav navbar topic-navbar" align="left">
         <button type="button" class="btn btn-primary" data-toggle="modal" href="#modal_new_comment"><i class="fa fa-comment"></i>  發表評論</button>
 
         <% if @user.level >= 8 || @topic.creator == @user.id.to_s %>
@@ -46,12 +44,12 @@
         </div>
         <% end %>
       </div>
+      <% end %>
 
       <%= render 'proxies/modal_switch_real' unless @user.level == 0 or @user.is_robot? %>
       <%= render 'comments/modal_new_comment' if @user.level >= 2 %>
       <%= render 'topics/modal_delete_topic' if @user.level == 10 %>
       <%= render 'topics/modal_edit_stances' if @user.level >= 8 or @topic.creator == @user.id.to_s %>
-      <% end %>
 
       </div>
       <div class="col-md-5 hidden-sm hidden-xs" align="center">
