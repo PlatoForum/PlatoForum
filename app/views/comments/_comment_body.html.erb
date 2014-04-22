@@ -15,7 +15,7 @@
 	</div>
 
     <script>
-      $( document ).ajaxComplete(function(){
+      $(function(){
         var imgStr = "\.(jpg|gif|png)+" 
         var youtubeStr = "https://www.youtube.com/"
         $("#comment_body_<%= @comment.id%> a").filter(function(){

@@ -58,7 +58,7 @@
         <canvas id="topic_statistics" width="300" height="300"></canvas>
         <script type="text/javascript">
         $(function(){
-                    var data = [
+          var data = [
             <% @topic.stances.each do |stance| %>
             {
               value: <%= stance.comments.count %>,
