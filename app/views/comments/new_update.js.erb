@@ -1,4 +1,4 @@
-$("#comment_body_<%= @comment.id%>").append("<%= escape_javascript(render 'comments/new_update')%>")
+$(".comment_body_<%= @comment.id%>").append("<%= escape_javascript(render 'comments/new_update')%>")
 $("#modal_new_update").modal("hide")
 $("#btn_new_update_<%= @comment.id %>").show();
 $("#btn_new_update_spin_<%= @comment.id %>").hide();
