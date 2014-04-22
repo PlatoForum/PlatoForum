@@ -53,15 +53,15 @@
               <% end %>
               
               <% if stance.comments.count > 5 %>
-              <center><a id="show_more_stance<%= stance.number %>" href="/<%= @topic.permalink %>/comments/more_stance_<%= stance.number %>/5" data-remote="true">更多⋯⋯</a><i id="spin_stance<%= stance.number %>" class="fa fa-spinner fa-spin" style="display: none;"></i></center>
+              <center><a id="show_more_stance<%= stance.id %>" href="/<%= @topic.permalink %>/comments/more_stance_<%= stance.id %>/5" data-remote="true">更多⋯⋯</a><i id="spin_stance<%= stance.id %>" class="fa fa-spinner fa-spin" style="display: none;"></i></center>
               <% end %>
             </div>
           </div>
       </div>
       <script type="text/javascript">
-        $("#show_more_stance<%= stance.number %>").click(function (){
-          $("#show_more_stance<%= stance.number %>").hide();
-          $("#spin_stance<%= stance.number %>").show();
+        $("#show_more_stance<%= stance.id %>").click(function (){
+          $("#show_more_stance<%= stance.id %>").hide();
+          $("#spin_stance<%= stance.id %>").show();
         });
       </script>
       <% end %>
