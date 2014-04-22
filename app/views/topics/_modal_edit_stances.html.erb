@@ -1,0 +1,51 @@
+<div class="bs-component">
+  <div class="modal fade" id="modal_edit_stances" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4>編輯立場</h4>
+          <p class="text-muted"><%= @topic.name %></p>
+        </div>
+            
+        <div class="modal-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>描述</th>
+                <th>標色</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="stance_list">
+              <% @topic.stances.sort!.each do |stance| %>
+              <tr>
+                <td id="descr_<%= stance.id %>"><%= stance.description %></td>
+                <td id="panel_<%= stance.id %>"><span class="label label-<%= stance.panel %>"><%= stance.color_name %></span></td>
+                <td><a href="/<%= @topic.permalink %>/stance_<%= stance.id %>/edit" data-remote="true">編輯</a></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <% if @topic.stances.count < 4 %>
+            <a id="btn_new" class="btn btn-default" href="/<%= @topic.permalink %>/stances/new" data-remote="true">新增立場</a>
+          <% end %>
+        </div>
+
+        <div class="modal-footer">
+          <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+              <a id="btn_apply" href="/<%= @topic.permalink %>" class="btn btn-primary" style="display:none;">確認</a>
+              <button id="btn_return" href="#" data-dismiss="modal" class="btn btn-default">返回</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal_new_stance" data-keyboard="false" data-backdrop="static"></div>
+  <div class="modal fade" id="modal_edit_stance" data-keyboard="false" data-backdrop="static"></div>
+</div>

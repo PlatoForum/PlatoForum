@@ -1,0 +1,103 @@
+  <div class="bs-component">
+    <div class="modal fade" id="modal_new_topic" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <% if @user.level < 2 %>
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4>發起議題</h4>
+            </div>
+            <div class="modal-body">
+              <p class="text-danger">權限不足，請先登入</p>
+            </div>
+            <div class="modal-footer">
+              <div class="col-sm-10 col-sm-offset-2">
+                <button data-dismiss="modal" class="btn btn-default">返回</button>
+              </div>
+            </div>
+
+          <% else %>
+            <% @topic = Topic.new %>
+            <%= form_for(@topic, url: "/topics/create", :html => { class: "form-horizontal"}) do |f| %>
+
+            <fieldset>
+
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4>發起議題</h4>
+              </div>
+              
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="topic_type" class="col-sm-2 control-label">類型</label>
+                  <div class="col-sm-10">
+                    <input class="form-control" id="topic_type" name="topic[topic_type]" type="hidden" placeholder="議題類型" value="yesno">
+                    <ul class="nav nav-pills" style="margin-bottom: 15px;">
+                      <li class="active"><a href="#yesno" onClick="click_yesno()" data-toggle="tab">封閉式</a></li>
+                      <li><a href="#open" onClick="click_open()" data-toggle="tab">開放式</a></li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <script type="text/javascript">
+                function click_open(){
+                  $("#topic_type").val("open");
+                }
+                function click_yesno(){
+                  $("#topic_type").val("yesno");
+                }
+                </script>
+
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label">名稱</label>
+                  <div class="col-sm-10">
+                    <%= f.text_field :name, class: "form-control", placeholder: "議題名稱" %>
+                    <span class="help-block">最多四十個字。必要</span>
+                  </div>
+                </div>
+                <div class="form-group <%= "has-error" unless @topic.errors[:description].count ==0 %>">
+                  <label for="description" class="col-sm-2 control-label">描述</label>
+                  <div class="col-sm-10">
+                    <%= f.text_area :description, class: "form-control", placeholder: "議題描述", rows: "3" %>
+                    <div id="myTabContent" class="tab-content">
+                      <div class="tab-pane fade active in" id="yesno">
+                        <span class="help-block">簡單描述議論的目標，使用可以讓人『支持』或『反對』的形式。<br>例如『你覺得香蕉好吃嗎？』而不是『你對香蕉有什麼看法？』</span>
+                      </div>
+                      <div class="tab-pane fade" id="open">
+                        <span class="help-block">簡單描述議論的目標，使用可以讓人自由回答的形式。<br>例如『你對香蕉有什麼看法？』而不是『你覺得香蕉好吃嗎？』</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="permalink" class="col-sm-2 control-label">永久連結</label>
+                  <div class="col-sm-10">
+
+                    <%= f.text_field :permalink, class: "form-control", placeholder: "永久連結" %>
+                    <span class="help-block">
+                      作為議題網址使用。只能使用英文字母、數字和底線。<br>
+                      例如「PlatoForum_is_so_cool」
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <div class="form-group">
+                  <div class="col-sm-10 col-sm-offset-2">
+                    <%= f.submit "送出", :class => 'btn btn-primary'%>
+                    <button data-dismiss="modal" class="btn btn-default">返回</button>
+                  </div>
+                </div>
+              </div>
+
+            </fieldset>
+          <% end %>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>

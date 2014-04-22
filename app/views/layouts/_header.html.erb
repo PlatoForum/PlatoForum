@@ -61,5 +61,5 @@
     });
    
     </script>
-    <%= render 'layouts/modal_agreement' %>
+    <%= render 'layouts/modal_agreement' if @user.level == 0 %>
     <%= render 'admins/modal_broadcast' if @user.level >= 10 %>

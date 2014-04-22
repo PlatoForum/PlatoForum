@@ -24,12 +24,13 @@
               </thead>
               <% @proxy.works.sort!{|b,a| a.doc <=> b.doc}.each do |comment| %>
                 <% unless comment == @comment or @comment.supported.find(comment) or @comment.opposed.find(comment) %>
-                  <tr onClick="set_old_post('<%= comment.id %>');">
+                  <tr onClick="set_old_post_<%= @comment.id %>('<%= comment.id %>');">
                     <td><i class="fa fa-check old_post_check" id="check_<%= comment.id %>_<%= @comment.id %>"></i></td>
                     <td style="display:none;" id="abstract_<%= comment.id %>"><%= comment.subject %></td>
                     <td><span class="text-muted"><%= comment.body.length <= 50 ? comment.body : comment.body[0,50] + "⋯⋯" %></span></td>
                     <td style="display:none;" id="body_<%= comment.id %>"><%= comment.body  %></td>
                     <td class="text-primary" id="time_<%= comment.id %>"><%= comment.doc.strftime("%F %T") %></td>
+                    <td style="display: none;" id="stance_<%= comment.id %>"><span class="text-<%= comment.stance.panel.nil? ? 'muted' : comment.stance.panel %>"><%= comment.stance.display_description %></span></td>
                   </tr>
                 <% end %>
               <% end %>
@@ -62,7 +63,7 @@
 
         <%= form_for(@reply, url: "/#{@topic.permalink}/comment_#{@comment.id}/reply", :html => { class: "form-horizontal"}) do |f| %>
         <fieldset>
-          <input class="form-control" id="comment_stance_<%= @comment.id %>" name="comment[stance]" placeholder="立場" type="hidden" value="">
+          <input class="form-control" id="comment_opinion_<%= @comment.id %>" name="comment[opinion]" placeholder="立場" type="hidden" value="">
 
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -74,13 +75,6 @@
           </div>
 
           <div class="modal-body">
-            <div class="form-group">
-              <label for="description" class="col-sm-2 control-label">內容</label>
-              <div class="col-sm-10">
-                <%= f.text_area :body, class: "form-control", placeholder: "評論內容", rows: "5" %>
-                <span class="help-block">必要</span>
-              </div>
-            </div>
 
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label">主旨</label>
@@ -89,16 +83,58 @@
                 <span class="help-block">必要，最多五十個字</span>
               </div>
             </div>
+            
+            <div class="form-group">
+              <label for="permalink" class="col-sm-2 control-label">立場</label>
+              <div class="col-sm-10">
+                <input class="form-control" id="comment_stance_<%= @comment.id %>" name="comment[stance]" placeholder="立場" type="hidden" value="">
+                <% @topic.stances.each do |stance| %>
+                  <button id="button_<%= @comment.id %>_<%= stance.id %>" onClick="set_stance_<%= @comment.id %>('<%= stance.id %>')" type="button" class="btn btn-<%= stance.panel.nil? ? "default" : stance.panel %>"><i class="fa fa-check checks" id="check_<%= @comment.id %>_<%= stance.id %>"></i> <%= stance.display_description %></button>
+                <% end %>
+                <span class="help-block">這則評論對議題的立場，必要</span>
+              </div>
+            </div>
+            <script type="text/javascript">
+              $(function() {
+                $(".checks").hide();
+              });
+              function set_stance_<%= @comment.id %>(stance){
+                // clear_buttons();
+                $(".checks").hide();
+                $("#check_<%= @comment.id %>_"+stance).show();
+                $("#comment_stance_<%= @comment.id %>").val(stance);
+              }
+            </script>
+
+            <div class="form-group">
+              <label for="description" class="col-sm-2 control-label">內容</label>
+              <div class="col-sm-10">
+                <%= f.text_area :body, class: "form-control", placeholder: "評論內容", rows: "5" %>
+                <span class="help-block">必要</span>
+              </div>
+            </div>
+
           </div>
 
           <div class="modal-footer">
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
-                <%= f.submit "送出", :class => 'btn btn-primary' %>
+                <span class="btn btn-primary" disabled id="btn_reply_comment_spin"><i class="fa fa-spinner fa-spin"></i> </span>
+                <%= f.submit "送出", :class => 'btn btn-primary', :id => "btn_reply_comment" %>
                 <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
               </div>
             </div>
           </div>
+
+            <script type="text/javascript">
+              $("#btn_reply_comment").click(function() {
+                $("#btn_reply_comment").hide();
+                $("#btn_reply_comment_spin").show();
+              });
+              $(function() {
+                $("#btn_reply_comment_spin").hide();
+              });
+            </script>
 
         </fieldset>
         <% end %>
@@ -123,8 +159,23 @@
 
         <form accept-charset="UTF-8" action="/<%= @topic.permalink %>/comment_<%= @comment.id %>/reply_old" class="form-horizontal" id="reply" method="post">
           <div class="modal-body">
-            <input class="form-control" id="old_stance_<%= @comment.id %>" name="comment[stance]" type="hidden" value="">
+            <input class="form-control" id="old_opinion_<%= @comment.id %>" name="comment[opinion]" type="hidden" value="">
             <input class="form-control" id="old_id_<%= @comment.id %>" name="comment[old_id]" type="hidden" value="">
+
+            <div class="form-group">
+              <label for="stance" class="col-sm-2">立場</label>
+              <div class="col-sm-10">
+                <p id="old_stance_<%= @comment.id %>">立場</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="abstract" class="col-sm-2">主旨</label>
+              <div class="col-sm-10">
+                <p class="text-muted" id="old_abstract_<%= @comment.id %>">主旨</p>
+              </div>
+            </div>
+
             <div class="form-group">
               <label for="description" class="col-sm-2">舊評論<br>發表時間</label>
               <div class="col-sm-10">
@@ -136,13 +187,6 @@
               <label for="description" class="col-sm-2">內容</label>
               <div class="col-sm-10">
                 <p class="text-muted" id="old_body_<%= @comment.id %>">內容</p>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="abstract" class="col-sm-2">主旨</label>
-              <div class="col-sm-10">
-                <p class="text-muted" id="old_abstract_<%= @comment.id %>">主旨</p>
               </div>
             </div>
           </div>
@@ -168,22 +212,23 @@ $(function() {
   $(".old_post_check").hide();
   $("#old_chosen_<%= @comment.id %>").attr("disabled", true);
 });
-function set_support(){
+function set_support_<%= @comment.id %>(){
   $(".stance_oppose").hide();
   $(".stance_support").show();
-  $("#old_stance_<%= @comment.id %>").val("support");
-  $("#comment_stance_<%= @comment.id %>").val("support");
+  $("#old_opinion_<%= @comment.id %>").val("support");
+  $("#comment_opinion_<%= @comment.id %>").val("support");
 }
-function set_oppose(){
+function set_oppose_<%= @comment.id %>(){
   $(".stance_support").hide();
   $(".stance_oppose").show();
-  $("#old_stance_<%= @comment.id %>").val("oppose");
-  $("#comment_stance_<%= @comment.id %>").val("oppose");
+  $("#old_opinion_<%= @comment.id %>").val("oppose");
+  $("#comment_opinion_<%= @comment.id %>").val("oppose");
 }
-function set_old_post(id){
+function set_old_post_<%= @comment.id %>(id){
   $("#old_id_<%= @comment.id %>").val(id);
   $(".old_post_check").hide();
   $("#check_"+id+"_<%= @comment.id %>").show();
+  $("#old_stance_<%= @comment.id %>").html($("#stance_"+id).html());
   $("#old_time_<%= @comment.id %>").text($("#time_"+id).text());
   $("#old_body_<%= @comment.id %>").text($("#body_"+id).text());
   $("#old_abstract_<%= @comment.id %>").text($("#abstract_"+id).text());

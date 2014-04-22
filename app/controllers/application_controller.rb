@@ -29,22 +29,45 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user
-    if session[:user_id]
-      @user = User.find(session[:user_id])
-      return @user
-    end
-    if cookies[:token]
-      @user = User.find_by(:token => cookies[:token])
-      if @user
+
+    unless @user 
+      if session[:user_id]
+        @user = User.find(session[:user_id])
+      elsif cookies[:token] and cookie_user = User.find_by(:token => cookies[:token])
+        @user = cookie_user
         session[:user_id] = @user.id
-        return @user
+      end
+      
+      if @user and @user.omnitoken.nil? and !@user.is_robot?
+        reset_session
+        cookies.delete :token
+        @user = nil
+      end
+
+      if @user and @user.privacy_settings.nil?
+        @user.privacy_settings = {show_FB: true, list_comments: true}
+        @user.save
+      end
+
+      if @user and @user.noti_settings.nil?
+        @user.noti_settings = {NewComment: false, NewLike: false, NewDislike: false, NewOppose: true, NewSupport: true, Announcement: true, Other: false }
+        @user.save
+      end
+
+      if @user
+        @user.last_login = {ip: request.remote_ip, time: Time.zone.now}
+        @user.save
+      else
+        unless anonymous_user = User.find_by(:level => 0)
+          anonymous_user = User.new
+          anonymous_user.level = 0
+          anonymous_user.name = "路人"
+          anonymous_user.save
+        end
+        @user = anonymous_user
       end
     end
 
-    @user = User.find_by(:level => 0) || User.new
-    @user.level = 0
-    @user.name = "路人"
-    @user.save
     return @user
   end
 

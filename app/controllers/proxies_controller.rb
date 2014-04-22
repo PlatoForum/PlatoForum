@@ -1,6 +1,6 @@
 # encoding: UTF-8
 class ProxiesController < ApplicationController
-  before_action :set_proxy, only: [:edit, :update, :destroy, :make_real, :make_fake]
+  before_action :set_proxy, only: [:edit, :update, :destroy, :toggle_real]
   before_action :set_proxy_to_show, only: [:show]
   before_action :check_proxy, only: [:show]
 
@@ -25,29 +25,27 @@ class ProxiesController < ApplicationController
   end
 
   # GET /:permalink/proxy_real
-  def make_real
-    @proxy.real_id = true
+  def toggle_real
+    @proxy.real_id = !@proxy.real_id
     @proxy.save
-    @switch_to = "real"
-    @switch_from = "fake"
     respond_to do |format|
-      format.html { redirect_to request.referrer, notice: '成功切換成實名' }
+      format.html { redirect_to request.referrer, notice: '成功切換實/匿名' }
       format.json { render action: 'show', status: :created, location: @proxy }
       format.js { render 'switch_real_id'}
     end
   end
 
-  def make_fake
-    @proxy.real_id = false
-    @proxy.save
-    @switch_to = "fake"
-    @switch_from = "real"
-    respond_to do |format|
-      format.html { redirect_to request.referrer, notice: '成功切換成匿名' }
-      format.json { render action: 'show', status: :created, location: @proxy }
-      format.js { render 'switch_real_id' }
-    end
-  end
+  # def make_fake
+  #   @proxy.real_id = false
+  #   @proxy.save
+  #   @switch_to = "fake"
+  #   @switch_from = "real"
+  #   respond_to do |format|
+  #     format.html { redirect_to request.referrer, notice: '成功切換成匿名' }
+  #     format.json { render action: 'show', status: :created, location: @proxy }
+  #     format.js { render 'switch_real_id' }
+  #   end
+  # end
 
   # POST /proxies
   # POST /proxies.json

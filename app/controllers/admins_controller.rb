@@ -14,7 +14,16 @@ class AdminsController < ApplicationController
 
 	def robot
 		session[:user_id_backup] = session.delete(:user_id)
-		@user = User.find("aaaaaaaaaaaaaaaaaaaaaaaa")
+		
+		unless @user = User.find("aaaaaaaaaaaaaaaaaaaaaaaa")
+			robot = User.new({:id => "aaaaaaaaaaaaaaaaaaaaaaaa"})
+			robot.name = "潑辣機器人"
+			robot.level = 4
+			robot.omnitoken = "FAKE"
+			robot.save
+			@user = robot 
+		end
+		
 		session[:user_id] = @user._id
 		if request.post?
 			redirect_to "/"
@@ -73,7 +82,7 @@ class AdminsController < ApplicationController
       note.doc = Time.zone.now
       user.notifications << note
       note.save
-      note.push_notification
+      #note.push_notification
     end
     respond_to do |format|
 	  	format.html { redirect_to request.referrer, notice: 'Broadcasted!' }

@@ -1,4 +1,4 @@
-<% if @user.allow_list_comments %>
+<% if @user.privacy_settings["list_comments"] %>
 	$("#allow_list_comments").html("允許");
 	$("#allow_list_comments_link").html("設為禁止");
 <% else %>

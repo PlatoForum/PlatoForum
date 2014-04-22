@@ -4,9 +4,9 @@ class SessionsController < ApplicationController
 
   def new
     session[:return_to] = request.referrer if session[:return_to].nil?
-    #if session[:return_to].match(/\/cover$/)
+    if session[:return_to].nil? or session[:return_to].match(/\/cover$/)
       session[:return_to] = "/"
-    #end
+    end
 
     if session[:user_id]
       redirect_to session.delete(:return_to)
@@ -25,11 +25,11 @@ class SessionsController < ApplicationController
 
     session[:user_id] = user.id
     user.level = 2 if user.level.nil?
-    
+
     cookies.permanent[:token] = user.generate_token
     user.save
 
-    redirect_to session.delete(:return_to)
+    redirect_to session.delete(:return_to) || "/"
     #redirect_to params[:lastpage]
   end
 

@@ -1,0 +1,11 @@
+$("#stance_list").append("<tr><td id='descr_<%= @stance.id %>'><%= @stance.description %></td><td id='panel_<%= @stance.id %>'><span class='label label-<%= @stance.panel %>'><%= @stance.color_name %></span></td><td><a href='/<%= @topic.permalink %>/stance_<%= @stance.id %>/edit' data-remote='true'>編輯</a></td></tr>");
+
+$("#modal_new_stance").modal("hide");
+$("#modal_edit_stances").modal("show");
+
+$("#btn_return").hide();
+$("#btn_apply").show();
+
+<% if @topic.stances.count >= 4 %>
+	$("btn_new").hide();
+<% end %>

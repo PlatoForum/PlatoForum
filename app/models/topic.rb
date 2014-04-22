@@ -6,8 +6,10 @@ class Topic
   field :permalink, type: String
   field :doc, type: Time, default: Time.zone.now
   field :last_updated, type: Time
-  field :topic_type, type: Symbol
+  field :topic_type, type: Symbol, default: :yesno
   field :creator, type: String
+
+  #embeds_one :default_stance, class_name: "Stance"
   # topic_type :none, :yesno, :open
 
   has_many :comments, class_name: "Comment", inverse_of: :topic, autosave: true, validate: false, dependent: :destroy
@@ -22,7 +24,7 @@ class Topic
   validates_uniqueness_of :permalink
   validates_format_of :permalink, :with => /\A\w+\z/
   validates_length_of :name, :maximum => 40
-  validates_presence_of :topic_type
+  #validates_presence_of :topic_type
 
   validates_presence_of :doc
 

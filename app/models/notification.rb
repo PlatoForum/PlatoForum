@@ -15,10 +15,12 @@ class Notification
 
   belongs_to :target, class_name: "User", inverse_of: :notifications, autosave: true
 
-  #before_save :app_notify
+  #before_save :push_notification
+  after_create :push_notification
 
   def push_notification
-    if self.target.level == 10
+    if (self.target.noti_settings and self.target.noti_settings[self.noti_type.to_s]) or noti_type == :Announcement
+      #logger.error "Pushed!"
       GRAPH_API.put_connections(self.target.uid, "notifications", template: self.display_message, href: "notification/#{self.id}")
     end
   end
@@ -48,7 +50,6 @@ class Notification
         return self.source_id
       when :Announcement then
         return self.source_id
->>>>>>> 0be1aa4aa6dd8040d6f7290b3fcf558a1336714d
     end
   end
 end

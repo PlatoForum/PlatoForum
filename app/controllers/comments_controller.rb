@@ -62,7 +62,7 @@ class CommentsController < ApplicationController
   
   def set_reply_relations
     @target = Comment.find(params[:id])
-    if comment_params[:stance] == "support"
+    if params[:comment][:opinion] == "support"
       @target.supported << @comment
       action = :support
     else #oppose
@@ -84,7 +84,7 @@ class CommentsController < ApplicationController
     notify_new_reply
 
     respond_to do |format|
-      format.html { redirect_to request.referrer, notice: '已成功回應評論！' }
+      format.html { redirect_to "/#{@topic.permalink}/comment_#{@target.id}", notice: '已成功回應評論！' }
       format.json { render action: 'show', status: :created, location: @comment }
     end
   end
@@ -99,19 +99,9 @@ class CommentsController < ApplicationController
 
     @target = Comment.find(params[:id])
 
-    if @topic.topic_type == :yesno
-      if comment_params[:stance] == "support"
-        @stance = @target.stance
-      else #oppose
-        @stance_number = 4 - @target.stance.number
-        @stance = @topic.stances.find_by(:number => @stance_number)
-      end
-      @comment.stance = @stance
-    else
-      @stance = @topic.stances.sort!{|b,a| a.comments.where(:owner => @proxy).count <=> b.comments.where(:owner => @proxy).count }.first
-      @comment.stance = @stance
-    end
-    
+    @stance = @topic.stances.find(params[:comment][:stance])
+    @comment.stance = @stance
+
     respond_to do |format|
       if @comment.save
 
@@ -122,7 +112,7 @@ class CommentsController < ApplicationController
 
         set_reply_relations
 
-        format.html { redirect_to request.referrer, notice: '已成功回應評論！' }
+        format.html { redirect_to "/#{@topic.permalink}/comment_#{@comment.id}", notice: '已成功回應評論！' }
         format.json { render action: 'show', status: :created, location: @comment }
       else
         format.html { render action: 'new', notice: @errormessage }
@@ -141,13 +131,8 @@ class CommentsController < ApplicationController
     @comment.owner = @proxy
     @proxy.read_comments << @comment
 
-    if @topic.topic_type == :yesno
-      @stance = @topic.stances.find_by(:number => comment_params[:stance])
-      @comment.stance = @stance
-    else
-      @stance = @topic.stances.sort!{|b,a| a.comments.where(:owner => @proxy).count <=> b.comments.where(:owner => @proxy).count }.first
-      @comment.stance = @stance
-    end
+    @stance = @topic.stances.find(comment_params[:stance])
+    @comment.stance = @stance
     
     respond_to do |format|
       if @comment.save
@@ -246,10 +231,10 @@ class CommentsController < ApplicationController
         note = Notification.new
         note.noti_type = :NewComment
         note.source_id = @comment.id
-        note.doc = Time.zone.now
+
         subscriber.notifications << note
         note.save
-        note.push_notification
+        #note.push_notification
       end
     end
   end
@@ -257,7 +242,7 @@ class CommentsController < ApplicationController
   def notify_new_reply
     unless @target.owner.user == @user
       note = Notification.new
-      if comment_params[:stance] == "support"
+      if params[:comment][:opinion] == "support"
         note.noti_type = :NewSupport
       else #oppose
         note.noti_type = :NewOppose
@@ -267,7 +252,7 @@ class CommentsController < ApplicationController
       note.doc = Time.zone.now
       @target.owner.user.notifications << note
       note.save
-      note.push_notification
+      #note.push_notification
     end
   end
 
@@ -280,7 +265,7 @@ class CommentsController < ApplicationController
       note.doc = Time.zone.now
       @c.owner.user.notifications << note
       note.save
-      note.push_notification
+      #note.push_notification
     end
   end
 
@@ -293,7 +278,7 @@ class CommentsController < ApplicationController
       note.doc = Time.zone.now
       @c.owner.user.notifications << note
       note.save
-      note.push_notification
+      #note.push_notification
     end
   end
 

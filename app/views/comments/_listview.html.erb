@@ -1,8 +1,7 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="expandable-boxes" name="main-well">
-      <% only_one_stance = (@topic.stances.count == 1) %>
-      <% @topic.stances.sort!{|a,b| a.number <=> b.number}.each do |stance| %>
+      <% @topic.stances.sort!.each do |stance| %>
 
       <div class="expandable-box expandable-box-<%= @topic.stances.count %>">
           <div class="panel <%= stance.panel.nil? ? "panel-default" : "panel-"+stance.panel %>">
@@ -14,10 +13,10 @@
                       <span class="label"><i class="fa fa-caret-left fa-fw"></i>返回</span>
                     </td>
                     <td align="center" width="3000">
-                      <% if only_one_stance %>
-                        未分類
-                      <% else %>
-                        <%= stance.display_description %>
+                      <%= stance.display_description %>
+                      <% unless stance.keywords.nil? or stance.keywords.empty? %>
+                        <br>
+                        <span class="text-muted-inverse">關鍵字：<%= stance.display_keywords %></span>
                       <% end %>
                     </td>
                   </tr></tbody></table>
@@ -68,6 +67,7 @@
       <% end %>
       <div class="expandable-box expandable-box-main out">
         <div id="main-container" class="well main-well"></div>
+        <a class="fixed-button" onclick="hideMain();"><i class="fa fa-arrow-left fa"></i></a>
       </div>
     </div>
   </div>
@@ -76,3 +76,5 @@
 <div id="comment_pool">Comment pool</div>
 <div id="comment_modal" class="modal fade"></div>
 <div id="reply_modals"></div>
+
+<%= javascript_include_tag "topic_view", "data-turbolinks-track" => true %>

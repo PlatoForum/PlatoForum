@@ -1,4 +1,4 @@
-<% if @user.allow_show_FB %>
+<% if @user.privacy_settings["show_FB"] %>
 	$("#allow_show_FB").html("允許");
 	$("#allow_show_FB_link").html("設為禁止");
 <% else %>

@@ -1,0 +1,7 @@
+<% if @user.noti_settings[params[:type]] %>
+	$("#label_<%= params[:type] %>").html("通知我");
+	$("#toggle_<%= params[:type] %>").html("關閉");
+<% else %>
+	$("#label_<%= params[:type] %>").html("不要通知我");
+	$("#toggle_<%= params[:type] %>").html("開啓");
+<% end %>
