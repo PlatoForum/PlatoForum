@@ -29,6 +29,10 @@ function scroll_top () {
 
 var onready;
 onready = function() {
+  $(".label-opinion").click(function(e){
+    click_opinion();
+  });
+
   $('.expand-btn').click(function(e) {
     var expandable = $(this).parent().parent()
     if( expandable.hasClass('open') || expandable.hasClass('side') ) {
@@ -157,5 +161,5 @@ function click_comment_link(data) {
 }
 
 function click_opinion() {
-  $(this).html("<i class='fa fa-spin fa-spinner fa-2x'></i>");
+  $('.label-opinion').html("<i class='fa fa-spin fa-spinner'></i>");
 }

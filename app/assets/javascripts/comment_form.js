@@ -3,11 +3,6 @@
 var imgStr = "\.(jpg|gif|png)+"
 var youtubeStr = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
 
-// Expand <a /> with its associate application, ex. img, youtube
-function activate_media(){
-
-}
-
 function check_and_preview(event) {
   var success = true;
 
