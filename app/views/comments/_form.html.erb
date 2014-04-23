@@ -81,7 +81,7 @@
         <%= f.text_area :body, class: "form-control", placeholder: "評論內容", rows: "10" %>
         <% unless @comment.errors[:body].empty? %>
         <label class="control-label" for="inputError"><%= @comment.errors[:body].join("，") %></label>
-        <% end %><span class="help-block">必要</span>
+        <% end %><span class="help-block">必要<br>若您放入「圖片連結」或「Youtube影片」網址，顯示時會自動轉換</span>
       </div>
     </div>
 
