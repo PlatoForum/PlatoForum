@@ -1,6 +1,12 @@
 /* theme */
 img.comment_img {
   max-width: 100%;
+  border-radius:5px;
+}
+
+.topic-navbar {
+  position: absolute;
+  top: 0px;
 }
 
 body {
@@ -27,13 +33,11 @@ textarea {
   font-size: 0.9em;
 }
 
-@media all and (max-width: 2000px) {
-  .pf-body {
-    font-size: 1.2em;
-  }
-  .btn {
-    font-size: 14px;
-  }
+.pf-body {
+  font-size: 1.2em;
+}
+.btn {
+  font-size: 14px;
 }
 
 @media all and (max-width: 992px) {

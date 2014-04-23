@@ -28,7 +28,6 @@
 
 	// Expand <a /> with its associate application, ex. img, youtube
 	function onYouTubeIframeAPIReady(){
-		$( document ).ajaxComplete(function(){
 			$("#comment_body_<%= @comment.id%> a").filter(function(){
 				// image url
 				var url = $(this).attr("href");
@@ -46,7 +45,6 @@
 					}));
 				}
 			});
-		});
 	}
 	</script>
 	<div class="row">

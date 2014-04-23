@@ -1,0 +1,25 @@
+<% if params[:sort] == "doc" %>
+  <% @topic.stances.each do |stance| %>
+    <% @comments = stance.comments.sort!{|b,a| a.doc <=> b.doc}[0,5] %>
+    $("#comment_list_stance<%= stance.id %>").html("<%= escape_javascript(render 'comments/tr_comment_list') %>")
+    $("#show_more_stance<%= stance.id %>").attr("href","/<%= @topic.permalink %>/comments/more_stance_<%= stance.id %>/5?sort=doc")
+    <% if stance.comments.count > 5  %>
+      $('#show_more_stance<%= stance.id %>').parent().show()
+    <% end %>
+  <% end %>
+  $("#sort_doc").addClass("active")
+  $("#sort_importance").removeClass("active")
+  $("#sort_label").html("優先顯示：最新評論 <span class='caret'></span>")
+<% else %>
+  <% @topic.stances.each do |stance| %>
+    <% @comments = stance.comments[0,5] %>
+    $("#comment_list_stance<%= stance.id %>").html("<%= escape_javascript(render 'comments/tr_comment_list') %>")
+    $("#show_more_stance<%= stance.id %>").attr("href","/<%= @topic.permalink %>/comments/more_stance_<%= stance.id %>/5?sort=importance")
+    <% if stance.comments.count > 5  %>
+      $('#show_more_stance<%= stance.id %>').parent().show()
+    <% end %>
+  <% end %>
+  $("#sort_importance").addClass("active")
+  $("#sort_doc").removeClass("active")
+  $("#sort_label").html("優先顯示：重要評論 <span class='caret'></span>")
+<% end %>

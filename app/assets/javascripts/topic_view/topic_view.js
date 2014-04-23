@@ -1,5 +1,10 @@
 /* Hsuan Lee @ 2014.04.20 */
 
+function scroll_top () {
+  var aTag = $("div[name='main-well']");
+  $('html,body').animate({scrollTop: aTag.offset().top - 70},'slow');
+}
+
 $(function() {
   $('.expand-btn').click(function(e) {
     var expandable = $(this).parent().parent()
@@ -15,7 +20,18 @@ $(function() {
       $('.expandable-box').not(expandable).addClass('out');
       expandable.addClass('open');
       $('.stance-back').show();
+      scroll_top();
     }
+  });
+
+  $("a#subscribe_toggle").click(function(){
+    $(this).html("<i class='fa fa-spin fa-spinner'></i>");
+    $(this).attr("href","#");
+  });
+
+  $(".sort-group li").click(function(){
+    $(".sort-group").removeClass("open");
+    $(".comment_lists").html("<i class='fa fa-spin fa-spinner'></i>");
   });
 });
 
@@ -62,8 +78,7 @@ function click_tr(data) {
       $("#main-container").html($("#comment_"+data+"_full").html());
     }        
 
-    var aTag = $("div[name='main-well']");
-    $('html,body').animate({scrollTop: aTag.offset().top - 70},'slow');
+    scroll_top();
   }
   return false;
 };
@@ -84,8 +99,7 @@ function click_comment_link(data) {
     $("#main-container").html($("#comment_"+data+"_full").html());
   }        
 
-  var aTag = $("div[name='main-well']");
-  $('html,body').animate({scrollTop: aTag.offset().top - 70},'slow');
+  scroll_top();
   return false;
 }
 

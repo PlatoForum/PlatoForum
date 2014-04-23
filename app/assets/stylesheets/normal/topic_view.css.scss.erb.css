@@ -112,11 +112,31 @@ tr.unread {
 @media all and (max-width: 767px) {
   .expandable-box {
     box-sizing: border-box;
-    -webkit-transition: all .3s ease-in-out;
-    -moz-transition: all .3s ease-in-out;
-    -o-transition: all .3s ease-in-out;
-    -ms-transition: all .3s ease-in-out;
-    transition: all .3s ease-in-out;
+    -webkit-transition: none .3s ease-in-out;
+    -moz-transition: none .3s ease-in-out;
+    -o-transition: none .3s ease-in-out;
+    -ms-transition: none .3s ease-in-out;
+    transition: none .3s ease-in-out;
+
+    .panel-body {
+      width: 0;
+      height: 0;
+      padding: 0;
+      visibility: hidden;
+    }
+
+    p.empty {
+      padding-top: 15px;
+      padding-left: 15px;
+      padding-bottom: 15px;
+    }
+
+    &.open .panel-body {
+      width: auto;
+      height: auto;
+      padding: 15;
+      visibility: visible;
+    }
     
     &.open {
       width: 99%;
@@ -145,23 +165,24 @@ tr.unread {
   }
 
   .expandable-box-4 {
-    width: 99%;
+    width: 49%;
     float: left;
-    padding: 0px;
-    
+    margin: 0 1% 20px 0;
+    font-size: 0.9em;
   }
 
   .expandable-box-3 {
-    width: 99%;
+    width: 32%;
     float: left;
-    padding: 0px;
-    
+    margin: 0 1% 20px 0;
+    font-size: 0.9em;
   }
 
   .expandable-box-2 {
-    width: 99%;
+    width: 49%;
     float: left;
-    padding: 0px;
+    margin: 0 1% 20px 0;
+    font-size: 0.9em;
   }
 
   .expandable-box-1 {

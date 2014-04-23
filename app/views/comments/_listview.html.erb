@@ -26,42 +26,27 @@
 
             <div class="panel-body">          
               <% if stance.comments.count == 0 %>
-                <p class="text-muted">這裡有點冷清⋯⋯</p>
+                <p class="text-muted empty">這裡有點冷清⋯⋯</p>
               <% else %>
                 <table class="table table-striped table-hover ">
-                  <tbody id="comment_list_stance<%= stance.number %>">
-                    <% stance.comments[0,5].each do |comment| %>
-                      <tr class="show_comment_tr" id="tr_<%= comment.id %>" onclick="click_tr('<%= comment.id %>');">
-                        <% unless session[:user_id].nil? %>
-                        <td width="10" class="read_<%= comment.id %>">
-                          <% if @proxy.read_comments.find(comment.id) %>
-                            <span class="label label-default"><i class="fa fa-check fa-fw"></i> </span>
-                          <% else %>
-                            <span class="label label-warning"><i class="fa fa-exclamation fa-fw"></i> </span>
-                          <% end %>
-                        </td>
-                        <% end %>
-                        <td class="td_short" id="td_<%= comment.id %>_short">
-                          <span class="text-muted"><% if (comment.owner == @proxy)%>你<%else%><%=comment.owner.display_name%><%end%></span><br>
-                          <span class="text-default"><%= comment.display_abstract_long %></span>
-                        </td>
-                      </tr>
-                    <% end %>
+                  <tbody id="comment_list_stance<%= stance.id %>" class="comment_lists">
+                    <% @comments = stance.comments[0,5] %>
+                    <%= render 'comments/tr_comment_list' %>
                   </tbody>
                 </table> 
 
               <% end %>
               
               <% if stance.comments.count > 5 %>
-              <center><a id="show_more_stance<%= stance.number %>" href="/<%= @topic.permalink %>/comments/more_stance_<%= stance.number %>/5" data-remote="true">更多⋯⋯</a><i id="spin_stance<%= stance.number %>" class="fa fa-spinner fa-spin" style="display: none;"></i></center>
+              <center><a id="show_more_stance<%= stance.id %>" href="/<%= @topic.permalink %>/comments/more_stance_<%= stance.id %>/5" data-remote="true">更多⋯⋯</a><i id="spin_stance<%= stance.id %>" class="fa fa-spinner fa-spin" style="display: none;"></i></center>
               <% end %>
             </div>
           </div>
       </div>
       <script type="text/javascript">
-        $("#show_more_stance<%= stance.number %>").click(function (){
-          $("#show_more_stance<%= stance.number %>").hide();
-          $("#spin_stance<%= stance.number %>").show();
+        $("#show_more_stance<%= stance.id %>").click(function (){
+          $("#show_more_stance<%= stance.id %>").hide();
+          $("#spin_stance<%= stance.id %>").show();
         });
       </script>
       <% end %>
