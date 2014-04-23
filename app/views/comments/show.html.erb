@@ -89,32 +89,5 @@
   <% end %>
 </div>
 
-<script type="text/javascript">
-$(function(){
-  var imgStr = "\.(jpg|gif|png)+"
-  var youtubeStr = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-
-  // Expand <a /> with its associate application, ex. img, youtube
-  $("#main-container .comment_bodies a").filter(function(){
-    // image url
-    var url = $(this).attr("href");
-    if( url.match(imgStr)) {
-      $(this).html($("<img>").attr("src",url).addClass("comment_img"));
-    }
-    // youtube url
-    var yt_match = url.match(youtubeStr);  // dessemble youtube url into fields
-    if( yt_match && yt_match[7].length==11) {
-
-      $(this).replaceWith("<div class='youtube-iframe'><iframe src='//www.youtube.com/embed/" + yt_match[7] + "' frameborder='0' allowfullscreen></iframe></div>");
-    }
-  });
-})
-
-function click_comment_link(data) {
-  window.location.href = "/<%= @topic.permalink %>/comment_" + data;
-}
-
-function click_tr(data) {
-  window.location.href = "/<%= @topic.permalink %>/comment_" + data;
-};
-</script>
+<%= stylesheet_link_tag    "topic_view", media: "all", "data-turbolinks-track" => true %>
+<%= javascript_include_tag "comment_view", "data-turbolinks-track" => true %>

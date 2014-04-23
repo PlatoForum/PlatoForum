@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
   # end
 
   # GET /:permalink/comment_:id
-  # GET /comments/1.json
+  # GET /comment_:id
   def show
     unless session[:user_id].nil?
       @proxy.read_comments << Comment.find(params[:id])

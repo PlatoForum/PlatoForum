@@ -1,3 +1,5 @@
+/* PlatoForum @ 2014.04.20 */
+
 //= require_tree ./comment_form/
 
 var imgStr = "\.(jpg|gif|png)+"
@@ -45,7 +47,7 @@ function check_and_preview(event) {
       $("#preview-quote").html("轉錄自 <a class='label label-primary' target='_blank' href='" +  tag_url +"'> " + $("#comment_tag").val() +" </a>" );
     }
 
-    $("#preview-body").html( simpleFormat(removeTags($("#comment_body").val()).autoLink({ target: "_blank"}) ) );
+    $("#preview-body").html( content_processor($("#comment_body").val()) );
     $("#preview-body a").filter(function(){
       // image url
       var url = $(this).attr("href");

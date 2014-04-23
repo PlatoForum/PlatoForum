@@ -1,26 +1,6 @@
+/* PlatoForum @ 2014.04.20 */
 //= require_tree ./topic_view/
-
-/* Hsuan Lee @ 2014.04.20 */
-
-var imgStr = "\.(jpg|gif|png)+"
-var youtubeStr = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-
-// Expand <a /> with its associate application, ex. img, youtube
-function activate_media(){
-  $("#main-container .comment_bodies a").filter(function(){
-      // image url
-    var url = $(this).attr("href");
-    if( url.match(imgStr)) {
-      $(this).html($("<img>").attr("src",url).addClass("comment_img"));
-    }
-    // youtube url
-    var yt_match = url.match(youtubeStr);  // dessemble youtube url into fields
-    if( yt_match && yt_match[7].length==11) {
-
-      $(this).replaceWith("<div class='youtube-iframe'><iframe src='//www.youtube.com/embed/" + yt_match[7] + "' frameborder='0' allowfullscreen></iframe></div>");
-    }
-  });
-}
+//= require ./shared/activate_media
 
 function scroll_top () {
   var aTag = $("div[name='main-well']");

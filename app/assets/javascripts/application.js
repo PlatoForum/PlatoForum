@@ -13,4 +13,4 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.turbolinks
-//= require_tree ./normal/
+//= require_tree ./common/
