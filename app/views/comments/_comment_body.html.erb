@@ -14,18 +14,41 @@
 	<% end %>
 	</div>
 
-    <script>
-      $( document ).ajaxComplete(function(){
-        var imgStr = "\.(jpg|gif|png)+" 
-        var youtubeStr = "https://www.youtube.com/"
-        $("#comment_body_<%= @comment.id%> a").filter(function(){
-	          var url = $(this).attr("href");
-	          if( url.match(imgStr)) {
-	            $(this).text("").append($("<img>").attr("src",url).addClass("comment_img"));
-	          }
-	        });
-        });
-    </script>
+	<script>
+	// This code loads the IFrame Player API code asynchronously.
+	var yt_api = document.createElement('script');
+	yt_api.src = "https://www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+	// iFrame container
+	var yt_player = new Array();
+	var imgStr = "\.(jpg|gif|png)+"
+	var youtubeStr = "https://www.youtube.com/"
+
+	// Expand <a /> with its associate application, ex. img, youtube
+	function onYouTubeIframeAPIReady(){
+		$( document ).ajaxComplete(function(){
+			$("#comment_body_<%= @comment.id%> a").filter(function(){
+				// image url
+				var url = $(this).attr("href");
+				if( url.match(imgStr)) {
+					$(this).text("").append($("<img>").attr("src",url).addClass("comment_img"));
+				}
+				// youtube url
+				var yt_match = url.match(youtubeStr);  // dessemble youtube url into fields
+				if( yt_match && yt_match[7].length==11) {
+					$(this).attr('id',yt_match[7])
+					yt_player.push( new YT.Player(yt_match[7], {
+						height: '390',
+						width: '640',
+						videoId: yt_match[7]
+					}));
+				}
+			});
+		});
+	}
+	</script>
 	<div class="row">
 		<div class="col-xs-8">
 			<% if @user.level < 2 or @user.is_robot? or @user == @comment.owner.user %>
