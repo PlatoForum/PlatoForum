@@ -24,7 +24,7 @@
 	// iFrame container
 	var yt_player = new Array();
 	var imgStr = "\.(jpg|gif|png)+"
-	var youtubeStr = "https://www.youtube.com/"
+    var youtubeStr = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
 
 	// Expand <a /> with its associate application, ex. img, youtube
 	function onYouTubeIframeAPIReady(){
