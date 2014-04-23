@@ -1,13 +1,12 @@
+$("#comment_pool").append("<%= escape_javascript(render 'td_show_comment') %>");
+$("#comment_pool").addClass('<%= @comment.id %>');
+$("#main-container").html($("#comment_<%= @comment.id %>_full").html());
+activate_media();
+
 <% if params[:with_ref] and params[:with_ref] == "true" %>
-	$("#comment_pool").append("<%= escape_javascript(render 'td_show_comment') %>");
 	$("#reference_pool").append("<%= escape_javascript(render 'td_comment_reference') %>");
-	$("#comment_pool").addClass('<%= @comment.id %>');
-	$("#main-container").html($("#comment_<%= @comment.id %>_full").html());
 	$("#ref-container").html($("#comment_<%= @comment.id %>_ref").html());
 <% else %>
-	$("#comment_pool").append("<%= escape_javascript(render 'td_show_comment') %>");
 	$(".read_<%= @comment.id %>").html("<span class='label label-default'><i class='fa fa-check fa-fw'></i> </span>");
 	$(".tr_<%= @comment.id %>.unread").removeClass("unread");
-	$("#comment_pool").addClass('<%= @comment.id %>');
-	$("#main-container").html($("#comment_<%= @comment.id %>_full").html());
 <% end %>
