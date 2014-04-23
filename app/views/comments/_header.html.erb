@@ -1,61 +1,69 @@
   <div class="page-header">
       
     <div class="row">
-      <div class="col-md-7">
-      <h1><%= @topic.name %></h1>
-      <% if @topic.topic_type == :open %>
-      <span class="label label-default">開放式議題</span>
-      <% else %>
-      <span class="label label-default">封閉式議題</span>
-      <% end %>
-      <span class="label label-default"><%= @topic.subscribed_by.count %>人訂閱</span>
-      <% unless session[:user_id].nil? %>
-      <% if @user.subscriptions.find(@topic.id) %>
-      <a href="/<%= @topic.permalink %>/unsubscribe" class="label label-primary"><i class="fa fa-star"></i> 已訂閱</a>
-      <% else %>
-      <a href="/<%= @topic.permalink %>/subscribe" class="label label-primary"><i class="fa fa-star-o"></i> 訂閱</a>
-      <% end %>
-      <% end %>
-      <a title="分享到Facebook" href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]=<%= request.original_url %>" class="label label-primary" onclick="window.open(this.href, '分享到Facebook',
-        'left=20,top=20,width=700,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-share"></i> facebook</a>
-        <h4 class="text-default"><%= auto_link(simple_format(sanitize @topic.description, tags: %w(a p br)), :all, :target => '_blank') %></h4>
-        <h4 class="text-muted">你的身份是「
-          <% if session[:user_id].nil? %>
-          <span class="text-primary"><%= @proxy.display_name %></span>
+      <div class="col-sm-7">
+        <tr><td>
+          <div style="min-height: 230px;">
+          <h1><%= @topic.name %></h1>
+          <span class="label label-default" id="subscription_count"><%= @topic.subscribed_by.count %>人訂閱</span>
+          <% unless session[:user_id].nil? %>
+          <% if @user.subscriptions.find(@topic.id) %>
+            <a id="subscribe_toggle" data-remote="true" href="/<%= @topic.permalink %>/toggle" class="label label-primary"><i class="fa fa-star"></i> 已訂閱</a>
           <% else %>
-          <a data-toggle="modal" href="#modal_switch_real_id"><%= @proxy.display_name %></a>
-          <% end %>」
-        </h4>
+            <a id="subscribe_toggle" data-remote="true" href="/<%= @topic.permalink %>/toggle" class="label label-primary"><i class="fa fa-star-o"></i> 訂閱</a>
+          <% end %>
 
-      <% if @user.level >= 2 %>
-      <div class="nav navbar topic-navbar" align="left">
-        <button type="button" class="btn btn-primary" data-toggle="modal" href="#modal_new_comment"><i class="fa fa-comment"></i>  發表評論</button>
+          <% end %>
+          <a title="分享到Facebook" href="#" class="label label-primary" onclick="share_FB('<%= request.original_url %>');"><i class="fa fa-share"></i> facebook</a>
+            <h4 class="text-default"><%= auto_link(simple_format(sanitize @topic.description, tags: %w(a p br)), :all, :target => '_blank') %></h4>
+            <h4 class="text-muted">你的身份是「
+              <% if session[:user_id].nil? %>
+              <span class="text-primary"><%= @proxy.display_name %></span>
+              <% else %>
+              <a data-toggle="modal" href="#modal_switch_real_id"><%= @proxy.display_name %></a>
+              <% end %>」
+            </h4>
+          </div>
+        </td></tr>
+        <tr><td>
+          
+            <div class="nav navbar">
+              <% if @user.level >= 2 %>
+                <button type="button" class="btn btn-primary" data-toggle="modal" href="#modal_new_comment"><i class="fa fa-comment"></i>  發表評論</button>
+              <% end %>
 
-        <% if @user.level >= 8 || @topic.creator == @user.id.to_s %>
-        <div class="btn-group" align="left">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">管理 <span class="caret"></span></button>
-          <ul class="dropdown-menu dropdown-menu-right">
-            <li><a href="/<%= @topic.permalink %>/edit" role: "button"><i class="fa fa-pencil-square-o fa-fw"></i> 編輯議題</a></li>
-            <li><a href="#modal_edit_stances" data-toggle="modal"><i class="fa fa-group fa-fw"></i> 編輯立場</a></li>
-            <% if @user.level == 10 %>
-            <li><a href="#modal_delete_topic" data-toggle="modal" rel="nofollow"><i class="fa fa-trash-o fa-fw"></i> 刪除議題</a></li>
-            <% end %>
-          </ul>
-        </div>
-        <% end %>
+              <div class="btn-group sort-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">優先顯示 <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li id="sort_importance" class="active"><a href="" data-remote="true" >重要評論</a></li>
+                  <li id="sort_doc"><a href="/<%= @topic.permalink %>?sort=doc" data-remote="true" >最新評論</a></li>
+                </ul>
+              </div>
+
+              <% if @user.level >= 8 || @topic.creator == @user.id.to_s %>
+              <div class="btn-group" align="left">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">管理 <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="/<%= @topic.permalink %>/edit" role: "button"><i class="fa fa-pencil-square-o fa-fw"></i> 編輯議題</a></li>
+                  <li><a href="#modal_edit_stances" data-toggle="modal"><i class="fa fa-group fa-fw"></i> 編輯立場</a></li>
+                  <% if @user.level == 10 %>
+                  <li><a href="#modal_delete_topic" data-toggle="modal" rel="nofollow"><i class="fa fa-trash-o fa-fw"></i> 刪除議題</a></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+
+            <%= render 'proxies/modal_switch_real' unless @user.level == 0 or @user.is_robot? %>
+            <%= render 'comments/modal_new_comment' if @user.level >= 2 %>
+            <%= render 'topics/modal_delete_topic' if @user.level == 10 %>
+            <%= render 'topics/modal_edit_stances' if @user.level >= 8 or @topic.creator == @user.id.to_s %>
+        </td></tr>
       </div>
-      <% end %>
 
-      <%= render 'proxies/modal_switch_real' unless @user.level == 0 or @user.is_robot? %>
-      <%= render 'comments/modal_new_comment' if @user.level >= 2 %>
-      <%= render 'topics/modal_delete_topic' if @user.level == 10 %>
-      <%= render 'topics/modal_edit_stances' if @user.level >= 8 or @topic.creator == @user.id.to_s %>
-
-      </div>
-      <div class="col-md-5 hidden-sm hidden-xs" align="center">
+      <div class="col-sm-5 hidden-xs" align="center">
         <canvas id="topic_statistics" width="300" height="300"></canvas>
         <script type="text/javascript">
-        $(function(){
+        $(document).ready(function(){
           var data = [
             <% @topic.stances.each do |stance| %>
             {

@@ -25,8 +25,7 @@ class TopicsController < ApplicationController
 
   # GET /:permalink/comments
   # GET /:permalink/comments.json
-  def show 
-    @comments = @topic.comments
+  def show
   end
 
   # GET /topics/new

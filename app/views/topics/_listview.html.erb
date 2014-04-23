@@ -2,7 +2,7 @@
   <div class="col-sm-4">
     <div class="bs-component">
       <div class="list-group">
-        <a class="list-group-item active" href="/list">
+        <a class="list-group-item active" href="/list?sort=popularity">
           <h4 class="list-group-item-heading"><i class="fa fa-group fa-fw"></i> 熱門議題</h4>
         </a>
         <% @topics.sort!{ |a,b| b.comments.count <=> a.comments.count }.first(5).each do |topic| %>
@@ -16,7 +16,7 @@
   <div class="col-sm-4">
     <div class="bs-component">
       <div class="list-group">
-        <a class="list-group-item active" href="/list">
+        <a class="list-group-item active" href="/list?sort=doc">
           <h4 class="list-group-item-heading"><i class="fa fa-clock-o fa-fw"></i> 最新議題</h4>
         </a>
         <% @topics.sort!{ |a,b| b.doc <=> a.doc }.first(5).each do |topic| %>
@@ -31,7 +31,7 @@
     <div class="col-sm-4">
       <div class="bs-component">
         <div class="list-group">
-          <a class="list-group-item active" href="/list">
+          <a class="list-group-item active" href="/list?sort=subscription">
             <h4 class="list-group-item-heading"><i class="fa fa-star fa-fw"></i> 熱門訂閱議題</h4>
           </a>
           <% @topics.sort!{|a,b| b.subscribed_by.count <=> a.subscribed_by.count}.first(5).each do |topic| %>
