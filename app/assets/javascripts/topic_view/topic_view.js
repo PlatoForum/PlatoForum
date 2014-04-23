@@ -46,7 +46,6 @@ $(function() {
 
   $("a#subscribe_toggle").click(function(){
     $(this).html("<i class='fa fa-spin fa-spinner'></i>");
-    $(this).attr("href","#");
   });
 
   $(".sort-group li").click(function(){

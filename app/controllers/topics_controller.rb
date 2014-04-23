@@ -1,6 +1,6 @@
 # encoding: UTF-8
 class TopicsController < ApplicationController
-  before_action :set_topic, only: [:show, :edit, :update, :destroy]
+  before_action :set_topic, only: [:show, :edit, :update, :destroy, :toggle]
   before_action :before_show, only: [:show]
 
   # GET /topics
@@ -66,6 +66,32 @@ class TopicsController < ApplicationController
       #redirect_to "/#{params[:permalink]}"
       respond_to do |format|
         format.html { redirect_to "/#{params[:permalink]}", notice: "取消訂閱議題『#{@topic.name}』"}
+      end
+    end
+  end
+
+  def toggle
+    if session[:user_id].nil?
+      respond_to do |format|
+        format.html { redirect_to "/#{params[:permalink]}", notice: "你必須先登入才能訂閱議題" }
+      end
+    else
+      @user = User.find_by(:id => session[:user_id])
+      @topic = Topic.find_by(:permalink => params[:permalink])
+      
+      if @user.subscriptions.find(@topic)
+        @user.subscriptions.delete(@topic)
+        @action = "unsubscribe"
+      else
+        @user.subscriptions << @topic
+        @action = "subscribe"
+      end
+      @user.save
+
+      #redirect_to "/#{params[:permalink]}"
+      respond_to do |format|
+        format.html { redirect_to "/#{params[:permalink]}", notice: "取消訂閱議題『#{@topic.name}』"}
+        format.js
       end
     end
   end

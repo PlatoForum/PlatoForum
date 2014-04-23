@@ -72,6 +72,7 @@ PlatoForum::Application.routes.draw do
 
   get ':permalink/subscribe' => "topics#subscribe"
   get ':permalink/unsubscribe' => "topics#unsubscribe"
+  get ':permalink/toggle' => "topics#toggle"
 
   get ':permalink/edit' => "topics#edit"
   patch ':permalink/edit' => "topics#update"

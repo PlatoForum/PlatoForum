@@ -1,0 +1,6 @@
+$("#subscription_count").html("<%= @topic.subscribed_by.count %>人訂閱")
+<% if @action == "subscribe" %>
+	$("#subscribe_toggle").html("<i class='fa fa-star'></i> 已訂閱")
+<% else %>
+	$("#subscribe_toggle").html("<i class='fa fa-star-o'></i> 訂閱")
+<% end %>
