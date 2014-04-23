@@ -57,7 +57,7 @@ PlatoForum::Application.routes.draw do
   post 'fbcanvas' => "facebook#canvas"
   post 'fbcanvas/notification/:id' => "facebook#notification"
  
-  #get ':permalink/comments/new' => "comments#new"
+  get ':permalink/new' => "comments#new"
   post ':permalink/comments' => "comments#create"
   post ':permalink/comment_:id/new_update' => "comments#new_update"
   post ':permalink/comment_:id/reply' => "comments#reply"

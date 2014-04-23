@@ -62,6 +62,8 @@ class CommentsController < ApplicationController
   def new
     @comment = Comment.new
     @comment.owner = @proxy
+    @target = @topic.comments.find(params[:target]) unless params[:target].nil?
+    @opinion = params[:opinion] unless params[:opinion].nil?
   end
   
   def set_reply_relations

@@ -67,74 +67,25 @@
 
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="text-success stance_support">支援評論</h4><h4 class="text-danger stance_oppose">支援評論</h4>
-            <p class="text-muted">對於<span class="text-primary"><%= @comment.owner.display_name %></span>說：</p>
-            <p class="text-muted"><%= @comment.display_body_short %></p>
-            <p class="text-muted">你（<span class="text-primary"><%= @proxy.display_name %></span>）表示<span class="text-success stance_support">支持！</span><span class="text-danger stance_oppose">反對！</span></p>
-            <a href="#modal_choose_old" class="btn btn-default" data-dismiss="modal" data-toggle="modal">使用舊評論回應</a>
+            <h4 class="text-success stance_support">支援評論</h4><h4 class="text-danger stance_oppose">反駁評論</h4>
           </div>
 
           <div class="modal-body">
-
-            <div class="form-group">
-              <label for="name" class="col-sm-2 control-label">主旨</label>
-              <div class="col-sm-10">
-                <%= f.text_field :subject, class: "form-control", placeholder: "評論主旨" %>
-                <span class="help-block">必要，最多五十個字</span>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label for="permalink" class="col-sm-2 control-label">立場</label>
-              <div class="col-sm-10">
-                <input class="form-control" id="comment_stance_<%= @comment.id %>" name="comment[stance]" placeholder="立場" type="hidden" value="">
-                <% @topic.stances.each do |stance| %>
-                  <button id="button_<%= @comment.id %>_<%= stance.id %>" onClick="set_stance_<%= @comment.id %>('<%= stance.id %>')" type="button" class="btn btn-<%= stance.panel.nil? ? "default" : stance.panel %>"><i class="fa fa-check checks" id="check_<%= @comment.id %>_<%= stance.id %>"></i> <%= stance.display_description %></button>
-                <% end %>
-                <span class="help-block">這則評論對議題的立場，必要</span>
-              </div>
-            </div>
-            <script type="text/javascript">
-              $(function() {
-                $(".checks").hide();
-              });
-              function set_stance_<%= @comment.id %>(stance){
-                // clear_buttons();
-                $(".checks").hide();
-                $("#check_<%= @comment.id %>_"+stance).show();
-                $("#comment_stance_<%= @comment.id %>").val(stance);
-              }
-            </script>
-
-            <div class="form-group">
-              <label for="description" class="col-sm-2 control-label">內容</label>
-              <div class="col-sm-10">
-                <%= f.text_area :body, class: "form-control", placeholder: "評論內容", rows: "5" %>
-                <span class="help-block">必要</span>
-              </div>
-            </div>
-
+            <p class="text-muted">對於<span class="text-primary"><%= @comment.owner.display_name %></span>說：</p>
+            <p class="text-muted"><%= @comment.display_body_short %></p>
+            <p class="text-muted">你（<span class="text-primary"><%= @proxy.display_name %></span>）表示<span class="text-success stance_support">支持！</span><span class="text-danger stance_oppose">反對！</span></p>
           </div>
 
           <div class="modal-footer">
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
-                <span class="btn btn-primary" disabled id="btn_reply_comment_spin"><i class="fa fa-spinner fa-spin"></i> </span>
-                <%= f.submit "送出", :class => 'btn btn-primary', :id => "btn_reply_comment" %>
+                <a id="compose_<%= @comment.id %>" href="" class="btn btn-primary">撰寫新評論</a>
+                <a href="#modal_choose_old" class="btn btn-primary" data-dismiss="modal" data-toggle="modal">使用舊評論回應</a>
+            
                 <button href="#" data-dismiss="modal" class="btn btn-default">返回</button>
               </div>
             </div>
           </div>
-
-            <script type="text/javascript">
-              $("#btn_reply_comment").click(function() {
-                $("#btn_reply_comment").hide();
-                $("#btn_reply_comment_spin").show();
-              });
-              $(function() {
-                $("#btn_reply_comment_spin").hide();
-              });
-            </script>
 
         </fieldset>
         <% end %>
@@ -217,12 +168,14 @@ function set_support_<%= @comment.id %>(){
   $(".stance_support").show();
   $("#old_opinion_<%= @comment.id %>").val("support");
   $("#comment_opinion_<%= @comment.id %>").val("support");
+  $("#compose_<%= @comment.id %>").attr("href","/<%= @topic.permalink %>/new?target=<%= @comment.id %>&opinion=support");
 }
 function set_oppose_<%= @comment.id %>(){
   $(".stance_support").hide();
   $(".stance_oppose").show();
   $("#old_opinion_<%= @comment.id %>").val("oppose");
   $("#comment_opinion_<%= @comment.id %>").val("oppose");
+  $("#compose_<%= @comment.id %>").attr("href","/<%= @topic.permalink %>/new?target=<%= @comment.id %>&opinion=oppose");
 }
 function set_old_post_<%= @comment.id %>(id){
   $("#old_id_<%= @comment.id %>").val(id);

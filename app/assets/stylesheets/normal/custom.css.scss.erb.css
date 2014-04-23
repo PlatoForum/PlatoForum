@@ -4,6 +4,10 @@ img.comment_img {
   border-radius:5px;
 }
 
+.youtube-iframe {
+  border-radius:5px;
+}
+
 .topic-navbar {
   position: absolute;
   top: 0px;

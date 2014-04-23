@@ -29,13 +29,13 @@
           
           <div class="nav navbar">
             <% if @user.level >= 2 %>
-              <button type="button" class="btn btn-primary" data-toggle="modal" href="#modal_new_comment"><i class="fa fa-comment"></i>  發表評論</button>
+              <a class="btn btn-primary" href="/<%= @topic.permalink %>/new"><i class="fa fa-comment"></i>  發表評論</a>
             <% end %>
 
             <div class="btn-group sort-group">
               <button id="sort_label" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">優先顯示：重要評論 <span class="caret"></span></button>
               <ul class="dropdown-menu">
-                <li id="sort_importance" class="active"><a href="" data-remote="true" >重要評論</a></li>
+                <li id="sort_importance" class="active"><a href="/<%= @topic.permalink %>?sort=importance" data-remote="true" >重要評論</a></li>
                 <li id="sort_doc"><a href="/<%= @topic.permalink %>?sort=doc" data-remote="true" >最新評論</a></li>
               </ul>
             </div>
@@ -65,7 +65,7 @@
       <div class="col-sm-5 hidden-xs" align="center">
         <canvas id="topic_statistics" width="300" height="300"></canvas>
         <script type="text/javascript">
-        $(document).ready(function(){
+        
           var data = [
             <% @topic.stances.each do |stance| %>
             {
@@ -77,38 +77,6 @@
             },
             <% end %>
           ]
-
-          var options = {
-            //Boolean - Whether we should show a stroke on each segment
-            segmentShowStroke : true,
-            
-            //String - The colour of each segment stroke
-            segmentStrokeColor : "#fff",
-            
-            //Number - The width of each segment stroke
-            segmentStrokeWidth : 2,
-            
-            //Boolean - Whether we should animate the chart 
-            animation : true,
-            
-            //Number - Amount of animation steps
-            animationSteps : 100,
-            
-            //String - Animation easing effect
-            animationEasing : "easeOutBounce",
-            
-            //Boolean - Whether we animate the rotation of the Pie
-            animateRotate : true,
-
-            //Boolean - Whether we animate scaling the Pie from the centre
-            animateScale : true,
-            
-            //Function - Will fire on animation completion.
-            onAnimationComplete : null
-          }
-          var ctx = document.getElementById("topic_statistics").getContext("2d");
-          var myNewChart = new Chart(ctx).Doughnut(data,options); 
-        })
         </script>
       </div>
     </div>
