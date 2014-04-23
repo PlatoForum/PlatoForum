@@ -31,6 +31,7 @@ $(function() {
 
   $(".sort-group li").click(function(){
     $(".sort-group").removeClass("open");
+    $(".comment_lists").html("<i class='fa fa-spin fa-spinner'></i>");
   });
 });
 

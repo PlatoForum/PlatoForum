@@ -1,7 +1,7 @@
-$('#comment_list_stance<%= @stance.id %>').append("<%= escape_javascript(render 'comments/show_more')%>")
-$('#show_more_stance<%= @stance.id %>').attr("href", "/<%= @topic.permalink %>/comments/more_stance_<%= @stance.number %>/<%= params[:offset].to_i + 5 %>")
+$('#comment_list_stance<%= @stance.id %>').append("<%= escape_javascript(render 'comments/tr_comment_list')%>")
+$('#show_more_stance<%= @stance.id %>').attr("href", "/<%= @topic.permalink %>/comments/more_stance_<%= @stance.id %>/<%= params[:offset].to_i + 5 %>?sort=<%= params[:sort] %>")
 $('#show_more_stance<%= @stance.id %>').show()
 $('#spin_stance<%= @stance.id %>').hide()
 <% if @stance.comments.count <= params[:offset].to_i + 5  %>
-$('#show_more_stance<%= @stance.id %>').parent().hide()
+	$('#show_more_stance<%= @stance.id %>').parent().hide()
 <% end %>

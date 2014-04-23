@@ -27,31 +27,33 @@
         </td></tr>
         <tr><td>
           
-            <div class="nav navbar">
-              <% if @user.level >= 2 %>
-                <button type="button" class="btn btn-primary" data-toggle="modal" href="#modal_new_comment"><i class="fa fa-comment"></i>  發表評論</button>
-              <% end %>
+          <div class="nav navbar">
+            <% if @user.level >= 2 %>
+              <button type="button" class="btn btn-primary" data-toggle="modal" href="#modal_new_comment"><i class="fa fa-comment"></i>  發表評論</button>
+            <% end %>
 
-              <div class="btn-group sort-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">優先顯示 <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li id="sort_importance" class="active"><a href="" data-remote="true" >重要評論</a></li>
-                  <li id="sort_doc"><a href="/<%= @topic.permalink %>?sort=doc" data-remote="true" >最新評論</a></li>
-                </ul>
-              </div>
-
-              <% if @user.level >= 8 || @topic.creator == @user.id.to_s %>
-              <div class="btn-group" align="left">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">管理 <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li><a href="/<%= @topic.permalink %>/edit" role: "button"><i class="fa fa-pencil-square-o fa-fw"></i> 編輯議題</a></li>
-                  <li><a href="#modal_edit_stances" data-toggle="modal"><i class="fa fa-group fa-fw"></i> 編輯立場</a></li>
-                  <% if @user.level == 10 %>
-                  <li><a href="#modal_delete_topic" data-toggle="modal" rel="nofollow"><i class="fa fa-trash-o fa-fw"></i> 刪除議題</a></li>
-                  <% end %>
-                </ul>
-              </div>
+            <div class="btn-group sort-group">
+              <button id="sort_label" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">優先顯示：重要評論 <span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li id="sort_importance" class="active"><a href="" data-remote="true" >重要評論</a></li>
+                <li id="sort_doc"><a href="/<%= @topic.permalink %>?sort=doc" data-remote="true" >最新評論</a></li>
+              </ul>
             </div>
+
+            <% if @user.level >= 8 || @topic.creator == @user.id.to_s %>
+            <div class="btn-group" align="left">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">管理 <span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="/<%= @topic.permalink %>/edit" role: "button"><i class="fa fa-pencil-square-o fa-fw"></i> 編輯議題</a></li>
+                <li><a href="#modal_edit_stances" data-toggle="modal"><i class="fa fa-group fa-fw"></i> 編輯立場</a></li>
+                <% if @user.level == 10 %>
+                <li><a href="#modal_delete_topic" data-toggle="modal" rel="nofollow"><i class="fa fa-trash-o fa-fw"></i> 刪除議題</a></li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %>
+
+          </div>
 
             <%= render 'proxies/modal_switch_real' unless @user.level == 0 or @user.is_robot? %>
             <%= render 'comments/modal_new_comment' if @user.level >= 2 %>

@@ -22,7 +22,11 @@ class CommentsController < ApplicationController
   def show_more
     @stance = @topic.stances.find(params[:stance])
     #@comments = @stance.comments.sort!{|b,a| a.importance_factor <=> b.importance_factor}[ params[:offset].to_i , 5]
-    @comments = @stance.comments[ params[:offset].to_i , 5]
+    if params[:sort] == "doc"
+      @comments = @stance.comments.sort!{|b,a| a.doc <=> b.doc}[ params[:offset].to_i , 5]
+    else
+      @comments = @stance.comments[ params[:offset].to_i , 5]
+    end
   end
 
   # GET /link_comment_:id
