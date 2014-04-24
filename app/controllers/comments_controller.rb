@@ -205,6 +205,7 @@ class CommentsController < ApplicationController
       create_job(:like, @proxy._id, @c._id) 
       create_job(:undislike, @proxy._id, @c._id) if @proxy.disapprovals.delete(@c)
       # redirect_to "/comments/#{@c.id}"
+      cancel_new_dislike
       notify_new_like
       @action = "like"
       respond_to do |format|
@@ -221,6 +222,8 @@ class CommentsController < ApplicationController
       # redirect_to "/comments/#{c.id}"
       #@c.update_importance_factor
       @c.save
+      cancel_new_dislike
+      cancel_new_like
       @action = "neutral"
       respond_to do |format|
         format.html { redirect_to request.referrer, notice: "你對『#{c.subject}』沒有感覺" }
@@ -237,6 +240,7 @@ class CommentsController < ApplicationController
       create_job(:dislike, @proxy._id, @c._id)
       create_job(:unlike, @proxy._id, @c._id) if @proxy.approvals.delete(@c) 
       # redirect_to "/comments/#{@c.id}"
+      cancel_new_like
       notify_new_dislike
       @action = "dislike"
       respond_to do |format|
@@ -275,6 +279,16 @@ class CommentsController < ApplicationController
       note.save
       #note.push_notification
     end
+  end
+
+  def cancel_new_like
+    criteria = {noti_type: :NewLike, source_id: @proxy.id, destination_id: @c.id}
+    @c.owner.user.notifications.where(criteria).destroy()
+  end
+
+  def cancel_new_dislike
+    criteria = {noti_type: :NewDislike, source_id: @proxy.id, destination_id: @c.id}
+    @c.owner.user.notifications.where(criteria).destroy()
   end
 
   def notify_new_like
