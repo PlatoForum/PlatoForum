@@ -98,6 +98,7 @@ class AdminsController < ApplicationController
 		noti.doc = Time.zone.now
 		user = User.find(params[:user])
 		user.notifications << noti
+		noti.save
 
 		redirection = request.referrer.nil? ? "/admin" : request.referrer
 		respond_to do |format|
