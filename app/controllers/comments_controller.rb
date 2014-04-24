@@ -209,7 +209,7 @@ class CommentsController < ApplicationController
       notify_new_like
       @action = "like"
       respond_to do |format|
-        format.html { redirect_to request.referrer, notice: "你覺得『#{@c.subject}』讚！" }
+        #format.html { redirect_to request.referrer, notice: "你覺得『#{@c.subject}』讚！" }
         format.js { render 'opinions'}
         format.json { head :no_content }
       end
@@ -226,7 +226,7 @@ class CommentsController < ApplicationController
       cancel_new_like
       @action = "neutral"
       respond_to do |format|
-        format.html { redirect_to request.referrer, notice: "你對『#{@c.subject}』沒有感覺" }
+        #format.html { redirect_to request.referrer, notice: "你對『#{@c.subject}』沒有感覺" }
         format.js {render 'opinions'}
         format.json { head :no_content }
       end
@@ -244,7 +244,7 @@ class CommentsController < ApplicationController
       notify_new_dislike
       @action = "dislike"
       respond_to do |format|
-        format.html { redirect_to request.referrer, notice: "你覺得『#{@c.subject}』爛！" }
+        #format.html { redirect_to request.referrer, notice: "你覺得『#{@c.subject}』爛！" }
         format.js {render 'opinions'}
         format.json { head :no_content }
       end
