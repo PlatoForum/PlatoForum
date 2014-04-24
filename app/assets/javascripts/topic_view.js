@@ -54,7 +54,7 @@ onready = function() {
     animationSteps : 100,
     
     //String - Animation easing effect
-    animationEasing : "easeInOutCirc",
+    animationEasing : "easeOutQuint",
     
     //Boolean - Whether we animate the rotation of the Pie
     animateRotate : true,
