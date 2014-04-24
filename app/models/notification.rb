@@ -22,7 +22,7 @@ class Notification
   def push_notification
     if (self.target.noti_settings and self.target.noti_settings[self.noti_type.to_s]) or noti_type == :Announcement
       #logger.error "Pushed!"
-      GRAPH_API.put_connections(self.target.uid, "notifications", template: self.display_message, href: "notification/#{self.id}?user_id=#{@target.id}")
+      GRAPH_API.put_connections(self.target.uid, "notifications", template: self.display_message, href: "notification/#{self.id}?user_id=#{self.target.id}")
     end
   end
 
