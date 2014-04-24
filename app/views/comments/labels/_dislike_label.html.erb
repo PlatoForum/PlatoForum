@@ -1,5 +1,5 @@
 <% if @action == "dislike" %>
-	<a class="label label-danger" href="<%= neutral_comment_path(@c) %>" data-remote="true" onclick="click_opinion($(this));"><i class="fa fa-check fa-fw"></i> <%= @c.dislikes.count %></a>
+	<a class="label label-danger label-opinion" href="<%= neutral_comment_path(@c) %>" data-remote="true"><i class="fa fa-check fa-fw"></i> <%= @c.dislikes.count %></a>
 <% else %>
-	<a class="label label-danger" href="<%= dislike_comment_path(@c) %>" data-remote="true" onclick="click_opinion($(this));"><i class="fa fa-thumbs-down fa-fw"></i> <%= @c.dislikes.count %></a>
+	<a class="label label-danger label-opinion" href="<%= dislike_comment_path(@c) %>" data-remote="true"><i class="fa fa-thumbs-down fa-fw"></i> <%= @c.dislikes.count %></a>
 <% end %>

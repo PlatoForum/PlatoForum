@@ -24,9 +24,6 @@ function expandable_btn(element) {
 
 var onready;
 onready = function() {
-  $(".label-opinion").click(function(e){
-    click_opinion();
-  });
 
   $("a#subscribe_toggle").click(function(){
     $(this).html("<i class='fa fa-spin fa-spinner'></i>");
@@ -142,6 +139,10 @@ function click_comment_link(data) {
   return false;
 }
 
-function click_opinion(element) {
-  element.html("<i class='fa fa-spin fa-spinner'></i>");
+$(document).on('click', '.label-opinion', function () {
+  click_opinion();
+});
+
+function click_opinion() {
+  $(".label-opinion").html("<i class='fa fa-spin fa-spinner'></i>");
 }
