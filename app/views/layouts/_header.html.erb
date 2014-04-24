@@ -12,7 +12,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
               <li <% if request.fullpath == "/" %> class="active" <% end %>><%= link_to "主頁", "/"  %></li>
-              <li <% if !(request.fullpath.include? "/static/" or request.fullpath.include? "/user/" or request.fullpath.include? "/admin" or request.fullpath == "/") %> class="active" <% end %>><%= link_to "議題", "/list"  %></li>
+              <li <% if !(request.fullpath.include? "/static/" or request.fullpath.include? "/user/" or request.fullpath.include? "/admin" or request.fullpath == "/") %> class="active" <% end %>><%= link_to "議題", "/list?sort=popularity" %></li>
               <li <% if request.fullpath == "/static/about" %> class="active" <% end %> ><%= link_to "關於", "/static/about" %></li>
               <li <% if request.fullpath == "/static/contact" %> class="active" <% end %> ><%= link_to "聯絡", "/static/contact"  %></li>
               <% if @user.level > 0 %>
