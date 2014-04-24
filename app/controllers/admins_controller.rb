@@ -90,6 +90,10 @@ class AdminsController < ApplicationController
 	  end
 	end
 
+	def notify_single
+		
+	end
+
 	private
 
     # Never trust parameters from the scary internet, only allow the white list through.
