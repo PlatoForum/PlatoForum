@@ -5,7 +5,7 @@
 
       <div class="expandable-box expandable-box-<%= @topic.stances.count %>">
           <div class="panel <%= stance.panel.nil? ? "panel-default" : "panel-"+stance.panel %>">
-            <a class="expand-btn">
+            <a class="expand-btn" onclick="expandable_btn($(this));">
               <div class="panel-heading" valign="center">
                 <h3 class="panel-title">
                   <table><tbody><tr>

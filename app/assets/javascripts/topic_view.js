@@ -7,23 +7,25 @@ function scroll_top () {
   $('html,body').animate({scrollTop: aTag.offset().top - 70},'slow');
 }
 
+function expandable_btn(element) {
+  var expandable = element.parent().parent()
+  if( expandable.hasClass('open') || expandable.hasClass('side') ) {
+    hideMain();
+  }
+  else {
+    $('.expandable-box').not(expandable).addClass('out');
+    expandable.addClass('open');
+    $('.stance-back').show();
+    scroll_top();
+  }
+  //e.preventDefault();
+  //return false;
+}
+
 var onready;
 onready = function() {
   $(".label-opinion").click(function(e){
     click_opinion();
-  });
-
-  $('.expand-btn').click(function(e) {
-    var expandable = $(this).parent().parent()
-    if( expandable.hasClass('open') || expandable.hasClass('side') ) {
-      hideMain();
-    }
-    else {
-      $('.expandable-box').not(expandable).addClass('out');
-      expandable.addClass('open');
-      $('.stance-back').show();
-      scroll_top();
-    }
   });
 
   $("a#subscribe_toggle").click(function(){
