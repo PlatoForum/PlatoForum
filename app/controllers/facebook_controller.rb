@@ -20,7 +20,8 @@ class FacebookController < ApplicationController
   end
 
   def notification
-  	@notification = Notification.find(params[:id])
+    @user = User.find(params[:user_id])
+  	@notification = @user.notifications.find(params[:id])
   end
 
 	def canvas
