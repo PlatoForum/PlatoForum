@@ -16,3 +16,7 @@ function click_comment_link(data) {
 function click_tr(data) {
   window.location.href = "/comment_" + data;
 };
+
+function click_opinion(element) {
+  element.html("<i class='fa fa-spin fa-spinner'></i>");
+}

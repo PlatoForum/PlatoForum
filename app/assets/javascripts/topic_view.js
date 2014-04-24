@@ -142,6 +142,6 @@ function click_comment_link(data) {
   return false;
 }
 
-function click_opinion() {
-  $('.label-opinion').html("<i class='fa fa-spin fa-spinner'></i>");
+function click_opinion(element) {
+  element.html("<i class='fa fa-spin fa-spinner'></i>");
 }
