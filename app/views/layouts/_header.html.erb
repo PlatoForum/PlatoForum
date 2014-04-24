@@ -30,7 +30,7 @@
                   <li><a href="/admin"><i class="fa fa-cogs fa-fw"></i> 管理頁面</a></li>
                   <li><a href="/admin/robot"><i class="fa fa-android fa-fw"></i> 切換為機器人</a></li>
                 <% end %>
-                <% if @user.id.to_s == "aaaaaaaaaaaaaaaaaaaaaaaa" %>
+                <% if @user.is_robot? %>
                   <li class="divider"></li>
                   <li><a href="/admin/de_robot"><i class="fa fa-android fa-fw"></i> 切換回原帳號</a></li>
                 <% end %>

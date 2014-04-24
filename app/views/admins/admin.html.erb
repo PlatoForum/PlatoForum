@@ -27,6 +27,11 @@
 							<td class="text-muted"><span class="badge"><%= user.level %></span></td>
 							<td class="text-muted"><a href="/admin/edit_user/<%= user.id %>" data-remote="true">編輯</a></td>
 							<td class="text-muted"><a href="/admin/kill_user/<%= user.id %>" method="delete">刪除</a></td>
+							<td class="text-muted">
+							<% unless user.omnitoken.nil? or user.omnitoken.nil? %>
+							<a href="#modal_notify_single" data-toggle="modal" onclick="set_notify('<%= user.id %>');">通知</a>
+							<% end %>
+							</td>
 						</tr>
 					  <% end %>
 					<tbody>
@@ -68,4 +73,10 @@
 	</div>
 </div>
 
+<script type="text/javascript">
+function set_notify(id) {
+	$("#notify_single").attr("action", "/admin/notify_"+id);
+}
+</script>
 <div id="user_modal" class="modal fade"></div>
+<%= render 'modal_notify_single' %>

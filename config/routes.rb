@@ -22,6 +22,7 @@ PlatoForum::Application.routes.draw do
   post 'admin/broadcast' => 'admins#broadcast'
   get 'admin/robot' => 'admins#robot'
   get 'admin/de_robot' => 'admins#de_robot'
+  get 'admin/notify_:user' => 'admins#notify_single'
 
   get 'user/panel' => 'users#panel'
   get 'user/toggle_show_FB' => 'users#toggle_show_FB'

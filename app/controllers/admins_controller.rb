@@ -75,15 +75,15 @@ class AdminsController < ApplicationController
 	# POST /admin/broadcast/:message
 	def broadcast
 		User.all.each do |user|
-      note = Notification.new
-      note.noti_type = :Announcement
-      note.source_id = "系統廣播：#{broadcast_params[:source_id]}"
-      note.destination_id = broadcast_params[:destination_id]
-      note.doc = Time.zone.now
-      user.notifications << note
-      note.save
-      #note.push_notification
-    end
+	      note = Notification.new
+	      note.noti_type = :Announcement
+	      note.source_id = "系統廣播：#{broadcast_params[:source_id]}"
+	      note.destination_id = broadcast_params[:destination_id]
+	      note.doc = Time.zone.now
+	      user.notifications << note
+	      note.save
+	      #note.push_notification
+	    end
     respond_to do |format|
 	  	format.html { redirect_to request.referrer, notice: 'Broadcasted!' }
 	    format.js { render 'broadcast'}
@@ -91,7 +91,20 @@ class AdminsController < ApplicationController
 	end
 
 	def notify_single
-		
+		noti = Notification.new
+		noti.noti_type = :Announcement
+		noti.source_id = params[:message]
+		noti.destination_id = params[:url]
+		noti.doc = Time.zone.now
+		user = User.find(params[:user])
+		user.notifications << noti
+
+		redirection = request.referrer.nil? ? "/admin" : request.referrer
+		respond_to do |format|
+			format.html { redirect_to redirection, notice: 'Broadcasted!' }
+			format.js { head :no_content }
+		end
+
 	end
 
 	private
