@@ -128,8 +128,16 @@ class UsersController < ApplicationController
           noti.destroy
           next
         end
+        if Comment.find(noti.destination_id).nil?
+          noti.destroy
+          next
+        end
       when :NewOppose then 
         if Comment.find(noti.source_id).nil?
+          noti.destroy
+          next
+        end
+        if Comment.find(noti.destination_id).nil?
           noti.destroy
           next
         end
