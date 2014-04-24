@@ -226,7 +226,7 @@ class CommentsController < ApplicationController
       cancel_new_like
       @action = "neutral"
       respond_to do |format|
-        format.html { redirect_to request.referrer, notice: "你對『#{c.subject}』沒有感覺" }
+        format.html { redirect_to request.referrer, notice: "你對『#{@c.subject}』沒有感覺" }
         format.js {render 'opinions'}
         format.json { head :no_content }
       end
