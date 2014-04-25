@@ -3,38 +3,8 @@ class UsersController < ApplicationController
   before_action :set_user
   # GET /users
   # GET /users.json
-  helper_method :notification_message, :notification_url
 
-  def index
-    @users = User.all
-  end
-
-  def notification_message(noti)
-    if noti.noti_type == :NewComment 
-      comment = Comment.find(noti.source_id) 
-      "#{comment.owner.display_name} 在 #{comment.topic.name} 中發佈了一則新評論 #{comment.display_abstract}" 
-    elsif noti.noti_type == :NewSupport 
-      comment = Comment.find(noti.source_id) 
-      target = Comment.find(noti.destination_id) 
-     "#{comment.owner.display_name} 支援了你在 #{comment.topic.name} 上的評論 #{target.display_abstract}" 
-    elsif noti.noti_type == :NewOppose 
-      comment = Comment.find(noti.source_id) 
-      target = Comment.find(noti.destination_id) 
-      "#{comment.owner.display_name} 反駁了你在 #{comment.topic.name} 上的評論 #{target.display_abstract}" 
-    elsif noti.noti_type == :NewLike 
-      someone = Proxy.find_by(:id => noti.source_id) 
-      target = Comment.find(noti.destination_id) 
-      "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很讚！" 
-    elsif noti.noti_type == :NewDislike 
-      someone = Proxy.find_by(:id => noti.source_id) 
-      target = Comment.find(noti.destination_id) 
-      "#{someone.display_name} 覺得你在 #{target.topic.name} 上的評論 #{target.display_abstract} 很爛！"
-    elsif noti.noti_type == :Other
-      noti.source_id
-    elsif noti.noti_type == :Announcement
-      noti.source_id
-    end
-  end
+  extend UsersHelper
 
   def notification_url(noti)
     comment = Comment.find(noti.source_id)  unless noti.source_id.nil?
@@ -49,6 +19,10 @@ class UsersController < ApplicationController
           when :Other then noti.destination_id
           when :Announcement then noti.destination_id
       end
+  end
+
+  def index
+    @users = User.all
   end
 
   # GET /users/1
@@ -86,7 +60,7 @@ class UsersController < ApplicationController
   end
 
   def notification
-    notification = @user.notifications.find(params[:id]) or not_found
+    note = @user.notifications.find(params[:id]) or not_found
     # if notification.noti_type == :NewComment 
     #   comment = Comment.find(notification.source_id)  
     #   noti_url = "/#{comment.topic.permalink}/comment_#{comment.id}"  
@@ -104,10 +78,10 @@ class UsersController < ApplicationController
     #   noti_url = "/#{target.topic.permalink}/comment_#{target.id}"
     # end  
 
-    notification.read = true
-    notification.save
+    note.read = true
+    note.save
 
-    redirect_to notification_url(notification)
+    redirect_to notification_url(note)
   end
 
   def notifications_more
