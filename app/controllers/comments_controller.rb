@@ -87,7 +87,9 @@ class CommentsController < ApplicationController
 
     @update = Update.new
     @update.content = params[:update][:content]
+    @update.doc = Time.zone.now
     @comment.updates << @update
+    @update.save
 
     respond_to do |format|
       format.html
