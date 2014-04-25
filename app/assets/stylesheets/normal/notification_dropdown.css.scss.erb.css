@@ -44,7 +44,7 @@ ul.notification > li span {
 .dropdownContain {
 	width: 300px;
 	position: absolute;
-	z-index: 2;
+	z-index: 2000;
 	left: 50%;
 	margin-left: -150px; /* half of width */
 	top: -400px;
