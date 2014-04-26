@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
       end
 
       if @user
-        @unread_notifications = @user.notifications.where(read: false)
+        @unread_notifications = @user.notifications.where(read: false)[0,10]
         @user.last_login = {ip: request.remote_ip, time: Time.zone.now}
         @user.save
       else

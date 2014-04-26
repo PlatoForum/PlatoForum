@@ -16,7 +16,7 @@ ul.notification > li span {
     position: absolute;    /* This breaks the div from the normal HTML document. */
     top: 8px;
     left: 40px;
-    padding: 5px 4px 5px 5px;
+    padding: 5px 2px 5px 3px;
     background-color: red; /* you could use a background image if you'd like as well */
     color: white;
     font-weight: bolder;
@@ -26,7 +26,7 @@ ul.notification > li span {
     /* The following is CSS3, but isn't crucial for this technique to work. */
     /* Keep in mind that if a browser doesn't support CSS3, it's fine! They just won't have rounded borders and won't have a box shadow effect. */
     /* You can always use a background image to produce the same effect if you want to, and you can use both together so browsers without CSS3 still have the rounded/shadow look. */
-    border-radius: 10px;
+    border-radius: .5em;
     box-shadow: 1px 1px 1px gray;
 }
 
@@ -47,7 +47,7 @@ ul.notification > li span {
 	z-index: 2000;
 	left: 50%;
 	margin-left: -150px; /* half of width */
-	top: -400px;
+	top: -1000px;
 }
 .dropOut {
 	width: 300px;
