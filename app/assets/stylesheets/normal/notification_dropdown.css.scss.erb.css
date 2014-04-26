@@ -17,7 +17,6 @@ ul.notification > li span {
     top: 8px;
     left: 40px;
     padding: 5px 2px 5px 3px;
-    background-color: red; /* you could use a background image if you'd like as well */
     color: white;
     font-weight: bolder;
     font-size: 0.65em;
@@ -28,6 +27,10 @@ ul.notification > li span {
     /* You can always use a background image to produce the same effect if you want to, and you can use both together so browsers without CSS3 still have the rounded/shadow look. */
     border-radius: .5em;
     box-shadow: 1px 1px 1px gray;
+    background: -webkit-linear-gradient(red, #dd0000, red); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(red, #dd0000, red); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(red, #dd0000, red); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(red, #dd0000, red); /* Standard syntax */
 }
 
 .dropOut .triangle {
