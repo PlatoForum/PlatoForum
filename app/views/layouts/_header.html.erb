@@ -26,11 +26,11 @@
                 <div class="dropdownContain hidden-xs">
                   <div class="dropOut">
                     <div class="triangle"></div>
-                    <ul class="notification">
+                    <table class="notification">
                       <% @unread_notifications.each do |noti| %>
-                      <li onclick="document.location = '/notification_<%= noti.id %>';"><span><%= notification_message(noti) %></span></li>
+                      <tr onclick="document.location = '/notification_<%= noti.id %>';"><td><span><%= notification_message(noti) %></span></td></tr>
                       <% end %>
-                    </ul>
+                    </table>
                   </div>
                 </div>
                 <% end %>
