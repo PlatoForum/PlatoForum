@@ -24,7 +24,6 @@ function expandable_btn(element) {
 
 var onready;
 onready = function() {
-
   $("a#subscribe_toggle").click(function(){
     $(this).html("<i class='fa fa-spin fa-spinner'></i>");
   });
@@ -34,40 +33,42 @@ onready = function() {
     $(".comment_lists").html("<center><i class='fa fa-spin fa-spinner'></i></center>");
   });
 
-  var options = {
-    //Boolean - Whether we should show a stroke on each segment
-    segmentShowStroke : true,
-    
-    //String - The colour of each segment stroke
-    segmentStrokeColor : "#fff",
-    
-    //Number - The width of each segment stroke
-    segmentStrokeWidth : 2,
-    
-    //Boolean - Whether we should animate the chart 
-    animation : true,
-    
-    //Number - Amount of animation steps
-    animationSteps : 100,
-    
-    //String - Animation easing effect
-    animationEasing : "easeOutQuint",
-    
-    //Boolean - Whether we animate the rotation of the Pie
-    animateRotate : true,
+  if ( $("#topic_statistics").length > 0 ) {
+    var options = {
+      //Boolean - Whether we should show a stroke on each segment
+      segmentShowStroke : true,
+      
+      //String - The colour of each segment stroke
+      segmentStrokeColor : "#fff",
+      
+      //Number - The width of each segment stroke
+      segmentStrokeWidth : 2,
+      
+      //Boolean - Whether we should animate the chart 
+      animation : true,
+      
+      //Number - Amount of animation steps
+      animationSteps : 100,
+      
+      //String - Animation easing effect
+      animationEasing : "easeOutQuint",
+      
+      //Boolean - Whether we animate the rotation of the Pie
+      animateRotate : true,
 
-    //Boolean - Whether we animate scaling the Pie from the centre
-    animateScale : true,
-    
-    //Function - Will fire on animation completion.
-    onAnimationComplete : null
+      //Boolean - Whether we animate scaling the Pie from the centre
+      animateScale : true,
+      
+      //Function - Will fire on animation completion.
+      onAnimationComplete : null
+    }
+    var ctx = document.getElementById("topic_statistics").getContext("2d");
+    var myNewChart = new Chart(ctx).Doughnut(data,options); 
   }
-  var ctx = document.getElementById("topic_statistics").getContext("2d");
-  var myNewChart = new Chart(ctx).Doughnut(data,options); 
 };
 
-//$(document).ready(onready);
 $(document).on('page:load', onready);
+//$(document).ready(onready);
 
 $(document).keydown(function (e) {
   if ((e.which === 8 || e.which === 27) && !$('.modal').hasClass('in') ) {

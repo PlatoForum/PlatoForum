@@ -70,7 +70,7 @@ gem 'resque', "~> 1.22.0"
 gem 'json'
 
 # Use rails_12factor for assets pipelining
-gem 'rails_12factor'
+#gem 'rails_12factor'
 
 # Use rails_autolink to displat hyperlinks in posts
 gem 'rails_autolink'
