@@ -15,10 +15,11 @@ table.notification > li span {
 .noti_bubble {
     position: absolute;    /* This breaks the div from the normal HTML document. */
     top: 8px;
-    left: 40px;
-    padding: 5px 2px 5px 3px;
+    left: 38px;
+    padding: 4px 5px 4px 3px;
     color: white;
     font-weight: bolder;
+    letter-spacing: -2px;
     font-size: 0.65em;
     line-height: 6px;
 
@@ -76,7 +77,6 @@ table.notification > li span {
 	width: 100%;
 	float: left;
 	margin: 10px 0 10px 0;
-	padding: 10px 10px 10px 10px;
 }
 
 .dropOut table tr {

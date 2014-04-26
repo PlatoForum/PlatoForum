@@ -27,7 +27,7 @@
                   <div class="dropOut">
                     <div class="triangle"></div>
                     <table class="notification">
-                      <% @unread_notifications.each do |noti| %>
+                      <% @unread_notifications[0,10].each do |noti| %>
                       <tr onclick="document.location = '/notification_<%= noti.id %>';"><td><span><%= notification_message(noti) %></span></td></tr>
                       <% end %>
                     </table>
