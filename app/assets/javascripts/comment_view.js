@@ -6,7 +6,7 @@ onready = function() {
   activate_media();
 };
 
-$(document).ready(onready);
+//$(document).ready(onready);
 $(document).on('page:load', onready);
 
 function click_comment_link(data) {

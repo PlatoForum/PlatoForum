@@ -66,7 +66,7 @@ onready = function() {
   var myNewChart = new Chart(ctx).Doughnut(data,options); 
 };
 
-$(document).ready(onready);
+//$(document).ready(onready);
 $(document).on('page:load', onready);
 
 $(document).keydown(function (e) {
