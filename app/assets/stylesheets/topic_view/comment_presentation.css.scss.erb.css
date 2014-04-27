@@ -15,8 +15,8 @@
 	transition: background-color .2s ease-in-out;
 }
 
-.panel-hilite {
-	background-color: #dddddd;
+.panel-reply {
+	background-color: rgba(0, 0, 0, 0.075);
 }
 
 .panel-closed {
@@ -26,7 +26,7 @@
 .panel-closed .panel-heading {
 	border-radius: 3px;
 	font-size: 0.9em;
-	background-color: rgba(0, 0, 0, 0.075) !important;
+	background-color: transparent !important;
 	color: #555555 !important;
 }
 
