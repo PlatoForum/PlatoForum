@@ -32,7 +32,7 @@
 }
 
 .panel-closed .text-muted-inverse {
-	color: #999999;
+	color: rgba(0, 0, 0, 0.2);
 }
 
 .panel-closed .panel-heading:hover .text-muted-inverse {
