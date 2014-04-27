@@ -71,7 +71,7 @@
 
 		<% @comment.replied.each do |comment| %>
 		<div class="col-xs-11 col-xs-push-1">
-			<div class="panel panel-<%= @comment.supported.find(comment.id) ? 'success' : 'danger' %> panel-closed" id="<%= comment.id %>">
+			<div class="panel panel-reply panel-<%= @comment.supported.find(comment.id) ? 'success' : 'danger' %> panel-closed" id="<%= comment.id %>">
 				<a onclick="expand_reply($(this));">
 					<div class="panel-heading">
 						<table><tbody><tr>
