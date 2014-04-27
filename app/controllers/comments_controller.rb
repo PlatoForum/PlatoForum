@@ -135,7 +135,7 @@ class CommentsController < ApplicationController
 
         set_reply_relations
 
-        format.html { redirect_to "/#{@topic.permalink}/comment_#{@comment.id}", notice: '已成功回應評論！' }
+        format.html { redirect_to "/#{@topic.permalink}/comment_#{@target.id}", notice: '已成功回應評論！' }
         format.json { render action: 'show', status: :created, location: @comment }
       else
         format.html { render action: 'new', notice: @errormessage }

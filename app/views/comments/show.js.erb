@@ -1,6 +1,6 @@
 $("#comment_pool").append("<%= escape_javascript(render 'td_show_comment') %>");
 $("#comment_pool").addClass('<%= @comment.id %>');
-$("#main-container").html($("#comment_<%= @comment.id %>_full").html());
+$(".holder_<%= @comment.id %>").replaceWith($("#comment_<%= @comment.id %>_full").html());
 activate_media();
 
 <% if params[:with_ref] and params[:with_ref] == "true" %>
