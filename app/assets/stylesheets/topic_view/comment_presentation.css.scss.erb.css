@@ -17,6 +17,7 @@
 
 .panel-reply {
 	background-color: rgba(0, 0, 0, 0.075);
+	border-width: 0;
 }
 
 .panel-closed {
