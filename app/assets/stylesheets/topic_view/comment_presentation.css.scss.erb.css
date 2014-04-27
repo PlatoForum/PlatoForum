@@ -7,12 +7,21 @@
 	transition: all .2s ease-in-out;
 }
 
+.panel-heading {
+	-webkit-transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	-ms-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+
 .panel-closed {
 	border-width: 0;
 }
 
 .panel-closed .panel-heading {
 	border-radius: 3px;
+	font-size: 0.9em;
 }
 
 .panel-closed .panel-body {
@@ -20,4 +29,12 @@
 	opacity: 0;
 	height: 0;
 	padding: 0;
+}
+
+.hidden-description {
+	display: none;
+}
+
+.panel-closed .hidden-description {
+	display: block;
 }
