@@ -164,6 +164,10 @@ function expand_reply(element) {
     expandable.addClass("panel-closed");
     //$(".panel-body", expandable).html("");
   }
+
+  if ( !expandable.hasClass("panel-hilite") ){
+    $(".panel", expandable).addClass("panel-hilite");
+  }
 }
 
 $(document).on('click', '.label-opinion', function () {
