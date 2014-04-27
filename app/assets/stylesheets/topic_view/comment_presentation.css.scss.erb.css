@@ -17,16 +17,13 @@
 
 .panel-reply {
 	background-color: rgba(0, 0, 0, 0.075);
-}
-
-.panel-closed {
 	border-width: 0;
 }
 
 .panel-closed .panel-heading {
 	border-radius: 3px;
 	font-size: 0.9em;
-	background-color: #dddddd !important;
+	background-color: rgba(0, 0, 0, 0.075) !important;
 	color: #555555 !important;
 }
 
