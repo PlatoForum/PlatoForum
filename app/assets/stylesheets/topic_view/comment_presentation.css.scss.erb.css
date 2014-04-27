@@ -8,11 +8,11 @@
 }
 
 .panel-heading {
-	-webkit-transition: all .2s ease-in-out;
-	-moz-transition: all .2s ease-in-out;
-	-o-transition: all .2s ease-in-out;
-	-ms-transition: all .2s ease-in-out;
-	transition: all .2s ease-in-out;
+	-webkit-transition: background-color .2s ease-in-out;
+	-moz-transition: background-color .2s ease-in-out;
+	-o-transition: background-color .2s ease-in-out;
+	-ms-transition: background-color .2s ease-in-out;
+	transition: background-color .2s ease-in-out;
 }
 
 .panel-closed {
@@ -22,6 +22,38 @@
 .panel-closed .panel-heading {
 	border-radius: 3px;
 	font-size: 0.9em;
+	background-color: #dddddd !important;
+	color: #555555 !important;
+}
+
+.panel-closed .panel-heading:hover .label-reply {
+	color: #ffffff !important;
+}
+
+.panel-closed .text-muted-inverse {
+	color: #999999;
+}
+
+.panel-closed .panel-heading:hover .text-muted-inverse {
+	color: #dddddd;
+}
+
+.panel-closed.panel-success .label-reply {
+	color: #28b62c !important;
+}
+
+.panel-closed.panel-success .panel-heading:hover {
+	background-color: #28b62c !important;
+	color: #ffffff !important;
+}
+
+.panel-closed.panel-danger .label-reply {
+	color: #ff4136 !important;
+}
+
+.panel-closed.panel-danger .panel-heading:hover {
+	background-color: #ff4136 !important;
+	color: #ffffff !important;
 }
 
 .panel-closed .panel-body {
@@ -31,10 +63,6 @@
 	padding: 0;
 }
 
-.hidden-description {
-	display: none;
-}
-
-.panel-closed .hidden-description {
-	display: block;
+.label-reply {
+	font-size: 1em;
 }

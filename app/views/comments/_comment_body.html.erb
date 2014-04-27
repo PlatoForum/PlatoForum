@@ -74,7 +74,14 @@
 			<div class="panel panel-<%= @comment.supported.find(comment.id) ? 'success' : 'danger' %> panel-closed" id="<%= comment.id %>">
 				<a onclick="expand_reply($(this));">
 					<div class="panel-heading">
-						<center><i class="fa fa-reply fa-fw"></i> <%= comment.owner.display_name %>：「<%= comment.display_abstract %>」</center>
+						<table><tbody><tr>
+              <td width="10">
+                <span class="label label-reply"><i class="fa fa-reply fa-fw"></i><%= @comment.supported.find(comment.id) ? '支援' : '反駁' %></span>
+              </td>
+              <td align="center" width="3000">
+                <span class="text-muted-inverse"><%= comment.owner.display_name %>：</span>「<%= comment.display_abstract %>」
+              </td>
+            </tr></tbody></table>
 					</div>
 				</a>
 
