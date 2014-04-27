@@ -2,7 +2,7 @@
 //= require_tree ./topic_view/
 //= require ./shared/activate_media
 
-function scroll_top () {
+function scroll_top() {
   var aTag = $("div[name='main-well']");
   $('html,body').animate({scrollTop: aTag.offset().top - 70},'slow');
 }
@@ -172,4 +172,12 @@ $(document).on('click', '.label-opinion', function () {
 
 function click_opinion() {
   $(".label-opinion").html("<i class='fa fa-spin fa-spinner'></i>");
+}
+
+function takeover(element) {
+  var expandable = element.parent().parent().parent();
+  $("#main-container").html(expandable.html());
+
+  $('.show_comment_tr.open').removeClass('open');
+  scroll_top();
 }

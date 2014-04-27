@@ -16,12 +16,16 @@
   height: 40px;
 
   position: fixed;
-  bottom: 50%;
+  bottom: 212px;
   right: 70px;
 
   -webkit-transition: color .3s;
   transition: color .3s;
   outline: 0!important;
+}
+
+.fixed-up {
+  bottom: 170px;
 }
 
 .fixed-button:hover {

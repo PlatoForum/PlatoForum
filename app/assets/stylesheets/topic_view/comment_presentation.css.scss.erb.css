@@ -79,3 +79,11 @@
 .panel-closed .hidden-description {
 	display: table-cell;
 }
+
+.takeover {
+	display: none;
+}
+
+.panel-reply .takeover {
+	display: inline-block;
+}
