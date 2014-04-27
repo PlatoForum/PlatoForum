@@ -1,0 +1,23 @@
+.panel-body {
+	box-sizing: border-box;
+	-webkit-transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	-ms-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+
+.panel-closed {
+	border-width: 0;
+}
+
+.panel-closed .panel-heading {
+	border-radius: 3px;
+}
+
+.panel-closed .panel-body {
+	overflow: hidden;
+	opacity: 0;
+	height: 0;
+	padding: 0;
+}

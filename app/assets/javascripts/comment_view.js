@@ -25,3 +25,29 @@ $(document).on('click', '.label-opinion', function () {
 function click_opinion() {
   $(".label-opinion").html("<i class='fa fa-spin fa-spinner'></i>");
 }
+
+function expand_reply(element) {
+  var expandable = element.parent();
+  if (expandable.hasClass("panel-closed")) {
+    expandable.removeClass("panel-closed");
+
+    var data = expandable.attr("id");
+    if ( !$("#comment_pool").hasClass(data) ) {
+
+      $(".panel-body", expandable).html("<div class='holder_"+data+"'><center><i class='fa fa-spin fa-spinner fa-2x'></i></center></div>");
+
+      $.ajax({
+        url: "/comment_" + data,
+        dataType: "script"
+      });
+    }
+    else {
+      $(".panel-body", expandable).html($("#comment_"+data+"_full").html());
+      activate_media(data);
+    }        
+  }
+  else {
+    expandable.addClass("panel-closed");
+    //$(".panel-body", expandable).html("");
+  }
+}

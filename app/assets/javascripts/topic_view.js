@@ -102,7 +102,7 @@ function click_tr(data) {
 
     if ( !$("#comment_pool").hasClass(data) ) {
 
-      $("#main-container").html("<center><i class='fa fa-spin fa-spinner fa-2x'></i></center>");
+      $("#main-container").html("<div class='holder_"+data+"'><center><i class='fa fa-spin fa-spinner fa-2x'></i></center></div>");
 
       $.ajax({
         url: "/comment_" + data,
@@ -138,6 +138,32 @@ function click_comment_link(data) {
 
   scroll_top();
   return false;
+}
+
+function expand_reply(element) {
+  var expandable = element.parent();
+  if (expandable.hasClass("panel-closed")) {
+    expandable.removeClass("panel-closed");
+
+    var data = expandable.attr("id");
+    if ( !$("#comment_pool").hasClass(data) ) {
+
+      $(".panel-body", expandable).html("<div class='holder_"+data+"'><center><i class='fa fa-spin fa-spinner fa-2x'></i></center></div>");
+
+      $.ajax({
+        url: "/comment_" + data,
+        dataType: "script"
+      });
+    }
+    else {
+      $(".panel-body", expandable).html($("#comment_"+data+"_full").html());
+      activate_media(data);
+    }        
+  }
+  else {
+    expandable.addClass("panel-closed");
+    //$(".panel-body", expandable).html("");
+  }
 }
 
 $(document).on('click', '.label-opinion', function () {
