@@ -184,5 +184,6 @@ function takeover(element) {
   $("#main-container").html(expandable.html()).fadeIn();
 
   $('.show_comment_tr.open').removeClass('open');
-  scroll_to( $("#main-container div[id='anchor_replies']") );
+  //scroll_to( $("#main-container div[id='anchor_replies']") );
+  scroll_top();
 }
