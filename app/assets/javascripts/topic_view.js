@@ -7,6 +7,10 @@ function scroll_top() {
   $('html,body').animate({scrollTop: aTag.offset().top - 70},'slow');
 }
 
+function scroll_to(element) {
+  $('html,body').animate({scrollTop: element.offset().top - 70},'slow');
+}
+
 function expandable_btn(element) {
   var expandable = element.parent().parent()
   if( expandable.hasClass('open') || expandable.hasClass('side') ) {
@@ -176,8 +180,9 @@ function click_opinion() {
 
 function takeover(element) {
   var expandable = element.parent().parent().parent();
-  $("#main-container").html(expandable.html());
+  $("#main-container").fadeOut();
+  $("#main-container").html(expandable.html()).fadeIn();
 
   $('.show_comment_tr.open').removeClass('open');
-  scroll_top();
+  scroll_to( $("#main-container div[id='anchor_replies']") );
 }
