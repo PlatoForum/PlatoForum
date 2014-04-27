@@ -70,3 +70,11 @@
 .label-reply {
 	font-size: 1em;
 }
+
+.hidden-description {
+	display: none;
+}
+
+.panel-closed .hidden-description {
+	display: table-cell;
+}

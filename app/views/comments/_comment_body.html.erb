@@ -78,7 +78,7 @@
               <td width="10">
                 <span class="label label-reply"><i class="fa fa-reply fa-fw"></i><%= @comment.supported.find(comment.id) ? '支援' : '反駁' %></span>
               </td>
-              <td align="center" width="3000">
+              <td align="center" width="3000" class="hidden-description">
                 <span class="text-muted-inverse"><%= comment.owner.display_name %>：</span>「<%= comment.display_abstract %>」
               </td>
             </tr></tbody></table>
