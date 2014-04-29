@@ -29,7 +29,7 @@ class ProxiesController < ApplicationController
     @proxy.real_id = !@proxy.real_id
     @proxy.save
     respond_to do |format|
-      format.html { redirect_to request.referrer, notice: '成功切換實/匿名' }
+      format.html { redirect_to @proxy.topic.permalink, notice: '成功切換實/匿名' }
       format.json { render action: 'show', status: :created, location: @proxy }
       format.js { render 'switch_real_id'}
     end
