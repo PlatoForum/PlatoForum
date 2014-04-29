@@ -3,7 +3,7 @@
     <div class="expandable-boxes" name="main-well">
       <% @topic.stances.sort!.each do |stance| %>
 
-      <div class="expandable-box expandable-box-<%= @topic.stances.count %>">
+      <div class="expandable-box expandable-box-<%= @topic.stances.count %>" id="stance_<%= stance.id %>">
           <div class="panel <%= stance.panel.nil? ? "panel-default" : "panel-"+stance.panel %>">
             <a class="expand-btn" onclick="expandable_btn($(this));">
               <div class="panel-heading" valign="center">
@@ -62,3 +62,12 @@
 <div id="comment_pool">Comment pool</div>
 <div id="comment_modal" class="modal fade"></div>
 <div id="reply_modals"></div>
+
+<% unless params[:stance].nil? %>
+<script type="text/javascript">
+$(function(){
+  $('.expandable-box').addClass('out');
+  $(".expandable-box#stance_<%= params[:stance] %>").removeClass('out').addClass('open');
+})
+</script>
+<% end %>

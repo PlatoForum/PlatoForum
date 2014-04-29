@@ -84,7 +84,7 @@ PlatoForum::Application.routes.draw do
 
   get ':permalink/stance_:stance/more_importance/:offset' => "stances#show_more_importance"
   get ':permalink/stance_:stance/more_time/:offset' => "stances#show_more_time"
-  get ':permalink/stance_:stance' => "stances#show"
+  get ':permalink/stance_:stance' => "topics#show"
 
   get ':permalink/stances/new' => "stances#new"
   post ':permalink/stances' => "stances#create"

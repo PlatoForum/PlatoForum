@@ -20,13 +20,16 @@
 	border-width: 0;
 }
 
+.panel-reply .panel-heading {
+	font-size: 0.9em;
+}
+
 .panel-closed {
 	border-width: 0;
 }
 
 .panel-closed .panel-heading {
 	border-radius: 3px;
-	font-size: 0.9em;
 	background-color: transparent !important;
 	color: #444444 !important;
 }

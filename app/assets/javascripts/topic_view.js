@@ -2,6 +2,39 @@
 //= require_tree ./topic_view/
 //= require ./shared/activate_media
 
+window.onpopstate = function(event) {
+  if ( event.state.type_id == 'comment') {
+    $('.expandable-box').removeClass('open').addClass('out');
+    $('.expandable-box-main').removeClass('out');
+    $(".expandable-box#" + event.state.stance_id).removeClass('out').addClass('side');
+    $('.show_comment_tr.open').not($("#tr_"+event.state.comment_id)).removeClass('open');
+    $("#tr_"+event.state.comment_id).addClass("open");
+
+    if ( !$("#comment_pool").hasClass(event.state.comment_id) ) {
+
+      $("#main-container").html("<div class='holder_"+event.state.comment_id+"'><center><i class='fa fa-spin fa-spinner fa-2x'></i></center></div>");
+
+      $.ajax({
+        url: "/comment_" + event.state.comment_id,
+        dataType: "script"
+      });
+    }
+    else {
+      $("#main-container").html($("#comment_"+event.state.comment_id+"_full").html());
+      activate_media(event.state.comment_id);
+    }        
+  }
+  else if ( event.state.type_id == 'stance' ) {
+    $('.expandable-box').addClass('out');
+    $('.expandable-box').removeClass('open');
+    $('.expandable-box').removeClass('side');
+    $(".expandable-box#" + event.state.stance_id).removeClass('out').addClass('open');
+  }
+  else if ( event.state.type_id == 'topic' ) {
+    hideMain();
+  }
+};
+
 function scroll_top() {
   var aTag = $("div[name='main-well']");
   $('html,body').animate({scrollTop: aTag.offset().top - 70},'slow');
@@ -14,20 +47,24 @@ function scroll_to(element) {
 function expandable_btn(element) {
   var expandable = element.parent().parent()
   if( expandable.hasClass('open') || expandable.hasClass('side') ) {
+    history.pushState({type_id: "topic"}, '', "");
     hideMain();
   }
   else {
     $('.expandable-box').not(expandable).addClass('out');
     expandable.addClass('open');
     $('.stance-back').show();
+
+    history.pushState({type_id: "stance", stance_id: expandable.attr("id")}, '', "./" + expandable.attr("id"));
     scroll_top();
   }
   //e.preventDefault();
   //return false;
 }
 
-var onready;
-onready = function() {
+var onready = function() {
+  history.replaceState({type_id: "topic"}, '', "");
+
   $("a#subscribe_toggle").click(function(){
     $(this).html("<i class='fa fa-spin fa-spinner'></i>");
   });
@@ -118,6 +155,8 @@ function click_tr(data) {
       activate_media(data);
     }        
 
+    var stance_obj = $('.expandable-box.side').attr('id');
+    history.pushState({type_id: "comment", comment_id: data, stance_id: stance_obj}, '', "./comment_" + data );
     scroll_top();
   }
   return false;
@@ -140,6 +179,7 @@ function click_comment_link(data) {
     activate_media(data);
   }        
 
+  history.pushState({}, '', "./comment_" + data);
   scroll_top();
   return false;
 }
