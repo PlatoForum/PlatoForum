@@ -19,7 +19,7 @@
               <li class="drop<% if request.fullpath == "/user/notifications" %> active<% end %>">
                 <a href="/user/notifications">通知
                 <% unless @unread_notifications.count == 0 %>
-                <div class="noti_bubble noti_count"><%= @unread_notifications.count if @unread_notifications.count != 0 %></div>
+                <div class="noti_bubble noti_count"><%= @unread_notifications.count %></div>
                 <% end %>
                 </a>
                 <% unless @unread_notifications.count == 0 %>

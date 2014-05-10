@@ -1,0 +1,63 @@
+.text-primary {
+	color: #e06c00;
+}
+
+.text-primary, .text-primary:hover {
+	color: #e06c00;
+}
+
+a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus {
+	background-color: #555;
+	border-color: transparent;
+}
+
+a {
+	color: #e06c00;
+}
+
+a:hover {
+	color: #e06c00;
+}
+
+.my-jumbo {
+  background: url(/assets/bg.png) no-repeat center center; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.my-jumbo h1 {
+  line-height: 0.8em;
+  font-size: 3em;
+}
+
+.text-whiter {
+  color:#ffffff;
+}
+
+.text-white {
+  color:#ffffff;
+}
+
+.text-white > a {
+  color:#bb3f00;
+}
+
+.text-white > a:hover {
+  color:#ffffff;
+  text-decoration:none;
+}
+
+.navbar-default .navbar-brand {
+	color:#111111;
+}
+
+.badge {
+	background-color: #e06c00;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+  color: #ffffff;
+  background-color: #e06c00;
+}
