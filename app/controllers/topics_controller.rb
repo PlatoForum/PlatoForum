@@ -7,7 +7,6 @@ class TopicsController < ApplicationController
   # GET /topics.json
   def index
     @topics = Topic.all
-    clear_notifications
   end
 
   def completelist
